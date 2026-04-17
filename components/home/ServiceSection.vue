@@ -189,7 +189,6 @@ onMounted(async () => {
   margin-bottom: 24px;
   color: var(--primary-2);
 }
-}
 
 .service-tag {
   font-size: 0.7rem;
