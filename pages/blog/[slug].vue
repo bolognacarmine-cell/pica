@@ -18,12 +18,12 @@ const fetchPost = async () => {
     // SEO Dinamica
     if (post.value) {
       useHead({
-        title: `${post.value.title} | Road Runner Moto Blog`,
+        title: `${post.value.title} | Pica Caravan Blog`,
         meta: [
-          { name: 'description', content: post.value.excerpt || `Leggi l'articolo ${post.value.title} sul blog di Road Runner Moto.` },
-          { property: 'og:title', content: `${post.value.title} | Road Runner Moto Blog` },
+          { name: 'description', content: post.value.excerpt || `Leggi l'articolo ${post.value.title} sul blog di Pica Caravan.` },
+          { property: 'og:title', content: `${post.value.title} | Pica Caravan Blog` },
           { property: 'og:description', content: post.value.excerpt },
-          { property: 'og:image', content: post.value.imageCover || '/logo-road-runner.jpg' },
+          { property: 'og:image', content: post.value.imageCover || '/logo-pica-caravan.jpg' },
           { property: 'og:type', content: 'article' }
         ]
       })
@@ -77,7 +77,7 @@ const formatDate = (d) => new Date(d).toLocaleDateString('it-IT', {
     <article v-else-if="post" class="post-content">
       <!-- Hero Header -->
       <header class="post-hero">
-        <div class="hero-bg" :style="{ backgroundImage: `url(${post.imageCover || '/logo-road-runner.jpg'})` }"></div>
+        <div class="hero-bg" :style="{ backgroundImage: `url(${post.imageCover || '/logo-pica-caravan.jpg'})` }"></div>
         <div class="hero-overlay"></div>
         <div class="container hero-shell">
           <NuxtLink to="/blog" class="back-link">← Torna al Blog</NuxtLink>
@@ -87,8 +87,8 @@ const formatDate = (d) => new Date(d).toLocaleDateString('it-IT', {
           </div>
           <h1 class="post-title">{{ post.title }}</h1>
           <div class="post-author">
-            <img src="/logo-road-runner.jpg" alt="Author" />
-            <span>{{ post.autore || 'Road Runner Team' }}</span>
+            <img src="/logo-pica-caravan.jpg" alt="Author" />
+            <span>{{ post.autore || 'Pica Team' }}</span>
           </div>
         </div>
       </header>
@@ -102,8 +102,8 @@ const formatDate = (d) => new Date(d).toLocaleDateString('it-IT', {
           <div class="share-box">
             <span>Condividi:</span>
             <div class="share-links">
-              <a :href="`https://wa.me/?text=Leggi questo articolo su Road Runner Moto: ${post.title} - https://road-runner-moto.it/blog/${post.slug}`" target="_blank" class="share-wa">WhatsApp</a>
-              <a :href="`https://www.facebook.com/sharer/sharer.php?u=https://road-runner-moto.it/blog/${post.slug}`" target="_blank" class="share-fb">Facebook</a>
+              <a :href="`https://wa.me/?text=Leggi questo articolo su Pica Caravan: ${post.title} - https://pica-caravan.it/blog/${post.slug}`" target="_blank" class="share-wa">WhatsApp</a>
+              <a :href="`https://www.facebook.com/sharer/sharer.php?u=https://pica-caravan.it/blog/${post.slug}`" target="_blank" class="share-fb">Facebook</a>
             </div>
           </div>
         </div>
@@ -111,10 +111,10 @@ const formatDate = (d) => new Date(d).toLocaleDateString('it-IT', {
         <!-- Sidebar: Moto Correlate & Info -->
         <aside class="article-sidebar">
           <div v-if="relatedMotos.length > 0" class="sidebar-block">
-            <h3>Moto in evidenza</h3>
+            <h3>Veicoli in evidenza</h3>
             <div class="related-motos">
-              <NuxtLink v-for="moto in relatedMotos" :key="moto._id" :to="`/moto/${moto._id}`" class="mini-moto-card">
-                <img :src="moto.immagini?.[0] || '/logo-road-runner.jpg'" alt="Moto" />
+              <NuxtLink v-for="moto in relatedMotos" :key="moto._id" :to="`/veicoli/${moto._id}`" class="mini-moto-card">
+                <img :src="moto.immagini?.[0] || '/logo-pica-caravan.jpg'" alt="Veicolo" />
                 <div class="mini-moto-info">
                   <strong>{{ moto.marca }} {{ moto.modello }}</strong>
                   <span class="price">{{ moto.prezzo ? `€ ${moto.prezzo}` : 'Prezzo su richiesta' }}</span>

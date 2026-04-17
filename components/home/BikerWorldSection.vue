@@ -117,7 +117,7 @@ onMounted(async () => {
       <!-- Intestazione Sezione -->
       <div class="biker-header">
         <p class="section-kicker">News & Insights</p>
-        <h2 class="section-title">Mondo Road Runner</h2>
+        <h2 class="section-title">Mondo Pica Caravan</h2>
         <p class="section-subtitle">
           Esplora i nostri contenuti esclusivi: novità, sicurezza e tutto ciò che serve per vivere al meglio la tua passione. 
           Scegli i link utili qui sotto per approfondire ogni aspetto del mondo a due ruote.

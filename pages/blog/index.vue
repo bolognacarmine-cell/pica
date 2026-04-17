@@ -79,9 +79,9 @@ onMounted(() => {
 })
 
 useHead({
-  title: 'Blog & News | Road Runner Moto',
+  title: 'Blog & News | Pica Caravan',
   meta: [
-    { name: 'description', content: 'Ultime novità dal mondo delle moto, consigli di manutenzione e offerte speciali da Road Runner Moto.' }
+    { name: 'description', content: 'Ultime novità dal mondo dei camper e roulotte, consigli di manutenzione e offerte speciali da Pica Caravan.' }
   ]
 })
 </script>
@@ -92,9 +92,9 @@ useHead({
     <section class="blog-hero">
       <div class="container">
         <div class="hero-content">
-          <span class="badge">News & Insights</span>
-          <h1>Mondo Road Runner</h1>
-          <p>Rimani aggiornato su novità, tecnica e passioni a due ruote.</p>
+          <span class="badge">Esperienze e Consigli</span>
+          <h1>Mondo Pica Caravan</h1>
+          <p>Scopri i migliori itinerari, consigli tecnici e le novità dal mondo del caravanning.</p>
         </div>
       </div>
     </section>

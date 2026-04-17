@@ -5,186 +5,186 @@ dotenv.config();
 
 const demoPosts = [
   {
-    title: "Notizie Moto: Nuovi Modelli e Innovazioni Tecnologiche 2026",
-    slug: "notizie-moto-nuovi-modelli-2026",
-    category: "Nuove Moto",
+    title: "Notizie Camper: Nuovi Modelli e Innovazioni Tecnologiche 2026",
+    slug: "notizie-camper-nuovi-modelli-2026",
+    category: "Nuovi Veicoli",
     imageCover: "https://images.unsplash.com/photo-1599819811279-d5ad9cccf838?q=80&w=2070&auto=format&fit=crop",
-    excerpt: "Scopri le ultime tendenze del settore moto: dai motori Euro 5+ alle innovazioni su sicurezza e connettività.",
-    content: `# Notizie Moto: Nuovi Modelli e Innovazioni Tecnologiche
+    excerpt: "Scopri le ultime tendenze del settore camper: dai motori Euro 5+ alle innovazioni su sicurezza e connettività.",
+    content: `# Notizie Camper: Nuovi Modelli e Innovazioni Tecnologiche
 
-Il mondo delle due ruote sta attraversando una fase di trasformazione senza precedenti. Nel 2026, l'attenzione dei costruttori è focalizzata su un equilibrio perfetto tra prestazioni pure, sostenibilità ambientale e sicurezza proattiva. Che tu sia un amante delle naked cattive, un viaggiatore instancabile in sella a una crossover o un pendolare urbano su scooter, le novità di quest'anno promettono di rivoluzionare la tua esperienza di guida.
+Il mondo dei viaggi itineranti sta attraversando una fase di trasformazione senza precedenti. Nel 2026, l'attenzione dei costruttori è focalizzata su un equilibrio perfetto tra prestazioni pure, sostenibilità ambientale e sicurezza proattiva. Che tu sia un amante dei van agili, un viaggiatore instancabile in sella a un motorhome o un amante delle roulotte, le novità di quest'anno promettono di rivoluzionare la tua esperienza di viaggio.
 
 ## Tendenze e Nuovi Modelli in Arrivo
 
-I listini dei principali produttori si arricchiscono di modelli sempre più sofisticati. Vediamo una forte spinta verso i motori **Euro 5+**, che non solo riducono le emissioni ma ottimizzano l'erogazione grazie a una gestione elettronica affinata. Le crossover continuano a dominare il mercato, ma assistiamo a un ritorno prepotente delle medie cilindrate, agili e divertenti, ideali per chi cerca il massimo piacere di guida senza eccessi.
+I listini dei principali produttori si arricchiscono di modelli sempre più sofisticati. Vediamo una forte spinta verso i motori **Euro 5+**, che non solo riducono le emissioni ma ottimizzano l'erogazione grazie a una gestione elettronica affinata. I van compatti continuano a dominare il mercato, ma assistiamo a un ritorno prepotente dei profilati, spaziosi e confortevoli, ideali per chi cerca il massimo piacere di viaggio senza compromessi.
 
 ## Elettronica, Sicurezza e Comfort: La Nuova Frontiera
 
-La vera rivoluzione avviene sotto la carena. Le innovazioni tecnologiche oggi riguardano principalmente:
-- **Sistemi di assistenza alla guida (ARAS):** Radar anteriori e posteriori per il cruise control adattivo e il monitoraggio dell'angolo cieco.
-- **Piattaforme inerziali (IMU) a 6 assi:** Gestione millimetrica di ABS Cornering e Traction Control.
-- **Connettività Smartphone:** Display TFT sempre più grandi con navigazione cartografica integrata e gestione chiamate/musica.
-- **Sospensioni Semi-attive:** Regolazione in tempo reale dello smorzamento per adattarsi a ogni tipo di fondo stradale.
+La vera rivoluzione avviene sotto la carrozzeria. Le innovazioni tecnologiche oggi riguardano principalmente:
+- **Sistemi di assistenza alla guida (ADAS):** Radar anteriori e posteriori per il cruise control adattivo e il monitoraggio dell'angolo cieco.
+- **Domotica Integrata:** Gestione remota di riscaldamento, livelli acqua e batterie tramite app dedicata.
+- **Connettività Satellitare:** Sistemi Starlink integrati per avere internet ovunque, anche nei luoghi più remoti.
+- **Sospensioni Autolivellanti:** Regolazione automatica per un comfort massimo durante la sosta e la marcia.
 
-## Perché queste novità interessano chi vuole comprare una moto oggi
+## Perché queste novità interessano chi vuole comprare un camper oggi
 
-Investire in un modello di ultima generazione significa non solo avere un mezzo più performante, ma soprattutto più sicuro. Le nuove tecnologie riducono drasticamente il rischio di incidenti e aumentano il comfort nei lunghi viaggi, rendendo la moto un mezzo godibile in ogni condizione.
+Investire in un modello di ultima generazione significa non solo avere un mezzo più performante, ma soprattutto più sicuro e confortevole. Le nuove tecnologie riducono drasticamente lo stress da guida e aumentano il comfort durante la sosta, rendendo il camper una vera e propria casa su ruote godibile in ogni condizione.
 
-Passa a trovarci da **Road Runner Moto** per scoprire dal vivo queste innovazioni e prenotare un test ride sui nuovi modelli 2026!
+Passa a trovarci da **Pica Caravan** per scoprire dal vivo queste innovazioni e prenotare una visita sui nuovi modelli 2026!
 
-*Ti è piaciuto questo articolo? Leggi anche le nostre guide sulla manutenzione o scopri i prossimi raduni nella sezione Mondo Biker.*`,
+*Ti è piaciuto questo articolo? Leggi anche le nostre guide sulla manutenzione o scopri i prossimi raduni nella sezione Mondo Pica Caravan.*`,
     date: new Date(),
-    autore: "Road Runner Team",
+    autore: "Pica Caravan Team",
     relatedMotos: []
   },
   {
-    title: "Codice della Strada: Aggiornamenti Normativi per Motociclisti",
-    slug: "aggiornamenti-codice-strada-moto",
+    title: "Codice della Strada: Aggiornamenti Normativi per Caravan e Camper",
+    slug: "aggiornamenti-codice-strada-camper",
     category: "Codice della Strada",
     imageCover: "https://images.unsplash.com/photo-1591637333184-19aa84b3e01f?q=80&w=2070&auto=format&fit=crop",
-    excerpt: "Guida aggiornata sulle nuove regole del Codice della Strada: casco, sicurezza e sanzioni per chi guida una moto.",
-    content: `# Codice della Strada: Cosa Cambia per chi Guida una Moto
+    excerpt: "Guida aggiornata sulle nuove regole del Codice della Strada: pesi, patenti e sanzioni per chi guida un veicolo ricreazionale.",
+    content: `# Codice della Strada: Cosa Cambia per chi Guida un Camper o Caravan
 
-Rimanere aggiornati sulle normative è fondamentale per ogni motociclista, non solo per evitare sanzioni, ma soprattutto per garantire la propria sicurezza e quella degli altri utenti della strada. In questo articolo analizziamo le ultime novità legislative che interessano il mondo delle due ruote.
+Rimanere aggiornati sulle normative è fondamentale per ogni viaggiatore, non solo per evitare sanzioni, ma soprattutto per garantire la propria sicurezza e quella degli altri utenti della strada. In questo articolo analizziamo le ultime novità legislative che interessano il mondo dei veicoli ricreazionali.
 
 ## Cosa Cambia: Le Nuove Regole
 
-Le recenti modifiche al Codice della Strada hanno introdotto norme più stringenti per la circolazione. L'obiettivo è chiaro: ridurre il numero di sinistri che coinvolgono utenti vulnerabili. Particolare attenzione è stata posta alla gestione del traffico urbano e all'utilizzo di dispositivi tecnologici durante la guida.
+Le recenti modifiche al Codice della Strada hanno introdotto norme più stringenti per la circolazione dei mezzi pesanti e ingombranti. L'obiettivo è chiaro: ridurre il numero di sinistri che coinvolgono utenti vulnerabili. Particolare attenzione è stata posta alla gestione dei pesi e alle patenti necessarie per i mezzi oltre le 3.5 tonnellate.
 
-## Le Regole che Riguardano i Motociclisti
+## Le Regole che Riguardano i Camperisti
 
 Ecco i punti chiave da tenere a mente:
-- **Dispositivi di Protezione:** L'obbligo del casco è ovviamente confermato, ma si discute sempre più di standard omologativi più elevati (ECE 22.06) e dell'importanza dell'abbigliamento tecnico certificato.
-- **Comportamento nel Traffico:** Sorpassi azzardati e circolazione in corsie non consentite sono soggetti a controlli più frequenti. La guida prudente non è solo un consiglio, ma un obbligo normativo.
+- **Limiti di Peso:** Maggiore rigore nelle pesate autostradali. Assicurati che il tuo mezzo rientri nei limiti della tua patente (B o C1).
+- **Comportamento nel Traffico:** Rispetto delle distanze di sicurezza e dei limiti di velocità specifici per i mezzi oltre le 3.5t o con rimorchio.
 - **Documentazione:** Assicurati di avere sempre con te patente, libretto di circolazione e certificato di assicurazione (anche in formato digitale).
 
 ## Sanzioni e Controlli
 
-Le sanzioni per l'utilizzo del cellulare alla guida o per la guida sotto l'effetto di sostanze sono state inasprite. Anche la revisione periodica del veicolo è monitorata con maggiore rigore attraverso sistemi elettronici di lettura targa.
+Le sanzioni per il sovraccarico sono state inasprite. Anche la revisione periodica del veicolo è monitorata con maggiore rigore attraverso sistemi elettronici di lettura targa.
 
 ## Come Evitare Errori alla Guida
 
-La conoscenza della norma è il primo passo per una guida serena. Rispetta sempre le precedenze, mantieni la distanza di sicurezza e adegua la velocità alle condizioni del fondo stradale e del traffico.
+La conoscenza della norma è il primo passo per una guida serena. Rispetta sempre le precedenze, mantieni la distanza di sicurezza e adegua la velocità alle dimensioni del tuo veicolo.
 
 ### 5 Consigli Pratici per Guidare in Regola:
 1. Controlla sempre la scadenza di revisione e assicurazione.
-2. Usa solo caschi con omologazione recente e ben allacciati.
+2. Pesa il tuo camper a pieno carico prima di ogni lungo viaggio.
 3. Segnala ogni manovra con gli indicatori di direzione in anticipo.
-4. Non sostare mai negli angoli ciechi dei mezzi pesanti.
-5. Mantieni la calma anche nel traffico più intenso.
+4. Non sostare mai dove espressamente vietato ai veicoli ricreazionali.
+5. Mantieni la calma anche nei tratti stradali più stretti.
 
 *Nota: Le normative possono subire ulteriori variazioni. Ti invitiamo a consultare sempre i canali ufficiali del Ministero delle Infrastrutture e dei Trasporti per gli aggiornamenti in tempo reale.*`,
     date: new Date(Date.now() - 86400000),
-    autore: "Road Runner Team",
+    autore: "Pica Caravan Team",
     relatedMotos: []
   },
   {
-    title: "Sicurezza in Moto: Consigli di Guida e Manutenzione Essenziale",
-    slug: "sicurezza-e-manutenzione-moto-guida",
+    title: "Sicurezza in Camper: Consigli di Viaggio e Manutenzione Essenziale",
+    slug: "sicurezza-e-manutenzione-camper-guida",
     category: "Sicurezza e Manutenzione",
     imageCover: "https://images.unsplash.com/photo-1444858291040-58f756a3bdd6?q=80&w=2000&auto=format&fit=crop",
-    excerpt: "La sicurezza inizia dal box. Scopri i controlli pre-partenza e le abitudini di guida che salvano la vita.",
-    content: `# Sicurezza in Moto: La Tua Guida Pratica
+    excerpt: "La sicurezza inizia dal rimessaggio. Scopri i controlli pre-partenza e le abitudini di viaggio che garantiscono una vacanza serena.",
+    content: `# Sicurezza in Camper: La Tua Guida Pratica
 
-Essere un motociclista consapevole significa sapere che la sicurezza dipende da tre fattori: lo stato del mezzo, l'equipaggiamento e lo stile di guida. In questa guida pratica, esploriamo come minimizzare i rischi e massimizzare il piacere di ogni uscita.
+Essere un camperista consapevole significa sapere che la sicurezza dipende da tre fattori: lo stato del mezzo, l'attrezzatura e lo stile di guida. In questa guida pratica, esploriamo come minimizzare i rischi e massimizzare il piacere di ogni viaggio.
 
 ## Controlli da Fare Prima di Partire
 
-Non salire mai in sella senza aver dato un'occhiata veloce ma attenta alla tua moto. Bastano pochi minuti per prevenire problemi seri:
-- **Pneumatici:** Controlla la pressione (a freddo) e l'usura del battistrada. Gomme sgonfie o troppo usurate compromettono la tenuta in curva.
-- **Luci:** Verifica il funzionamento di fari, stop e frecce. Vedere ed essere visti è vitale.
-- **Liquidi:** Un rapido controllo al livello dell'olio e del liquido di raffreddamento può salvarti da guasti meccanici costosi.
+Non metterti mai in viaggio senza aver dato un'occhiata veloce ma attenta al tuo camper. Bastano pochi minuti per prevenire problemi seri:
+- **Pneumatici:** Controlla la pressione (a freddo) e l'usura del battistrada. Gomme sgonfie o vecchie su mezzi pesanti sono pericolosissime.
+- **Impianto Gas:** Verifica che le bombole siano chiuse correttamente durante la marcia e che non ci siano perdite.
+- **Liquidi:** Un rapido controllo al livello dell'olio e del liquido di raffreddamento, oltre ai livelli delle acque.
 
 ## Manutenzione che Aiuta a Prevenire Problemi
 
 Oltre ai controlli quotidiani, la manutenzione regolare è la tua migliore alleata:
-- **Freni:** Monitora lo stato delle pastiglie e la risposta della leva. Se senti vibrazioni o rumori anomali, corri in officina.
-- **Trasmissione:** La catena deve essere pulita, ingrassata e tensionata correttamente ogni 500-1000 km.
-- **Batteria:** Se la moto resta ferma spesso, usa un mantenitore di carica per evitare brutte sorprese all'avvio.
+- **Freni e Sospensioni:** Monitora lo stato delle pastiglie e la risposta degli ammortizzatori. Un mezzo carico necessita di freni al top.
+- **Sigillature:** Controlla annualmente le sigillature del tetto e delle finestre per evitare infiltrazioni dannose.
+- **Batterie Servizi:** Verifica lo stato di carica e l'efficienza dei pannelli solari.
 
 ## Abitudini di Guida che Aumentano la Sicurezza
 
-La strada non è una pista. Adottare uno stile di guida difensivo è fondamentale:
-- **Distanza di Sicurezza:** Mantieni sempre lo spazio necessario per una frenata d'emergenza.
-- **Sguardo:** Guarda sempre lontano, verso la fine della curva, non davanti alla ruota.
-- **Equipaggiamento:** Anche per brevi tragitti, indossa sempre guanti, giacca con protezioni e scarpe adatte.
+La strada richiede attenzione. Adottare uno stile di guida prudente è fondamentale:
+- **Distanza di Sicurezza:** Ricorda che lo spazio di frenata di un camper è molto superiore a quello di un'auto.
+- **Vento Laterale:** Presta attenzione quando esci dalle gallerie o sorpassi mezzi pesanti.
+- **Stivaggio Carico:** Assicurati che tutto sia ben fissato all'interno per evitare spostamenti pericolosi in curva.
 
 ### Checklist Essenziale Pre-Partenza:
-- [ ] Pressione pneumatici corretta
-- [ ] Livello olio motore
-- [ ] Funzionamento luci e frecce
-- [ ] Tensione catena
-- [ ] Casco pulito e visiera integra
+- [ ] Pressione pneumatici corretta (inclusa scorta)
+- [ ] Chiusura sicura di tutti i gavoni e finestre
+- [ ] Controllo impianto gas e acqua
+- [ ] Fissaggio oggetti interni
+- [ ] Controllo luci e segnaletica rimorchio
 
-La prevenzione è il segreto per godersi la strada per molti anni. Ti aspettiamo da **Road Runner Moto** per un check-up completo della tua moto!`,
+La prevenzione è il segreto per godersi il viaggio per molti anni. Ti aspettiamo da **Pica Caravan** per un check-up completo del tuo veicolo!`,
     date: new Date(Date.now() - 86400000 * 2),
-    autore: "Road Runner Team",
+    autore: "Pica Caravan Team",
     relatedMotos: []
   },
   {
-    title: "Guide per Motociclisti: Come Scegliere l'Abbigliamento Tecnico",
-    slug: "guide-per-motociclisti-abbigliamento",
-    category: "Guide per Motociclisti",
+    title: "Guide per Viaggiatori: Come Scegliere l'Attrezzatura da Campeggio",
+    slug: "guide-per-camperisti-attrezzatura",
+    category: "Guide per Viaggiatori",
     imageCover: "https://images.unsplash.com/photo-1568772585407-9361f9bf3a87?q=80&w=2070&auto=format&fit=crop",
-    excerpt: "Pelle o tessuto? Casco integrale o modulare? La nostra guida alla scelta dell'equipaggiamento perfetto.",
-    content: `# Guida all'Abbigliamento Tecnico: Protezione con Stile
+    excerpt: "Veranda o tendalino? Litio o AGM? La nostra guida alla scelta degli accessori perfetti per il tuo camper.",
+    content: `# Guida all'Attrezzatura: Comfort in Ogni Sosta
 
-Scegliere l'abbigliamento giusto non è solo una questione di estetica, ma di sicurezza attiva e passiva. La tecnologia dei materiali ha fatto passi da gigante, offrendo oggi capi protettivi, confortevoli e adatti a ogni stagione.
+Scegliere gli accessori giusti non è solo una questione di estetica, ma di comfort e autonomia energetica. La tecnologia degli accessori ha fatto passi da gigante, offrendo oggi soluzioni leggere, efficienti e facili da usare.
 
-## Il Casco: Il Tuo Primo Alleato
+## L'Energia: Il Cuore dell'Autonomia
 
-Il casco è l'elemento più importante. Scegli sempre un modello con omologazione **ECE 22.06**. L'integrale offre la massima protezione, mentre il modulare è ideale per il mototurismo grazie alla sua versatilità. Assicurati che la taglia sia corretta: non deve stringere troppo ma nemmeno muoversi.
+Le batterie al **Litio (LiFePO4)** sono ormai lo standard per chi cerca vera autonomia. Abbinate a pannelli solari ad alta efficienza e inverter a onda pura, ti permettono di usare macchine del caffè e phon come a casa.
 
-## Pelle vs Tessuto
+## Comfort Esterno
 
-- **Pelle:** Offre la massima resistenza all'abrasione. È la scelta d'elezione per la guida sportiva e in pista.
-- **Tessuto (Cordura, Gore-Tex):** Più versatile, spesso impermeabile e traspirante. Ideale per il turismo e l'uso quotidiano grazie alle membrane rimovibili.
+- **Verande e Tendalini:** Essenziali per creare una zona d'ombra. La scelta dipende dal tipo di vacanza (stanziale o itinerante).
+- **Arredo da Esterno:** Tavoli e sedie leggeri in alluminio sono la scelta migliore per non appesantire il veicolo.
 
-## Protezioni e Airbag
+## Sicurezza e Livellamento
 
-Non dimenticare mai il paraschiena, spesso sottovalutato ma fondamentale. Oggi i sistemi **Airbag elettronici** sono diventati accessibili e offrono un livello di protezione nettamente superiore a qualsiasi imbottitura tradizionale.
+Non sottovalutare l'importanza di buoni cunei di livellamento o, per il massimo comfort, dei piedini idraulici autolivellanti. Anche un buon antifurto perimetrale e volumetrico è fondamentale per dormire sonni tranquilli.
 
-Passa nel nostro store per provare le ultime collezioni e farti consigliare dai nostri esperti!`,
+Passa nel nostro store per scoprire le ultime novità e farti consigliare dai nostri esperti!`,
     date: new Date(Date.now() - 86400000 * 3),
-    autore: "Road Runner Team",
+    autore: "Pica Caravan Team",
     relatedMotos: []
   },
   {
-    title: "Mobilità Urbana: Perché Scegliere uno Scooter Elettrico nel 2026",
-    slug: "scooter-e-mobilita-urbana-elettrico",
-    category: "Scooter e Mobilità Urbana",
+    title: "Viaggi Itineranti: Perché Scegliere un Van nel 2026",
+    slug: "viaggi-van-life-2026",
+    category: "Van Life",
     imageCover: "https://images.unsplash.com/photo-1515777315835-281b94c9589f?q=80&w=2024&auto=format&fit=crop",
-    excerpt: "Vantaggi, autonomia e incentivi: tutto quello che devi sapere sulla rivoluzione elettrica in città.",
-    content: `# La Rivoluzione della Mobilità Urbana
+    excerpt: "Agilità, parcheggio e libertà: tutto quello che devi sapere sulla rivoluzione dei camper puri.",
+    content: `# La Rivoluzione dei Camper Puri (Van)
 
-Muoversi in città sta cambiando. Il traffico, le zone a emissioni limitate e il costo del carburante stanno spingendo sempre più utenti verso soluzioni di mobilità elettrica.
+Il modo di viaggiare sta cambiando. Sempre più viaggiatori scelgono la libertà dei van per la loro incredibile agilità e versatilità.
 
-## I Vantaggi dell'Elettrico
+## I Vantaggi del Van
 
-Gli scooter elettrici di ultima generazione offrono prestazioni paragonabili ai 125cc termici, con il vantaggio di una coppia immediata che li rende agilissimi nel traffico. I costi di manutenzione sono ridotti al minimo e il "pieno" si fa comodamente a casa.
+I van di ultima generazione offrono tutti i comfort di un camper tradizionale in dimensioni ridotte. Sono facili da guidare, si parcheggiano quasi ovunque e permettono di raggiungere luoghi inaccessibili ai mezzi più grandi.
 
-## Autonomia e Ricarica
+## Tecnologia e Spazi Ottimizzati
 
-Le batterie estraibili hanno risolto il problema della ricarica per chi non ha un garage. L'autonomia media urbana si attesta ormai intorno ai 70-100 km, più che sufficienti per diversi giorni di commuting cittadino.
+Grazie a letti basculanti, bagni a scomparsa e cucine compatte, i van moderni sfruttano ogni centimetro quadrato. L'isolamento termico migliorato li rende perfetti anche per il campeggio invernale.
 
-## Incentivi e Risparmio
+## Stile di Vita Libero
 
-Grazie agli ecoincentivi statali, l'acquisto di uno scooter elettrico è oggi estremamente vantaggioso. Se a questo aggiungi l'esenzione dal bollo per 5 anni e il risparmio su assicurazione e carburante, il ritorno dell'investimento è rapidissimo.
+Il van non è solo un mezzo di trasporto, è uno stile di vita. Ti permette di cambiare panorama ogni mattina e di vivere a stretto contatto con la natura senza rinunciare alle comodità di base.
 
-Scopri la nostra gamma elettrica da **Road Runner Moto** e rivoluziona il tuo modo di vivere la città!`,
+Scopri la nostra gamma di van da **Pica Caravan** e inizia la tua prossima avventura!`,
     date: new Date(Date.now() - 86400000 * 4),
-    autore: "Road Runner Team",
+    autore: "Pica Caravan Team",
     relatedMotos: []
   },
   {
-    title: "Evento: Raduno Road Runner 2026",
-    slug: "raduno-road-runner-2026",
+    title: "Evento: Raduno Pica Caravan 2026",
+    slug: "raduno-pica-caravan-2026",
     category: "Eventi",
     imageCover: "https://images.unsplash.com/photo-1515777315835-281b94c9589f?q=80&w=2024&auto=format&fit=crop",
-    excerpt: "Torna l'appuntamento più atteso dell'anno. Unisciti a noi per una giornata di curve e passione.",
-    content: "# Raduno Road Runner Moto 2026\n\nSiete pronti a scaldare i motori? Il raduno annuale si terrà il prossimo 15 Maggio.\n\n## Il Percorso\n\nPartiremo dalla nostra sede a Capodrise per un tour panoramico che ci porterà tra i monti del Matese.\n\n## Programma:\n- 09:00 Ritrovo e colazione in sede\n- 10:30 Partenza tour\n- 13:30 Pranzo convenzionato\n- 16:00 Premiazioni e saluti",
+    excerpt: "Torna l'appuntamento più atteso dell'anno. Unisciti a noi per una giornata di condivisione e passione per il viaggio.",
+    content: "# Raduno Pica Caravan 2026\n\nSiete pronti a partire? Il raduno annuale si terrà il prossimo 15 Maggio.\n\n## Il Percorso\n\nPartiremo dalla nostra sede per un tour panoramico che ci porterà tra i borghi più belli della nostra regione.\n\n## Programma:\n- 09:00 Ritrovo e colazione in sede\n- 10:30 Partenza carovana\n- 13:30 Pranzo in agriturismo convenzionato\n- 16:00 Premiazioni e saluti",
     date: new Date(Date.now() - 86400000 * 5),
-    autore: "Road Runner Team",
+    autore: "Pica Caravan Team",
     relatedMotos: []
   }
 ];
@@ -200,7 +200,7 @@ async function seedBlog() {
 
   try {
     await client.connect();
-    const db = client.db(process.env.MONGODB_DB_NAME || 'roadrunner_db');
+    const db = client.db(process.env.MONGODB_DB_NAME || 'picacaravan_db');
     const collection = db.collection('blog_posts');
 
     // Svuota collezione esistente (opzionale)

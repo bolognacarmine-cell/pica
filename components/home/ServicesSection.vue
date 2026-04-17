@@ -7,7 +7,7 @@ const latestMaintenance = ref(null)
 const fetchFeaturedArticles = async () => {
   try {
     const [newsRes, maintRes] = await Promise.all([
-      $fetch('/api/blog', { query: { category: 'Novità Moto', limit: 1 } }),
+      $fetch('/api/blog', { query: { category: 'Novità Camper', limit: 1 } }),
       $fetch('/api/blog', { query: { category: 'Manutenzione', limit: 1 } })
     ])
     

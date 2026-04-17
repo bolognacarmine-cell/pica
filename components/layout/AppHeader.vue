@@ -209,7 +209,7 @@ const toggleMobileMenu = () => {
           <div class="absolute top-full right-0 mt-3 w-56 bg-white dark:bg-[#0a0a0a] border border-white/10 rounded-2xl shadow-2xl opacity-0 invisible group-hover/user:opacity-100 group-hover/user:visible translate-y-2 group-hover/user:translate-y-0 transition-all duration-400 overflow-hidden">
             <div class="px-5 py-4 border-b border-white/5 bg-white/5">
               <p class="text-xs text-gray-500">Benvenuto,</p>
-              <p class="text-sm font-bold truncate">Michele Road Runner</p>
+              <p class="text-sm font-bold truncate">Michele Pica Caravan</p>
             </div>
             <div class="py-2">
               <NuxtLink to="/admin" class="flex items-center gap-3 px-5 py-3 text-sm hover:bg-primary/10 hover:text-primary transition-colors">

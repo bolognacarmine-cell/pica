@@ -72,7 +72,7 @@ const getDateStatus = (dateStr) => {
     <header class="dashboard-header">
       <div class="container header-shell">
         <div class="brand-minimal">
-          <img src="/logo-road-runner.jpg" alt="Logo" />
+          <img src="/logo-pica-caravan.jpg" alt="Logo" />
           <span>Area Clienti</span>
         </div>
         <div v-if="user" class="user-info">
@@ -92,7 +92,7 @@ const getDateStatus = (dateStr) => {
         <!-- Sidebar / Navigation -->
         <aside class="dashboard-nav">
           <div class="vehicle-mini-card">
-            <img :src="data.vehicle.photoUrl || '/logo-road-runner.jpg'" alt="Moto" />
+            <img :src="data.vehicle.photoUrl || '/logo-pica-caravan.jpg'" alt="Veicolo" />
             <div class="mini-info">
               <h3>{{ data.vehicle.marca }} {{ data.vehicle.modello }}</h3>
               <span class="plate-badge">{{ data.vehicle.targa }}</span>
@@ -100,7 +100,7 @@ const getDateStatus = (dateStr) => {
           </div>
           <nav class="nav-links">
             <button :class="{ active: activeTab === 'profile' }" @click="activeTab = 'profile'">
-              <span class="icon">🏍️</span> Profilo Moto
+              <span class="icon">🚐</span> Profilo Veicolo
             </button>
             <button :class="{ active: activeTab === 'history' }" @click="activeTab = 'history'">
               <span class="icon">🔧</span> Manutenzioni
@@ -176,7 +176,7 @@ const getDateStatus = (dateStr) => {
               <h3>Consigli di Manutenzione per te</h3>
               <div class="portal-blog-grid">
                 <NuxtLink v-for="post in data.blogPosts" :key="post._id" :to="`/blog/${post.slug}`" class="portal-blog-card">
-                  <img :src="post.imageCover || '/logo-road-runner.jpg'" alt="Blog" />
+                  <img :src="post.imageCover || '/logo-pica-caravan.jpg'" alt="Blog" />
                   <div class="p-blog-info">
                     <h4>{{ post.title }}</h4>
                     <span class="p-read-more">Leggi di più →</span>

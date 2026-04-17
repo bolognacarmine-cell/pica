@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { useRouter } from 'vue-router'
 
 const router = useRouter()
-const username = ref('roadrunner')
+const username = ref('pica')
 const targa = ref('')
 const password = ref('')
 const loading = ref(false)
@@ -38,8 +38,8 @@ const handleLogin = async () => {
 }
 
 useHead({
-  title: 'Accedi al tuo Veicolo | Road Runner Moto',
-  meta: [{ name: 'description', content: 'Portale privato clienti Road Runner Moto.' }]
+  title: 'Accedi al tuo Veicolo | Pica Caravan',
+  meta: [{ name: 'description', content: 'Portale privato clienti Pica Caravan.' }]
 })
 </script>
 
@@ -48,7 +48,7 @@ useHead({
     <div class="login-container">
       <div class="login-card">
         <div class="login-header">
-          <img src="/logo-road-runner.jpg" alt="Logo" class="portal-logo" />
+          <img src="/logo-pica-caravan.jpg" alt="Logo" class="portal-logo" />
           <h1>Portale Cliente</h1>
           <p>Inserisci i dati del tuo veicolo per accedere all'area riservata.</p>
         </div>

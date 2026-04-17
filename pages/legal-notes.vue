@@ -34,7 +34,7 @@
             <div class="section-number">01</div>
             <h2>Proprietà Intellettuale e Marchi</h2>
             <div class="section-body">
-              <p>Tutti i contenuti presenti sul sito (testi, grafiche, loghi, icone, immagini, clip audio, video, software) sono di proprietà di <strong>ROAD RUNNER DI TARTAGLIONE PASQUALE</strong> o dei rispettivi proprietari dei marchi citati (es. marchi motociclistici come Yamaha, Honda, Ducati, ecc.).</p>
+              <p>Tutti i contenuti presenti sul sito (testi, grafiche, loghi, icone, immagini, clip audio, video, software) sono di proprietà di <strong>PICA CARAVAN</strong> o dei rispettivi proprietari dei marchi citati (es. marchi motociclistici come Yamaha, Honda, Ducati, ecc.).</p>
               <p>È vietata la riproduzione, distribuzione, modifica o utilizzo di tali materiali senza espressa autorizzazione scritta dal Titolare o dai legittimi proprietari.</p>
             </div>
           </section>
@@ -44,7 +44,7 @@
             <h2>Limitazione di Responsabilità</h2>
             <div class="section-body">
               <p>Le informazioni riportate su questo sito, inclusi prezzi, schede tecniche e disponibilità dei veicoli, hanno scopo puramente informativo e non costituiscono proposta contrattuale.</p>
-              <p>Road Runner si riserva il diritto di modificare i contenuti in qualsiasi momento senza preavviso e non risponde di eventuali errori tipografici o imprecisioni.</p>
+              <p>Pica Caravan si riserva il diritto di modificare i contenuti in qualsiasi momento senza preavviso e non risponde di eventuali errori tipografici o imprecisioni.</p>
             </div>
           </section>
 
@@ -52,7 +52,7 @@
             <div class="section-number">03</div>
             <h2>Link Esterni</h2>
             <div class="section-body">
-              <p>Il sito può contenere collegamenti a siti web di terze parti. Road Runner non ha alcun controllo su tali siti e non assume alcuna responsabilità per i contenuti, la privacy o le pratiche di tali piattaforme.</p>
+              <p>Il sito può contenere collegamenti a siti web di terze parti. Pica Caravan non ha alcun controllo su tali siti e non assume alcuna responsabilità per i contenuti, la privacy o le pratiche di tali piattaforme.</p>
             </div>
           </section>
         </main>
@@ -63,9 +63,9 @@
 
 <script setup>
 useHead({
-  title: 'Note Legali',
+  title: 'Note Legali | Pica Caravan',
   meta: [
-    { name: 'description', content: 'Informazioni sulla proprietà intellettuale, marchi e termini d\'uso del sito Road Runner Moto.' }
+    { name: 'description', content: 'Informazioni sulla proprietà intellettuale, marchi e termini d\'uso del sito Pica Caravan.' }
   ]
 })
 </script>

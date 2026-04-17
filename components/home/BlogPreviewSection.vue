@@ -27,7 +27,7 @@ onMounted(() => {
   <section class="blog-preview-section">
     <div class="container">
       <div class="section-heading">
-        <p class="section-kicker">Mondo Road Runner</p>
+        <p class="section-kicker">Mondo Pica Caravan</p>
         <div class="heading-flex">
           <h2>Ultime dal Blog</h2>
           <NuxtLink to="/blog" class="btn-link">Vedi tutti gli articoli →</NuxtLink>

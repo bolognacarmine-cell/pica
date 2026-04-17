@@ -1,8 +1,8 @@
 <script setup>
 useHead({
-  title: 'Cookie Policy | Road Runner Moto',
+  title: 'Cookie Policy | Pica Caravan',
   meta: [
-    { name: 'description', content: 'Informativa sui cookie di Road Runner Moto. Gestione del consenso e tipologie di cookie utilizzati.' }
+    { name: 'description', content: 'Informativa sui cookie di Pica Caravan. Gestione del consenso e tipologie di cookie utilizzati.' }
   ]
 })
 

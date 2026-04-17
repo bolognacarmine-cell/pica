@@ -1,8 +1,8 @@
 <script setup>
 useHead({
-  title: 'Privacy Policy | Road Runner Moto',
+  title: 'Privacy Policy | Pica Caravan',
   meta: [
-    { name: 'description', content: 'Informativa sulla privacy di Road Runner Moto. Scopri come trattiamo i tuoi dati personali in conformità al GDPR.' }
+    { name: 'description', content: 'Informativa sulla privacy di Pica Caravan. Scopri come trattiamo i tuoi dati personali in conformità al GDPR.' }
   ]
 })
 

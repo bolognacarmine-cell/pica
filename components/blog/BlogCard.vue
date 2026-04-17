@@ -22,7 +22,7 @@ const readingTime = (content) => {
 <template>
   <NuxtLink :to="`/blog/${post.slug}`" class="blog-card">
     <div class="card-image">
-      <img :src="post.imageCover || '/logo-road-runner.jpg'" :alt="post.title" loading="lazy" />
+      <img :src="post.imageCover || '/logo-pica-caravan.jpg'" :alt="post.title" loading="lazy" />
       <div class="category-badge">{{ post.category }}</div>
     </div>
     <div class="card-content">

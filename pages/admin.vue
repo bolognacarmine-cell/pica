@@ -448,7 +448,7 @@
           
           <div v-else class="blog-admin-list">
             <div v-for="p in blogPosts" :key="p._id" class="blog-item-admin">
-              <img :src="p.imageCover || '/logo-road-runner.jpg'" class="blog-thumb" />
+              <img :src="p.imageCover || '/logo-pica-caravan.jpg'" class="blog-thumb" />
               <div class="blog-info">
                 <h3>{{ p.title }}</h3>
                 <span class="blog-meta">{{ p.category }} • {{ new Date(p.date).toLocaleDateString() }}</span>
