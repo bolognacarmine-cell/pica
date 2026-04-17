@@ -80,7 +80,6 @@ export default defineNuxtConfig({
   // ✅ Immagini ottimizzate
   image: {
     domains: ['api.picacaravan.it'],
-    provider: 'static',
     format: ['webp', 'avif']
   }
 })

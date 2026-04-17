@@ -101,26 +101,29 @@ onMounted(() => {
   updateTheme()
 
   // Simulate loading for Skeleton
-  setTimeout(() => {
+  setTimeout(async () => {
     isLoaded.value = true
+    await nextTick()
     handleScroll()
     initAnimations()
+
+    // Custom Cursor Follower (init after load)
+    if (window.innerWidth > 1024) {
+      const cursor = document.querySelector('.custom-cursor')
+      if (cursor) {
+        window.addEventListener('mousemove', (e) => {
+          gsap.to(cursor, { 
+            x: e.clientX, y: e.clientY, 
+            duration: 0.15, ease: 'power2.out',
+            scale: e.target.closest('a, button') ? 1.5 : 1,
+            opacity: e.target.closest('a, button') ? 0.8 : 0.5
+          })
+        })
+      }
+    }
   }, 800)
 
   window.addEventListener('scroll', handleScroll)
-  
-  // Custom Cursor Follower
-  if (window.innerWidth > 1024) {
-    const cursor = document.querySelector('.custom-cursor')
-    window.addEventListener('mousemove', (e) => {
-      gsap.to(cursor, { 
-        x: e.clientX, y: e.clientY, 
-        duration: 0.15, ease: 'power2.out',
-        scale: e.target.closest('a, button') ? 1.5 : 1,
-        opacity: e.target.closest('a, button') ? 0.8 : 0.5
-      })
-    })
-  }
 })
 
 onUnmounted(() => {
