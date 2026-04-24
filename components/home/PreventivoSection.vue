@@ -1,0 +1,190 @@
+<script setup>
+import { ref, onMounted } from 'vue'
+import { gsap } from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
+
+if (process.client) {
+  gsap.registerPlugin(ScrollTrigger)
+}
+
+const showGdpr = ref(false)
+const showInfo = ref(false)
+
+const toggleGdpr = () => {
+  showGdpr.value = !showGdpr.value
+}
+
+const toggleInfo = () => {
+  showInfo.value = !showInfo.value
+}
+
+onMounted(() => {
+  if (process.client) {
+    const ctx = gsap.context(() => {
+      // Header Animation
+      gsap.from('.preventivo-header > *', {
+        scrollTrigger: {
+          trigger: '.preventivo-header',
+          start: 'top 85%',
+        },
+        y: 30,
+        opacity: 0,
+        stagger: 0.15,
+        duration: 1,
+        ease: 'power4.out'
+      })
+
+      // Cards Animation
+      gsap.from('.action-card', {
+        scrollTrigger: {
+          trigger: '.action-cards-grid',
+          start: 'top 80%',
+        },
+        y: 50,
+        opacity: 0,
+        stagger: 0.2,
+        duration: 1.2,
+        ease: 'expo.out'
+      })
+    })
+  }
+})
+</script>
+
+<template>
+  <section id="preventivo" class="py-24 md:py-32 bg-gray-50 dark:bg-[#030303] overflow-hidden relative">
+    <!-- Premium Background Decor -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+      <div class="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] bg-primary/5 rounded-full blur-[140px]"></div>
+      <div class="absolute bottom-[-10%] left-[-10%] w-[600px] h-[600px] bg-primary/10 rounded-full blur-[120px]"></div>
+    </div>
+    
+    <div class="container mx-auto px-4 relative z-10">
+      <div class="max-w-6xl mx-auto">
+        
+        <div class="preventivo-header text-center mb-16 md:mb-24">
+          <div class="inline-flex items-center gap-2 px-4 py-2 mb-8 rounded-full bg-white dark:bg-white/5 backdrop-blur-md border border-primary/20 shadow-sm">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-primary"></span>
+            </span>
+            <span class="text-primary text-[10px] font-black uppercase tracking-[0.3em]">Consulenza Personalizzata</span>
+          </div>
+          
+          <h2 class="text-4xl md:text-6xl lg:text-7xl font-black mb-8 dark:text-white uppercase tracking-tighter leading-none">
+            Pronto a <br>
+            <span class="text-primary italic">Partire?</span>
+          </h2>
+          
+          <p class="text-base md:text-lg text-gray-500 dark:text-gray-400 max-w-xl mx-auto leading-relaxed font-medium">
+            Scegli il modo più rapido per dare forma al tuo prossimo viaggio. I nostri esperti sono a tua disposizione per consulenze personalizzate.
+          </p>
+        </div>
+
+        <!-- Action Cards -->
+        <div class="action-cards-grid grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12 mb-24">
+          
+          <!-- Card 1: Modulo -->
+          <div class="action-card group p-10 md:p-12 bg-white dark:bg-white/5 rounded-[40px] border border-transparent hover:border-primary/20 transition-all duration-700 hover:shadow-2xl relative overflow-hidden">
+            <div class="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -mr-16 -mt-16 group-hover:scale-150 transition-transform duration-1000"></div>
+            
+            <div class="flex items-center justify-center w-16 h-16 mb-8 rounded-2xl bg-primary/10 text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500">
+              <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
+            </div>
+            
+            <h3 class="text-2xl md:text-3xl font-black mb-4 dark:text-white uppercase tracking-tighter">Richiesta <span class="text-primary">Online</span></h3>
+            <p class="text-gray-500 dark:text-gray-400 mb-10 leading-relaxed text-sm">Ricevi una quotazione o informazioni tecniche entro 24 ore compilando il modulo.</p>
+            
+            <NuxtLink 
+              to="/#contatti" 
+              class="inline-flex items-center gap-3 px-8 py-4 bg-primary text-white font-black rounded-xl hover:bg-black transition-all duration-500 no-underline uppercase tracking-widest text-[10px] shadow-lg shadow-primary/20"
+            >
+              VAI AL MODULO
+              <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+            </NuxtLink>
+          </div>
+
+          <!-- Card 2: Chiamata Diretta -->
+          <div class="action-card group p-10 md:p-12 bg-primary rounded-[40px] shadow-xl shadow-primary/20 transition-all duration-700 hover:-translate-y-1 relative overflow-hidden">
+            <div class="absolute bottom-0 left-0 w-32 h-32 bg-white/10 rounded-full -ml-16 -mb-16 group-hover:scale-150 transition-transform duration-1000"></div>
+            
+            <div class="flex items-center justify-center w-16 h-16 mb-8 rounded-2xl bg-white/20 backdrop-blur-xl text-white group-hover:bg-white group-hover:text-primary transition-all duration-500">
+              <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+            </div>
+            
+            <h3 class="text-2xl md:text-3xl font-black mb-4 text-white uppercase tracking-tighter">Parla con <span class="opacity-80">Noi</span></h3>
+            <p class="text-white/80 mb-10 leading-relaxed text-sm">Chiamaci direttamente per parlare con un consulente esperto e ricevere assistenza immediata.</p>
+            
+            <a 
+              href="tel:3332327592" 
+              class="inline-flex items-center gap-3 px-8 py-4 bg-white text-primary font-black rounded-xl hover:scale-105 transition-all duration-500 no-underline uppercase tracking-widest text-lg md:text-xl shadow-lg shadow-black/10"
+            >
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
+              333 2327592
+            </a>
+          </div>
+
+        </div>
+
+        <!-- FAQ/Info Footer -->
+        <div class="max-w-4xl mx-auto border-t border-gray-200 dark:border-white/10 pt-16">
+          <div class="grid md:grid-cols-2 gap-8 md:gap-16">
+            <!-- Why Us -->
+            <div class="relative">
+              <button @click="toggleInfo" class="flex items-center justify-between w-full py-6 text-left group">
+                <span class="text-sm font-black uppercase tracking-widest dark:text-white group-hover:text-primary transition-colors">Perché Pica Caravan?</span>
+                <svg class="w-5 h-5 text-gray-400 group-hover:text-primary transition-all duration-300" :class="{'rotate-180': showInfo}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <Transition enter-active-class="transition-all duration-500" enter-from-class="max-h-0 opacity-0" enter-to-class="max-h-64 opacity-100" leave-active-class="transition-all duration-300" leave-from-class="max-h-64 opacity-100" leave-to-class="max-h-0 opacity-0">
+                <div v-if="showInfo" class="overflow-hidden">
+                  <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed pb-6">
+                    Siamo un punto di riferimento per il caravanning in Campania. Offriamo vendita garantita, assistenza tecnica certificata e rimessaggio h24. La nostra missione è rendere ogni tuo viaggio indimenticabile.
+                  </p>
+                </div>
+              </Transition>
+            </div>
+
+            <!-- GDPR -->
+            <div class="relative">
+              <button @click="toggleGdpr" class="flex items-center justify-between w-full py-6 text-left group">
+                <span class="text-sm font-black uppercase tracking-widest dark:text-white group-hover:text-primary transition-colors">Trattamento Dati</span>
+                <svg class="w-5 h-5 text-gray-400 group-hover:text-primary transition-all duration-300" :class="{'rotate-180': showGdpr}" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+              </button>
+              <Transition enter-active-class="transition-all duration-500" enter-from-class="max-h-0 opacity-0" enter-to-class="max-h-64 opacity-100" leave-active-class="transition-all duration-300" leave-from-class="max-h-64 opacity-100" leave-to-class="max-h-0 opacity-0">
+                <div v-if="showGdpr" class="overflow-hidden">
+                  <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed pb-6">
+                    I tuoi dati sono protetti secondo il GDPR. Verranno utilizzati esclusivamente per gestire la tua richiesta e non saranno ceduti a terzi. Puoi richiedere la cancellazione in qualsiasi momento scrivendo a info@picacaravan.it.
+                  </p>
+                </div>
+              </Transition>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</template>
+
+<style scoped>
+.action-card {
+  will-change: transform, box-shadow;
+}
+
+/* Fix icone giganti */
+.action-card :deep(svg) {
+  width: 32px !important;
+  height: 32px !important;
+  display: block;
+}
+
+a :deep(svg) {
+  width: 24px !important;
+  height: 24px !important;
+}
+
+.NuxtLink :deep(svg) {
+  width: 18px !important;
+  height: 18px !important;
+}
+</style>
