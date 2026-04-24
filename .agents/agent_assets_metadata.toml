@@ -1,0 +1,32 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "n2mfM_FTSNKr69Gq8deOM"
+uri = "file://artifacts/pica-caravan/public/images/hero.png"
+type = "image"
+title = "Cinematic Italian road camper sunset"
+
+[[generated]]
+id = "fQrayMxhQp8LwgbaFJKH0"
+uri = "file://artifacts/pica-caravan/public/images/van.png"
+type = "image"
+title = "Modern camper van exterior"
+
+[[generated]]
+id = "q6rSuraXirmcYB5YAbCYb"
+uri = "file://artifacts/pica-caravan/public/images/roulotte.png"
+type = "image"
+title = "Modern travel trailer exterior"
+
+[[generated]]
+id = "Is_hIXLb986eC1CMVh3_d"
+uri = "file://artifacts/pica-caravan/public/images/motorhome.png"
+type = "image"
+title = "Luxury motorhome exterior"
+
+[[generated]]
+id = "UixtF4HXohZB7EhRhbV5H"
+uri = "file://artifacts/pica-caravan/public/images/storage.png"
+type = "image"
+title = "Camper storage facility at dusk"
