@@ -14,7 +14,7 @@
             </div>
           </NuxtLink>
           <p class="text-[var(--text-dim)] text-sm leading-relaxed mb-8">
-            Pica Caravan di Antimo Pica. La tua concessionaria di riferimento a San Nicola la Strada per la vendita di camper, roulotte e rimessaggio sicuro. Oltre 20 anni di esperienza al servizio dei viaggiatori.
+            Pica Caravan di Antimo Pica. La tua concessionaria di fiducia a San Nicola la Strada per camper, roulotte e rimessaggio sicuro. Dal 2004, esperienza e passione al servizio dei viaggiatori.
           </p>
           <div class="flex gap-4">
             <a href="#" class="w-10 h-10 rounded-full bg-[var(--line)] flex items-center justify-center text-[var(--text-dim)] hover:bg-[var(--primary)] hover:text-white transition-all duration-300">
@@ -28,7 +28,7 @@
 
         <!-- Links Col -->
         <div>
-          <h4 class="text-white text-xs font-black uppercase tracking-[0.2em] mb-8">Navigazione</h4>
+          <h4 class="text-white text-xs font-black uppercase tracking-[0.2em] mb-8">Esplora</h4>
           <ul class="flex flex-col gap-4 p-0 list-none">
             <li v-for="link in ['Home', 'Veicoli', 'Blog', 'Azienda', 'Contatti']" :key="link">
               <NuxtLink :to="link === 'Home' ? '/' : `/${link.toLowerCase()}`" class="text-[var(--text-dim)] hover:text-[var(--primary)] text-sm font-bold transition-colors no-underline uppercase tracking-wider">
@@ -40,19 +40,19 @@
 
         <!-- Contact Col -->
         <div>
-          <h4 class="text-white text-xs font-black uppercase tracking-[0.2em] mb-8">Contatti</h4>
+          <h4 class="text-white text-xs font-black uppercase tracking-[0.2em] mb-8">Informazioni</h4>
           <ul class="flex flex-col gap-6 p-0 list-none">
             <li class="flex items-start gap-4">
               <div class="w-8 h-8 rounded-[var(--radius-sm)] bg-[var(--line)] flex items-center justify-center shrink-0">
                 <svg class="w-4 h-4 text-[var(--primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
               </div>
-              <span class="text-[var(--text-dim)] text-xs leading-relaxed">Via Retella / Pizzo Pilato<br>San Nicola la Strada (CE)</span>
+              <span class="text-[var(--text-dim)] text-xs leading-relaxed">Via Retella / Pizzo Pilato 2ª Traversa n. 2<br>81020 San Nicola la Strada (CE)</span>
             </li>
             <li class="flex items-start gap-4">
               <div class="w-8 h-8 rounded-[var(--radius-sm)] bg-[var(--line)] flex items-center justify-center shrink-0">
                 <svg class="w-4 h-4 text-[var(--primary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
               </div>
-              <span class="text-[var(--text-dim)] text-xs leading-relaxed">0823 224038<br>333 2327592</span>
+              <span class="text-[var(--text-dim)] text-xs leading-relaxed">Tel: 0823 224038<br>Cell: 333 2327592</span>
             </li>
           </ul>
         </div>

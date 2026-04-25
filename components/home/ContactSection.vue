@@ -57,7 +57,7 @@ const handleSubmit = async () => {
               Vieni a <br><span class="text-primary italic">Trovarci</span>
             </h2>
             <p class="text-gray-500 dark:text-gray-400 text-lg leading-relaxed font-medium">
-              Siamo a San Nicola la Strada, pronti ad accoglierti e guidarti nella scelta del tuo prossimo camper o roulotte.
+              La nostra sede a San Nicola la Strata è pronta ad accoglierti. Ti guidiamo nella scelta del camper perfetto con consulenza dedicata.
             </p>
           </div>
           
@@ -101,10 +101,10 @@ const handleSubmit = async () => {
         <div class="lg:col-span-7">
           <div class="contact-form-card bg-white dark:bg-[#0b0b0b] rounded-2xl p-8 md:p-12 border border-primary/20 relative">
             <div v-if="!submitted" class="relative z-10">
-              <h3 class="text-3xl font-black mb-10 dark:text-white uppercase tracking-tighter">Inviaci un <span class="text-primary">Messaggio</span></h3>
+              <h3 class="text-3xl font-black mb-10 dark:text-white uppercase tracking-tighter">Contatta un <span class="text-primary">Consulente</span></h3>
               <form @submit.prevent="handleSubmit" class="space-y-6">
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <input v-model="formData.name" type="text" placeholder="Nome Completo" class="w-full bg-gray-50 dark:bg-[#111] border border-primary/20 focus:border-primary rounded-xl py-4 px-6 text-sm text-gray-900 dark:text-white outline-none" required />
+                  <input v-model="formData.name" type="text" placeholder="Nome e Cognome" class="w-full bg-gray-50 dark:bg-[#111] border border-primary/20 focus:border-primary rounded-xl py-4 px-6 text-sm text-gray-900 dark:text-white outline-none" required />
                   <input v-model="formData.phone" type="tel" placeholder="Telefono" class="w-full bg-gray-50 dark:bg-[#111] border border-primary/20 focus:border-primary rounded-2xl py-4 px-6 text-sm text-gray-900 dark:text-white outline-none" required />
                 </div>
                 <input v-model="formData.email" type="email" placeholder="Email" class="w-full bg-gray-50 dark:bg-[#111] border border-primary/20 focus:border-primary rounded-2xl py-4 px-6 text-sm text-gray-900 dark:text-white outline-none" required />
@@ -117,7 +117,7 @@ const handleSubmit = async () => {
                   </select>
                   <svg class="absolute right-6 top-1/2 -mt-2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
                 </div>
-                <textarea v-model="formData.message" placeholder="Come possiamo aiutarti?" rows="4" class="w-full bg-gray-50 dark:bg-[#111] border border-primary/20 focus:border-primary rounded-2xl py-4 px-6 text-sm text-gray-900 dark:text-white outline-none resize-none"></textarea>
+                <textarea v-model="formData.message" placeholder="Descrivi le tue necessità" rows="4" class="w-full bg-gray-50 dark:bg-[#111] border border-primary/20 focus:border-primary rounded-2xl py-4 px-6 text-sm text-gray-900 dark:text-white outline-none resize-none"></textarea>
                 
                 <div class="flex items-center gap-3">
                   <input type="checkbox" id="privacy" v-model="formData.privacy" class="w-4 h-4 accent-primary" required />
@@ -125,7 +125,7 @@ const handleSubmit = async () => {
                 </div>
                 
                 <button type="submit" class="w-full py-5 bg-primary text-white text-xs font-black uppercase tracking-widest rounded-2xl" :disabled="isSubmitting">
-                  {{ isSubmitting ? 'Invio in corso...' : 'Invia Messaggio' }}
+                  {{ isSubmitting ? 'Invio in corso...' : 'Parla con un Esperto' }}
                 </button>
               </form>
             </div>
@@ -135,9 +135,9 @@ const handleSubmit = async () => {
               <div class="w-20 h-20 bg-gray-100 dark:bg-[#111] text-primary rounded-full flex items-center justify-center mx-auto mb-8">
                 <svg width="32" height="32" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>
               </div>
-              <h3 class="text-3xl font-black mb-4 dark:text-white uppercase tracking-tighter">Messaggio <span class="text-primary">Inviato</span></h3>
-              <p class="text-gray-400 mb-10">Grazie! Ti risponderemo entro 24 ore lavorative.</p>
-              <button @click="submitted = false" class="text-xs font-black text-primary uppercase tracking-widest">Invia un altro messaggio</button>
+              <h3 class="text-3xl font-black mb-4 dark:text-white uppercase tracking-tighter">Richiesta <span class="text-primary">Inviata</span></h3>
+              <p class="text-gray-400 mb-10">Grazie per la tua fiducia. Un nostro consulente ti contatterà entro 24 ore lavorative.</p>
+              <button @click="submitted = false" class="text-xs font-black text-primary uppercase tracking-widest">Nuova Richiesta</button>
             </div>
           </div>
         </div>

@@ -33,7 +33,7 @@ const toggleInfo = () => {
           </h2>
           
           <p class="text-base md:text-lg text-gray-500 dark:text-gray-400 max-w-xl mx-auto leading-relaxed font-medium">
-            Scegli il modo più rapido per dare forma al tuo prossimo viaggio. I nostri esperti sono a tua disposizione per consulenze personalizzate.
+            Inizia il tuo viaggio con il supporto dei nostri specialisti. Ti guidiamo nella scelta migliore con una consulenza su misura.
           </p>
         </div>
 
@@ -47,14 +47,14 @@ const toggleInfo = () => {
               <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
             </div>
             
-            <h3 class="text-2xl md:text-3xl font-black mb-4 dark:text-white uppercase tracking-tighter">Richiesta <span class="text-primary">Online</span></h3>
-            <p class="text-gray-500 dark:text-gray-400 mb-10 leading-relaxed text-sm">Ricevi una quotazione o informazioni tecniche entro 24 ore compilando il modulo.</p>
+            <h3 class="text-2xl md:text-3xl font-black mb-4 dark:text-white uppercase tracking-tighter">Richiedi <span class="text-primary">Preventivo</span></h3>
+            <p class="text-gray-500 dark:text-gray-400 mb-10 leading-relaxed text-sm">Compila il modulo e ricevi una quotazione dettagliata entro 24 ore lavorative.</p>
             
             <NuxtLink 
               to="/#contatti" 
               class="inline-flex items-center gap-3 px-8 py-4 bg-primary text-white font-black rounded-xl no-underline uppercase tracking-widest text-[10px] shadow-lg shadow-primary/20"
             >
-              VAI AL MODULO
+              RICHIEDI CONSULENZA
               <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
             </NuxtLink>
           </div>
@@ -66,8 +66,8 @@ const toggleInfo = () => {
               <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             </div>
             
-            <h3 class="text-2xl md:text-3xl font-black mb-4 text-white uppercase tracking-tighter">Parla con Noi</h3>
-            <p class="text-white/80 mb-10 leading-relaxed text-sm">Chiamaci direttamente per parlare con un consulente esperto e ricevere assistenza immediata.</p>
+            <h3 class="text-2xl md:text-3xl font-black mb-4 text-white uppercase tracking-tighter">Chiamata <span class="text-white/80">Immediata</span></h3>
+            <p class="text-white/80 mb-10 leading-relaxed text-sm">Parla direttamente con un nostro consulente per risposte immediate e assistenza personalizzata.</p>
             
             <a 
               href="tel:3332327592" 
@@ -91,7 +91,7 @@ const toggleInfo = () => {
               </button>
               <div v-if="showInfo" class="overflow-hidden">
                 <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed pb-6">
-                  Siamo un punto di riferimento per il caravanning in Campania. Offriamo vendita garantita, assistenza tecnica certificata e rimessaggio h24. La nostra missione è rendere ogni tuo viaggio indimenticabile.
+                  Dal 2004 siamo il punto di riferimento per il caravanning in Campania. Vendita garantita, assistenza certificata e rimessaggio sicuro: la nostra esperienza al servizio della tua libertà di viaggiare.
                 </p>
               </div>
             </div>
