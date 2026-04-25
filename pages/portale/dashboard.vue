@@ -232,26 +232,6 @@ const getDateStatus = (dateStr) => {
               </div>
             </div>
           </div>
-        </section>
-      </div>
-    </main>
-  </div>
-</template>
-                <div class="time-point"></div>
-                <div class="timeline-card">
-                  <div class="tm-header">
-                    <span class="tm-date">{{ formatDate(item.data) }}</span>
-                    <span class="tm-cost" v-if="item.costo">{{ formatPrice(item.costo) }}</span>
-                  </div>
-                  <h4>{{ item.descrizione }}</h4>
-                  <div class="tm-details">
-                    <p class="km-label">🏁 {{ item.km }} km</p>
-                    <p v-if="item.partiSostituite" class="parts-list">📦 Parti: {{ item.partiSostituite }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
 
           <!-- TAB: DOCUMENTI REMOVED -->
 
