@@ -1,6 +1,6 @@
 
 <script setup>
-import { onMounted, onUnmounted, nextTick } from 'vue'
+import { onMounted, nextTick } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
@@ -10,75 +10,66 @@ if (process.client) {
 
 const services = [
   {
-    title: 'Soluzioni Su Misura',
-    desc: 'Personalizziamo il tuo camper con accessori premium e configurazioni uniche, create apposta per te.',
-    icon: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>',
-    type: 'custom',
-    bgImage: 'https://images.unsplash.com/photo-1558020113-5b9a28bb9733?auto=format&fit=crop&q=80&w=600'
+    title: 'Vendita Veicoli',
+    desc: 'Ampia scelta di camper e roulotte nuovi e usati dei migliori brand, garantiti e controllati.',
+    icon: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>',
+    type: 'sales'
   },
   {
-    title: 'Massima Affidabilità',
-    desc: 'Garanzia di qualità su tutti i veicoli e assistenza tecnica specializzata per viaggiare senza pensieri.',
-    icon: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>',
-    type: 'warranty',
-    bgImage: 'https://images.unsplash.com/photo-1618668123933-0b4a2f5b6b2c?auto=format&fit=crop&q=80&w=600'
-  },
-  {
-    title: 'Assistenza Completa',
-    desc: 'Officina specializzata, ricambi originali e supporto tecnico per ogni tua esigenza.',
+    title: 'Officina Specializzata',
+    desc: 'Affida il tuo mezzo a mani esperte: eseguiamo manutenzioni, riparazioni scocche, controlli infiltrazioni e installazione accessori. Un servizio professionale per viaggiare sempre in sicurezza.',
     icon: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>',
-    type: 'support',
-    bgImage: 'https://images.unsplash.com/photo-1558618667-f725c4cd7ab3?auto=format&fit=crop&q=80&w=600'
+    type: 'service'
+  },
+  {
+    title: 'Accessori e Ricambi',
+    desc: 'Utilizziamo solo componenti di qualità e accessori delle migliori marche per personalizzare il tuo camper.',
+    icon: '<svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>',
+    type: 'parts'
   }
 ]
 
 let ctx
 onMounted(async () => {
-  if (process.client) {
-    await nextTick()
-    ctx = gsap.context(() => {
-      const serviceCards = document.querySelectorAll('.service-card')
-      if (serviceCards.length > 0) {
-        gsap.fromTo(serviceCards, 
-          { opacity: 0, y: 40 },
-          {
-            scrollTrigger: {
-              trigger: '.services-grid',
-              start: 'top 80%',
-            },
-            y: 0,
-            opacity: 1,
-            duration: 1,
-            stagger: 0.2,
-            ease: 'power3.out',
-            clearProps: 'all'
-          }
-        )
-      }
+  await nextTick()
+  ctx = gsap.context(() => {
+    const serviceCards = document.querySelectorAll('.service-card')
+    if (serviceCards.length > 0) {
+      gsap.fromTo(serviceCards, 
+        { opacity: 0, y: 40 },
+        {
+          scrollTrigger: {
+            trigger: '.services-grid',
+            start: 'top 80%',
+          },
+          y: 0,
+          opacity: 1,
+          duration: 1,
+          stagger: 0.2,
+          ease: 'power3.out',
+          clearProps: 'all'
+        }
+      )
+    }
 
-      const supportCtaBox = document.querySelector('.support-cta-box')
-      if (supportCtaBox) {
-        gsap.fromTo(supportCtaBox,
-          { opacity: 0, scale: 0.95 },
-          {
-            scrollTrigger: {
-              trigger: '.support-cta-box',
-              start: 'top 85%',
-            },
-            opacity: 1,
-            scale: 1,
-            duration: 1.2,
-            ease: 'expo.out',
-            clearProps: 'all'
-          }
-        )
-      }
-    })
-  }
-})
-
-onUnmounted(() => {
-  if (process.client && ctx) ctx.revert()
+    const supportCtaBox = document.querySelector('.support-cta-box')
+    if (supportCtaBox) {
+      gsap.fromTo(supportCtaBox,
+        { opacity: 0, scale: 0.95 },
+        {
+          scrollTrigger: {
+            trigger: '.support-cta-box',
+            start: 'top 85%',
+          },
+          opacity: 1,
+          scale: 1,
+          duration: 1.2,
+          ease: 'expo.out',
+          clearProps: 'all'
+        }
+      )
+    }
+  })
 })
 </script>
 
@@ -94,48 +85,38 @@ onUnmounted(() => {
       </div>
 
       <div class="services-grid">
-        <div v-for="s in services" :key="s.title" class="service-card group relative bg-white dark:bg-white/5 rounded-2xl overflow-hidden border border-white/5 hover:border-primary/20 transition-all duration-700 hover:shadow-2xl h-[420px]">
-          <div class="absolute inset-0">
-            <nuxt-img 
-              :src="s.bgImage" 
-              :alt="s.title" 
-              class="w-full h-full object-cover filter brightness-[0.25] contrast-[1.1] transition-transform duration-1000 group-hover:scale-110"
-              format="webp"
-              width="600"
-              height="450"
-            />
+        <div v-for="s in services" :key="s.title" class="service-card glass-panel">
+          <div class="card-top">
+            <div class="service-icon-box" v-html="s.icon"></div>
+            <div class="service-tag status-badge primary">{{ s.type }}</div>
           </div>
-          <div class="relative z-10 h-full flex flex-col justify-between p-8 md:p-10 text-center">
-            <div class="flex flex-col items-center">
-              <div class="w-14 h-14 mb-6 rounded-xl bg-primary/10 backdrop-blur-md flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-500" v-html="s.icon"></div>
-              <span class="text-[10px] font-black text-primary uppercase tracking-[0.3em] mb-4">{{ s.type }}</span>
-              <h3 class="text-2xl font-black text-white uppercase tracking-tighter mb-4">{{ s.title }}</h3>
-              <p class="text-gray-400 text-sm leading-relaxed">{{ s.desc }}</p>
-            </div>
-            <div class="pt-6">
-              <NuxtLink to="#contatti" class="inline-flex items-center gap-2 text-white/60 text-[10px] font-black uppercase tracking-widest hover:text-primary transition-all group/link">
-                Scopri Servizio
-                <svg width="14" height="14" class="transform group-hover/link:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
-              </NuxtLink>
-            </div>
+          <div class="card-body">
+            <h3>{{ s.title }}</h3>
+            <p>{{ s.desc }}</p>
+          </div>
+          <div class="card-footer">
+            <NuxtLink to="/#contatti" class="service-link">
+              Richiedi Info
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </NuxtLink>
           </div>
         </div>
       </div>
 
       <!-- CTA Unificato -->
-      <div class="support-cta-box mt-16 md:mt-24 bg-white/5 border border-white/5 rounded-2xl p-8 md:p-16 relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-64 h-64 bg-primary/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-        <div class="relative z-10 flex flex-col lg:flex-row justify-between items-center gap-10 text-center lg:text-left">
-          <div class="max-w-xl">
-            <h3 class="text-2xl md:text-3xl font-black text-white uppercase tracking-tighter mb-4">Hai bisogno di assistenza o accessori?</h3>
-            <p class="text-gray-400 text-base md:text-lg font-medium">Il nostro team tecnico è a tua disposizione per appuntamenti e consulenze veloci.</p>
+      <div class="support-cta-box glass-panel">
+        <div class="cta-content">
+          <div class="cta-text">
+            <h3>Hai bisogno di assistenza o accessori?</h3>
+            <p>Il nostro team tecnico è a tua disposizione per appuntamenti e consulenze veloci.</p>
           </div>
-          <div class="flex flex-wrap justify-center gap-4">
-            <a href="tel:0823224038" class="px-8 py-4 bg-primary text-white text-[11px] font-black rounded-xl uppercase tracking-widest shadow-lg shadow-primary/20 hover:bg-white hover:text-black transition-all duration-500 transform hover:-translate-y-1">
+          <div class="cta-actions">
+            <a href="tel:0823224038" class="btn-premium">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
               Chiama Officina
             </a>
-            <a href="https://wa.me/390823224038" target="_blank" class="px-8 py-4 bg-[#25D366] text-white text-[11px] font-black rounded-xl uppercase tracking-widest shadow-lg shadow-green-500/20 hover:brightness-110 transition-all duration-500 transform hover:-translate-y-1 flex items-center gap-2">
-              <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.31 2c-5.52 0-10 4.48-10 10 0 1.76.46 3.41 1.26 4.85l-1.33 4.86 4.98-1.31c1.4.74 2.99 1.17 4.67 1.17 5.52 0 10-4.48 10-10s-4.48-10-10-10zm5.79 14.16c-.25.7-1.46 1.34-2.01 1.43-.5.08-1.15.15-3.32-.74-2.78-1.14-4.57-3.97-4.71-4.16-.14-.19-1.13-1.5-1.13-2.86s.71-2.03.96-2.3c.25-.27.54-.34.72-.34.18 0 .36.01.52.02.17.01.4.04.62.55.23.54.79 1.93.86 2.07.07.14.12.3.02.49-.1.19-.15.3-.3.47-.15.17-.31.38-.44.51-.15.15-.31.31-.13.62.18.31.79 1.3 1.7 2.11.7.63 1.29.83 1.6.96.31.13.49.11.67-.1.18-.21.79-.91.99-1.22.21-.31.42-.26.71-.15.29.11 1.83.86 2.15 1.02.32.16.53.24.6.38.08.13.08.77-.17 1.47z"/></svg>
+            <a href="https://wa.me/390823224038" target="_blank" class="btn-whatsapp">
+              <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L0 24l6.335-1.662c1.72.94 3.659 1.437 5.63 1.438h.004c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
               WhatsApp
             </a>
           </div>
@@ -147,38 +128,14 @@ onUnmounted(() => {
 
 <style scoped>
 .combined-services-section {
-  padding: 3rem 0;
+  padding: 60px 0;
   background: #050505;
   position: relative;
 }
 
-@media (min-width: 768px) {
-  .combined-services-section {
-    padding: 4rem 0;
-  }
-}
-
-@media (min-width: 1024px) {
-  .combined-services-section {
-    padding: 5rem 0;
-  }
-}
-
 .services-header {
   max-width: 700px;
-  margin-bottom: 2rem;
-}
-
-@media (min-width: 768px) {
-  .services-header {
-    margin-bottom: 2.5rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .services-header {
-    margin-bottom: 3rem;
-  }
+  margin-bottom: 80px;
 }
 
 .section-kicker {
@@ -191,11 +148,10 @@ onUnmounted(() => {
 }
 
 .section-title {
-  font-size: var(--text-4xl);
+  font-size: clamp(2rem, 5vw, 3rem);
   font-weight: 900;
-  margin-bottom: var(--space-lg);
+  margin-bottom: 16px;
   line-height: 1.1;
-  color: var(--text-primary);
 }
 
 .section-subtitle {
@@ -207,91 +163,44 @@ onUnmounted(() => {
 
 .services-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 1.5rem;
-  margin-bottom: 3rem;
-}
-
-@media (min-width: 768px) {
-  .services-grid {
-    gap: 2rem;
-    margin-bottom: 4rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .services-grid {
-    gap: 2.5rem;
-    margin-bottom: 5rem;
-  }
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 32px;
+  margin-bottom: 60px;
 }
 
 .service-card {
-  position: relative;
-  background: var(--surface);
-  border-radius: var(--radius-2xl);
-  border: 1px solid var(--line);
-  transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-  overflow: hidden;
-  height: 400px;
-  will-change: transform;
-}
-
-.card-background {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  filter: brightness(0.3) saturate(0.8);
-  transition: filter 0.3s ease;
-}
-
-.service-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.4);
-  border-color: var(--primary);
-}
-
-.service-card:hover .card-background {
-  filter: brightness(0.35) saturate(0.9);
-}
-
-.card-content {
-  position: relative;
-  z-index: 2;
-  height: 100%;
+  padding: 40px;
+  transition: all 0.4s ease;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: var(--space-2xl);
+  align-items: center;
   text-align: center;
 }
 
-.card-icon {
-  margin-bottom: var(--space-lg);
+.service-card:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary);
+  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
 }
 
-.icon-wrapper {
+.card-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.service-icon-box {
   width: 64px;
   height: 64px;
-  background: var(--primary-gradient);
-  border-radius: var(--radius-lg);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 0 auto var(--space-md);
-  color: var(--text-inverse);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  transition: all var(--transition-base);
-}
-
-.icon-wrapper svg {
-  stroke-width: 2;
-}
-
-.service-card:hover .icon-wrapper {
-  transform: scale(1.1);
-  box-shadow: 0 0 20px var(--primary-glow);
+  background: rgba(241, 110, 34, 0.1);
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  margin: 0 auto 20px auto;
+  color: var(--primary);
+  border: 1px solid rgba(241, 110, 34, 0.2);
 }
 
 .service-tag {
@@ -328,10 +237,8 @@ onUnmounted(() => {
 
 /* CTA Box */
 .support-cta-box {
-  background: var(--panel);
-  border-radius: 40px;
   padding: 60px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: var(--radius-xl);
 }
 
 .cta-content {
@@ -348,7 +255,7 @@ onUnmounted(() => {
 }
 
 .cta-text p {
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-dim);
   font-size: 1.1rem;
 }
 
@@ -358,39 +265,24 @@ onUnmounted(() => {
 }
 
 .btn-whatsapp {
-  padding: 14px 32px;
-  border-radius: 100px;
-  background: linear-gradient(135deg, #25D366, #128C7E);
-  color: #fff;
-  text-decoration: none;
-  font-weight: 800;
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-  position: relative;
-  overflow: hidden;
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-}
-
-.btn-whatsapp::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-  transition: 0.5s;
+  gap: 12px;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  color: white;
+  border-radius: 100px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.2);
 }
 
 .btn-whatsapp:hover {
-  transform: translateY(-5px) scale(1.03);
-  box-shadow: 0 15px 30px rgba(37, 211, 102, 0.4);
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 0 16px 32px rgba(37, 211, 102, 0.3);
   filter: brightness(1.1);
-}
-
-.btn-whatsapp:hover::after {
-  left: 100%;
 }
 
 .btn-primary-custom {

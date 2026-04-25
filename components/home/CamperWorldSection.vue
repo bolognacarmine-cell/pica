@@ -99,7 +99,7 @@ onMounted(async () => {
           v-for="cat in categories" 
           :key="cat.id" 
           :to="cat.link"
-          class="category-card group flex flex-col p-8 bg-gray-50 dark:bg-white/5 rounded-[32px] border border-transparent hover:border-primary/30 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5"
+          class="category-card group flex flex-col p-8 glass-panel border border-transparent hover:border-primary/30 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5"
         >
           <div class="category-icon w-14 h-14 mb-8 rounded-2xl bg-white dark:bg-white/10 flex items-center justify-center text-primary shadow-sm group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500" v-html="cat.icon"></div>
           
@@ -118,20 +118,20 @@ onMounted(async () => {
       </div>
 
       <!-- Social Band -->
-      <div class="social-community-band bg-primary rounded-[40px] p-10 md:p-16 flex flex-col lg:flex-row justify-between items-center gap-10 shadow-2xl shadow-primary/20 relative overflow-hidden group">
-        <div class="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-32 -mt-32 group-hover:scale-150 transition-transform duration-1000"></div>
+      <div class="social-community-band glass-panel rounded-[40px] p-10 md:p-16 flex flex-col lg:flex-row justify-between items-center gap-10 shadow-2xl relative overflow-hidden group">
+        <div class="glow-effect"></div>
         
         <div class="band-text text-center lg:text-left relative z-10">
-          <h4 class="text-3xl md:text-4xl font-black text-white mb-4 uppercase tracking-tighter leading-none">Entra nella nostra <span class="italic opacity-80">Community</span></h4>
-          <p class="text-white/80 font-medium max-w-xl">Unisciti a migliaia di appassionati. Seguici sui social per non perdere nemmeno un aggiornamento dal mondo Pica Caravan.</p>
+          <h4 class="text-3xl md:text-4xl font-black text-white mb-4 uppercase tracking-tighter leading-none">Entra nella nostra <span class="text-primary italic">Community</span></h4>
+          <p class="text-white/60 font-medium max-w-xl">Unisciti a migliaia di appassionati. Seguici sui social per non perdere nemmeno un aggiornamento dal mondo Pica Caravan.</p>
         </div>
         
         <div class="band-actions flex flex-wrap justify-center gap-4 relative z-10">
-          <a href="https://facebook.com" target="_blank" class="px-8 py-5 bg-white text-primary hover:bg-black hover:text-white font-black rounded-2xl transition-all duration-300 flex items-center gap-3 uppercase tracking-widest text-xs shadow-xl shadow-black/10">
+          <a href="https://facebook.com" target="_blank" class="btn-secondary-glass">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
             Facebook
           </a>
-          <a href="https://instagram.com" target="_blank" class="px-8 py-5 bg-black text-white hover:bg-white hover:text-primary font-black rounded-2xl transition-all duration-300 flex items-center gap-3 uppercase tracking-widest text-xs shadow-xl shadow-black/20">
+          <a href="https://instagram.com" target="_blank" class="btn-secondary-glass">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 1.366.062 2.633.332 3.608 1.308.975.975 1.245 2.242 1.308 3.608.058 1.266.07 1.646.07 4.85s-.012 3.584-.07 4.85c-.063 1.366-.333 2.633-1.308 3.608-.975.975-2.242 1.245-3.608 1.308-1.266.058-1.646.07-4.85.07s-3.584-.012-4.85-.07c-1.366-.063-2.633-.333-3.608-1.308-.975-.975-1.245-2.242-1.308-3.608-.058-1.266-.07-1.646-.07-4.85s.012-3.584.07-4.85c.062-1.366.332-2.633 1.308-3.608.975-.975 2.242-1.242 3.608-1.308 1.266-.058-1.646-.07 4.85-.07m0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.058-1.281.072-1.689.072-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.058-1.689-.072-4.948-.072zM12 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759-6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.791-4-4s1.791-4 4-4 4 1.791 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
             Instagram
           </a>

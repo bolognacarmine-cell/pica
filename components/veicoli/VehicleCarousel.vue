@@ -25,14 +25,14 @@
         @click.stop="handlePrevManual" 
         v-show="showArrows"
       >
-        <span>‹</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path></svg>
       </button>
       <button 
         class="nav-btn next" 
         @click.stop="handleNextManual" 
         v-show="showArrows"
       >
-        <span>›</span>
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path></svg>
       </button>
 
       <!-- Indicatori (pallini) -->
@@ -67,7 +67,7 @@ const props = defineProps({
   },
   autoplayInterval: {
     type: Number,
-    default: 4000 // 4 secondi
+    default: 5000
   }
 })
 
@@ -92,10 +92,12 @@ const stopAutoplay = () => {
 }
 
 const nextSlide = () => {
+  if (props.images.length === 0) return
   currentIndex.value = (currentIndex.value + 1) % props.images.length
 }
 
 const prevSlide = () => {
+  if (props.images.length === 0) return
   currentIndex.value = (currentIndex.value - 1 + props.images.length) % props.images.length
 }
 
@@ -128,7 +130,7 @@ onUnmounted(() => {
   position: relative;
   width: 100%;
   height: v-bind(height);
-  background: #000;
+  background: #050505;
   overflow: hidden;
 }
 
@@ -144,22 +146,29 @@ onUnmounted(() => {
   position: absolute;
   top: 0;
   left: 0;
+  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .carousel-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  transition: transform 1.2s ease;
+}
+
+.carousel-container:hover .carousel-img {
+  transform: scale(1.05);
 }
 
 .nav-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  width: 40px;
-  height: 40px;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
+  width: 44px;
+  height: 44px;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: white;
   border-radius: 50%;
@@ -168,41 +177,46 @@ onUnmounted(() => {
   justify-content: center;
   cursor: pointer;
   z-index: 10;
-  transition: all 0.3s ease;
-  font-size: 1.5rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .nav-btn:hover {
-  background: var(--primary);
-  border-color: var(--primary);
+  background: #f16e22;
+  border-color: #f16e22;
   transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 0 20px rgba(241, 110, 34, 0.4);
 }
 
-.prev { left: 16px; }
-.next { right: 16px; }
+.prev { left: 20px; }
+.next { right: 20px; }
 
 .carousel-dots {
   position: absolute;
-  bottom: 16px;
+  bottom: 20px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 8px;
+  gap: 10px;
   z-index: 10;
+  padding: 6px 12px;
+  background: rgba(0,0,0,0.2);
+  backdrop-filter: blur(8px);
+  border-radius: 100px;
+  border: 1px solid rgba(255,255,255,0.05);
 }
 
 .dot {
-  width: 8px;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.3);
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dot.active {
-  background: white;
-  width: 24px;
+  background: #f16e22;
+  width: 20px;
   border-radius: 10px;
 }
 </style>

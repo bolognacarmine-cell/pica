@@ -172,50 +172,38 @@ onMounted(async () => {
           <h2 class="section-title">Trova il mezzo perfetto per te</h2>
           <p class="section-description">Scegliere un camper o una roulotte è un passo importante. Che tu stia cercando la tua prima casa su ruote o voglia permutare il tuo usato, siamo qui per guidarti.</p>
           
-          <!-- Premium Cards Vendita Veicoli -->
-          <div class="vehicle-cards">
-            <div class="vehicle-card-item">
-              <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1558020113-5b9a28bb9733?auto=format&fit=crop&q=80&w=600')"></div>
-              <div class="card-content">
-                <h3>Camper Famiglia</h3>
-                <p>Soluzioni spaziose e sicure per viaggiare con i tuoi cari in totale comfort.</p>
-                <div class="card-features">
-                  <span class="feature">Spazio</span>
-                  <span class="feature">Sicurezza</span>
-                  <span class="feature">Comfort</span>
-                </div>
-              </div>
-            </div>
-            
-            <div class="vehicle-card-item">
-              <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1618668123933-0b4a2f5b6b2c?auto=format&fit=crop&q=80&w=600')"></div>
-              <div class="card-content">
-                <h3>Roulotte Vacanza</h3>
-                <p>La libertà del campeggio con tutti i comfort di casa per vacanze indimenticabili.</p>
-                <div class="card-features">
-                  <span class="feature">Libertà</span>
-                  <span class="feature">Praticità</span>
-                  <span class="feature">Design</span>
-                </div>
-              </div>
-            </div>
-            
-            <div class="vehicle-card-item">
-              <div class="card-image" style="background-image: url('https://images.unsplash.com/photo-1558618667-f725c4cd7ab3?auto=format&fit=crop&q=80&w=600')"></div>
-              <div class="card-content">
-                <h3>Usato Garantito</h3>
-                <p>Ogni mezzo viene sottoposto a rigorosi controlli tecnici per garantire massima affidabilità.</p>
-                <div class="card-features">
-                  <span class="feature">Garanzia</span>
-                  <span class="feature">Controllo</span>
-                  <span class="feature">Certificato</span>
-                </div>
-              </div>
-            </div>
-          </div>
+          <ul class="benefits-list">
+            <li>
+              <span class="benefit-icon glass-panel">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+              </span>
+              <div><strong>Camper per Famiglia:</strong> Soluzioni spaziose e sicure per viaggiare con i tuoi cari.</div>
+            </li>
+            <li>
+              <span class="benefit-icon glass-panel">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+              </span>
+              <div><strong>Roulotte per Vacanza:</strong> La libertà del campeggio con tutti i comfort di casa.</div>
+            </li>
+            <li>
+              <span class="benefit-icon glass-panel">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              </span>
+              <div><strong>Usato Garantito:</strong> Ogni mezzo viene sottoposto a rigorosi controlli tecnici.</div>
+            </li>
+            <li>
+              <span class="benefit-icon glass-panel">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+              </span>
+              <div><strong>Assistenza Certificata:</strong> Service autorizzato VIESA, THETFORD e WEBASTO.</div>
+            </li>
+          </ul>
 
           <div class="trade-actions mt-8">
-            <a href="#contatti" class="btn-primary-custom">Richiedi una Consulenza</a>
+            <a href="#contatti" class="btn-premium">
+              Richiedi una Consulenza
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+            </a>
           </div>
         </div>
 
@@ -236,143 +224,91 @@ onMounted(async () => {
 
 <style scoped>
 .trade-section {
-  padding: 100px 0;
+  padding: 120px 0;
   background: var(--bg);
 }
 
 .trade-card {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 60px;
+  gap: 0;
   background: var(--panel);
-  border-radius: 40px;
+  border-radius: var(--radius-xl);
   border: 1px solid var(--line);
   overflow: hidden;
-  align-items: center;
+  align-items: stretch;
 }
 
 @media (max-width: 1024px) {
   .trade-card {
     grid-template-columns: 1fr;
-    gap: 40px;
   }
 }
 
 .trade-content {
-  padding: 60px;
+  padding: 80px;
 }
 
 @media (max-width: 640px) {
   .trade-content {
-    padding: 40px 24px;
+    padding: 48px 24px;
   }
 }
 
-.section-kicker {
-  color: var(--primary);
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-size: 0.85rem;
-  margin-bottom: 12px;
-}
-
 .section-title {
-  font-size: clamp(2rem, 4vw, 3rem);
-  font-weight: 900;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
+  font-weight: 950;
   margin-bottom: 24px;
-  line-height: 1.1;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
 }
 
 .section-description {
-  color: var(--muted);
-  font-size: 1.1rem;
+  color: var(--text-dim);
+  font-size: 1.15rem;
   line-height: 1.6;
-  margin-bottom: 32px;
+  margin-bottom: 48px;
 }
 
-.vehicle-cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: var(--space-xl);
-  margin: var(--space-3xl) 0;
-}
-
-.vehicle-card-item {
-  background: var(--surface-elevated);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-2xl);
-  overflow: hidden;
-  transition: all var(--transition-base);
-  height: 400px;
-  position: relative;
-}
-
-.vehicle-card-item:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-xl);
-  border-color: var(--primary);
-}
-
-.card-image {
-  position: absolute;
-  inset: 0;
-  background-size: cover;
-  background-position: center;
-  filter: brightness(0.4) saturate(0.8);
-  transition: all var(--transition-base);
-}
-
-.vehicle-card-item:hover .card-image {
-  filter: brightness(0.5) saturate(1);
-}
-
-.card-content {
-  position: relative;
-  z-index: 2;
-  height: 100%;
+.benefits-list {
+  list-style: none;
+  padding: 0;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: var(--space-2xl);
-  text-align: center;
+  gap: 24px;
 }
 
-.card-content h3 {
-  font-size: var(--text-xl);
-  font-weight: 800;
-  color: var(--text-primary);
-  margin-bottom: var(--space-md);
-}
-
-.card-content p {
-  font-size: var(--text-base);
-  color: var(--text-secondary);
-  line-height: 1.6;
-  margin-bottom: var(--space-xl);
-}
-
-.card-features {
+.benefits-list li {
   display: flex;
-  gap: var(--space-sm);
-  justify-content: center;
-  flex-wrap: wrap;
+  gap: 16px;
+  align-items: center;
+  color: var(--text-dim);
+  font-size: 1.05rem;
+  line-height: 1.5;
 }
 
-.feature {
-  background: var(--primary-gradient);
-  color: var(--text-inverse);
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: var(--radius-full);
-  font-size: var(--text-xs);
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+.benefits-list li strong {
+  color: #fff;
+  font-weight: 800;
+}
+
+.benefit-icon {
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  background: var(--primary-glow) !important;
+  color: var(--primary);
+  border: 1px solid var(--primary) !important;
+  flex-shrink: 0;
 }
 
 .trade-visual {
-  height: 100%;
   position: relative;
+  min-height: 500px;
 }
 
 .visual-placeholder {
@@ -384,7 +320,6 @@ onMounted(async () => {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  min-height: 400px;
 }
 
 .visual-overlay {
@@ -406,26 +341,29 @@ onMounted(async () => {
   position: absolute;
   bottom: 40px;
   right: 40px;
-  background: var(--primary);
+  background: var(--primary-gradient);
   color: white;
-  padding: 20px 30px;
-  border-radius: 24px;
+  padding: 24px 32px;
+  border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 20px 40px var(--primary-glow);
 }
 
 .floating-badge .number {
-  font-size: 2rem;
+  font-size: 2.5rem;
   font-weight: 900;
   line-height: 1;
+  letter-spacing: -0.02em;
 }
 
 .floating-badge .label {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
-  font-weight: 700;
-  letter-spacing: 0.1em;
+  font-weight: 800;
+  letter-spacing: 0.2em;
+  margin-top: 4px;
+  opacity: 0.9;
 }
 </style>

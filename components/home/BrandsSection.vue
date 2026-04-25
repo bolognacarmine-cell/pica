@@ -1,46 +1,24 @@
 <script setup>
-// Marchi principali e Service Center - Versione Premium con loghi SVG/Mockup
-const brands = [
-  { name: 'Across Car', type: 'Concessionario Ufficiale' },
-  { name: 'Viesa', type: 'Service Center' },
-  { name: 'Thetford', type: 'Partner Tecnico' },
-  { name: 'Webasto', type: 'Assistenza Autorizzata' },
-  { name: 'Hymer', type: 'Rivenditore' },
-  { name: 'Knaus', type: 'Service Point' }
-]
+// Marchi principali e Service Center
+const brands = ['Across Car', 'Viesa', 'Thetford', 'Webasto', 'Hymer', 'Knaus']
 </script>
 
 <template>
-  <section id="marchi" class="brands-section py-20 md:py-24 bg-gray-50 dark:bg-[#080808]">
-    <div class="container mx-auto px-4">
-      <div class="section-heading text-center max-w-2xl mx-auto mb-16 md:mb-20">
-        <span class="text-[11px] font-black text-primary uppercase tracking-[0.3em] mb-4 inline-block bg-primary/10 px-4 py-2 rounded-full">Partnership & Qualità</span>
-        <h2 class="text-3xl md:text-5xl font-black mb-6 dark:text-white uppercase tracking-tighter leading-tight">
-          Centro Assistenza & <br><span class="text-primary italic">Rivenditore Autorizzato</span>
-        </h2>
-        <p class="text-base md:text-lg text-gray-500 dark:text-gray-400 font-medium">
-          Collaboriamo con i leader mondiali del caravanning per garantirti solo il meglio.
-        </p>
+  <section id="marchi" class="brands-section">
+    <div class="container">
+      <div class="section-heading">
+        <p class="section-kicker">Partnership & Qualità</p>
+        <h2>Service Center & Concessionario</h2>
+        <p>Siamo centro autorizzato per i migliori sistemi di bordo e rivenditori ufficiali Across Car.</p>
       </div>
 
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6">
+      <div class="brands-grid">
         <div
           v-for="brand in brands"
-          :key="brand.name"
-          class="group relative bg-white dark:bg-white/5 rounded-2xl p-6 md:p-8 border border-white/5 hover:border-primary/30 transition-all duration-500 flex flex-col items-center justify-center text-center overflow-hidden"
+          :key="brand"
+          class="brand-pill glass-panel"
         >
-          <!-- Background accent hover -->
-          <div class="absolute inset-0 bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-          
-          <div class="relative z-10 flex flex-col items-center">
-            <span class="text-xl md:text-2xl font-black text-white/40 group-hover:text-white uppercase tracking-tighter transition-all duration-500 mb-2">
-              {{ brand.name }}
-            </span>
-            <div class="h-0.5 w-8 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-center"></div>
-            <p class="mt-4 text-[9px] text-gray-500 uppercase font-black tracking-widest opacity-0 group-hover:opacity-100 transition-all duration-500 transform translate-y-2 group-hover:translate-y-0">
-              {{ brand.type }}
-            </p>
-          </div>
+          {{ brand }}
         </div>
       </div>
     </div>
@@ -49,6 +27,74 @@ const brands = [
 
 <style scoped>
 .brands-section {
+  padding: 80px 0;
+  background: var(--bg);
+  color: #f5f5f5;
   scroll-margin-top: 100px;
+}
+
+.section-heading {
+  text-align: center;
+  max-width: 760px;
+  margin: 0 auto 48px;
+}
+
+.section-heading h2 {
+  margin: 0 0 12px;
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+.section-kicker {
+  color: var(--primary);
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: .85rem;
+  letter-spacing: .12em;
+}
+
+.brands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px;
+}
+
+.brand-pill {
+  min-height: 100px;
+  display: grid;
+  place-items: center;
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: #fff;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  text-align: center;
+  padding: 20px;
+  border-radius: var(--radius-md);
+  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+  cursor: default;
+  position: relative;
+  overflow: hidden;
+}
+
+.brand-pill:hover {
+  transform: translateY(-8px);
+  border-color: var(--primary);
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px var(--primary-glow);
+}
+
+.brand-pill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+  transition: 0.5s;
+}
+
+.brand-pill:hover::after {
+  left: 100%;
 }
 </style>

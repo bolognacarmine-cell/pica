@@ -1,61 +1,48 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
 import { gsap } from 'gsap'
-import { useRoute, useRouter } from 'vue-router'
+import { useSearch } from '~/composables/useSearch'
+import { useFilter } from '~/composables/useFilter'
 import VehicleCarousel from '~/components/veicoli/VehicleCarousel.vue'
 
+// Props: veicoli dinamici e filtri
+import { useRoute } from '#app'
+
 const route = useRoute()
-const router = useRouter()
 const isVeicoliPage = computed(() => route.path === '/veicoli')
 
 const props = defineProps({
   vehicles: { type: Array, default: () => [] }
 })
 
-const activeFilter = ref('tutti')
+// Stato globale della ricerca
+const { searchQuery, setSearchQuery } = useSearch()
+const { activeFilter } = useFilter()
+const localSearchQuery = ref(searchQuery.value)
+
+// Sincronizza l'input locale con lo stato globale
+watch(localSearchQuery, (newVal) => {
+  setSearchQuery(newVal)
+})
+
+// Sincronizza lo stato globale con l'input locale (se resettato altrove)
+watch(searchQuery, (newVal) => {
+  if (newVal !== localSearchQuery.value) {
+    localSearchQuery.value = newVal
+  }
+})
+
+// Stato filtro attivo
 const activeCategory = ref('tutte')
-const maxKm = ref(null)
-const sortBy = ref('recente')
-const localSearchQuery = ref('')
+const maxKm = ref(null) // Nuovo: filtro chilometri
+const sortBy = ref('recente') // Nuovo: ordinamento (recente, alfabetico, anno)
 
 // Computed: categorie uniche dai veicoli caricate nel database
 const dynamicCategories = computed(() => {
   const cats = props.vehicles
     .map(m => m.categoria)
-    .filter(Boolean)
-    .filter((value, index, self) => self.indexOf(value) === index)
-  return cats.sort()
-})
-
-// Inizializza stato da hash URL
-const initializeFromHash = () => {
-  const hash = route.hash.replace('#', '')
-  if (hash && ['tutti', 'nuovo', 'usato', 'promozioni'].includes(hash)) {
-    activeFilter.value = hash
-  }
-}
-
-// Sincronizza stato con hash URL
-const syncHashWithFilter = () => {
-  const currentHash = route.hash.replace('#', '')
-  const targetHash = activeFilter.value === 'tutti' ? '' : `#${activeFilter.value}`
-  
-  if (currentHash !== activeFilter.value) {
-    router.replace({ hash: targetHash })
-  }
-}
-
-// Watch per sincronizzare hash quando cambia filtro
-watch(activeFilter, syncHashWithFilter)
-
-// Watch per sincronizzare filtro quando cambia hash
-watch(() => route.hash, (newHash) => {
-  const hash = newHash.replace('#', '')
-  if (hash && ['tutti', 'nuovo', 'usato', 'promozioni'].includes(hash)) {
-    activeFilter.value = hash
-  } else if (!hash) {
-    activeFilter.value = 'tutti'
-  }
+    .filter(c => c && c !== '')
+  return [...new Set(cats)].sort()
 })
 
 // Computed: veicoli filtrati
@@ -66,7 +53,7 @@ const featuredMotos = computed(() => {
   let filtered = props.vehicles.filter(m => m.isVisible !== false)
   
   // 0. Filtro per ricerca globale (Header)
-  const query = (localSearchQuery.value || '').toString().toLowerCase().trim()
+  const query = (searchQuery.value || '').toString().toLowerCase().trim()
   if (query) {
     filtered = filtered.filter(m => 
       `${m.marca || ''} ${m.modello || ''} ${m.categoria || ''}`.toLowerCase().includes(query)
@@ -143,34 +130,31 @@ const formatYear = (moto) => moto.annoImmatricolazione || moto.anno || 'N/D'
 const formatImages = (moto) => {
   if (moto?.immagini && Array.isArray(moto.immagini) && moto.immagini.length > 0) {
     return moto.immagini.map(img => {
-      const url = typeof img === 'string' ? img : (img?.url || '/images/placeholder-vehicle.jpg')
+      const url = typeof img === 'string' ? img : (img?.url || '/logo-pica-caravan.jpg')
       return url.replace('/upload/', '/upload/f_auto,q_auto/')
     })
   }
-  // Placeholder professionale con logo per veicoli senza immagini
-  return ['/logo-pica.png']
+  return ['https://images.unsplash.com/photo-1517030330234-94c4fa948ec3?q=80&w=2070']
 }
 
 // Animazioni GSAP
 let ctx
 
 const animateCards = () => {
-  if (!process.client) return
   if (ctx) ctx.revert()
   ctx = gsap.context(() => {
-    // Animazione slide-in da sinistra per veicoli
-    const cards = document.querySelectorAll('.vehicle-card')
+    const cards = document.querySelectorAll('.featured-grid .moto-card')
     if (cards.length > 0) {
       gsap.fromTo(cards, 
-        { translateX: -50, opacity: 0 },
+        { y: 28, opacity: 0 },
         { 
-          translateX: 0, 
+          y: 0, 
           opacity: 1, 
-          duration: 0.6, 
-          stagger: 0.1, 
+          duration: 0.7, 
+          stagger: 0.12, 
           delay: 0.2, 
           ease: 'power2.out',
-          clearProps: 'transform'
+          clearProps: 'opacity,transform'
         }
       )
     }
@@ -178,41 +162,36 @@ const animateCards = () => {
 }
 
 // Watch per riattivare l'animazione quando cambiano i veicoli filtrati
-watch([featuredMotos, activeFilter, activeCategory, sortBy, localSearchQuery], () => {
-  if (process.client) {
-    nextTick(() => {
-      animateCards()
-    })
-  }
+watch([featuredMotos, searchQuery], () => {
+  nextTick(() => {
+    animateCards()
+  })
 }, { deep: true })
 
 onMounted(async () => {
-  if (process.client) {
-    await nextTick()
-    initializeFromHash()
-    animateCards()
-  }
+  await nextTick()
+  animateCards()
 })
 
 onUnmounted(() => {
-  if (process.client && ctx) ctx.revert()
+  if (ctx) ctx.revert()
 })
 </script>
 
 <template>
-  <section id="veicoli" class="featured-section section">
+  <section id="veicoli" class="featured-section">
     <div class="container">
-      <div class="section-header">
-        <div class="section-content">
-          <span class="section-kicker">Showroom</span>
+      <div class="section-heading-row">
+        <div class="heading-left">
+          <p class="section-kicker">Showroom</p>
           <h2 class="section-title">Parco Camper e Roulotte</h2>
-          <p class="section-subtitle">Esplora la nostra selezione di camper e roulotte pronti per il tuo prossimo viaggio.</p>
+          <p class="section-description">Esplora la nostra selezione di camper e roulotte pronti per il tuo prossimo viaggio.</p>
         </div>
         
-        <!-- Premium Search Bar -->
-        <div class="search-container">
-          <div class="search-wrapper">
-            <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <!-- Premium Search Bar Integrata -->
+        <div class="search-bar-container">
+          <div class="search-wrapper glass-panel">
+            <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
               <circle cx="11" cy="11" r="8"></circle>
               <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
             </svg>
@@ -226,122 +205,175 @@ onUnmounted(() => {
         </div>
       </div>
 
-      <!-- Filtri Premium -->
-      <div class="filters-section">
-        <div class="filter-tabs" role="tablist" aria-label="Filtri veicoli">
+      <div class="section-filters-only">
+        <!-- Filtri Veicoli Premium - Grandi e Ben Visibili -->
+        <div class="main-filter-tabs">
           <button 
-            v-for="filter in [
-              { key: 'tutti', label: 'Tutti', count: props.vehicles.filter(m => m.isVisible !== false).length },
-              { key: 'nuovo', label: 'Nuovo', icon: 'star', count: props.vehicles.filter(m => m.isVisible !== false && ((m.nuovaUsata || '').toLowerCase().includes('nuov') || (m.stato || '').toLowerCase().includes('nuov'))).length },
-              { key: 'usato', label: 'Usato', icon: 'check', count: props.vehicles.filter(m => m.isVisible !== false && ((m.nuovaUsata || '').toLowerCase().includes('usat') || (m.stato || '').toLowerCase().includes('usat'))).length },
-              { key: 'promozioni', label: 'Offerte', icon: 'tag', count: props.vehicles.filter(m => m.isVisible !== false && ((m.nuovaUsata || '').toLowerCase().includes('promozion') || m.isPromotion || m.prezzoScontato)).length }
-            ]" 
-            :key="filter.key"
-            @click="activeFilter = filter.key"
-            @keydown.enter="activeFilter = filter.key"
-            @keydown.space.prevent="activeFilter = filter.key"
-            :class="['filter-tab', { active: activeFilter === filter.key }]"
-            :id="`filter-${filter.key}`"
-            role="tab"
-            :aria-selected="activeFilter === filter.key"
-            :aria-controls="`vehicles-panel-${filter.key}`"
-            :tabindex="activeFilter === filter.key ? 0 : -1"
+            @click="activeFilter = 'tutti'"
+            :class="{ active: activeFilter === 'tutti' }"
+            class="main-tab-btn"
           >
-            <span class="filter-label">{{ filter.label }}</span>
-            <span class="filter-count">{{ filter.count }}</span>
+            <span class="tab-label">TUTTI</span>
+            <span class="tab-count">{{ props.vehicles.filter(m => m.isVisible !== false).length }}</span>
+          </button>
+          
+          <button 
+            @click="activeFilter = 'nuovo'"
+            :class="{ active: activeFilter === 'nuovo' }"
+            class="main-tab-btn"
+          >
+            <span class="tab-icon">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-7.714 2.143L11 21l-2.286-6.857L1 12l7.714-2.143L11 3z"/></svg>
+            </span>
+            <span class="tab-label">NUOVO</span>
+            <span class="tab-count">
+              {{ props.vehicles.filter(m => m.isVisible !== false && ((m.nuovaUsata || '').toLowerCase().includes('nuov') || (m.stato || '').toLowerCase().includes('nuov'))).length }}
+            </span>
+          </button>
+
+          <button 
+            @click="activeFilter = 'usato'"
+            :class="{ active: activeFilter === 'usato' }"
+            class="main-tab-btn"
+          >
+            <span class="tab-icon">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </span>
+            <span class="tab-label">USATO</span>
+            <span class="tab-count">
+              {{ props.vehicles.filter(m => m.isVisible !== false && ((m.nuovaUsata || '').toLowerCase().includes('usat') || (m.stato || '').toLowerCase().includes('usat'))).length }}
+            </span>
+          </button>
+
+          <button 
+            @click="activeFilter = 'promozioni'"
+            :class="{ active: activeFilter === 'promozioni' }"
+            class="main-tab-btn promo-tab"
+          >
+            <span class="tab-icon">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.99 7.99 0 0120 13a7.99 7.99 0 01-2.343 5.657z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.879 16.121A3 3 0 1012.015 11L11 14l-2.879 2.121z"/></svg>
+            </span>
+            <span class="tab-label">OFFERTE</span>
+            <span class="tab-count">
+              {{ props.vehicles.filter(m => m.isVisible !== false && ((m.nuovaUsata || '').toLowerCase().includes('promozion') || m.isPromotion || m.prezzoScontato)).length }}
+            </span>
+          </button>
+
+          <button 
+            @click="activeFilter = 'venduto'"
+            :class="{ active: activeFilter === 'venduto' }"
+            class="main-tab-btn sold-tab"
+          >
+            <span class="tab-icon">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+            </span>
+            <span class="tab-label">VENDUTO</span>
+            <span class="tab-count">
+              {{ props.vehicles.filter(m => m.isVisible !== false && ((m.nuovaUsata || '').toLowerCase().includes('vendut') || (m.stato || '').toLowerCase().includes('vendut'))).length }}
+            </span>
           </button>
         </div>
 
-        <div class="secondary-filters">
-          <select v-model="activeCategory" class="filter-select" v-if="dynamicCategories.length">
-            <option value="tutte">Tutte le categorie</option>
-            <option v-for="cat in dynamicCategories" :key="cat" :value="cat">{{ cat }}</option>
-          </select>
-          
-          <select v-model="sortBy" class="filter-select">
-            <option value="recente">Ultimi arrivi</option>
-            <option value="alfabetico">A-Z</option>
-            <option value="anno">Anno</option>
-            <option value="prezzo_asc">Prezzo</option>
-          </select>
+        <div class="secondary-filters-row">
+          <div v-if="dynamicCategories.length" class="filter-group">
+            <select v-model="activeCategory" class="premium-select">
+              <option value="tutte">Tutte le Categorie</option>
+              <option v-for="cat in dynamicCategories" :key="cat" :value="cat">{{ cat }}</option>
+            </select>
+          </div>
+
+          <div v-if="activeFilter === 'usato' || activeFilter === 'tutti'" class="filter-group">
+            <select v-model="maxKm" class="premium-select">
+              <option :value="null">Qualsiasi Chilometraggio</option>
+              <option :value="5000">Fino a 5.000 km</option>
+              <option :value="10000">Fino a 10.000 km</option>
+              <option :value="20000">Fino a 20.000 km</option>
+              <option :value="50000">Fino a 50.000 km</option>
+            </select>
+          </div>
+
+          <div class="filter-group">
+            <select v-model="sortBy" class="premium-select">
+              <option value="recente">Ultimi Arrivi</option>
+              <option value="alfabetico">Marca e Modello (A-Z)</option>
+              <option value="anno">Anno (Più Recente)</option>
+              <option value="prezzo_asc">Prezzo (Crescente)</option>
+            </select>
+          </div>
         </div>
       </div>
 
-      <!-- Grid Veicoli -->
-      <div v-if="!props.vehicles.length" class="empty-state">
-        <div class="empty-content">
-          <svg class="empty-icon" width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-            <path d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z"/>
-            <path d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 104 0m6 0a2 2 0 104 0m-4 0a2 2 0 104 0"/>
-          </svg>
-          <h3>Nessun veicolo disponibile</h3>
-          <p>Contattaci per scoprire le prossime disponibilità</p>
-        </div>
-      </div>
+      <div v-if="!props.vehicles.length" class="state-box glass-panel">Nessun veicolo disponibile.</div>
 
-      <div v-else class="vehicles-grid grid-3" :id="`vehicles-panel-${activeFilter}`" role="tabpanel" :aria-labelledby="`filter-${activeFilter}`">
-        <article v-for="vehicle in featuredMotos" :key="vehicle._id" class="vehicle-card group bg-white dark:bg-white/5 rounded-xl overflow-hidden border border-transparent hover:border-primary/20 transition-all duration-500 hover:shadow-2xl">
-          <div class="vehicle-image-wrapper relative h-[280px] overflow-hidden">
-            <VehicleCarousel :images="formatImages(vehicle)" :altText="`${vehicle.categoria} ${vehicle.marca} ${vehicle.modello}`" height="280px" />
-            
-            <!-- Sold Stamp -->
-            <div v-if="vehicle.stato === 'venduto' || vehicle.nuovaUsata?.toLowerCase().includes('venduto')" class="sold-stamp absolute inset-0 flex items-center justify-center z-20 pointer-events-none">
-              VENDUTO
+      <div v-else class="featured-grid">
+        <article v-for="moto in featuredMotos" :key="moto._id" class="moto-card glass-panel">
+          <div class="card-visual">
+            <VehicleCarousel :images="formatImages(moto)" :altText="`${moto.categoria} ${moto.marca} ${moto.modello} in vendita a San Nicola la Strada`" height="260px" />
+             <div class="card-overlay-actions">
+                <NuxtLink :to="`/veicoli/${moto.slug || moto._id}`" class="btn-secondary-glass">Dettagli</NuxtLink>
+            </div>
+            <div class="card-badges-top">
+              <div v-if="moto.nuovaUsata === 'nuova' || moto.stato === 'nuovo'" class="badge-status-card new">NUOVO</div>
+              <div v-else-if="moto.nuovaUsata === 'usata' || moto.stato === 'usato'" class="badge-status-card used">USATO</div>
+              <div v-else-if="moto.nuovaUsata === 'venduta' || (moto.stato || '').toLowerCase().includes('vendut')" class="badge-status-card sold">VENDUTO</div>
+              <div v-if="moto.nuovaUsata === 'promozione' || moto.isPromotion || moto.prezzoScontato || moto.offerta === true" class="badge-promo-card">PROMO</div>
             </div>
             
-            <!-- Premium Badge stato -->
-            <div class="absolute top-4 left-4 z-10 flex flex-col gap-2">
-              <span v-if="vehicle.nuovaUsata === 'nuova' || vehicle.stato === 'nuovo'" class="px-3 py-1 bg-primary text-white text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg">Nuovo</span>
-              <span v-else-if="vehicle.nuovaUsata === 'usata' || vehicle.stato === 'usato'" class="px-3 py-1 bg-white/20 backdrop-blur-md text-white text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg border border-white/20">Usato</span>
-              <span v-if="vehicle.isPromotion || vehicle.prezzoScontato" class="px-3 py-1 bg-accent text-black text-[10px] font-black uppercase tracking-widest rounded-full shadow-lg">Offerta</span>
-            </div>
-            
-            <!-- Price Tag -->
-            <div class="absolute bottom-4 right-4 z-10">
-              <div class="px-4 py-2 bg-black/80 backdrop-blur-xl rounded-2xl border border-white/10 shadow-2xl">
-                <span class="text-primary font-black text-lg">{{ formatPrice(vehicle.prezzo) }}</span>
-              </div>
+            <!-- Timbro Venduto -->
+            <div v-if="moto.nuovaUsata === 'venduta' || (moto.stato || '').toLowerCase().includes('vendut')" class="sold-stamp-wrapper">
+              <div class="sold-stamp">VENDUTO</div>
             </div>
           </div>
 
-          <div class="vehicle-content p-8">
-            <div class="flex items-center justify-between mb-4">
-              <span class="text-xs font-bold text-primary uppercase tracking-[0.2em]">{{ vehicle.marca || 'Veicolo' }}</span>
-              <span class="text-[10px] font-bold text-gray-400 uppercase tracking-widest bg-gray-100 dark:bg-white/5 px-2 py-1 rounded-md">{{ vehicle.categoria }}</span>
+          <div class="moto-body">
+            <div class="moto-header-main">
+              <span class="brand-tag">{{ moto.marca || 'Veicolo' }}</span>
+              <span class="category-tag" v-if="moto.categoria">{{ moto.categoria }}</span>
             </div>
             
-            <h3 class="text-2xl font-black mb-6 dark:text-white uppercase tracking-tighter leading-tight group-hover:text-primary transition-colors">{{ vehicle.modello || 'Modello disponibile' }}</h3>
+            <h3 class="moto-title-display">{{ moto.modello || 'Modello disponibile' }}</h3>
             
-            <div class="grid grid-cols-2 gap-4 mb-8">
-              <div class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-white/5 rounded-2xl">
-                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-                <div class="flex flex-col">
-                  <span class="text-[10px] text-gray-400 font-bold uppercase">Anno</span>
-                  <span class="text-xs font-black dark:text-white">{{ formatYear(vehicle) }}</span>
-                </div>
+            <div class="moto-spec-grid">
+              <div class="spec-item">
+                <span class="spec-icon">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
+                </span>
+                <span class="spec-value">{{ formatYear(moto) }}</span>
               </div>
-              <div class="flex items-center gap-3 p-3 bg-gray-50 dark:bg-white/5 rounded-2xl">
-                <svg class="w-4 h-4 text-primary" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
-                <div class="flex flex-col">
-                  <span class="text-[10px] text-gray-400 font-bold uppercase">KM</span>
-                  <span class="text-xs font-black dark:text-white">{{ vehicle.chilometri?.toLocaleString('it-IT') || '0' }}</span>
-                </div>
+              <div class="spec-item">
+                <span class="spec-icon">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/></svg>
+                </span>
+                <span class="spec-value">{{ moto.chilometri?.toLocaleString('it-IT') || '0' }} km</span>
+              </div>
+              <div class="spec-item">
+                <span class="spec-icon">
+                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"/></svg>
+                </span>
+                <span class="spec-value">{{ moto.alimentazione || 'N/D' }}</span>
               </div>
             </div>
 
-            <NuxtLink :to="`/veicoli/${vehicle.slug || vehicle._id}`" class="w-full py-4 bg-gray-900 dark:bg-white/10 text-white text-[11px] font-black rounded-2xl uppercase tracking-[0.2em] hover:bg-primary transition-all duration-300 flex items-center justify-center gap-2 group/btn">
-              Vedi Dettagli
-              <svg class="w-4 h-4 transform group-hover/btn:translate-x-1 transition-transform" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-            </NuxtLink>
+            <div class="moto-footer-premium">
+              <div class="price-display-wrapper">
+                <span class="price-label">Prezzo</span>
+                <strong class="main-price">{{ formatPrice(moto.prezzo) }}</strong>
+              </div>
+              <NuxtLink :to="{ path: '/', query: { moto: moto._id }, hash: '#preventivo' }" class="btn-quote-minimal">
+                <span class="icon">
+                  <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+                </span>
+                Preventivo
+              </NuxtLink>
+            </div>
           </div>
         </article>
       </div>
 
-      <!-- CTA Section -->
-      <div v-if="!isVeicoliPage" class="section-cta">
-        <NuxtLink to="/veicoli" class="btn btn-primary btn-lg btn-icon">
-          Vedi tutto il parco veicoli
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+      <div v-if="!isVeicoliPage" class="section-footer-actions">
+        <NuxtLink to="/veicoli" class="btn-premium">
+          <span>Vedi Tutto il Parco Veicoli</span>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </NuxtLink>
       </div>
     </div>
@@ -349,265 +381,238 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
-/* Featured Vehicles Section */
 .featured-section {
+  padding: 40px 0 60px;
   background: var(--bg);
   position: relative;
+  z-index: 2;
+  margin-top: 0;
+  scroll-margin-top: 20px;
 }
 
-.section-header {
+.section-heading-row {
   display: flex;
   justify-content: space-between;
   align-items: flex-end;
-  gap: var(--space-2xl);
-  margin-bottom: var(--space-2xl);
+  gap: 32px;
+  margin-bottom: 48px;
   flex-wrap: wrap;
 }
 
-.section-content {
+@media (max-width: 768px) {
+  .section-heading-row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+}
+
+.heading-left {
   flex: 1;
   min-width: 300px;
 }
 
-/* Search Container */
-.search-container {
+.section-kicker {
+  color: var(--primary);
+  font-weight: 900;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 1rem;
+  margin-bottom: 12px;
+}
+
+.heading-left h2 {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 950;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* --- Search Bar Style --- */
+.search-bar-container {
   width: 100%;
-  max-width: 400px;
+  max-width: 450px;
+}
+
+@media (max-width: 768px) {
+  .search-bar-container {
+    max-width: 100%;
+    margin-top: 10px;
+  }
 }
 
 .search-wrapper {
   position: relative;
+  width: 100%;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
 }
 
 .search-icon {
   position: absolute;
-  left: var(--space-lg);
+  left: 20px;
   top: 50%;
   transform: translateY(-50%);
-  width: 20px;
-  height: 20px;
-  color: var(--text-muted);
-  transition: color var(--transition-base);
+  width: 18px;
+  height: 18px;
+  color: var(--text-dim);
+  transition: color 0.3s ease;
+  z-index: 1;
 }
 
 .search-input {
   width: 100%;
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-full);
-  padding: var(--space-md) var(--space-xl) var(--space-md) 52px;
-  color: var(--text-primary);
-  font-size: var(--text-sm);
+  background: transparent;
+  border: none;
+  padding: 14px 24px 14px 54px;
+  color: #fff;
+  font-size: 0.95rem;
   font-weight: 500;
-  transition: all var(--transition-base);
-  appearance: none;
+  transition: all 0.3s ease;
+  -webkit-appearance: none;
 }
 
 .search-input:focus {
   outline: none;
-  border-color: var(--primary);
-  background: var(--surface-elevated);
-  box-shadow: 0 0 0 3px var(--primary-glow);
 }
 
-.search-input:focus + .search-icon {
+.search-wrapper:focus-within {
+  border-color: var(--primary);
+  box-shadow: 0 0 20px var(--primary-glow);
+}
+
+.search-wrapper:focus-within .search-icon {
   color: var(--primary);
 }
 
-/* Filters Section */
-.filters-section {
-  margin-bottom: var(--space-3xl);
+/* --- Filter Section Premium --- */
+.section-filters-only {
+  margin-bottom: 60px;
 }
 
-.filter-tabs {
+@media (max-width: 768px) {
+  .section-filters-only {
+    margin-bottom: 40px;
+  }
+}
+
+.section-description {
+  color: var(--text-dim);
+  font-size: 1.1rem;
+  margin-top: 8px;
+}
+
+.main-filter-tabs {
   display: flex;
-  gap: var(--space-md);
-  margin-bottom: var(--space-xl);
-  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 32px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  padding: 4px 4px 12px;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
 }
 
-.filter-tab {
-  background: var(--surface);
+.main-filter-tabs::-webkit-scrollbar {
+  display: none;
+}
+
+.main-tab-btn {
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--line);
-  padding: var(--space-sm) var(--space-lg);
-  border-radius: var(--radius-full);
-  color: var(--text-secondary);
+  padding: 14px 28px;
+  border-radius: var(--radius-xl);
+  color: white;
   cursor: pointer;
-  transition: all var(--transition-base);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
-  gap: var(--space-sm);
-  font-weight: 600;
-  font-size: var(--text-sm);
+  gap: 12px;
+  position: relative;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
-.filter-tab:hover {
-  background: var(--surface-elevated);
-  border-color: var(--line-elevated);
-  transform: translateY(-1px);
+.main-tab-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
-.filter-tab.active {
+.main-tab-btn.active {
   background: var(--primary-gradient);
   border-color: transparent;
-  color: var(--text-inverse);
-  box-shadow: var(--shadow-primary);
+  box-shadow: 0 8px 20px var(--primary-glow);
 }
 
-.filter-label {
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+.main-tab-btn.active .tab-label,
+.main-tab-btn.active .tab-count,
+.main-tab-btn.active .tab-icon {
+  color: white;
 }
 
-.filter-count {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 2px 8px;
-  border-radius: var(--radius-full);
-  font-size: var(--text-xs);
-  font-weight: 800;
-  min-width: 20px;
-  text-align: center;
-}
-
-.filter-tab.active .filter-count {
-  background: rgba(255, 255, 255, 0.3);
-  color: var(--text-inverse);
-}
-
-.secondary-filters {
-  display: flex;
-  gap: var(--space-lg);
-  flex-wrap: wrap;
-}
-
-.filter-select {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  padding: var(--space-sm) var(--space-lg);
-  color: var(--text-primary);
-  font-weight: 600;
-  font-size: var(--text-sm);
-  cursor: pointer;
-  transition: all var(--transition-base);
-  min-width: 180px;
-}
-
-.filter-select:focus {
-  outline: none;
-  border-color: var(--primary);
-  box-shadow: 0 0 0 3px var(--primary-glow);
-}
-
-.filter-select option {
-  background: var(--surface-elevated);
-  color: var(--text-primary);
-}
-
-/* Empty State */
-.empty-state {
-  text-align: center;
-  padding: var(--space-4xl) var(--space-xl);
-  background: var(--surface);
-  border-radius: var(--radius-xl);
-  border: 2px dashed var(--line);
-}
-
-.empty-content {
-  max-width: 400px;
-  margin: 0 auto;
-}
-
-.empty-icon {
-  color: var(--text-muted);
-  margin-bottom: var(--space-lg);
-}
-
-.empty-content h3 {
-  font-size: var(--text-xl);
-  font-weight: 700;
-  margin-bottom: var(--space-md);
-  color: var(--text-primary);
-}
-
-.empty-content p {
-  color: var(--text-muted);
-  font-size: var(--text-sm);
-}
-
-/* Vehicle Cards */
-.vehicles-grid {
-  margin-bottom: var(--space-3xl);
-}
-
-.vehicle-card {
-  overflow: hidden;
-  transition: all var(--transition-base);
-}
-
-.vehicle-card:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-lg);
-}
-
-.vehicle-image {
-  position: relative;
-  overflow: hidden;
-  height: 280px;
-}
-
-.vehicle-badges {
-  position: absolute;
-  top: var(--space-md);
-  left: var(--space-md);
-  display: flex;
-  gap: var(--space-sm);
-  z-index: 2;
-}
-
-.badge {
-  padding: var(--space-xs) var(--space-sm);
-  border-radius: var(--radius-sm);
-  font-size: var(--text-xs);
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-.badge-new {
-  background: var(--success);
-  color: var(--text-inverse);
-}
-
-.badge-used {
-  background: var(--surface-elevated);
-  color: var(--text-primary);
-  border: 1px solid var(--line);
-}
-
-.badge-promo {
-  background: var(--warning);
-  color: var(--text-inverse);
-}
-
-.vehicle-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.7);
-  display: flex;
+.tab-icon {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
-  opacity: 0;
-  transition: opacity var(--transition-base);
-  backdrop-filter: blur(4px);
 }
 
-.vehicle-card:hover .vehicle-overlay {
-  opacity: 1;
+.tab-label {
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
 }
 
-.vehicle-content {
+.main-tab-btn.active .tab-label {
+  color: white;
+}
+
+.tab-count {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.75rem;
+  font-weight: 900;
+  color: var(--primary);
+}
+
+.main-tab-btn.active .tab-count {
+  background: rgba(255, 255, 255, 0.2);
+  color: white;
+}
+
+.promo-tab.active::before {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+.promo-tab.active {
+  box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.5);
+}
+
+.promo-tab .tab-count {
+  color: #f59e0b;
+}
+
+.sold-tab.active::before {
+  background: linear-gradient(135deg, #4b5563, #1f2937);
+}
+
+.sold-tab.active {
+  box-shadow: 0 10px 30px -10px rgba(75, 85, 99, 0.5);
+}
+
+.sold-tab .tab-count {
+  color: #9ca3af;
+}
+
+/* --- Sold Stamp Style --- */
+.sold-stamp-wrapper {
+  position: absolute;
+  top: 0;
   left: 0;
   width: 100%;
   height: 100%;
@@ -676,7 +681,7 @@ onUnmounted(() => {
 .premium-select {
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   padding: 12px 20px;
   color: #fff;
   font-weight: 600;
@@ -687,7 +692,7 @@ onUnmounted(() => {
 }
 
 .premium-select:focus {
-  border-color: var(--primary-2);
+  border-color: var(--primary);
   background: rgba(255, 255, 255, 0.08);
 }
 
@@ -724,7 +729,7 @@ onUnmounted(() => {
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  color: var(--muted);
+  color: var(--text-dim);
 }
 
 .filter-tabs {
@@ -735,7 +740,7 @@ onUnmounted(() => {
 
 .filter-select {
   padding: 10px 20px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid var(--line);
   color: #fff;
@@ -749,7 +754,7 @@ onUnmounted(() => {
 
 .filter-select:hover {
   background: rgba(255, 255, 255, 0.08);
-  border-color: var(--primary-2);
+  border-color: var(--primary);
 }
 
 .filter-select option {
@@ -759,10 +764,10 @@ onUnmounted(() => {
 
 .filter-btn {
   padding: 10px 24px;
-  border-radius: 100px;
+  border-radius: var(--radius-xl);
   background: rgba(255, 255, 255, 0.03);
   border: 1px solid var(--line);
-  color: var(--muted);
+  color: var(--text-dim);
   font-weight: 700;
   font-size: 0.9rem;
   cursor: pointer;
@@ -779,7 +784,7 @@ onUnmounted(() => {
   background: var(--primary);
   border-color: var(--primary);
   color: #fff;
-  box-shadow: 0 10px 20px -5px rgba(225, 29, 72, 0.4);
+  box-shadow: 0 10px 20px -5px var(--primary-glow);
 }
 
 .featured-grid {
@@ -790,20 +795,15 @@ onUnmounted(() => {
 }
 
 .moto-card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 24px;
-  overflow: hidden;
-  transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
   position: relative;
-  display: flex;
-  flex-direction: column;
+  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  height: 100%;
 }
 
 .moto-card:hover {
-  transform: translateY(-8px);
+  transform: translateY(-12px);
   border-color: var(--primary);
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.6);
+  box-shadow: var(--shadow-lg), 0 0 30px var(--primary-glow);
 }
 
 .card-visual {
@@ -828,22 +828,7 @@ onUnmounted(() => {
   opacity: 1;
 }
 
-.btn-view-quick {
-  background: #fff;
-  color: #000;
-  padding: 12px 32px;
-  border-radius: 100px;
-  font-weight: 800;
-  text-transform: uppercase;
-  font-size: 0.85rem;
-  letter-spacing: 0.05em;
-  transform: translateY(20px);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
 
-.moto-card:hover .btn-view-quick {
-  transform: translateY(0);
-}
 
 .card-badges-top {
   position: absolute;
@@ -857,7 +842,7 @@ onUnmounted(() => {
 
 .badge-status-card {
   padding: 4px 12px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.65rem;
   font-weight: 900;
   letter-spacing: 0.05em;
@@ -884,7 +869,7 @@ onUnmounted(() => {
   background: #f59e0b;
   color: white;
   padding: 4px 12px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.65rem;
   font-weight: 900;
   letter-spacing: 0.05em;
@@ -892,7 +877,7 @@ onUnmounted(() => {
 }
 
 .moto-body {
-  padding: 28px;
+  padding: 32px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -905,34 +890,38 @@ onUnmounted(() => {
 }
 
 .brand-tag {
-  color: var(--primary-2);
+  color: var(--primary);
   font-weight: 900;
   text-transform: uppercase;
   font-size: 0.75rem;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.2em;
 }
 
 .category-tag {
-  color: rgba(255, 255, 255, 0.4);
+  color: var(--text-dim);
   font-size: 0.75rem;
-  font-weight: 600;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .moto-title-display {
-  font-size: 1.5rem;
-  font-weight: 900;
-  margin-bottom: 24px;
+  font-size: 1.75rem;
+  font-weight: 950;
+  margin: 12px 0 28px;
   color: #fff;
-  line-height: 1.2;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
 }
 
 .moto-spec-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 8px;
-  margin-bottom: 20px;
-  padding-bottom: 20px;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  gap: 16px;
+  margin-bottom: 32px;
+  padding: 20px 0;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
 }
 
 @media (max-width: 400px) {
@@ -945,26 +934,18 @@ onUnmounted(() => {
 .spec-item {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
+  gap: 6px;
 }
 
 .spec-icon {
-  font-size: 1.2rem;
-  margin-bottom: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 20px;
-  height: 20px;
-  flex-shrink: 0;
+  color: var(--primary);
 }
 
 .spec-value {
-  font-size: 0.75rem;
-  font-weight: 700;
-  color: rgba(255, 255, 255, 0.7);
-  white-space: nowrap;
+  font-size: 0.8rem;
+  font-weight: 800;
+  color: var(--text);
+  text-transform: uppercase;
 }
 
 .moto-footer-premium {
@@ -988,37 +969,41 @@ onUnmounted(() => {
 }
 
 .main-price {
-  font-size: 1.4rem;
+  font-size: 1.75rem;
   font-weight: 950;
   color: #fff;
+  letter-spacing: -0.02em;
 }
 
 .btn-quote-minimal {
-  display: flex;
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   background: rgba(255, 255, 255, 0.05);
-  padding: 10px 18px;
-  border-radius: 12px;
+  padding: 12px 24px;
+  border-radius: var(--radius-xl);
   font-size: 0.85rem;
   font-weight: 800;
   color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.3s ease;
+  border: 1px solid var(--line);
+  transition: all 0.4s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .btn-quote-minimal:hover {
-  background: var(--primary);
-  border-color: var(--primary);
+  background: var(--primary-gradient);
+  border-color: transparent;
   transform: scale(1.05);
+  box-shadow: 0 8px 16px var(--primary-glow);
 }
 
 .state-box {
   text-align: center;
   padding: 60px 20px;
   background: var(--panel);
-  border-radius: var(--radius);
-  color: var(--muted);
+  border-radius: var(--radius-xl);
+  color: var(--text-dim);
   border: 1px dashed var(--line);
 }
 

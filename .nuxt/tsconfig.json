@@ -19,9 +19,6 @@
       "vue-router/auto-routes": [
         "../node_modules/vue-router/vue-router-auto-routes"
       ],
-      "unplugin-vue-router/client": [
-        "../node_modules/unplugin-vue-router/client"
-      ],
       "@nuxt/schema": [
         "../node_modules/@nuxt/schema"
       ],
@@ -125,7 +122,7 @@
         "./imports"
       ],
       "#app-manifest": [
-        "./manifest/meta/dev"
+        "./manifest/meta/dev.json"
       ],
       "#components": [
         "./components"
@@ -211,5 +208,10 @@
     "../node_modules/dist/runtime/server",
     "../node_modules/nuxt-site-config/dist/runtime/server",
     "../node_modules/nuxt-site-config/dist/dist/runtime/server"
-  ]
+  ],
+  "vueCompilerOptions": {
+    "plugins": [
+      "vue-router/volar/sfc-route-blocks"
+    ]
+  }
 }

@@ -67,137 +67,176 @@ const getDateStatus = (dateStr) => {
 </script>
 
 <template>
-  <div class="portal-dashboard">
+  <div class="portal-dashboard bg-[#030303] min-h-screen text-white">
     <!-- Top Bar -->
-    <header class="dashboard-header">
-      <div class="container header-shell">
-        <div class="brand-minimal">
-          <img src="/logo-pica-caravan.jpg" alt="Logo" />
-          <span>Area Clienti</span>
+    <header class="border-b border-white/5 bg-[#050505]/80 backdrop-blur-md sticky top-0 z-50">
+      <div class="container mx-auto px-6 h-20 flex items-center justify-between">
+        <div class="flex items-center gap-4">
+          <img src="/logo-pica-caravan.jpg" alt="Logo" class="h-10 w-10 rounded-full border border-white/10" />
+          <div class="flex flex-col">
+            <span class="text-sm font-black uppercase tracking-tighter">Pica Caravan</span>
+            <span class="text-[10px] text-primary font-black uppercase tracking-[0.2em]">Area Clienti</span>
+          </div>
         </div>
-        <div v-if="user" class="user-info">
-          <span class="user-name">{{ user.nome }} {{ user.cognome }}</span>
-          <button @click="logout" class="btn-logout-small">Esci</button>
+        <div v-if="user" class="flex items-center gap-6">
+          <div class="hidden md:flex flex-col items-end">
+            <span class="text-xs font-black uppercase tracking-widest text-white">{{ user.nome }} {{ user.cognome }}</span>
+            <span class="text-[9px] text-white/40 uppercase font-bold tracking-widest">Cliente Verificato</span>
+          </div>
+          <button @click="logout" class="px-4 py-2 border border-white/10 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-red-500/10 hover:text-red-500 hover:border-red-500/20 transition-all">
+            Esci
+          </button>
         </div>
       </div>
     </header>
 
-    <main class="container dashboard-main">
-      <div v-if="loading" class="loading-state">
-        <div class="spinner"></div>
-        <p>Caricamento dati del tuo veicolo...</p>
+    <main class="container mx-auto px-6 py-12">
+      <div v-if="loading" class="flex flex-col items-center justify-center py-32">
+        <div class="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin mb-4"></div>
+        <p class="text-white/40 text-xs font-black uppercase tracking-widest">Sincronizzazione dati veicolo...</p>
       </div>
 
-      <div v-else-if="data.vehicle" class="dashboard-grid">
-        <!-- Sidebar / Navigation -->
-        <aside class="dashboard-nav">
-          <div class="vehicle-mini-card">
-            <img :src="data.vehicle.photoUrl || '/logo-pica-caravan.jpg'" alt="Veicolo" />
-            <div class="mini-info">
-              <h3>{{ data.vehicle.marca }} {{ data.vehicle.modello }}</h3>
-              <span class="plate-badge">{{ data.vehicle.targa }}</span>
+      <div v-else-if="data.vehicle" class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+        <!-- Sidebar -->
+        <aside class="lg:col-span-3 space-y-8">
+          <div class="glass-panel p-6 overflow-hidden relative">
+            <div class="absolute top-0 right-0 w-20 h-20 bg-primary/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
+            <img :src="data.vehicle.photoUrl || '/logo-pica-caravan.jpg'" alt="Veicolo" class="w-full h-40 object-cover rounded-xl mb-6 border border-white/5" />
+            <div class="space-y-1">
+              <h3 class="text-lg font-black uppercase tracking-tighter">{{ data.vehicle.marca }} {{ data.vehicle.modello }}</h3>
+              <span class="inline-block px-3 py-1 bg-primary/20 text-primary text-[10px] font-black rounded-md tracking-widest">{{ data.vehicle.targa }}</span>
             </div>
           </div>
-          <nav class="nav-links">
-            <button :class="{ active: activeTab === 'profile' }" @click="activeTab = 'profile'">
-              <span class="icon">🚐</span> Profilo Veicolo
-            </button>
-            <button :class="{ active: activeTab === 'history' }" @click="activeTab = 'history'">
-              <span class="icon">🔧</span> Manutenzioni
-            </button>
-            <button :class="{ active: activeTab === 'booking' }" @click="activeTab = 'booking'">
-              <span class="icon">📅</span> Prenota Officina
+
+          <nav class="space-y-2">
+            <button 
+              v-for="tab in [
+                { id: 'profile', label: 'Profilo Veicolo', icon: '🚐' },
+                { id: 'history', label: 'Manutenzioni', icon: '🔧' },
+                { id: 'booking', label: 'Prenota Officina', icon: '📅' }
+              ]"
+              :key="tab.id"
+              @click="activeTab = tab.id"
+              class="w-full flex items-center gap-4 p-4 rounded-xl transition-all font-black uppercase tracking-widest text-[10px]"
+              :class="activeTab === tab.id ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-white/40 hover:bg-white/5 hover:text-white'"
+            >
+              <span class="text-lg">{{ tab.icon }}</span>
+              {{ tab.label }}
             </button>
           </nav>
         </aside>
 
-        <!-- Main Content Area -->
-        <section class="dashboard-content">
-          
-          <!-- TAB: PROFILO MOTO -->
-          <div v-if="activeTab === 'profile'" class="tab-pane">
-            <div class="content-header">
-              <h2>Il tuo Veicolo</h2>
-              <span v-if="data.vehicle.avvisi" class="warranty-badge warning">{{ data.vehicle.avvisi }}</span>
-              <span v-else class="warranty-badge">Dati Aggiornati</span>
+        <!-- Content -->
+        <section class="lg:col-span-9">
+          <!-- TAB: PROFILO -->
+          <div v-if="activeTab === 'profile'" class="space-y-10">
+            <div class="flex justify-between items-center">
+              <h2 class="text-3xl font-black uppercase tracking-tighter">Il tuo Veicolo</h2>
+              <span v-if="data.vehicle.avvisi" class="status-badge primary animate-pulse">Avviso Importante</span>
+              <span v-else class="status-badge dim">Dati Sincronizzati</span>
             </div>
             
-            <div class="info-grid">
-              <div class="info-card">
-                <label>Dati Iniziali</label>
-                <ul>
-                  <li><span>Marca:</span> {{ data.vehicle.marca }}</li>
-                  <li><span>Modello:</span> {{ data.vehicle.modello }}</li>
-                  <li><span>Data Acquisto:</span> {{ data.vehicle.dataAcquisto ? formatDate(data.vehicle.dataAcquisto) : 'N.D.' }}</li>
-                  <li><span>Km Iniziali:</span> {{ data.vehicle.kmIniziali || 0 }} km</li>
-                </ul>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div class="admin-card space-y-6">
+                <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Dati Tecnici</h4>
+                <div class="space-y-4">
+                  <div v-for="(val, label) in { 'Marca': data.vehicle.marca, 'Modello': data.vehicle.modello, 'Data Acquisto': data.vehicle.dataAcquisto ? formatDate(data.vehicle.dataAcquisto) : 'N.D.', 'Km Iniziali': (data.vehicle.kmIniziali || 0) + ' km' }" :key="label" class="flex justify-between border-b border-white/5 pb-2">
+                    <span class="text-xs text-white/40 font-bold uppercase">{{ label }}</span>
+                    <span class="text-xs text-white font-black uppercase">{{ val }}</span>
+                  </div>
+                </div>
               </div>
-              <div class="info-card">
-                <label>Stato Attuale</label>
-                <ul>
-                  <li><span>Targa:</span> {{ data.vehicle.targa }}</li>
-                  <li><span>Km Attuali:</span> <strong>{{ data.vehicle.kmAttuali || 0 }} km</strong></li>
-                  <li><span>Prossima Manutenzione:</span> <code class="next-maint">{{ data.vehicle.prossimaManutenzione || 'Da definire' }}</code></li>
-                </ul>
-              </div>
-            </div>
 
-            <div class="deadlines-section">
-              <h3>Scadenze Veicolo</h3>
-              <div class="deadlines-grid-portal">
-                <div class="deadline-pill" :class="getDateStatus(data.vehicle.scadenzaRevisione)">
-                  <span class="label">Revisione:</span>
-                  <span class="value">{{ data.vehicle.scadenzaRevisione ? formatDate(data.vehicle.scadenzaRevisione) : 'N.D.' }}</span>
-                </div>
-                <div class="deadline-pill" :class="getDateStatus(data.vehicle.scadenzaAssicurazione)">
-                  <span class="label">Assicurazione:</span>
-                  <span class="value">{{ data.vehicle.scadenzaAssicurazione ? formatDate(data.vehicle.scadenzaAssicurazione) : 'N.D.' }}</span>
-                </div>
-                <div class="deadline-pill" :class="getDateStatus(data.vehicle.scadenzaBollo)">
-                  <span class="label">Bollo:</span>
-                  <span class="value">{{ data.vehicle.scadenzaBollo ? formatDate(data.vehicle.scadenzaBollo) : 'N.D.' }}</span>
+              <div class="admin-card space-y-6">
+                <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Stato Attuale</h4>
+                <div class="space-y-4">
+                  <div class="flex justify-between border-b border-white/5 pb-2">
+                    <span class="text-xs text-white/40 font-bold uppercase">Km Attuali</span>
+                    <span class="text-sm text-primary font-black">{{ data.vehicle.kmAttuali || 0 }} km</span>
+                  </div>
+                  <div class="flex justify-between border-b border-white/5 pb-2">
+                    <span class="text-xs text-white/40 font-bold uppercase">Prossima Scadenza</span>
+                    <span class="text-xs text-white font-black uppercase">{{ data.vehicle.prossimaManutenzione || 'In aggiornamento' }}</span>
+                  </div>
                 </div>
               </div>
             </div>
 
-            <div class="reminders-section" v-if="data.vehicle.avvisi">
-              <h3>Avvisi e Suggerimenti</h3>
-              <div class="reminder-item highlight">
-                <span class="rem-icon">⚠️</span>
-                <div class="rem-info">
-                  <strong>Nota del Meccanico</strong>
-                  <p>{{ data.vehicle.avvisi }}</p>
+            <div class="space-y-6">
+              <h3 class="text-xl font-black uppercase tracking-tighter">Scadenze Legali</h3>
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div v-for="scad in [
+                  { label: 'Revisione', date: data.vehicle.scadenzaRevisione },
+                  { label: 'Assicurazione', date: data.vehicle.scadenzaAssicurazione },
+                  { label: 'Bollo', date: data.vehicle.scadenzaBollo }
+                ]" :key="scad.label" 
+                class="glass-panel p-6 flex flex-col items-center text-center gap-3 border-l-4"
+                :class="[
+                  getDateStatus(scad.date) === 'expired' ? 'border-l-red-500 bg-red-500/5' : 
+                  getDateStatus(scad.date) === 'upcoming' ? 'border-l-primary bg-primary/5' : 'border-l-green-500 bg-green-500/5'
+                ]">
+                  <span class="text-[10px] font-black uppercase tracking-widest text-white/40">{{ scad.label }}</span>
+                  <span class="text-lg font-black">{{ scad.date ? formatDate(scad.date) : 'N.D.' }}</span>
+                  <span class="text-[9px] font-black uppercase tracking-widest" :class="getDateStatus(scad.date) === 'expired' ? 'text-red-500' : 'text-white/20'">
+                    {{ getDateStatus(scad.date) === 'expired' ? 'Scaduto' : (getDateStatus(scad.date) === 'upcoming' ? 'In Scadenza' : 'In Regola') }}
+                  </span>
                 </div>
               </div>
             </div>
 
-            <!-- Articoli Manutenzione Correlati -->
-            <div v-if="data.blogPosts.length > 0" class="portal-blog-section">
-              <h3>Consigli di Manutenzione per te</h3>
-              <div class="portal-blog-grid">
-                <NuxtLink v-for="post in data.blogPosts" :key="post._id" :to="`/blog/${post.slug}`" class="portal-blog-card">
-                  <img :src="post.imageCover || '/logo-pica-caravan.jpg'" alt="Blog" />
-                  <div class="p-blog-info">
-                    <h4>{{ post.title }}</h4>
-                    <span class="p-read-more">Leggi di più →</span>
+            <div v-if="data.vehicle.avvisi" class="glass-panel p-8 bg-primary/5 border-primary/20">
+              <div class="flex items-start gap-4">
+                <span class="text-2xl">⚠️</span>
+                <div>
+                  <h4 class="text-sm font-black uppercase tracking-widest text-primary mb-2">Nota del Team Pica</h4>
+                  <p class="text-white/60 text-sm leading-relaxed font-medium">{{ data.vehicle.avvisi }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Blog Section -->
+            <div v-if="data.blogPosts.length > 0" class="space-y-8 pt-10 border-t border-white/5">
+              <h3 class="text-xl font-black uppercase tracking-tighter text-white">Consigli per il tuo viaggio</h3>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <NuxtLink v-for="post in data.blogPosts" :key="post._id" :to="`/blog/${post.slug}`" class="admin-card group p-4 flex gap-4 items-center">
+                  <img :src="post.imageCover || '/logo-pica-caravan.jpg'" alt="Blog" class="w-20 h-20 object-cover rounded-lg grayscale group-hover:grayscale-0 transition-all" />
+                  <div>
+                    <h4 class="text-xs font-black uppercase tracking-tight mb-2 group-hover:text-primary transition-colors">{{ post.title }}</h4>
+                    <span class="text-[9px] font-black uppercase tracking-widest text-white/40">Approfondisci →</span>
                   </div>
                 </NuxtLink>
               </div>
             </div>
           </div>
 
-          <!-- TAB: STORICO MANUTENZIONI -->
-          <div v-if="activeTab === 'history'" class="tab-pane">
-            <div class="content-header">
-              <h2>Cronologia Interventi</h2>
+          <!-- TAB: STORICO -->
+          <div v-if="activeTab === 'history'" class="space-y-10">
+            <h2 class="text-3xl font-black uppercase tracking-tighter">Cronologia Interventi</h2>
+            <div v-if="data.maintenance.length === 0" class="glass-panel p-20 text-center">
+              <p class="text-white/40 font-bold uppercase tracking-widest text-[10px]">Nessun intervento registrato a sistema</p>
             </div>
-            
-            <div v-if="data.maintenance.length === 0" class="empty-tab">
-              <p>Nessun intervento registrato.</p>
+            <div v-else class="space-y-4">
+              <div v-for="item in data.maintenance" :key="item._id" class="admin-card flex flex-col md:flex-row justify-between gap-6">
+                <div class="space-y-2">
+                  <div class="flex items-center gap-3">
+                    <span class="text-xs font-black text-primary">{{ formatDate(item.data) }}</span>
+                    <span class="w-1 h-1 bg-white/20 rounded-full"></span>
+                    <span class="text-xs font-black text-white/60">{{ item.km }} KM</span>
+                  </div>
+                  <h4 class="text-lg font-black uppercase tracking-tight text-white">{{ item.descrizione }}</h4>
+                  <p v-if="item.partiSostituite" class="text-xs text-white/40 font-medium">Parti: {{ item.partiSostituite }}</p>
+                </div>
+                <div class="flex items-center">
+                  <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm font-black">€ {{ item.costo }}</span>
+                </div>
+              </div>
             </div>
-            
-            <div v-else class="maintenance-timeline">
-              <div v-for="item in data.maintenance" :key="item._id" class="timeline-item">
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</template>
                 <div class="time-point"></div>
                 <div class="timeline-card">
                   <div class="tm-header">

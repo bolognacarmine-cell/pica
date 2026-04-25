@@ -1,137 +1,145 @@
 <template>
   <div class="admin-container">
       <!-- Login Section -->
-      <div v-if="!isAuthenticated" class="login-wall">
-        <div class="login-card">
-          <div class="mb-6 flex justify-center">
-            <img src="/logo-pica.png" alt="Pica Caravan" class="login-logo-img" />
-          </div>
-          <div class="login-logo-text mb-8 text-center">
-            <h1 class="text-2xl font-black text-white">PICA CARAVAN</h1>
-            <p class="text-[10px] tracking-[0.3em] text-primary uppercase">Area Riservata</p>
-          </div>
-          <h2>Accesso Admin</h2>
-        <form @submit.prevent="handleLogin">
+    <div v-if="!isAuthenticated" class="login-wall bg-[var(--bg)]">
+      <div class="glass-panel p-10 w-full max-w-md relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-32 h-32 bg-[var(--primary)]/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
+        
+        <div class="mb-10 flex flex-col items-center">
+          <img src="/logo-pica.png" alt="Pica Caravan" class="h-16 w-auto mb-6" />
+          <h1 class="text-3xl font-black text-white tracking-tighter uppercase">PICA CARAVAN</h1>
+          <p class="text-[10px] tracking-[0.4em] text-[var(--primary)] font-black uppercase mt-2">Area Riservata</p>
+        </div>
+
+        <form @submit.prevent="handleLogin" class="space-y-6">
           <div class="form-group">
+            <label class="premium-label">Username</label>
             <input 
               type="text" 
               v-model="usernameInput" 
-              placeholder="Username" 
+              class="premium-input"
+              placeholder="Inserisci username" 
               required 
             />
           </div>
           <div class="form-group">
+            <label class="premium-label">Password</label>
             <input 
               type="password" 
               v-model="passwordInput" 
-              placeholder="Password" 
+              class="premium-input"
+              placeholder="••••••••" 
               required 
             />
           </div>
-          <button type="submit" class="btn-primary-custom">Accedi</button>
-          <p v-if="loginError" class="error-msg">Credenziali errate</p>
+          <button type="submit" class="btn-premium w-full justify-center">
+            Accedi al Pannello
+          </button>
+          <p v-if="loginError" class="text-center text-[var(--primary)] text-xs font-bold uppercase tracking-widest mt-4">
+            Credenziali non valide
+          </p>
         </form>
       </div>
     </div>
 
     <!-- Admin Dashboard -->
-    <div v-else class="admin-dashboard">
-      <aside class="admin-sidebar">
-        <div class="sidebar-header">
-          <div class="sidebar-logo-text">
-            <span class="font-black text-white">PICA CARAVAN</span>
-            <span class="text-[8px] tracking-[0.2em] text-primary">ADMIN</span>
+    <div v-else class="admin-dashboard bg-[var(--bg)]">
+      <aside class="w-80 border-r border-[var(--line)] flex flex-col p-8 bg-[var(--panel)]">
+        <div class="mb-12">
+          <div class="flex flex-col">
+            <span class="text-xl font-black text-white tracking-tighter">PICA CARAVAN</span>
+            <span class="text-[10px] tracking-[0.3em] text-[var(--primary)] font-black uppercase">Admin Dashboard</span>
           </div>
         </div>
-        <nav class="sidebar-nav">
+
+        <nav class="flex-1 space-y-2">
           <button 
-            :class="{ active: currentTab === 'list' }" 
-            @click="currentTab = 'list'"
+            v-for="tab in [
+              { id: 'list', label: 'Gestisci Veicoli', icon: '🚐' },
+              { id: 'add', label: 'Aggiungi Nuovo', icon: '➕' },
+              { id: 'leads', label: 'Preventivi', icon: '📩', count: leads.length },
+              { id: 'tradeIns', label: 'Permute', icon: '🔄', count: tradeIns.length },
+              { id: 'portal', label: 'Gestione Portale', icon: '👤' },
+              { id: 'deadlines', label: 'Alert Scadenze', icon: '🔔', count: upcomingDeadlines.length, urgent: hasUrgentDeadlines },
+              { id: 'blog', label: 'Journal Blog', icon: '📰' }
+            ]"
+            :key="tab.id"
+            @click="tab.id === 'add' ? openAddForm() : (currentTab = tab.id); if(tab.id === 'leads') fetchLeads(); if(tab.id === 'tradeIns') fetchTradeIns(); if(tab.id === 'portal' || tab.id === 'deadlines') fetchPortalUsers(); if(tab.id === 'blog') fetchBlogPosts();"
+            class="w-full flex items-center justify-between p-4 rounded-[var(--radius-md)] transition-all group"
+            :class="currentTab === tab.id ? 'bg-[var(--primary)] text-white shadow-lg shadow-[var(--primary-glow)]' : 'text-[var(--text-dim)] hover:bg-[var(--line)] hover:text-white'"
           >
-            <span class="icon">🚐</span> Gestisci Veicoli
-          </button>
-          <button 
-            :class="{ active: currentTab === 'add' }" 
-            @click="openAddForm"
-          >
-            <span class="icon">➕</span> Aggiungi Nuovo
-          </button>
-          <button 
-            :class="{ active: currentTab === 'leads' }" 
-            @click="currentTab = 'leads'; fetchLeads()"
-          >
-            <span class="icon">📩</span> Preventivi 
-            <span v-if="leads.length" class="badge-count">{{ leads.length }}</span>
-          </button>
-          <button 
-            :class="{ active: currentTab === 'tradeIns' }" 
-            @click="currentTab = 'tradeIns'; fetchTradeIns()"
-          >
-            <span class="icon">🔄</span> Permute 
-            <span v-if="tradeIns.length" class="badge-count">{{ tradeIns.length }}</span>
-          </button>
-          <button 
-            :class="{ active: currentTab === 'portal' }" 
-            @click="currentTab = 'portal'; fetchPortalUsers()"
-          >
-            <span class="icon">👤</span> Gestione Portale
-          </button>
-          <button 
-            :class="{ active: currentTab === 'deadlines' }" 
-            @click="currentTab = 'deadlines'; fetchPortalUsers()"
-          >
-            <span class="icon">🔔</span> Alert Scadenze
-            <span v-if="upcomingDeadlines && upcomingDeadlines.length" class="badge-count" :class="{ 'blink-badge': hasUrgentDeadlines }">
-              {{ upcomingDeadlines.length }}
+            <div class="flex items-center gap-3">
+              <span class="text-lg">{{ tab.icon }}</span>
+              <span class="text-xs font-black uppercase tracking-widest">{{ tab.label }}</span>
+            </div>
+            <span v-if="tab.count" 
+                  class="px-2 py-0.5 rounded-full text-[10px] font-black"
+                  :class="currentTab === tab.id ? 'bg-[var(--primary)] text-white shadow-lg shadow-[var(--primary-glow)]' : (tab.urgent ? 'bg-[var(--primary)] text-white animate-pulse' : 'bg-[var(--line)] text-[var(--text-dim)] hover:bg-[var(--line)] hover:text-white')">
+              {{ tab.count }}
             </span>
           </button>
-          <button 
-            :class="{ active: currentTab === 'blog' }" 
-            @click="currentTab = 'blog'; fetchBlogPosts()"
-          >
-            <span class="icon">📰</span> Blog
-          </button>
         </nav>
-        <button @click="logout" class="btn-logout">Esci</button>
+
+        <button @click="logout" class="mt-10 p-4 border border-[var(--line)] rounded-[var(--radius-md)] text-[var(--text-dim)] text-[10px] font-black uppercase tracking-widest hover:bg-red-500/10 hover:text-red-500 hover:border-red-500/20 transition-all">
+          Disconnetti
+        </button>
       </aside>
 
-      <main class="admin-content">
+      <main class="flex-1 overflow-y-auto p-12">
         <!-- List View -->
-        <section v-if="currentTab === 'list'" class="content-section">
-          <div class="section-header">
-            <h2>I Tuoi Veicoli</h2>
-            <p>Gestisci il tuo parco veicoli online</p>
+        <section v-if="currentTab === 'list'" class="space-y-10">
+          <div class="flex justify-between items-end">
+            <div>
+              <h2 class="text-4xl font-black text-white uppercase tracking-tighter">I Tuoi Veicoli</h2>
+              <p class="text-[var(--text-dim)] text-sm font-medium">Gestisci il catalogo online in tempo reale</p>
+            </div>
+            <button @click="currentTab = 'add'" class="btn-premium">
+              Nuovo Veicolo
+            </button>
           </div>
 
-          <div v-if="loading" class="loading-state">Caricamento veicoli...</div>
+          <div v-if="loading" class="flex items-center justify-center py-20">
+             <div class="w-10 h-10 border-4 border-[var(--primary)]/20 border-t-[var(--primary)] rounded-full animate-spin"></div>
+          </div>
           
-          <div v-else-if="vehicles.length === 0" class="empty-state">
-            <p>Non ci sono veicoli caricati.</p>
-            <button @click="currentTab = 'add'" class="btn-primary-custom">Carica il primo veicolo</button>
+          <div v-else-if="vehicles.length === 0" class="glass-panel p-20 text-center">
+            <p class="text-[var(--text-dim)] font-bold uppercase tracking-widest text-xs mb-6">Nessun veicolo trovato</p>
+            <button @click="currentTab = 'add'" class="btn-premium">Inizia ora</button>
           </div>
 
-          <div v-else class="vehicles-grid">
-            <div v-for="m in vehicles" :key="m._id" class="vehicle-card-admin">
-              <div class="vehicle-img-admin">
+          <div v-else class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-8">
+            <div v-for="m in vehicles" :key="m._id" class="admin-card group overflow-hidden flex flex-col glass-panel">
+              <div class="relative h-64 overflow-hidden -mx-6 -mt-6 mb-6">
                 <VehicleCarousel :images="m.immagini" :altText="`${m.marca} ${m.modello}`" />
-              </div>
-              <div class="vehicle-info-admin">
-                <h3>{{ m.marca }} {{ m.modello }}</h3>
-                <div class="vehicle-tags">
-                  <span class="tag">{{ m.tipo }}</span>
-                  <span v-if="m.categoria" class="tag category">{{ m.categoria }}</span>
-                  <span class="tag status" :class="m.nuovaUsata">
-                    {{ m.nuovaUsata === 'nuova' ? 'Nuova' : (m.nuovaUsata === 'promozione' ? 'Promozione' : (m.nuovaUsata === 'venduta' ? 'Venduta' : 'Usata')) }}
-                  </span>
-                  <span class="tag visibility" :class="m.isVisible ? 'visible' : 'hidden'">
-                    {{ m.isVisible ? '👁️ Visibile' : '🚫 Nascosto' }}
+                <div class="absolute top-4 right-4 flex gap-2">
+                  <span class="status-badge primary">{{ m.nuovaUsata }}</span>
+                  <span class="status-badge" :class="m.isVisible ? 'primary' : 'dim'">
+                    {{ m.isVisible ? 'Visibile' : 'Nascosto' }}
                   </span>
                 </div>
-                <p class="description-preview">{{ m.descrizione || 'Nessuna descrizione' }}</p>
-                <p class="price">€ {{ m.prezzo }}</p>
-                <div class="actions-admin">
-                  <button @click="editVehicle(m)" class="btn-edit">Modifica</button>
-                  <button @click="confirmDelete(m)" class="btn-delete">Elimina</button>
+              </div>
+
+              <div class="flex-1 flex flex-col">
+                <div class="flex justify-between items-start mb-4">
+                  <div>
+                    <span class="text-[var(--primary)] text-[10px] font-black uppercase tracking-widest">{{ m.marca }}</span>
+                    <h3 class="text-xl font-black text-white uppercase tracking-tight">{{ m.modello }}</h3>
+                  </div>
+                  <span class="text-lg font-black text-white">€ {{ m.prezzo.toLocaleString('it-IT') }}</span>
+                </div>
+
+                <div class="flex flex-wrap gap-2 mb-6">
+                  <span class="px-2 py-1 bg-[var(--line)] border border-[var(--line)] rounded-[var(--radius-sm)] text-[9px] font-black uppercase tracking-widest text-[var(--text-dim)]">{{ m.tipo }}</span>
+                  <span class="px-2 py-1 bg-[var(--line)] border border-[var(--line)] rounded-[var(--radius-sm)] text-[9px] font-black uppercase tracking-widest text-[var(--text-dim)]">{{ m.categoria }}</span>
+                </div>
+
+                <div class="flex gap-3 mt-auto">
+                  <button @click="editVehicle(m)" class="flex-1 py-3 bg-[var(--line)] hover:opacity-80 border border-[var(--line)] rounded-[var(--radius-md)] text-[10px] font-black uppercase tracking-widest text-white transition-all">
+                    Modifica
+                  </button>
+                  <button @click="confirmDelete(m)" class="px-4 py-3 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white border border-red-500/20 rounded-[var(--radius-md)] transition-all">
+                    🗑️
+                  </button>
                 </div>
               </div>
             </div>
@@ -139,45 +147,50 @@
         </section>
 
         <!-- Form View (Add/Edit) -->
-        <section v-if="currentTab === 'add' || currentTab === 'edit'" class="content-section">
-          <div class="section-header">
-            <h2>{{ currentTab === 'add' ? 'Carica Nuovo Veicolo' : 'Modifica Veicolo' }}</h2>
-            <button @click="currentTab = 'list'" class="btn-back">← Torna alla lista</button>
+        <section v-if="currentTab === 'add' || currentTab === 'edit'" class="space-y-10">
+          <div class="flex justify-between items-end">
+            <div>
+              <h2 class="text-4xl font-black text-white uppercase tracking-tighter">{{ currentTab === 'add' ? 'Carica Nuovo Veicolo' : 'Modifica Veicolo' }}</h2>
+              <p class="text-[var(--text-dim)] text-sm font-medium">Riempi i campi per pubblicare il veicolo nel catalogo</p>
+            </div>
+            <button @click="currentTab = 'list'" class="btn-secondary-glass">
+              ← Torna alla lista
+            </button>
           </div>
 
-          <form @submit.prevent="handleSubmit" class="moto-form">
-            <div class="form-grid">
+          <form @submit.prevent="handleSubmit" class="admin-card glass-panel">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <div class="form-group">
-                <label>Marca</label>
-                <input type="text" v-model="vehicleForm.marca" required placeholder="Es: Hymer" />
+                <label class="premium-label">Marca</label>
+                <input type="text" v-model="vehicleForm.marca" required placeholder="Es: Hymer" class="premium-input" />
               </div>
               <div class="form-group">
-                <label>Modello</label>
-                <input type="text" v-model="vehicleForm.modello" required placeholder="Es: B-Class" />
+                <label class="premium-label">Modello</label>
+                <input type="text" v-model="vehicleForm.modello" required placeholder="Es: B-Class" class="premium-input" />
               </div>
               <div class="form-group">
-                <label>Prezzo (€)</label>
-                <input type="number" v-model="vehicleForm.prezzo" required />
+                <label class="premium-label">Prezzo (€)</label>
+                <input type="number" v-model="vehicleForm.prezzo" required class="premium-input" />
               </div>
               <div class="form-group">
-                <label>Anno</label>
-                <input type="number" v-model="vehicleForm.anno" />
+                <label class="premium-label">Anno</label>
+                <input type="number" v-model="vehicleForm.anno" class="premium-input" />
               </div>
               <div class="form-group">
-                <label>Chilometri</label>
-                <input type="number" v-model="vehicleForm.chilometri" />
+                <label class="premium-label">Chilometri</label>
+                <input type="number" v-model="vehicleForm.chilometri" class="premium-input" />
               </div>
               <div class="form-group">
-                <label>Tipo</label>
-                <select v-model="vehicleForm.tipo" required>
+                <label class="premium-label">Tipo</label>
+                <select v-model="vehicleForm.tipo" required class="premium-input appearance-none">
                   <option value="camper">Camper</option>
                   <option value="roulotte">Roulotte</option>
                   <option value="container">Container</option>
                 </select>
               </div>
               <div class="form-group">
-                <label>Stato</label>
-                <select v-model="vehicleForm.nuovaUsata" required>
+                <label class="premium-label">Stato</label>
+                <select v-model="vehicleForm.nuovaUsata" required class="premium-input appearance-none">
                   <option value="nuovo">Nuovo</option>
                   <option value="usato">Usato</option>
                   <option value="promozione">Promozione</option>
@@ -185,157 +198,211 @@
                 </select>
               </div>
               <div class="form-group">
-                <label>Visibilità sul sito</label>
-                <div class="visibility-toggle">
-                  <input type="checkbox" v-model="vehicleForm.isVisible" id="isVisible" />
-                  <label for="isVisible">{{ vehicleForm.isVisible ? 'Visibile' : 'Nascosto' }}</label>
-                </div>
-              </div>
-              <div class="form-group">
-                <label>Categoria</label>
-                <select v-model="vehicleForm.categoria" required>
+                <label class="premium-label">Categoria</label>
+                <select v-model="vehicleForm.categoria" required class="premium-input appearance-none">
                   <option v-for="cat in ['Motorhome', 'Profilato', 'Mansardato', 'Van/Camper puro', 'Roulotte', 'Container', 'Street Food']" :key="cat" :value="cat">
                     {{ cat }}
                   </option>
                 </select>
               </div>
-              <div class="form-group full-width">
-                <label>Descrizione</label>
-                <textarea v-model="vehicleForm.descrizione" placeholder="Descrivi lo stato del veicolo..."></textarea>
+              <div class="form-group">
+                <label class="premium-label">Visibilità sul sito</label>
+                <div class="flex items-center gap-4 h-[54px]">
+                  <input type="checkbox" v-model="vehicleForm.isVisible" id="isVisible" class="w-6 h-6 rounded-[var(--radius-sm)] border-[var(--line)] bg-[var(--line)] text-[var(--primary)] focus:ring-[var(--primary)]" />
+                  <label for="isVisible" class="text-xs font-black uppercase tracking-widest text-[var(--text-dim)] cursor-pointer">{{ vehicleForm.isVisible ? 'Visibile' : 'Nascosto' }}</label>
+                </div>
+              </div>
+
+              <div class="form-group md:col-span-2 lg:col-span-3">
+                <label class="premium-label">Descrizione</label>
+                <textarea v-model="vehicleForm.descrizione" placeholder="Descrivi lo stato del veicolo..." class="premium-input min-h-[150px] py-4"></textarea>
               </div>
               
-              <div class="form-group full-width">
-                <label>Immagini</label>
-                <input type="file" @change="handleImageUpload" multiple accept="image/*" class="file-input" />
-                <div v-if="imagePreviews.length" class="image-previews">
-                  <div v-for="(preview, index) in imagePreviews" :key="index" class="image-preview-item">
-                    <img :src="preview" />
-                    <button @click="removeImage(index)" type="button" class="remove-btn">×</button>
+              <div class="form-group md:col-span-2 lg:col-span-3">
+                <label class="premium-label">Immagini</label>
+                <div class="border-2 border-dashed border-[var(--line)] rounded-[var(--radius-md)] p-8 text-center hover:border-[var(--primary)]/50 transition-all group">
+                  <input type="file" @change="handleImageUpload" id="fileInput" multiple accept="image/*" class="hidden" />
+                  <label for="fileInput" class="cursor-pointer flex flex-col items-center gap-4">
+                    <span class="text-4xl group-hover:scale-110 transition-transform">📸</span>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)] group-hover:text-[var(--primary)]">Trascina o clicca per caricare foto</span>
+                  </label>
+                </div>
+                
+                <div v-if="imagePreviews.length" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-6">
+                  <div v-for="(preview, index) in imagePreviews" :key="index" class="relative aspect-video rounded-[var(--radius-md)] overflow-hidden border border-[var(--line)] group">
+                    <img :src="preview" class="w-full h-full object-cover" />
+                    <button @click="removeImage(index)" type="button" class="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity">×</button>
                   </div>
                 </div>
               </div>
             </div>
 
-            <div class="form-actions">
-              <button type="submit" :disabled="submitting" class="btn-primary-custom">
-                {{ submitting ? 'Salvataggio...' : (currentTab === 'add' ? 'Pubblica Veicolo' : 'Salva Modifiche') }}
+            <div class="mt-12 flex flex-col items-center gap-6">
+              <button type="submit" :disabled="submitting" class="btn-premium px-12">
+                {{ submitting ? 'Salvataggio in corso...' : (currentTab === 'add' ? 'Pubblica Veicolo' : 'Salva Modifiche') }}
               </button>
-              <p v-if="formMessage" :class="['msg', isSuccess ? 'success' : 'error']">{{ formMessage }}</p>
+              <p v-if="formMessage" :class="['text-[10px] font-black uppercase tracking-[0.2em]', isSuccess ? 'text-green-500' : 'text-red-500']">{{ formMessage }}</p>
             </div>
           </form>
         </section>
 
         <!-- Leads View -->
-        <section v-if="currentTab === 'leads'" class="content-section">
-          <div class="section-header">
-            <h2>Richieste Preventivo</h2>
-            <p>Gestisci i contatti dai potenziali clienti</p>
+        <section v-if="currentTab === 'leads'" class="space-y-10">
+          <div class="flex justify-between items-end">
+            <div>
+              <h2 class="text-4xl font-black text-white uppercase tracking-tighter">Richieste Preventivo</h2>
+              <p class="text-[var(--text-dim)] text-sm font-medium">Gestisci i contatti dai potenziali clienti</p>
+            </div>
           </div>
 
-          <div v-if="loading" class="loading-state">Caricamento richieste...</div>
+          <div v-if="loading" class="flex items-center justify-center py-20">
+             <div class="w-10 h-10 border-4 border-[var(--primary)]/20 border-t-[var(--primary)] rounded-full animate-spin"></div>
+          </div>
           
-          <div v-else-if="leads.length === 0" class="empty-state">
-            <p>Non ci sono ancora richieste di preventivo.</p>
+          <div v-else-if="leads.length === 0" class="glass-panel p-20 text-center">
+            <p class="text-[var(--text-dim)] font-bold uppercase tracking-widest text-xs">Non ci sono ancora richieste di preventivo.</p>
           </div>
 
-          <div v-else class="leads-list">
-            <div v-for="l in leads" :key="l._id" class="lead-card">
-              <div class="lead-header">
-                <span class="lead-date">{{ new Date(l.createdAt).toLocaleDateString('it-IT') }}</span>
-                <span class="lead-status" :class="l.status">{{ l.status }}</span>
-              </div>
-              <div class="lead-body">
-                <div class="lead-info">
-                  <h4>{{ l.nome }}</h4>
-                  <p>📧 {{ l.email }}</p>
-                  <p>📞 {{ l.telefono }}</p>
-                  <p>📍 {{ l.citta || 'N/D' }}</p>
+          <div v-else class="grid grid-cols-1 gap-6">
+            <div v-for="l in leads" :key="l._id" class="admin-card glass-panel border-l-4" :class="l.status === 'nuovo' ? 'border-l-[var(--primary)] bg-[var(--primary)]/5' : 'border-l-[var(--line)]'">
+              <div class="flex flex-wrap justify-between items-start gap-6 mb-8">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 bg-[var(--line)] rounded-full flex items-center justify-center text-xl">👤</div>
+                  <div>
+                    <h4 class="text-xl font-black text-white uppercase tracking-tight">{{ l.nome }}</h4>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)]">{{ new Date(l.createdAt).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' }) }}</span>
+                  </div>
                 </div>
-                <div class="lead-moto">
-                  <strong>Interesse:</strong>
-                  <p>{{ l.marca }} {{ l.modello }} ({{ l.nuovaUsata }})</p>
-                  <p>Tipo: {{ l.tipo }}</p>
-                </div>
-                <div class="lead-payment">
-                  <strong>Acquisto:</strong>
-                  <p>{{ l.metodoAcquisto }}</p>
-                  <p v-if="l.valutazionePermuta === 'si'">🔄 Permuta: {{ l.permutaModello }} ({{ l.permutaAnno }})</p>
+                <div class="flex gap-2">
+                  <span class="status-badge" :class="l.status === 'nuovo' ? 'primary' : 'dim'">{{ l.status }}</span>
                 </div>
               </div>
-              <div v-if="l.messaggio" class="lead-message">
-                <strong>Messaggio:</strong>
-                <p>{{ l.messaggio }}</p>
+
+              <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="space-y-4">
+                  <div class="flex flex-col gap-1">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-[var(--primary)]">Contatti</span>
+                    <p class="text-sm text-white">📧 {{ l.email }}</p>
+                    <p class="text-sm text-white">📞 {{ l.telefono }}</p>
+                    <p class="text-sm text-white">📍 {{ l.citta || 'Città non specificata' }}</p>
+                  </div>
+                </div>
+                
+                <div class="space-y-4">
+                  <div class="flex flex-col gap-1">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-[var(--primary)]">Veicolo d'interesse</span>
+                    <p class="text-sm text-white font-bold uppercase">{{ l.marca }} {{ l.modello }}</p>
+                    <p class="text-[10px] text-[var(--text-dim)] font-black uppercase tracking-widest">{{ l.tipo }} • {{ l.nuovaUsata }}</p>
+                  </div>
+                </div>
+
+                <div class="space-y-4">
+                  <div class="flex flex-col gap-1">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-[var(--primary)]">Modalità Acquisto</span>
+                    <p class="text-sm text-white">{{ l.metodoAcquisto }}</p>
+                    <div v-if="l.valutazionePermuta === 'si'" class="mt-2 p-3 bg-[var(--line)] rounded-[var(--radius-sm)] border border-[var(--line)]">
+                      <span class="text-[9px] font-black uppercase tracking-widest text-[var(--text-dim)] block mb-1">Richiesta Permuta</span>
+                      <p class="text-[11px] text-white">🔄 {{ l.permutaModello }} ({{ l.permutaAnno }})</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div v-if="l.messaggio" class="mt-8 p-6 bg-[var(--line)] rounded-[var(--radius-md)] border border-[var(--line)]">
+                <span class="text-[10px] font-black uppercase tracking-widest text-[var(--primary)] block mb-3">Messaggio del cliente</span>
+                <p class="text-sm text-[var(--text-dim)] leading-relaxed italic">"{{ l.messaggio }}"</p>
               </div>
             </div>
           </div>
         </section>
 
         <!-- Trade-Ins View -->
-        <section v-if="currentTab === 'tradeIns'" class="content-section">
-          <div class="section-header">
-            <h2>Richieste Permuta</h2>
-            <p>Gestisci le valutazioni dell'usato inviate dai clienti</p>
+        <section v-if="currentTab === 'tradeIns'" class="space-y-10">
+          <div class="flex justify-between items-end">
+            <div>
+              <h2 class="text-4xl font-black text-white uppercase tracking-tighter">Richieste Permuta</h2>
+              <p class="text-[var(--text-dim)] text-sm font-medium">Gestisci le valutazioni dell'usato inviate dai clienti</p>
+            </div>
           </div>
 
-          <div v-if="loading" class="loading-state">Caricamento richieste...</div>
+          <div v-if="loading" class="flex items-center justify-center py-20">
+             <div class="w-10 h-10 border-4 border-[var(--primary)]/20 border-t-[var(--primary)] rounded-full animate-spin"></div>
+          </div>
           
-          <div v-else-if="tradeIns.length === 0" class="empty-state">
-            <p>Non ci sono ancora richieste di permuta.</p>
+          <div v-else-if="tradeIns.length === 0" class="glass-panel p-20 text-center">
+            <p class="text-[var(--text-dim)] font-bold uppercase tracking-widest text-xs">Non ci sono ancora richieste di permuta.</p>
           </div>
 
-          <div v-else class="leads-list">
-            <div v-for="t in tradeIns" :key="t._id" class="lead-card trade-in-card">
-              <div class="lead-header">
-                <span class="lead-date">{{ new Date(t.createdAt).toLocaleDateString('it-IT') }}</span>
-                <span class="lead-status" :class="t.status">{{ t.status }}</span>
-              </div>
-              <div class="lead-body">
-                <div class="lead-info">
-                  <h4>{{ t.nome }}</h4>
-                  <p>📧 {{ t.email }}</p>
-                  <p>📞 {{ t.telefono }}</p>
-                  <p>📍 {{ t.citta }}</p>
+          <div v-else class="grid grid-cols-1 gap-6">
+            <div v-for="t in tradeIns" :key="t._id" class="admin-card glass-panel border-l-4" :class="t.status === 'nuovo' ? 'border-l-[var(--primary)] bg-[var(--primary)]/5' : 'border-l-[var(--line)]'">
+              <div class="flex flex-wrap justify-between items-start gap-6 mb-8">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 bg-[var(--line)] rounded-full flex items-center justify-center text-xl">🔄</div>
+                  <div>
+                    <h4 class="text-xl font-black text-white uppercase tracking-tight">{{ t.nome }}</h4>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)]">{{ new Date(t.createdAt).toLocaleDateString('it-IT', { day: '2-digit', month: 'long', year: 'numeric' }) }}</span>
+                  </div>
                 </div>
-                <div class="lead-moto">
-                  <strong>Veicolo da permutare:</strong>
-                  <p>{{ t.marca }} {{ t.modello }} {{ t.versione }}</p>
-                  <p>Anno: {{ t.anno }} | Km: {{ t.km }}</p>
-                  <p>Cilindrata: {{ t.cilindrata }} cc | Targa: {{ t.targa }}</p>
-                </div>
-                <div class="lead-payment">
-                  <strong>Stato & Richiesta:</strong>
-                  <p>Stato: {{ t.stato }}</p>
-                  <p>Prezzo desiderato: <strong>€ {{ t.prezzoDesiderato }}</strong></p>
-                  <p v-if="t.motoInteresse">Interesse per: <em>{{ t.motoInteresse }}</em></p>
+                <div class="flex gap-2">
+                  <span class="status-badge" :class="t.status === 'nuovo' ? 'primary' : 'dim'">{{ t.status }}</span>
                 </div>
               </div>
-              <div class="lead-details-grid">
-                <div class="detail-item">
-                  <strong>Incidentata:</strong> {{ t.incidentato }}
+
+              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="space-y-4">
+                  <div class="flex flex-col gap-1">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-[var(--primary)]">Contatti</span>
+                    <p class="text-sm text-white">📧 {{ t.email }}</p>
+                    <p class="text-sm text-white">📞 {{ t.telefono }}</p>
+                    <p class="text-sm text-white">📍 {{ t.citta }}</p>
+                  </div>
                 </div>
-                <div class="detail-item">
-                  <strong>Tagliandata:</strong> {{ t.tagliandi }}
+                
+                <div class="space-y-4">
+                  <div class="flex flex-col gap-1">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-[var(--primary)]">Veicolo da Permutare</span>
+                    <p class="text-sm text-white font-bold uppercase">{{ t.marca }} {{ t.modello }}</p>
+                    <p class="text-[10px] text-[var(--text-dim)] font-black uppercase tracking-widest">{{ t.anno }} • {{ t.km }} KM</p>
+                    <p class="text-[10px] text-[var(--text-dim)] font-black uppercase tracking-widest">Targa: {{ t.targa }}</p>
+                  </div>
                 </div>
-                <div class="detail-item">
-                  <strong>Revisionata:</strong> {{ t.revisione }}
+
+                <div class="space-y-4">
+                  <div class="flex flex-col gap-1">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-[var(--primary)]">Stato & Valutazione</span>
+                    <p class="text-sm text-white">{{ t.stato }}</p>
+                    <p class="text-lg font-black text-[var(--primary)] mt-1">€ {{ t.prezzoDesiderato }}</p>
+                  </div>
                 </div>
-                <div class="detail-item">
-                  <strong>Proprietari:</strong> {{ t.proprietari }}
+
+                <div class="space-y-4">
+                  <div class="flex flex-col gap-1">
+                    <span class="text-[10px] font-black uppercase tracking-widest text-[var(--primary)]">Dettagli</span>
+                    <div class="flex flex-wrap gap-2 mt-1">
+                      <span class="px-2 py-0.5 bg-[var(--line)] rounded-[var(--radius-sm)] text-[9px] font-black uppercase text-[var(--text-dim)]">Incidentata: {{ t.incidentato }}</span>
+                      <span class="px-2 py-0.5 bg-[var(--line)] rounded-[var(--radius-sm)] text-[9px] font-black uppercase text-[var(--text-dim)]">Tagliandi: {{ t.tagliandi }}</span>
+                      <span class="px-2 py-0.5 bg-[var(--line)] rounded-[var(--radius-sm)] text-[9px] font-black uppercase text-[var(--text-dim)]">Revisionata: {{ t.revisione }}</span>
+                    </div>
+                  </div>
                 </div>
               </div>
-              <div v-if="t.descrizione" class="lead-message">
-                <strong>Descrizione:</strong>
-                <p>{{ t.descrizione }}</p>
+
+              <div v-if="t.descrizione || t.difetti" class="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div v-if="t.descrizione" class="p-6 bg-[var(--line)] rounded-[var(--radius-md)] border border-[var(--line)]">
+                  <span class="text-[10px] font-black uppercase tracking-widest text-[var(--primary)] block mb-3">Descrizione</span>
+                  <p class="text-sm text-[var(--text-dim)] leading-relaxed">"{{ t.descrizione }}"</p>
+                </div>
+                <div v-if="t.difetti" class="p-6 bg-red-500/5 rounded-[var(--radius-md)] border border-red-500/10">
+                  <span class="text-[10px] font-black uppercase tracking-widest text-red-500 block mb-3">Difetti Segnalati</span>
+                  <p class="text-sm text-[var(--text-dim)] leading-relaxed">"{{ t.difetti }}"</p>
+                </div>
               </div>
-              <div v-if="t.difetti" class="lead-message warning-msg">
-                <strong>Difetti segnalati:</strong>
-                <p>{{ t.difetti }}</p>
-              </div>
-              <div v-if="t.images && t.images.length" class="lead-images">
-                <strong>Foto allegate:</strong>
-                <div class="images-preview-grid">
-                  <a v-for="(img, idx) in t.images" :key="idx" :href="img" target="_blank">
-                    <img :src="img" alt="Foto permuta" />
+
+              <div v-if="t.images && t.images.length" class="mt-8">
+                <span class="text-[10px] font-black uppercase tracking-widest text-[var(--primary)] block mb-4">Foto Allegate</span>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
+                  <a v-for="(img, idx) in t.images" :key="idx" :href="img" target="_blank" class="aspect-square rounded-[var(--radius-md)] overflow-hidden border border-[var(--line)] hover:border-[var(--primary)]/50 transition-all">
+                    <img :src="img" class="w-full h-full object-cover" />
                   </a>
                 </div>
               </div>
@@ -344,176 +411,248 @@
         </section>
 
         <!-- Portal Management View -->
-        <section v-if="currentTab === 'portal'" class="content-section">
-          <div class="section-header">
-            <h2>Gestione Portale Clienti</h2>
-            <p>Crea e gestisci gli accessi privati per i tuoi clienti</p>
+        <section v-if="currentTab === 'portal'" class="space-y-10">
+          <div class="flex justify-between items-end">
+            <div>
+              <h2 class="text-4xl font-black text-white uppercase tracking-tighter">Gestione Portale Clienti</h2>
+              <p class="text-[var(--text-dim)] text-sm font-medium">Crea e gestisci gli accessi privati per i tuoi clienti</p>
+            </div>
           </div>
 
-          <div v-if="loading" class="loading-state">Caricamento...</div>
+          <div v-if="loading" class="flex items-center justify-center py-20">
+             <div class="w-10 h-10 border-4 border-[var(--primary)]/20 border-t-[var(--primary)] rounded-full animate-spin"></div>
+          </div>
 
-          <div v-else class="portal-admin-grid">
-            <div class="portal-users-list">
-              <div v-for="u in portalUsers" :key="u._id" class="user-card-admin">
-                <div class="user-main-info">
-                  <strong>{{ u.nome }} {{ u.cognome }}</strong>
-                  <span>Targa: <code>{{ u.targa }}</code></span>
-                </div>
-                <div class="user-actions">
-                  <button @click="openManageVehicle(u)" class="btn-edit-small">Veicolo</button>
-                  <button @click="openMaintenance(u)" class="btn-edit-small">Manutenzione</button>
-                  <button @click="deletePortalUser(u._id)" class="btn-edit-small btn-delete-red">Elimina</button>
-                </div>
-              </div>
-              <div v-if="portalUsers.length === 0" class="empty-state-small">
-                Nessun cliente registrato nel portale.
+          <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <!-- Form per nuovo utente -->
+            <div class="lg:col-span-1">
+              <div class="admin-card glass-panel sticky top-12">
+                <h3 class="text-xl font-black text-white uppercase tracking-tight mb-8">Registra Nuovo Cliente</h3>
+                <form @submit.prevent="handleCreatePortalUser" class="space-y-6">
+                  <div class="form-group">
+                    <label class="premium-label">Nome</label>
+                    <input v-model="newUser.nome" placeholder="Es: Mario" required class="premium-input" />
+                  </div>
+                  <div class="form-group">
+                    <label class="premium-label">Cognome</label>
+                    <input v-model="newUser.cognome" placeholder="Es: Rossi" required class="premium-input" />
+                  </div>
+                  <div class="form-group">
+                    <label class="premium-label">Targa</label>
+                    <input v-model="newUser.targa" placeholder="Es: AA123BB" required class="premium-input uppercase font-black" />
+                  </div>
+                  <div class="form-group">
+                    <label class="premium-label">Password Temporanea</label>
+                    <input v-model="newUser.password" placeholder="••••••••" required class="premium-input" />
+                  </div>
+                  <button type="submit" class="btn-premium w-full justify-center">
+                    Crea Account Portale
+                  </button>
+                </form>
               </div>
             </div>
 
-            <div class="portal-add-user">
-              <h3>Registra Nuovo Cliente</h3>
-              <form @submit.prevent="handleCreatePortalUser" class="mini-form">
-                <input v-model="newUser.nome" placeholder="Nome" required />
-                <input v-model="newUser.cognome" placeholder="Cognome" required />
-                <input v-model="newUser.targa" placeholder="Targa (es: AA123BB)" required />
-                <input v-model="newUser.password" placeholder="Password Temporanea" required />
-                <button type="submit" class="btn-primary-custom full">Crea Account Portale</button>
-              </form>
+            <!-- Lista utenti -->
+            <div class="lg:col-span-2 space-y-4">
+              <div v-for="u in portalUsers" :key="u._id" class="admin-card glass-panel flex flex-wrap items-center justify-between gap-6 hover:bg-[var(--line)] transition-all duration-300">
+                <div class="flex items-center gap-4">
+                  <div class="w-10 h-10 bg-[var(--primary)]/10 rounded-full flex items-center justify-center text-[var(--primary)] font-black">
+                    {{ u.nome.charAt(0) }}{{ u.cognome.charAt(0) }}
+                  </div>
+                  <div>
+                    <h4 class="text-lg font-black text-white uppercase tracking-tight">{{ u.nome }} {{ u.cognome }}</h4>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)]">Targa: <code class="text-[var(--primary)]">{{ u.targa }}</code></span>
+                  </div>
+                </div>
+                <div class="flex gap-2">
+                  <button @click="openManageVehicle(u)" class="px-4 py-2 bg-[var(--line)] hover:opacity-80 border border-[var(--line)] rounded-[var(--radius-sm)] text-[9px] font-black uppercase tracking-widest text-white transition-all">Veicolo</button>
+                  <button @click="openMaintenance(u)" class="px-4 py-2 bg-[var(--line)] hover:opacity-80 border border-[var(--line)] rounded-[var(--radius-sm)] text-[9px] font-black uppercase tracking-widest text-white transition-all">Manutenzione</button>
+                  <button @click="deletePortalUser(u._id)" class="px-4 py-2 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white border border-red-500/20 rounded-[var(--radius-sm)] text-[9px] font-black uppercase tracking-widest transition-all">Elimina</button>
+                </div>
+              </div>
+              <div v-if="portalUsers.length === 0" class="glass-panel p-12 text-center">
+                <p class="text-[var(--text-dim)] font-bold uppercase tracking-widest text-xs">Nessun cliente registrato nel portale.</p>
+              </div>
             </div>
           </div>
         </section>
 
         <!-- Deadlines Alert View -->
-        <section v-if="currentTab === 'deadlines'" class="content-section">
-          <div class="section-header">
-            <h2>Alert Scadenze 🔔</h2>
-            <p>Veicoli con scadenze imminenti o superate</p>
+        <section v-if="currentTab === 'deadlines'" class="space-y-10">
+          <div class="flex justify-between items-end">
+            <div>
+              <h2 class="text-4xl font-black text-white uppercase tracking-tighter">Alert Scadenze 🔔</h2>
+              <p class="text-[var(--text-dim)] text-sm font-medium">Veicoli con scadenze imminenti o superate</p>
+            </div>
           </div>
 
-          <div v-if="loading" class="loading-state">Analisi scadenze in corso...</div>
-
-          <div v-else-if="upcomingDeadlines.length === 0" class="empty-state">
-            <p>Nessuna scadenza imminente (entro 30 giorni) o superata.</p>
+          <div v-if="loading" class="flex items-center justify-center py-20">
+             <div class="w-10 h-10 border-4 border-[var(--primary)]/20 border-t-[var(--primary)] rounded-full animate-spin"></div>
           </div>
 
-          <div v-else class="deadlines-list">
-            <div v-for="d in upcomingDeadlines" :key="d.targa" class="deadline-card" :class="{ 'expired': d.isExpired }">
-              <div class="deadline-info">
-                <div class="vehicle-details">
-                  <strong>{{ d.marca }} {{ d.modello }}</strong>
-                  <code>{{ d.targa }}</code>
+          <div v-else-if="upcomingDeadlines.length === 0" class="glass-panel p-20 text-center">
+            <p class="text-[var(--text-dim)] font-bold uppercase tracking-widest text-sm">Nessuna scadenza imminente (entro 30 giorni) o superata.</p>
+          </div>
+
+          <div v-else class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div v-for="d in upcomingDeadlines" :key="d.targa" 
+                 class="admin-card glass-panel border-l-4" 
+                 :class="d.isExpired ? 'border-l-red-500' : 'border-l-[var(--primary)]'">
+              <div class="flex justify-between items-start mb-6">
+                <div>
+                  <h3 class="text-xl font-black text-white uppercase tracking-tight">{{ d.marca }} {{ d.modello }}</h3>
+                  <code class="text-[var(--primary)] text-xs font-black tracking-widest">{{ d.targa }}</code>
                 </div>
-                <div class="owner-details">
-                  <span>Cliente: {{ d.nome }} {{ d.cognome }}</span>
+                <div class="text-right">
+                  <span class="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)] block">Proprietario</span>
+                  <span class="text-sm font-bold text-white">{{ d.nome }} {{ d.cognome }}</span>
                 </div>
               </div>
               
-              <div class="deadlines-items">
-                <div v-if="d.revisioneStatus" class="deadline-item" :class="d.revisioneStatus.type">
-                  <span class="label">Revisione:</span>
-                  <span class="date">{{ formatDate(d.scadenzaRevisione) }}</span>
-                  <span class="days">({{ d.revisioneStatus.message }})</span>
+              <div class="space-y-3 mb-8">
+                <div v-if="d.revisioneStatus" class="flex items-center justify-between p-3 rounded-[var(--radius-sm)] bg-[var(--line)] border border-[var(--line)]">
+                  <div class="flex items-center gap-3">
+                    <div class="w-2 h-2 rounded-full" :class="d.revisioneStatus.type === 'expired' ? 'bg-red-500' : 'bg-[var(--primary)]'"></div>
+                    <span class="text-[11px] font-black uppercase tracking-widest text-[var(--text-dim)]">Revisione</span>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-xs font-bold text-white block">{{ formatDate(d.scadenzaRevisione) }}</span>
+                    <span class="text-[9px] font-black uppercase tracking-tighter" :class="d.revisioneStatus.type === 'expired' ? 'text-red-400' : 'text-[var(--primary)]'">{{ d.revisioneStatus.message }}</span>
+                  </div>
                 </div>
-                <div v-if="d.assicurazioneStatus" class="deadline-item" :class="d.assicurazioneStatus.type">
-                  <span class="label">Assicurazione:</span>
-                  <span class="date">{{ formatDate(d.scadenzaAssicurazione) }}</span>
-                  <span class="days">({{ d.assicurazioneStatus.message }})</span>
+
+                <div v-if="d.assicurazioneStatus" class="flex items-center justify-between p-3 rounded-[var(--radius-sm)] bg-[var(--line)] border border-[var(--line)]">
+                  <div class="flex items-center gap-3">
+                    <div class="w-2 h-2 rounded-full" :class="d.assicurazioneStatus.type === 'expired' ? 'bg-red-500' : 'bg-[var(--primary)]'"></div>
+                    <span class="text-[11px] font-black uppercase tracking-widest text-[var(--text-dim)]">Assicurazione</span>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-xs font-bold text-white block">{{ formatDate(d.scadenzaAssicurazione) }}</span>
+                    <span class="text-[9px] font-black uppercase tracking-tighter" :class="d.assicurazioneStatus.type === 'expired' ? 'text-red-400' : 'text-[var(--primary)]'">{{ d.assicurazioneStatus.message }}</span>
+                  </div>
                 </div>
-                <div v-if="d.bolloStatus" class="deadline-item" :class="d.bolloStatus.type">
-                  <span class="label">Bollo:</span>
-                  <span class="date">{{ formatDate(d.scadenzaBollo) }}</span>
-                  <span class="days">({{ d.bolloStatus.message }})</span>
+
+                <div v-if="d.bolloStatus" class="flex items-center justify-between p-3 rounded-[var(--radius-sm)] bg-[var(--line)] border border-[var(--line)]">
+                  <div class="flex items-center gap-3">
+                    <div class="w-2 h-2 rounded-full" :class="d.bolloStatus.type === 'expired' ? 'bg-red-500' : 'bg-[var(--primary)]'"></div>
+                    <span class="text-[11px] font-black uppercase tracking-widest text-[var(--text-dim)]">Bollo</span>
+                  </div>
+                  <div class="text-right">
+                    <span class="text-xs font-bold text-white block">{{ formatDate(d.scadenzaBollo) }}</span>
+                    <span class="text-[9px] font-black uppercase tracking-tighter" :class="d.bolloStatus.type === 'expired' ? 'text-red-400' : 'text-[var(--primary)]'">{{ d.bolloStatus.message }}</span>
+                  </div>
                 </div>
               </div>
 
-              <div class="deadline-actions">
-                <a :href="generateWhatsAppLink(d)" target="_blank" class="btn-whatsapp-small">
-                  Avvisa su WhatsApp
-                </a>
-              </div>
+              <a :href="generateWhatsAppLink(d)" target="_blank" 
+                 class="btn-premium w-full justify-center bg-[#25D366] border-[#25D366] hover:bg-[#128C7E] hover:border-[#128C7E] shadow-none hover:shadow-lg hover:shadow-[#25D366]/20">
+                <span class="flex items-center gap-2">
+                  <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.438 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
+                  Avvisa Cliente
+                </span>
+              </a>
             </div>
           </div>
         </section>
 
         <!-- Blog List View -->
-        <section v-if="currentTab === 'blog'" class="content-section">
-          <div class="section-header">
-            <h2>Blog & News</h2>
-            <div class="flex gap-4">
-              <button @click="resetBlogForm(); currentTab = 'add-blog'" class="btn-primary-custom">Scrivi Articolo</button>
+        <section v-if="currentTab === 'blog'" class="space-y-10">
+          <div class="flex justify-between items-end">
+            <div>
+              <h2 class="text-4xl font-black text-white uppercase tracking-tighter">Blog & News</h2>
+              <p class="text-[var(--text-dim)] text-sm font-medium">Gestisci i contenuti editoriali del sito</p>
             </div>
+            <button @click="resetBlogForm(); currentTab = 'add-blog'" class="btn-premium">
+              Scrivi Articolo
+            </button>
           </div>
 
-          <div v-if="loading" class="loading-state">Caricamento articoli...</div>
+          <div v-if="loading" class="flex items-center justify-center py-20">
+             <div class="w-10 h-10 border-4 border-[var(--primary)]/20 border-t-[var(--primary)] rounded-full animate-spin"></div>
+          </div>
           
-          <div v-else class="blog-admin-list">
-            <div v-for="p in blogPosts" :key="p._id" class="blog-item-admin">
-              <img :src="p.imageCover || '/logo-pica-caravan.jpg'" class="blog-thumb" />
-              <div class="blog-info">
-                <h3>{{ p.title }}</h3>
-                <span class="blog-meta">{{ p.category }} • {{ new Date(p.date).toLocaleDateString() }}</span>
+          <div v-else class="grid grid-cols-1 gap-4">
+            <div v-for="p in blogPosts" :key="p._id" class="admin-card glass-panel flex items-center gap-6 group hover:bg-[var(--line)] transition-all duration-300">
+              <div class="w-32 h-20 rounded-[var(--radius-sm)] overflow-hidden border border-[var(--line)] shrink-0">
+                <img :src="p.imageCover || '/logo-pica-caravan.jpg'" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
               </div>
-              <div class="blog-actions">
-                <button @click="editBlog(p)" class="btn-edit-small">Modifica</button>
-                <button @click="deleteBlog(p._id)" class="btn-edit-small btn-delete-red">Elimina</button>
+              <div class="flex-grow">
+                <div class="flex items-center gap-3 mb-1">
+                  <span class="text-[10px] font-black uppercase tracking-widest text-[var(--primary)]">{{ p.category }}</span>
+                  <span class="text-[10px] font-black uppercase tracking-widest text-[var(--line)]">•</span>
+                  <span class="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)]">{{ new Date(p.date).toLocaleDateString() }}</span>
+                </div>
+                <h3 class="text-lg font-black text-white uppercase tracking-tight">{{ p.title }}</h3>
+              </div>
+              <div class="flex gap-2">
+                <button @click="editBlog(p)" class="px-4 py-2 bg-[var(--line)] hover:opacity-80 border border-[var(--line)] rounded-[var(--radius-sm)] text-[9px] font-black uppercase tracking-widest text-white transition-all">Modifica</button>
+                <button @click="deleteBlog(p._id)" class="px-4 py-2 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white border border-red-500/20 rounded-[var(--radius-sm)] text-[9px] font-black uppercase tracking-widest transition-all">Elimina</button>
               </div>
             </div>
-            <div v-if="blogPosts.length === 0" class="empty-state">Nessun articolo presente.</div>
+            <div v-if="blogPosts.length === 0" class="glass-panel p-20 text-center">
+              <p class="text-[var(--text-dim)] font-bold uppercase tracking-widest text-sm">Nessun articolo presente.</p>
+            </div>
           </div>
         </section>
 
         <!-- Blog Add/Edit View -->
-        <section v-if="currentTab === 'add-blog'" class="content-section">
-          <div class="section-header">
-            <h2>{{ editingBlogId ? 'Modifica Articolo' : 'Nuovo Articolo' }}</h2>
-            <button @click="currentTab = 'blog'" class="btn-secondary-custom">Annulla</button>
+        <section v-if="currentTab === 'add-blog'" class="space-y-10">
+          <div class="flex justify-between items-end">
+            <div>
+              <h2 class="text-4xl font-black text-white uppercase tracking-tighter">{{ editingBlogId ? 'Modifica Articolo' : 'Nuovo Articolo' }}</h2>
+              <p class="text-[var(--text-dim)] text-sm font-medium">Scrivi e pubblica contenuti per il tuo pubblico</p>
+            </div>
+            <button @click="currentTab = 'blog'" class="btn-secondary-glass">
+              Annulla
+            </button>
           </div>
 
-          <form @submit.prevent="handleBlogSubmit" class="moto-form">
-            <div class="form-grid">
+          <form @submit.prevent="handleBlogSubmit" class="admin-card glass-panel">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               <div class="form-group">
-                <label>Titolo</label>
-                <input v-model="blogForm.title" placeholder="Titolo articolo" required />
+                <label class="premium-label">Titolo</label>
+                <input v-model="blogForm.title" placeholder="Titolo articolo" required class="premium-input" />
               </div>
               <div class="form-group">
-                <label>Slug (URL)</label>
-                <input v-model="blogForm.slug" placeholder="es: novita-honda-2026" required />
+                <label class="premium-label">Slug (URL)</label>
+                <input v-model="blogForm.slug" placeholder="es: novita-camper-2026" required class="premium-input" />
               </div>
               <div class="form-group">
-                <label>Categoria</label>
-                <select v-model="blogForm.category">
-                  <option v-for="c in ['Novità Camper', 'Manutenzione', 'Consigli Viaggio', 'Offerte', 'Eventi']" :key="c">{{ c }}</option>
+                <label class="premium-label">Categoria</label>
+                <select v-model="blogForm.category" class="premium-input appearance-none">
+                  <option v-for="c in ['Novità Camper', 'Manutenzione', 'Consigli Viaggio', 'Offerte', 'Eventi']" :key="c" :value="c">{{ c }}</option>
                 </select>
               </div>
-              <div class="form-group">
-                <label>URL Immagine Copertina</label>
-                <input v-model="blogForm.imageCover" placeholder="https://cloudinary..." />
+              <div class="form-group lg:col-span-3">
+                <label class="premium-label">URL Immagine Copertina</label>
+                <input v-model="blogForm.imageCover" placeholder="https://cloudinary..." class="premium-input" />
               </div>
-              <div class="form-group full-width">
-                <label>Estratto (breve descrizione)</label>
-                <textarea v-model="blogForm.excerpt" placeholder="Breve sintesi per l'elenco..."></textarea>
+              <div class="form-group lg:col-span-3">
+                <label class="premium-label">Estratto (breve descrizione)</label>
+                <textarea v-model="blogForm.excerpt" placeholder="Breve sintesi per l'elenco..." class="premium-input min-h-[80px] py-4"></textarea>
               </div>
-              <div class="form-group full-width">
-                <label>Collega Veicoli (Seleziona veicoli correlati)</label>
-                <div class="related-motos-selector">
-                  <div v-for="m in vehicles" :key="m._id" class="moto-check">
+              <div class="form-group lg:col-span-3">
+                <label class="premium-label">Collega Veicoli (Seleziona veicoli correlati)</label>
+                <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 p-6 rounded-[var(--radius-md)] bg-[var(--line)] border border-[var(--line)]">
+                  <div v-for="m in vehicles" :key="m._id" class="flex items-center gap-3">
                     <input 
                       type="checkbox" 
                       :id="`rel-${m._id}`" 
                       :value="m._id" 
                       v-model="blogForm.relatedVehicles" 
+                      class="w-5 h-5 rounded border-[var(--line)] bg-[var(--line)] text-[var(--primary)] focus:ring-[var(--primary)]"
                     />
-                    <label :for="`rel-${m._id}`">{{ m.marca }} {{ m.modello }}</label>
+                    <label :for="`rel-${m._id}`" class="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)] cursor-pointer">{{ m.marca }} {{ m.modello }}</label>
                   </div>
                 </div>
               </div>
-              <div class="form-group full-width">
-                <label>Contenuto (Markdown)</label>
-                <textarea v-model="blogForm.content" placeholder="Scrivi il tuo articolo qui..." class="content-editor" required></textarea>
+              <div class="form-group lg:col-span-3">
+                <label class="premium-label">Contenuto (Markdown)</label>
+                <textarea v-model="blogForm.content" placeholder="Scrivi il tuo articolo qui..." class="premium-input min-h-[400px] font-mono text-sm py-4" required></textarea>
               </div>
             </div>
-            <div class="form-actions mt-6">
-              <button type="submit" class="btn-primary-custom" :disabled="submitting">
+            <div class="mt-10 pt-10 border-t border-[var(--line)] flex justify-center">
+              <button type="submit" class="btn-premium px-12" :disabled="submitting">
                 {{ submitting ? 'Salvataggio...' : 'Salva Articolo' }}
               </button>
             </div>
@@ -523,114 +662,135 @@
     </div>
 
     <!-- Delete Confirmation Modal -->
-    <div v-if="showDeleteModal" class="modal-overlay">
-      <div class="modal">
-        <h3>Conferma Eliminazione</h3>
-        <p>Sei sicuro di voler eliminare definitivamente <strong>{{ motoToDelete?.marca }} {{ motoToDelete?.modello }}</strong>?</p>
-        <div class="modal-actions">
-          <button @click="showDeleteModal = false" class="btn-cancel">Annulla</button>
-          <button @click="deleteMoto" class="btn-delete-confirm">Sì, Elimina</button>
+    <div v-if="showDeleteModal" class="fixed inset-0 z-[100] flex items-center justify-center p-6">
+      <div class="absolute inset-0 bg-black/80 backdrop-blur-md" @click="showDeleteModal = false"></div>
+      <div class="glass-panel max-w-md w-full p-10 relative z-10 border-[var(--primary)]/20">
+        <h3 class="text-2xl font-black text-white uppercase tracking-tighter mb-4">Conferma Eliminazione</h3>
+        <p class="text-[var(--text-dim)] text-sm mb-8 leading-relaxed">Sei sicuro di voler eliminare definitivamente <strong class="text-white">{{ vehicleToDelete?.marca }} {{ vehicleToDelete?.modello }}</strong>? Questa azione non può essere annullata.</p>
+        <div class="flex gap-4">
+          <button @click="showDeleteModal = false" class="flex-1 px-6 py-4 bg-[var(--line)] hover:opacity-80 border border-[var(--line)] rounded-[var(--radius-md)] text-[10px] font-black uppercase tracking-widest text-white transition-all">Annulla</button>
+          <button @click="deleteVehicle" class="flex-1 px-6 py-4 bg-red-500 hover:bg-red-600 border border-red-500 rounded-[var(--radius-md)] text-[10px] font-black uppercase tracking-widest text-white transition-all">Sì, Elimina</button>
         </div>
       </div>
     </div>
 
-    <!-- Portal: Manage Moto Modal -->
-    <div v-if="showPortalMotoModal" class="modal-overlay">
-      <div class="modal large">
-        <h3>Gestisci Veicolo Utente</h3>
-        <p>Targa: <code>{{ selectedUserForAction?.targa }}</code></p>
+    <!-- Portal: Manage Vehicle Modal -->
+    <div v-if="showPortalVehicleModal" class="fixed inset-0 z-[100] flex items-center justify-center p-6">
+      <div class="absolute inset-0 bg-black/80 backdrop-blur-md" @click="showPortalVehicleModal = false"></div>
+      <div class="glass-panel max-w-4xl w-full p-10 relative z-10 max-h-[90vh] overflow-y-auto">
+        <div class="flex justify-between items-start mb-10">
+          <div>
+            <h3 class="text-2xl font-black text-white uppercase tracking-tighter">Gestisci Veicolo Utente</h3>
+            <span class="text-[10px] font-black uppercase tracking-widest text-[var(--primary)]">Targa: <code class="bg-[var(--primary)]/10 px-2 py-1 rounded-[var(--radius-sm)]">{{ selectedUserForAction?.targa }}</code></span>
+          </div>
+          <button @click="showPortalVehicleModal = false" class="text-[var(--text-dim)] hover:text-white transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        </div>
         
-        <form @submit.prevent="savePortalVehicle" class="mini-form mt-4">
-          <div class="form-grid">
+        <form @submit.prevent="savePortalVehicle" class="space-y-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             <div class="form-group">
-              <label>Marca</label>
-              <input v-model="portalMotoForm.marca" placeholder="Es: Honda" required />
-            </div>
-            <div class="form-group">
-              <label>Modello</label>
-              <input v-model="portalMotoForm.modello" placeholder="Es: SH 150" required />
+              <label class="premium-label">Marca</label>
+              <input v-model="portalVehicleForm.marca" placeholder="Es: Honda" required class="premium-input" />
             </div>
             <div class="form-group">
-              <label>Data Acquisto</label>
-              <input type="date" v-model="portalMotoForm.dataAcquisto" />
+              <label class="premium-label">Modello</label>
+              <input v-model="portalVehicleForm.modello" placeholder="Es: SH 150" required class="premium-input" />
             </div>
             <div class="form-group">
-              <label>Km Iniziali</label>
-              <input type="number" v-model="portalMotoForm.kmIniziali" />
+              <label class="premium-label">Data Acquisto</label>
+              <input type="date" v-model="portalVehicleForm.dataAcquisto" class="premium-input" />
             </div>
             <div class="form-group">
-              <label>Km Attuali</label>
-              <input type="number" v-model="portalMotoForm.kmAttuali" />
+              <label class="premium-label">Km Iniziali</label>
+              <input type="number" v-model="portalVehicleForm.kmIniziali" class="premium-input" />
             </div>
             <div class="form-group">
-              <label>Prossima Manutenzione (Km o Data)</label>
-              <input v-model="portalMotoForm.prossimaManutenzione" placeholder="Es: 10.000 km o 12/2026" />
+              <label class="premium-label">Km Attuali</label>
+              <input type="number" v-model="portalVehicleForm.kmAttuali" class="premium-input" />
             </div>
             <div class="form-group">
-              <label>Scadenza Revisione</label>
-              <input type="date" v-model="portalMotoForm.scadenzaRevisione" />
+              <label class="premium-label">Prossima Manutenzione</label>
+              <input v-model="portalVehicleForm.prossimaManutenzione" placeholder="Es: 10.000 km o 12/2026" class="premium-input" />
             </div>
             <div class="form-group">
-              <label>Scadenza Assicurazione</label>
-              <input type="date" v-model="portalMotoForm.scadenzaAssicurazione" />
+              <label class="premium-label">Scadenza Revisione</label>
+              <input type="date" v-model="portalVehicleForm.scadenzaRevisione" class="premium-input" />
             </div>
             <div class="form-group">
-              <label>Scadenza Bollo</label>
-              <input type="date" v-model="portalMotoForm.scadenzaBollo" />
+              <label class="premium-label">Scadenza Assicurazione</label>
+              <input type="date" v-model="portalVehicleForm.scadenzaAssicurazione" class="premium-input" />
             </div>
-            <div class="form-group full-width">
-              <label>Avvisi / Suggerimenti</label>
-              <textarea v-model="portalMotoForm.avvisi" placeholder="Es: Controllare pressione gomme ogni mese"></textarea>
+            <div class="form-group">
+              <label class="premium-label">Scadenza Bollo</label>
+              <input type="date" v-model="portalVehicleForm.scadenzaBollo" class="premium-input" />
             </div>
-            <div class="form-group full-width">
-              <label>URL Foto (opzionale)</label>
-              <input v-model="portalMotoForm.photoUrl" placeholder="https://..." />
+            <div class="form-group lg:col-span-3">
+              <label class="premium-label">Avvisi / Suggerimenti</label>
+              <textarea v-model="portalVehicleForm.avvisi" placeholder="Es: Controllare pressione gomme ogni mese" class="premium-input py-4"></textarea>
+            </div>
+            <div class="form-group lg:col-span-3">
+              <label class="premium-label">URL Foto Veicolo</label>
+              <input v-model="portalVehicleForm.photoUrl" placeholder="https://..." class="premium-input" />
             </div>
           </div>
           
-          <div class="modal-actions">
-            <button type="button" @click="showPortalMotoModal = false" class="btn-cancel">Annulla</button>
-            <button type="submit" class="btn-primary-custom">Salva Veicolo</button>
+          <div class="flex gap-4 pt-8 border-t border-[var(--line)]">
+            <button type="button" @click="showPortalVehicleModal = false" class="flex-1 px-6 py-4 bg-[var(--line)] hover:opacity-80 border border-[var(--line)] rounded-[var(--radius-md)] text-[10px] font-black uppercase tracking-widest text-white transition-all">Annulla</button>
+            <button type="submit" class="flex-1 btn-premium">Salva Veicolo</button>
           </div>
         </form>
       </div>
     </div>
 
     <!-- Portal: Maintenance History Modal -->
-    <div v-if="showMaintenanceModal" class="modal-overlay">
-      <div class="modal large max-h-[90vh] flex flex-col">
-        <h3>Storico Interventi</h3>
-        <p>Targa: <code>{{ selectedUserForAction?.targa }}</code></p>
+    <div v-if="showMaintenanceModal" class="fixed inset-0 z-[100] flex items-center justify-center p-6">
+      <div class="absolute inset-0 bg-black/80 backdrop-blur-md" @click="showMaintenanceModal = false"></div>
+      <div class="glass-panel max-w-4xl w-full p-10 relative z-10 max-h-[90vh] flex flex-col">
+        <div class="flex justify-between items-start mb-10">
+          <div>
+            <h3 class="text-2xl font-black text-white uppercase tracking-tighter">Storico Interventi</h3>
+            <span class="text-[10px] font-black uppercase tracking-widest text-[var(--primary)]">Targa: <code class="bg-[var(--primary)]/10 px-2 py-1 rounded-[var(--radius-sm)]">{{ selectedUserForAction?.targa }}</code></span>
+          </div>
+          <button @click="showMaintenanceModal = false" class="text-[var(--text-dim)] hover:text-white transition-colors">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+          </button>
+        </div>
 
-        <div class="existing-history mt-4 overflow-y-auto flex-grow bg-black/30 rounded-xl p-4">
-          <div v-for="rec in maintenanceHistory" :key="rec._id" class="maintenance-record-item mb-4 pb-4 border-b border-white/5">
+        <div class="flex-grow overflow-y-auto pr-4 space-y-4 mb-10 custom-scrollbar">
+          <div v-for="rec in maintenanceHistory" :key="rec._id" class="p-6 rounded-[var(--radius-md)] bg-[var(--line)] border border-[var(--line)] group hover:border-[var(--primary)]/30 transition-all duration-300">
             <div class="flex justify-between items-start">
               <div>
-                <span class="text-xs text-muted block">{{ rec.data }} - {{ rec.km }} km</span>
-                <strong class="text-sm block">{{ rec.descrizione }}</strong>
-                <p v-if="rec.partiSostituite" class="text-xs text-muted mt-1 italic">Parti: {{ rec.partiSostituite }}</p>
-                <p v-if="rec.costo" class="text-xs text-primary mt-1">€ {{ rec.costo }}</p>
+                <div class="flex items-center gap-3 mb-2">
+                  <span class="text-[10px] font-black uppercase tracking-widest text-[var(--primary)]">{{ rec.data }}</span>
+                  <span class="text-[10px] font-black uppercase tracking-widest text-[var(--line)]">•</span>
+                  <span class="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)]">{{ rec.km }} KM</span>
+                </div>
+                <h4 class="text-lg font-black text-white uppercase tracking-tight mb-1">{{ rec.descrizione }}</h4>
+                <p v-if="rec.partiSostituite" class="text-xs text-[var(--text-dim)] italic">Parti: {{ rec.partiSostituite }}</p>
+                <p v-if="rec.costo" class="text-sm font-black text-[var(--primary)] mt-3">€ {{ rec.costo }}</p>
               </div>
-              <button @click="deleteMaintenance(rec._id)" class="btn-delete-icon">×</button>
+              <button @click="deleteMaintenance(rec._id)" class="p-2 bg-red-500/10 text-red-500 rounded-[var(--radius-sm)] opacity-0 group-hover:opacity-100 transition-all hover:bg-red-500 hover:text-white">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+              </button>
             </div>
           </div>
-          <div v-if="maintenanceHistory.length === 0" class="empty-docs">Nessun intervento registrato.</div>
-        </div>
-
-        <div class="add-maintenance-form mt-6 pt-6 border-t border-white/10">
-          <h4>Aggiungi Intervento</h4>
-          <div class="grid grid-cols-2 gap-3 mt-3">
-            <input type="date" v-model="maintenanceForm.data" class="mini-input" />
-            <input type="number" v-model="maintenanceForm.km" placeholder="Km intervento" class="mini-input" />
-            <input v-model="maintenanceForm.descrizione" placeholder="Descrizione (es: Tagliando)" class="mini-input col-span-2" />
-            <input v-model="maintenanceForm.partiSostituite" placeholder="Parti sostituite" class="mini-input col-span-2" />
-            <input type="number" v-model="maintenanceForm.costo" placeholder="Costo (€)" class="mini-input" />
-            <button @click="addMaintenanceRecord" class="btn-primary-custom">Aggiungi</button>
+          <div v-if="maintenanceHistory.length === 0" class="p-12 text-center bg-[var(--line)] rounded-[var(--radius-md)] border border-dashed border-[var(--line)]">
+            <p class="text-[var(--text-dim)] font-black uppercase tracking-widest text-[10px]">Nessun intervento registrato.</p>
           </div>
         </div>
 
-        <div class="modal-actions mt-4">
-          <button @click="showMaintenanceModal = false" class="btn-cancel full">Chiudi</button>
+        <div class="pt-8 border-t border-[var(--line)]">
+          <h4 class="text-xs font-black text-white uppercase tracking-widest mb-6">Aggiungi Nuovo Intervento</h4>
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <input type="date" v-model="maintenanceForm.data" class="premium-input" />
+            <input type="number" v-model="maintenanceForm.km" placeholder="Chilometraggio" class="premium-input" />
+            <input type="number" v-model="maintenanceForm.costo" placeholder="Costo (€)" class="premium-input" />
+            <input v-model="maintenanceForm.descrizione" placeholder="Descrizione (es: Tagliando completo)" class="premium-input lg:col-span-2" />
+            <input v-model="maintenanceForm.partiSostituite" placeholder="Parti sostituite (es: Olio, Filtri...)" class="premium-input" />
+          </div>
+          <button @click="addMaintenanceRecord" class="btn-premium w-full mt-6 justify-center">Aggiungi Intervento</button>
         </div>
       </div>
     </div>
@@ -740,7 +900,7 @@ const portalDocForm = ref({
   type: 'Libretto',
   fileBase64: ''
 })
-const portalMotoForm = ref({
+const portalVehicleForm = ref({
   marca: '',
   modello: '',
   targa: '',
@@ -763,6 +923,7 @@ const maintenanceForm = ref({
   costo: 0
 })
 const showMaintenanceModal = ref(false)
+const showPortalVehicleModal = ref(false)
 
 const openManageVehicle = async (user) => {
   selectedUserForAction.value = user
@@ -1099,11 +1260,11 @@ const resetBlogForm = () => {
   blogForm.value = {
     title: '',
     slug: '',
-    category: 'Novità Moto',
+    category: 'Novità Camper',
     imageCover: '',
     content: '',
     excerpt: '',
-    relatedMotos: []
+    relatedVehicles: []
   }
   editingBlogId.value = null
 }
@@ -1215,7 +1376,7 @@ const handleSubmit = async () => {
 
 // --- Delete Logic ---
 const showDeleteModal = ref(false)
-const motoToDelete = ref(null)
+const vehicleToDelete = ref(null)
 
 const confirmDelete = (v) => {
   vehicleToDelete.value = v
@@ -1245,7 +1406,7 @@ onMounted(() => {
 <style scoped>
 .admin-container {
   min-height: 100vh;
-  background: #0a0a0a;
+  background: var(--bg);
   color: white;
   font-family: 'Inter', sans-serif;
 }
@@ -1259,14 +1420,14 @@ onMounted(() => {
 }
 
 .login-card {
-  background: #1a1a1a;
+  background: var(--panel-2);
   padding: 40px;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   width: 100%;
   max-width: 400px;
   text-align: center;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-  border: 1px solid #333;
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--line);
 }
 
 .login-logo-img {
@@ -1299,8 +1460,8 @@ onMounted(() => {
 
 .admin-sidebar {
   width: 280px;
-  background: #111;
-  border-right: 1px solid #222;
+  background: var(--panel);
+  border-right: 1px solid var(--line);
   display: flex;
   flex-direction: column;
   padding: 20px;
@@ -1330,10 +1491,10 @@ onMounted(() => {
 .sidebar-nav button {
   background: transparent;
   border: none;
-  color: #888;
+  color: var(--text-dim);
   padding: 12px 15px;
   text-align: left;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   transition: all 0.3s;
   font-size: 1rem;
@@ -1341,7 +1502,7 @@ onMounted(() => {
 
 .sidebar-nav button.active,
 .sidebar-nav button:hover {
-  background: #222;
+  background: var(--line);
   color: white;
 }
 
@@ -1351,10 +1512,10 @@ onMounted(() => {
 
 .btn-logout {
   background: transparent;
-  border: 1px solid #333;
-  color: #888;
+  border: 1px solid var(--line);
+  color: var(--text-dim);
   padding: 10px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
   margin-top: 20px;
 }
@@ -1379,7 +1540,7 @@ onMounted(() => {
 }
 
 .section-header p {
-  color: #888;
+  color: var(--text-dim);
 }
 
 /* Grid View */
@@ -1390,10 +1551,10 @@ onMounted(() => {
 }
 
 .moto-card-admin {
-  background: #1a1a1a;
-  border-radius: 15px;
+  background: var(--panel-2);
+  border-radius: var(--radius-md);
   overflow: hidden;
-  border: 1px solid #222;
+  border: 1px solid var(--line);
   transition: transform 0.3s;
 }
 
@@ -1405,7 +1566,7 @@ onMounted(() => {
   width: 100%;
   height: 200px;
   overflow: hidden;
-  border-bottom: 1px solid #222;
+  border-bottom: 1px solid var(--line);
 }
 
 .moto-info-admin {
@@ -1424,14 +1585,14 @@ onMounted(() => {
 }
 
 .tag {
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--line);
+  border: 1px solid var(--line);
   padding: 4px 10px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   font-size: 0.75rem;
   text-transform: uppercase;
   font-weight: 700;
-  color: var(--muted);
+  color: var(--text-dim);
 }
 
 .tag.category {
@@ -1440,51 +1601,51 @@ onMounted(() => {
 }
 
 .tag.status.nuova {
-  border-color: #28a745;
-  color: #28a745;
+  border-color: var(--success);
+  color: var(--success);
 }
 
 .tag.status.usata {
-  border-color: #ffc107;
-  color: #ffc107;
+  border-color: var(--warning);
+  color: var(--warning);
 }
 
 .tag.status.promozione {
-  border-color: #e11d48;
-  color: #e11d48;
-  background: rgba(225, 29, 72, 0.1);
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-glow);
 }
 
 .tag.status.venduta {
-  border-color: #6c757d;
-  color: #6c757d;
-  background: rgba(108, 117, 125, 0.1);
+  border-color: var(--text-dim);
+  color: var(--text-dim);
+  background: var(--line);
 }
 
 .tag.visibility {
   font-size: 0.7rem;
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--line);
 }
 
 .tag.visibility.visible {
-  color: #28a745;
-  border-color: rgba(40, 167, 69, 0.3);
+  color: var(--success);
+  border-color: var(--success-30);
 }
 
 .tag.visibility.hidden {
-  color: #dc3545;
-  border-color: rgba(220, 53, 69, 0.3);
+  color: var(--danger);
+  border-color: var(--danger-30);
 }
 
 .visibility-toggle {
   display: flex;
   align-items: center;
   gap: 10px;
-  background: #222;
+  background: var(--line);
   padding: 10px 15px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
-  border: 1px solid #333;
+  border: 1px solid var(--line);
 }
 
 .visibility-toggle input {
@@ -1496,14 +1657,15 @@ onMounted(() => {
 .visibility-toggle label {
   font-size: 0.9rem;
   cursor: pointer;
-  color: #fff;
+  color: white;
 }
 
 .description-preview {
   font-size: 0.85rem;
-  color: #888;
+  color: var(--text-dim);
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
   margin-bottom: 10px;
@@ -1524,7 +1686,7 @@ onMounted(() => {
 .btn-edit, .btn-delete {
   flex: 1;
   padding: 8px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   border: none;
   cursor: pointer;
   font-weight: 600;
@@ -1532,13 +1694,13 @@ onMounted(() => {
 }
 
 .btn-edit {
-  background: #333;
+  background: var(--line);
   color: white;
 }
 
 .btn-delete {
-  background: rgba(215, 24, 42, 0.1);
-  color: var(--primary);
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
 }
 
 .btn-edit:hover, .btn-delete:hover {
@@ -1546,13 +1708,13 @@ onMounted(() => {
 }
 
 .btn-logout:hover {
-  background: rgba(215, 24, 42, 0.1);
-  color: var(--primary-2);
+  background: rgba(239, 68, 68, 0.1);
+  color: var(--danger);
 }
 
 .badge-count {
   background: var(--primary);
-  color: #fff;
+  color: white;
   font-size: 0.7rem;
   padding: 2px 8px;
   border-radius: 10px;
@@ -1569,7 +1731,7 @@ onMounted(() => {
 .lead-card {
   background: var(--panel-2);
   border: 1px solid var(--line);
-  border-radius: 16px;
+  border-radius: var(--radius-md);
   padding: 24px;
 }
 
@@ -1584,7 +1746,7 @@ onMounted(() => {
 
 .lead-date {
   font-size: 0.85rem;
-  color: var(--muted);
+  color: var(--text-dim);
 }
 
 .lead-status {
@@ -1592,12 +1754,12 @@ onMounted(() => {
   font-size: 0.7rem;
   font-weight: 800;
   padding: 4px 10px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
 }
 
 .lead-status.nuovo {
-  background: rgba(255, 193, 7, 0.15);
-  color: #ffc107;
+  background: var(--primary-glow);
+  color: var(--primary);
 }
 
 .lead-body {
@@ -1628,18 +1790,18 @@ onMounted(() => {
   grid-template-columns: repeat(4, 1fr);
   gap: 16px;
   padding: 16px;
-  background: rgba(255, 255, 255, 0.03);
-  border-radius: 12px;
+  background: var(--line);
+  border-radius: var(--radius-sm);
   margin-top: 16px;
 }
 
 .detail-item {
   font-size: 0.85rem;
-  color: rgba(255, 255, 255, 0.6);
+  color: var(--text-dim);
 }
 
 .detail-item strong {
-  color: #fff;
+  color: white;
 }
 
 .warning-msg {
@@ -1662,8 +1824,8 @@ onMounted(() => {
   width: 100%;
   aspect-ratio: 1;
   object-fit: cover;
-  border-radius: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--line);
   transition: transform 0.3s;
 }
 
@@ -1673,20 +1835,20 @@ onMounted(() => {
 
 .lead-info p, .lead-moto p, .lead-payment p {
   font-size: 0.9rem;
-  color: var(--muted);
+  color: var(--text-dim);
   margin-bottom: 5px;
 }
 
 .lead-message {
   margin-top: 20px;
   padding: 15px;
-  background: rgba(255,255,255,0.03);
-  border-radius: 8px;
+  background: var(--line);
+  border-radius: var(--radius-sm);
 }
 
 .lead-message p {
   font-size: 0.9rem;
-  color: var(--text);
+  color: white;
   font-style: italic;
   margin-top: 5px;
 }
@@ -1708,7 +1870,7 @@ onMounted(() => {
   background: var(--panel-2);
   border: 1px solid var(--line);
   padding: 20px;
-  border-radius: 12px;
+  border-radius: var(--radius-md);
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -1771,21 +1933,21 @@ onMounted(() => {
 }
 
 .mini-form input {
-  background: #0a0a0a;
-  border: 1px solid #333;
+  background: var(--bg);
+  border: 1px solid var(--line);
   padding: 12px;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   color: #ffffff;
   font-size: 1rem;
   width: 100%;
 }
 
 .mini-form input::placeholder {
-  color: #666;
+  color: var(--text-dim);
 }
 
 .mini-form input:focus {
-  border-color: var(--primary-2);
+  border-color: var(--primary);
   outline: none;
 }
 
@@ -1858,10 +2020,10 @@ onMounted(() => {
 
 /* Form Styles */
 .moto-form {
-  background: #1a1a1a;
+  background: var(--panel-2);
   padding: 30px;
-  border-radius: 20px;
-  border: 1px solid #222;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
 }
 
 .form-grid {
@@ -1877,7 +2039,7 @@ onMounted(() => {
 .form-group label {
   display: block;
   margin-bottom: 8px;
-  color: #888;
+  color: var(--text-dim);
   font-size: 0.9rem;
 }
 
@@ -1886,9 +2048,9 @@ onMounted(() => {
 .form-group textarea {
   width: 100%;
   padding: 12px;
-  background: #0a0a0a;
-  border: 1px solid #333;
-  border-radius: 10px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
   color: white;
   font-size: 1rem;
 }
@@ -1946,13 +2108,13 @@ onMounted(() => {
 }
 
 .modal {
-  background: #1a1a1a;
+  background: var(--panel-2);
   padding: 30px;
-  border-radius: 20px;
+  border-radius: var(--radius-lg);
   max-width: 400px;
   width: 90%;
   text-align: center;
-  border: 1px solid #333;
+  border: 1px solid var(--line);
 }
 
 .modal.large {
@@ -1967,8 +2129,8 @@ onMounted(() => {
 .existing-docs {
   max-height: 200px;
   overflow-y: auto;
-  background: #0a0a0a;
-  border-radius: 10px;
+  background: var(--bg);
+  border-radius: var(--radius-sm);
   padding: 10px;
 }
 
@@ -1977,7 +2139,7 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
-  border-bottom: 1px solid #222;
+  border-bottom: 1px solid var(--line);
   font-size: 0.9rem;
 }
 
@@ -1999,34 +2161,34 @@ onMounted(() => {
 }
 
 .upload-zone {
-  background: #111;
+  background: var(--panel);
   padding: 20px;
-  border-radius: 12px;
-  border: 2px dashed #333;
+  border-radius: var(--radius-md);
+  border: 2px dashed var(--line);
 }
 
 .upload-zone input[type="text"],
 .upload-zone select {
-  background: #0a0a0a;
-  border: 1px solid #333;
+  background: var(--bg);
+  border: 1px solid var(--line);
   color: white;
   padding: 8px;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   width: 100%;
 }
 
 .mini-input {
-  background: #0a0a0a;
-  border: 1px solid #333;
+  background: var(--bg);
+  border: 1px solid var(--line);
   color: white;
   padding: 10px;
-  border-radius: 8px;
+  border-radius: var(--radius-sm);
   font-size: 0.9rem;
   width: 100%;
 }
 
 .mini-input:focus {
-  border-color: var(--primary-2);
+  border-color: var(--primary);
   outline: none;
 }
 
@@ -2038,11 +2200,11 @@ onMounted(() => {
 
 .btn-cancel {
   flex: 1;
-  background: #333;
+  background: var(--line);
   color: white;
   border: none;
   padding: 12px;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
 }
 
@@ -2052,7 +2214,7 @@ onMounted(() => {
   color: white;
   border: none;
   padding: 12px;
-  border-radius: 10px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
 }
 

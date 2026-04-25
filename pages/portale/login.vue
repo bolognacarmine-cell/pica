@@ -46,56 +46,57 @@ useHead({
 <template>
   <div class="portal-login-page">
     <div class="login-container">
-      <div class="login-card">
+      <div class="glass-panel p-10 shadow-2xl">
         <div class="login-header">
-          <img src="/logo-pica-caravan.jpg" alt="Logo" class="portal-logo" />
-          <h1>Portale Cliente</h1>
-          <p>Inserisci i dati del tuo veicolo per accedere all'area riservata.</p>
+          <img src="/logo-pica-caravan.jpg" alt="Logo" class="portal-logo mx-auto" />
+          <h1 class="text-3xl font-black mb-2">Portale Cliente</h1>
+          <p class="text-white/50 text-sm uppercase tracking-widest">Inserisci i dati del tuo veicolo</p>
         </div>
 
-        <form @submit.prevent="handleLogin" class="login-form">
-          <div class="form-group">
-            <label>Username</label>
+        <form @submit.prevent="handleLogin" class="login-form mt-8">
+          <div class="form-group mb-6">
+            <label class="premium-label">Username</label>
             <input 
               v-model="username" 
               type="text" 
               readonly 
-              class="readonly-input"
+              class="premium-input opacity-50 cursor-not-allowed"
             />
           </div>
 
-          <div class="form-group">
-            <label>Targa Veicolo</label>
+          <div class="form-group mb-6">
+            <label class="premium-label">Targa Veicolo</label>
             <input 
               v-model="targa" 
               type="text" 
-              placeholder="Es: AA123BB" 
+              placeholder="ES: AA123BB" 
               required 
               maxlength="7"
-              class="targa-input"
+              class="premium-input uppercase font-black tracking-widest text-center text-lg"
             />
           </div>
 
-          <div class="form-group">
-            <label>Password Personale</label>
+          <div class="form-group mb-8">
+            <label class="premium-label">Password Personale</label>
             <input 
               v-model="password" 
               type="password" 
               placeholder="••••••••" 
               required 
+              class="premium-input"
             />
           </div>
 
-          <div v-if="errorMsg" class="error-banner">
+          <div v-if="errorMsg" class="error-banner mb-6 p-4 rounded-xl bg-red-500/10 border border-red-500/20 text-red-500 text-sm text-center">
             {{ errorMsg }}
           </div>
 
-          <button type="submit" class="btn-primary-custom full" :disabled="loading">
+          <button type="submit" class="btn-premium w-full justify-center" :disabled="loading">
             {{ loading ? 'Verifica in corso...' : 'Accedi al tuo veicolo' }}
           </button>
 
-          <div class="login-footer">
-            <p>Hai dimenticato la password? <a href="#">Contatta la concessionaria</a></p>
+          <div class="login-footer mt-8 text-center">
+            <p class="text-white/30 text-xs">Hai dimenticato la password? <a href="#" class="text-primary font-bold hover:underline">Contatta la concessionaria</a></p>
           </div>
         </form>
       </div>
@@ -109,112 +110,25 @@ useHead({
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at center, #1a1a1a 0%, #050505 100%);
-  padding: 20px;
+  background: radial-gradient(circle at center, #111 0%, #000 100%);
+  padding: 24px;
 }
 
 .login-container {
   width: 100%;
-  max-width: 450px;
-}
-
-.login-card {
-  background: var(--panel);
-  border: 1px solid var(--line);
-  border-radius: 24px;
-  padding: 40px;
-  box-shadow: var(--shadow);
-}
-
-.login-header {
-  text-align: center;
-  margin-bottom: 40px;
+  max-width: 480px;
 }
 
 .portal-logo {
-  height: 80px;
-  border-radius: 12px;
-  margin-bottom: 20px;
+  height: 90px;
+  border-radius: 16px;
+  margin-bottom: 24px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-.login-header h1 {
-  font-size: 1.75rem;
-  font-weight: 900;
-  margin-bottom: 10px;
-}
-
-.login-header p {
-  color: var(--muted);
-  font-size: 0.9rem;
-}
-
-.login-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.form-group label {
-  font-size: 0.8rem;
-  font-weight: 700;
-  color: var(--muted);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-}
-
-input {
-  background: var(--panel-2);
-  border: 1px solid var(--line);
-  padding: 14px 16px;
-  border-radius: 12px;
-  color: #fff;
-  font-size: 1rem;
-  outline: none;
-  transition: all 0.3s ease;
-}
-
-input:focus {
-  border-color: var(--primary-2);
-  background: rgba(255,255,255,0.02);
-}
-
-.readonly-input {
-  background: rgba(255,255,255,0.03);
-  color: #666;
-  cursor: not-allowed;
-}
-
-.targa-input {
-  text-transform: uppercase;
-  font-weight: 800;
-  letter-spacing: 0.1em;
-}
-
-.error-banner {
-  background: rgba(215, 24, 42, 0.1);
-  border: 1px solid var(--primary);
-  color: var(--primary-2);
-  padding: 12px;
-  border-radius: 10px;
-  font-size: 0.85rem;
-  text-align: center;
-}
-
-.login-footer {
-  margin-top: 20px;
-  text-align: center;
-  font-size: 0.85rem;
-  color: var(--muted);
-}
-
-.login-footer a {
-  color: var(--primary-2);
-  font-weight: 600;
-}
+.p-10 { padding: 2.5rem; }
+.shadow-2xl { box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+.w-full { width: 100%; }
+.justify-center { justify-content: center; }
+.mx-auto { margin-left: auto; margin-right: auto; }
 </style>

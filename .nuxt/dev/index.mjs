@@ -3,44 +3,45 @@ import { Server } from 'node:http';
 import { resolve as resolve$1, dirname, join } from 'node:path';
 import nodeCrypto from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
-import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getQuery as getQuery$1, readBody, getRequestProtocol, getRequestHost, setHeader, getHeader, getResponseStatus, lazyEventHandler, useBase, createApp, createRouter as createRouter$1, toNodeListener, getRouterParam, getResponseStatusText } from 'file://C:/Users/michele/Desktop/pica/node_modules/h3/dist/index.mjs';
-import { escapeHtml } from 'file://C:/Users/michele/Desktop/pica/node_modules/@vue/shared/dist/shared.cjs.js';
-import { MongoClient, ObjectId } from 'file://C:/Users/michele/Desktop/pica/node_modules/mongodb/lib/index.js';
-import { v2 } from 'file://C:/Users/michele/Desktop/pica/node_modules/cloudinary/cloudinary.js';
-import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://C:/Users/michele/Desktop/pica/node_modules/vue-bundle-renderer/dist/runtime.mjs';
-import { parseURL, withoutBase, joinURL, getQuery, withQuery, hasProtocol, withHttps, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL, parsePath, stringifyQuery, parseQuery, encodePath, stringifyParsedURL, withBase } from 'file://C:/Users/michele/Desktop/pica/node_modules/ufo/dist/index.mjs';
-import destr, { destr as destr$1 } from 'file://C:/Users/michele/Desktop/pica/node_modules/destr/dist/index.mjs';
-import { renderToString } from 'file://C:/Users/michele/Desktop/pica/node_modules/vue/server-renderer/index.mjs';
-import { klona } from 'file://C:/Users/michele/Desktop/pica/node_modules/klona/dist/index.mjs';
-import defu, { defuFn, defu as defu$1, createDefu } from 'file://C:/Users/michele/Desktop/pica/node_modules/defu/dist/defu.mjs';
-import { snakeCase } from 'file://C:/Users/michele/Desktop/pica/node_modules/scule/dist/index.mjs';
-import { createHead as createHead$1, propsToString, renderSSRHead } from 'file://C:/Users/michele/Desktop/pica/node_modules/unhead/dist/server.mjs';
-import { stringify, uneval } from 'file://C:/Users/michele/Desktop/pica/node_modules/devalue/index.js';
-import { toValue, isVNode, isRef } from 'file://C:/Users/michele/Desktop/pica/node_modules/vue/index.mjs';
-import { createHooks } from 'file://C:/Users/michele/Desktop/pica/node_modules/hookable/dist/index.mjs';
-import { createFetch, Headers as Headers$1 } from 'file://C:/Users/michele/Desktop/pica/node_modules/ofetch/dist/node.mjs';
-import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file://C:/Users/michele/Desktop/pica/node_modules/node-mock-http/dist/index.mjs';
-import { createStorage, prefixStorage } from 'file://C:/Users/michele/Desktop/pica/node_modules/unstorage/dist/index.mjs';
-import unstorage_47drivers_47fs from 'file://C:/Users/michele/Desktop/pica/node_modules/unstorage/drivers/fs.mjs';
-import { digest } from 'file://C:/Users/michele/Desktop/pica/node_modules/ohash/dist/index.mjs';
-import { toRouteMatcher, createRouter } from 'file://C:/Users/michele/Desktop/pica/node_modules/radix3/dist/index.mjs';
+import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getQuery as getQuery$1, readBody, getRequestProtocol, getRequestHost, setHeader, getHeader, getResponseStatus, lazyEventHandler, useBase, createApp, createRouter as createRouter$1, toNodeListener, getRouterParam, getResponseStatusText } from 'file://C:/Users/Acer/pica/node_modules/h3/dist/index.mjs';
+import { escapeHtml } from 'file://C:/Users/Acer/pica/node_modules/@vue/shared/dist/shared.cjs.js';
+import { MongoClient, ObjectId } from 'file://C:/Users/Acer/pica/node_modules/mongodb/lib/index.js';
+import { v2 } from 'file://C:/Users/Acer/pica/node_modules/cloudinary/cloudinary.js';
+import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://C:/Users/Acer/pica/node_modules/vue-bundle-renderer/dist/runtime.mjs';
+import { parseURL, withoutBase, joinURL, getQuery, withQuery, hasProtocol, withHttps, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL, parsePath, stringifyQuery, parseQuery, encodePath, stringifyParsedURL, withBase } from 'file://C:/Users/Acer/pica/node_modules/ufo/dist/index.mjs';
+import destr, { destr as destr$1 } from 'file://C:/Users/Acer/pica/node_modules/destr/dist/index.mjs';
+import { renderToString } from 'file://C:/Users/Acer/pica/node_modules/vue/server-renderer/index.mjs';
+import { klona } from 'file://C:/Users/Acer/pica/node_modules/klona/dist/index.mjs';
+import defu, { defuFn, defu as defu$1, createDefu } from 'file://C:/Users/Acer/pica/node_modules/defu/dist/defu.mjs';
+import { snakeCase } from 'file://C:/Users/Acer/pica/node_modules/scule/dist/index.mjs';
+import { createHead as createHead$1, propsToString, renderSSRHead } from 'file://C:/Users/Acer/pica/node_modules/unhead/dist/server.mjs';
+import { stringify, uneval } from 'file://C:/Users/Acer/pica/node_modules/devalue/index.js';
+import { toValue, isVNode, isRef } from 'file://C:/Users/Acer/pica/node_modules/vue/index.mjs';
+import { createHooks } from 'file://C:/Users/Acer/pica/node_modules/nitropack/node_modules/hookable/dist/index.mjs';
+import { createFetch, Headers as Headers$1 } from 'file://C:/Users/Acer/pica/node_modules/ofetch/dist/node.mjs';
+import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file://C:/Users/Acer/pica/node_modules/node-mock-http/dist/index.mjs';
+import { createStorage, prefixStorage } from 'file://C:/Users/Acer/pica/node_modules/unstorage/dist/index.mjs';
+import unstorage_47drivers_47fs from 'file://C:/Users/Acer/pica/node_modules/unstorage/drivers/fs.mjs';
+import { digest } from 'file://C:/Users/Acer/pica/node_modules/ohash/dist/index.mjs';
+import { toRouteMatcher, createRouter } from 'file://C:/Users/Acer/pica/node_modules/radix3/dist/index.mjs';
 import { readFile } from 'node:fs/promises';
-import consola, { createConsola, consola as consola$1 } from 'file://C:/Users/michele/Desktop/pica/node_modules/consola/dist/index.mjs';
-import { ErrorParser } from 'file://C:/Users/michele/Desktop/pica/node_modules/youch-core/build/index.js';
-import { Youch } from 'file://C:/Users/michele/Desktop/pica/node_modules/youch/build/index.js';
-import { SourceMapConsumer } from 'file://C:/Users/michele/Desktop/pica/node_modules/source-map/source-map.js';
-import devalue from 'file://C:/Users/michele/Desktop/pica/node_modules/@nuxt/devalue/dist/devalue.mjs';
+import consola, { createConsola, consola as consola$1 } from 'file://C:/Users/Acer/pica/node_modules/consola/dist/index.mjs';
+import { ErrorParser } from 'file://C:/Users/Acer/pica/node_modules/youch-core/build/index.js';
+import { Youch } from 'file://C:/Users/Acer/pica/node_modules/youch/build/index.js';
+import { SourceMapConsumer } from 'file://C:/Users/Acer/pica/node_modules/source-map/source-map.js';
+import devalue from 'file://C:/Users/Acer/pica/node_modules/@nuxt/devalue/dist/devalue.mjs';
 import { AsyncLocalStorage } from 'node:async_hooks';
-import { getContext } from 'file://C:/Users/michele/Desktop/pica/node_modules/unctx/dist/index.mjs';
-import { captureRawStackTrace, parseRawStackTrace } from 'file://C:/Users/michele/Desktop/pica/node_modules/errx/dist/index.js';
+import { getContext } from 'file://C:/Users/Acer/pica/node_modules/unctx/dist/index.mjs';
+import { captureRawStackTrace, parseRawStackTrace } from 'file://C:/Users/Acer/pica/node_modules/errx/dist/index.js';
+import _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw from 'file://C:/Users/Acer/pica/node_modules/@nuxt/vite-builder/dist/fix-stacktrace.mjs';
 import { promises } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname as dirname$1, resolve as resolve$2, isAbsolute } from 'file://C:/Users/michele/Desktop/pica/node_modules/pathe/dist/index.mjs';
-import { walkResolver } from 'file://C:/Users/michele/Desktop/pica/node_modules/unhead/dist/utils.mjs';
-import { XMLParser } from 'file://C:/Users/michele/Desktop/pica/node_modules/fast-xml-parser/src/fxp.js';
-import { ipxFSStorage, ipxHttpStorage, createIPX, createIPXH3Handler } from 'file://C:/Users/michele/Desktop/pica/node_modules/ipx/dist/index.mjs';
+import { dirname as dirname$1, resolve as resolve$2, isAbsolute } from 'file://C:/Users/Acer/pica/node_modules/pathe/dist/index.mjs';
+import { walkResolver } from 'file://C:/Users/Acer/pica/node_modules/unhead/dist/utils.mjs';
+import { XMLParser } from 'file://C:/Users/Acer/pica/node_modules/fast-xml-parser/src/fxp.js';
+import { ipxFSStorage, ipxHttpStorage, createIPX, createIPXH3Handler } from 'file://C:/Users/Acer/pica/node_modules/ipx/dist/index.mjs';
 
-const serverAssets = [{"baseName":"server","dir":"C:/Users/michele/Desktop/pica/server/assets"}];
+const serverAssets = [{"baseName":"server","dir":"C:/Users/Acer/pica/server/assets"}];
 
 const assets$1 = createStorage();
 
@@ -52,11 +53,11 @@ const storage = createStorage({});
 
 storage.mount('/assets', assets$1);
 
-storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/michele/Desktop/pica","watchOptions":{"ignored":[null]}}));
-storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/michele/Desktop/pica/server","watchOptions":{"ignored":[null]}}));
-storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/michele/Desktop/pica/.nuxt"}));
-storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/michele/Desktop/pica/.nuxt/cache"}));
-storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"C:/Users/michele/Desktop/pica/.data/kv"}));
+storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/Acer/pica","watchOptions":{"ignored":[null]}}));
+storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"C:/Users/Acer/pica/server","watchOptions":{"ignored":[null]}}));
+storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/Acer/pica/.nuxt"}));
+storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"C:/Users/Acer/pica/.nuxt/cache"}));
+storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"C:/Users/Acer/pica/.data/kv"}));
 
 function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
@@ -658,16 +659,16 @@ const _inlineRuntimeConfig = {
     }
   },
   "public": {
-    "siteUrl": "https://picacaravan.it",
-    "apiBase": "https://api.picacaravan.it",
+    "siteUrl": "https://pica-bhm1.onrender.com",
+    "apiBase": "https://pica-bhm1.onrender.com/api",
     "adminUser": "picacaravan",
     "adminPassword": "pica2026"
   },
-  "mongodbUri": "",
-  "mongodbDbName": "picacaravan_db",
-  "cloudinaryCloudName": "",
-  "cloudinaryApiKey": "",
-  "cloudinaryApiSecret": "",
+  "mongodbUri": "mongodb+srv://ciaptciopt:%3Cciaptciopt%3Apolizza9231%21%3E@cluster0.0chvruk.mongodb.net/?appName=Cluster0",
+  "mongodbDbName": "Pica",
+  "cloudinaryCloudName": "dty2nvi8t",
+  "cloudinaryApiKey": "283337894435811",
+  "cloudinaryApiSecret": "rKqocf_BGQDwJyk_q4vjnBWzz_o",
   "sitemap": {
     "isI18nMapped": false,
     "sitemapName": "sitemap.xml",
@@ -731,6 +732,11 @@ const _inlineRuntimeConfig = {
         "_context": "package.json",
         "_priority": -10,
         "name": "pica-caravan"
+      },
+      {
+        "_context": "buildEnv",
+        "_priority": -1,
+        "url": "https://pica-bhm1.onrender.com"
       }
     ],
     "version": "3.2.21",
@@ -742,7 +748,7 @@ const _inlineRuntimeConfig = {
     "alias": {},
     "fs": {
       "dir": [
-        "C:/Users/michele/Desktop/pica/public"
+        "C:/Users/Acer/pica/public"
       ]
     },
     "http": {
@@ -910,7 +916,7 @@ function isJsonRequest(event) {
 }
 function hasReqHeader(event, name, includes) {
 	const value = getRequestHeader(event, name);
-	return value && typeof value === "string" && value.toLowerCase().includes(includes);
+	return !!(value && typeof value === "string" && value.toLowerCase().includes(includes));
 }
 
 const iframeStorageBridge = (nonce) => `
@@ -1272,7 +1278,7 @@ function webComponentScript(base64HTML, startMinimized) {
     iframe.id = 'frame';
     iframe.src = 'data:text/html;base64,${base64HTML}';
     iframe.title = 'Detailed error stack trace';
-    iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin');
+    iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-top-navigation-by-user-activation');
 
     const preview = el('div');
     preview.id = 'preview';
@@ -2123,7 +2129,7 @@ if (!window.__NUXT_DEVTOOLS_TIME_METRIC__) {
 window.__NUXT_DEVTOOLS_TIME_METRIC__.appInit = Date.now()
 `;
 
-const _1GsKTwggseaJBwTmOww5VKegiktL_HHNoKJB83QnHY = (function(nitro) {
+const _zdd24dfw5mTwTjL0sHmKRM18TlujMiIfoeHAW4tcAU = (function(nitro) {
   nitro.hooks.hook("render:html", (htmlContext) => {
     htmlContext.head.push(`<script>${script}<\/script>`);
   });
@@ -2223,7 +2229,7 @@ function getSiteConfig(e, _options) {
   return e.context.siteConfig.get(options);
 }
 
-const _UU3UYL5dgmSFQslfoYMpzMYpxPlDwuZZGiKTFINtw = defineNitroPlugin(async (nitroApp) => {
+const _7JwMsohQ3moHp07wMCkKQBjJxDguCO9VV0Srf9fbg = defineNitroPlugin(async (nitroApp) => {
   nitroApp.hooks.hook("render:html", async (ctx, { event }) => {
     const routeOptions = getRouteRules(event);
     const isIsland = process.env.NUXT_COMPONENT_ISLANDS && event.path.startsWith("/__nuxt_island");
@@ -2238,9 +2244,9 @@ const _UU3UYL5dgmSFQslfoYMpzMYpxPlDwuZZGiKTFINtw = defineNitroPlugin(async (nitr
   });
 });
 
-const rootDir = "C:/Users/michele/Desktop/pica";
+const rootDir = "C:/Users/Acer/pica";
 
-const appHead = {"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"name":"theme-color","content":"#111111"},{"name":"description","content":"Pica Caravan a San Nicola la Strada (CE) è la tua concessionaria di fiducia per la vendita di camper, roulotte e rimessaggio sicuro."},{"property":"og:type","content":"website"},{"property":"og:url","content":"https://picacaravan.it"},{"property":"og:title","content":"Pica Caravan | Vendita Camper e Roulotte a Caserta"},{"property":"og:description","content":"Scopri la vasta gamma di camper e roulotte nuovi e usati. Servizi di assistenza, riparazione e rimessaggio a San Nicola la Strada."},{"property":"og:image","content":"https://picacaravan.it/logo-pica.png"},{"name":"twitter:card","content":"summary_large_image"},{"name":"twitter:title","content":"Pica Caravan | Camper e Roulotte a Caserta"},{"name":"twitter:description","content":"Vendita, assistenza e rimessaggio camper e roulotte a San Nicola la Strada (CE)."},{"name":"twitter:image","content":"https://picacaravan.it/logo-pica.png"}],"link":[{"rel":"canonical","href":"https://picacaravan.it"},{"rel":"icon","type":"image/x-icon","href":"/favicon.ico"}],"style":[],"script":[],"noscript":[],"titleTemplate":"%s | Pica Caravan","htmlAttrs":{"lang":"it"}};
+const appHead = {"meta":[{"charset":"utf-8"},{"name":"viewport","content":"width=device-width, initial-scale=1"},{"name":"theme-color","content":"#0F0A08"},{"name":"description","content":"Pica Caravan a San Nicola la Strada (CE) è la tua concessionaria di fiducia per la vendita di camper, roulotte e rimessaggio sicuro."},{"property":"og:type","content":"website"},{"property":"og:url","content":"https://picacaravan.it"},{"property":"og:title","content":"Pica Caravan | Vendita Camper e Roulotte a Caserta"},{"property":"og:description","content":"Scopri la vasta gamma di camper e roulotte nuovi e usati. Servizi di assistenza, riparazione e rimessaggio a San Nicola la Strada."},{"property":"og:image","content":"https://picacaravan.it/logo-pica.png"},{"name":"twitter:card","content":"summary_large_image"},{"name":"twitter:title","content":"Pica Caravan | Camper e Roulotte a Caserta"},{"name":"twitter:description","content":"Vendita, assistenza e rimessaggio camper e roulotte a San Nicola la Strada (CE)."},{"name":"twitter:image","content":"https://picacaravan.it/logo-pica.png"}],"link":[{"rel":"canonical","href":"https://picacaravan.it"},{"rel":"icon","type":"image/x-icon","href":"/favicon.ico"},{"rel":"preconnect","href":"https://fonts.googleapis.com"},{"rel":"preconnect","href":"https://fonts.gstatic.com","crossorigin":""},{"rel":"stylesheet","href":"https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter:wght@100..900&display=swap"}],"style":[],"script":[],"noscript":[],"titleTemplate":"%s | Pica Caravan","htmlAttrs":{"lang":"it"}};
 
 const appRootTag = "div";
 
@@ -2267,7 +2273,7 @@ const asyncContext = getContext("nuxt-dev", {
 	asyncContext: true,
 	AsyncLocalStorage
 });
-const _UFf8HhGWj7LUdEqz1fxb6DNnBQJfGzDdjakVHQ_xY = (nitroApp) => {
+const _MRJis5zQpv2wUHyFzXX0Og3m289Mr99QeRtRkrLYDiE = (nitroApp) => {
 	const handler = nitroApp.h3App.handler;
 	nitroApp.h3App.handler = (event) => {
 		return asyncContext.callAsync({
@@ -2341,9 +2347,10 @@ function onConsoleLog(callback) {
 }
 
 const plugins = [
-  _1GsKTwggseaJBwTmOww5VKegiktL_HHNoKJB83QnHY,
-_UU3UYL5dgmSFQslfoYMpzMYpxPlDwuZZGiKTFINtw,
-_UFf8HhGWj7LUdEqz1fxb6DNnBQJfGzDdjakVHQ_xY
+  _zdd24dfw5mTwTjL0sHmKRM18TlujMiIfoeHAW4tcAU,
+_7JwMsohQ3moHp07wMCkKQBjJxDguCO9VV0Srf9fbg,
+_MRJis5zQpv2wUHyFzXX0Og3m289Mr99QeRtRkrLYDiE,
+_wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw
 ];
 
 const assets = {};
@@ -2371,7 +2378,7 @@ function getAsset (id) {
 
 const METHODS = /* @__PURE__ */ new Set(["HEAD", "GET"]);
 const EncodingMap = { gzip: ".gz", br: ".br" };
-const _FM8OA4 = eventHandler((event) => {
+const _EI5waZ = eventHandler((event) => {
   if (event.method && !METHODS.has(event.method)) {
     return;
   }
@@ -2457,6 +2464,7 @@ function resolveUnrefHeadInput(input) {
   return walkResolver(input, VueResolver);
 }
 
+const NUXT_PAYLOAD_INLINE = false;
 const NUXT_RUNTIME_PAYLOAD_EXTRACTION = false;
 
 // @__NO_SIDE_EFFECTS__
@@ -2511,9 +2519,9 @@ function publicAssetsURL(...path) {
 const APP_ROOT_OPEN_TAG = `<${appRootTag}${propsToString(appRootAttrs)}>`;
 const APP_ROOT_CLOSE_TAG = `</${appRootTag}>`;
 // @ts-expect-error file will be produced after app build
-const getServerEntry = () => import('file://C:/Users/michele/Desktop/pica/.nuxt//dist/server/server.mjs').then((r) => r.default || r);
+const getServerEntry = () => import('file://C:/Users/Acer/pica/.nuxt//dist/server/server.mjs').then((r) => r.default || r);
 // @ts-expect-error file will be produced after app build
-const getClientManifest = () => import('file://C:/Users/michele/Desktop/pica/.nuxt//dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
+const getClientManifest = () => import('file://C:/Users/Acer/pica/.nuxt//dist/server/client.manifest.mjs').then((r) => r.default || r).then((r) => typeof r === "function" ? r() : r);
 // -- SSR Renderer --
 const getSSRRenderer = lazyCachedFunction(async () => {
 	// Load server bundle
@@ -2696,7 +2704,7 @@ function replaceIslandTeleports(ssrContext, html) {
 }
 
 const ISLAND_SUFFIX_RE = /\.json(?:\?.*)?$/;
-const _SxA8c9 = defineEventHandler(async (event) => {
+const handler$1 = defineEventHandler(async (event) => {
 	const nitroApp = useNitroApp();
 	setResponseHeaders(event, {
 		"content-type": "application/json;charset=utf-8",
@@ -2774,24 +2782,35 @@ const _SxA8c9 = defineEventHandler(async (event) => {
 	});
 	return islandResponse;
 });
+const ISLAND_PATH_PREFIX = "/__nuxt_island/";
+const VALID_COMPONENT_NAME_RE = /^[a-z][\w.-]*$/i;
 async function getIslandContext(event) {
-	// TODO: Strict validation for url
 	let url = event.path || "";
-	const componentParts = url.substring("/__nuxt_island".length + 1).replace(ISLAND_SUFFIX_RE, "").split("_");
+	if (!url.startsWith(ISLAND_PATH_PREFIX)) {
+		throw createError({
+			statusCode: 400,
+			statusMessage: "Invalid island request path"
+		});
+	}
+	const componentParts = url.substring(ISLAND_PATH_PREFIX.length).replace(ISLAND_SUFFIX_RE, "").split("_");
 	const hashId = componentParts.length > 1 ? componentParts.pop() : undefined;
 	const componentName = componentParts.join("_");
-	// TODO: Validate context
+	if (!componentName || !VALID_COMPONENT_NAME_RE.test(componentName)) {
+		throw createError({
+			statusCode: 400,
+			statusMessage: "Invalid island component name"
+		});
+	}
 	const context = event.method === "GET" ? getQuery$1(event) : await readBody(event);
-	const ctx = {
-		url: "/",
-		...context,
+	// Only extract known context fields to prevent arbitrary data injection
+	return {
+		url: typeof context?.url === "string" ? context.url : "/",
 		id: hashId,
 		name: componentName,
 		props: destr$1(context.props) || {},
 		slots: {},
 		components: {}
 	};
-	return ctx;
 }
 
 const r=Object.create(null),i=e=>globalThis.process?.env||globalThis._importMeta_.env||globalThis.Deno?.env.toObject()||globalThis.__env__||(e?r:globalThis),o=new Proxy(r,{get(e,s){return i()[s]??r[s]},has(e,s){const E=i();return s in E||s in r},set(e,s,E){const B=i(true);return B[s]=E,true},deleteProperty(e,s){if(!s)return  false;const E=i(true);return delete E[s],true},ownKeys(){const e=i(true);return Object.keys(e)}}),t=typeof process<"u"&&process.env&&"development"||"",f=[["APPVEYOR"],["AWS_AMPLIFY","AWS_APP_ID",{ci:true}],["AZURE_PIPELINES","SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"],["AZURE_STATIC","INPUT_AZURE_STATIC_WEB_APPS_API_TOKEN"],["APPCIRCLE","AC_APPCIRCLE"],["BAMBOO","bamboo_planKey"],["BITBUCKET","BITBUCKET_COMMIT"],["BITRISE","BITRISE_IO"],["BUDDY","BUDDY_WORKSPACE_ID"],["BUILDKITE"],["CIRCLE","CIRCLECI"],["CIRRUS","CIRRUS_CI"],["CLOUDFLARE_PAGES","CF_PAGES",{ci:true}],["CLOUDFLARE_WORKERS","WORKERS_CI",{ci:true}],["CODEBUILD","CODEBUILD_BUILD_ARN"],["CODEFRESH","CF_BUILD_ID"],["DRONE"],["DRONE","DRONE_BUILD_EVENT"],["DSARI"],["GITHUB_ACTIONS"],["GITLAB","GITLAB_CI"],["GITLAB","CI_MERGE_REQUEST_ID"],["GOCD","GO_PIPELINE_LABEL"],["LAYERCI"],["HUDSON","HUDSON_URL"],["JENKINS","JENKINS_URL"],["MAGNUM"],["NETLIFY"],["NETLIFY","NETLIFY_LOCAL",{ci:false}],["NEVERCODE"],["RENDER"],["SAIL","SAILCI"],["SEMAPHORE"],["SCREWDRIVER"],["SHIPPABLE"],["SOLANO","TDDIUM"],["STRIDER"],["TEAMCITY","TEAMCITY_VERSION"],["TRAVIS"],["VERCEL","NOW_BUILDER"],["VERCEL","VERCEL",{ci:false}],["VERCEL","VERCEL_ENV",{ci:false}],["APPCENTER","APPCENTER_BUILD_ID"],["CODESANDBOX","CODESANDBOX_SSE",{ci:false}],["CODESANDBOX","CODESANDBOX_HOST",{ci:false}],["STACKBLITZ"],["STORMKIT"],["CLEAVR"],["ZEABUR"],["CODESPHERE","CODESPHERE_APP_ID",{ci:true}],["RAILWAY","RAILWAY_PROJECT_ID"],["RAILWAY","RAILWAY_SERVICE_ID"],["DENO-DEPLOY","DENO_DEPLOYMENT_ID"],["FIREBASE_APP_HOSTING","FIREBASE_APP_HOSTING",{ci:true}]];function b(){if(globalThis.process?.env)for(const e of f){const s=e[1]||e[0];if(globalThis.process?.env[s])return {name:e[0].toLowerCase(),...e[2]}}return globalThis.process?.env?.SHELL==="/bin/jsh"&&globalThis.process?.versions?.webcontainer?{name:"stackblitz",ci:false}:{name:"",ci:false}}const l=b();l.name;function n(e){return e?e!=="false":false}const I=globalThis.process?.platform||"",T=n(o.CI)||l.ci!==false,R=n(globalThis.process?.stdout&&globalThis.process?.stdout.isTTY);n(o.DEBUG);const a=t==="test"||n(o.TEST),h=t==="dev"||t==="development";n(o.MINIMAL)||T||a||!R;const A=/^win/i.test(I);!n(o.NO_COLOR)&&(n(o.FORCE_COLOR)||(R||A)&&o.TERM!=="dumb"||T);const C=(globalThis.process?.versions?.node||"").replace(/^v/,"")||null;Number(C?.split(".")[0])||null;const W=globalThis.process||Object.create(null),_={versions:{}};new Proxy(W,{get(e,s){if(s==="env")return o;if(s in e)return e[s];if(s in _)return _[s]}});const O=globalThis.process?.release?.name==="node",c=!!globalThis.Bun||!!globalThis.process?.versions?.bun,D=!!globalThis.Deno,L=!!globalThis.fastly,S=!!globalThis.Netlify,u=!!globalThis.EdgeRuntime,N=globalThis.navigator?.userAgent==="Cloudflare-Workers",F=[[S,"netlify"],[u,"edge-light"],[N,"workerd"],[L,"fastly"],[D,"deno"],[c,"bun"],[O,"node"]];function G(){const e=F.find(s=>s[0]);if(e)return {name:e[1]}}const P=G();P?.name||"";
@@ -2888,7 +2907,7 @@ function getNitroOrigin(e) {
   });
 }
 
-const _c3hG90 = eventHandler(async (e) => {
+const _1zx9fb = eventHandler(async (e) => {
   if (e.context._initedSiteConfig)
     return;
   const runtimeConfig = useRuntimeConfig(e);
@@ -2939,7 +2958,7 @@ const _c3hG90 = eventHandler(async (e) => {
   e.context._initedSiteConfig = true;
 });
 
-const _gEjiKX = eventHandler(async (e) => {
+const _XkZjDu = eventHandler(async (e) => {
   const siteConfig = getSiteConfig(e);
   const nitroOrigin = getNitroOrigin(e);
   const runtimeConfig = useRuntimeConfig(e);
@@ -3407,7 +3426,7 @@ async function parseSitemapXml(xml) {
   if (!xml) {
     throw new Error("Empty XML input provided");
   }
-  const { XMLParser } = await import('file://C:/Users/michele/Desktop/pica/node_modules/fast-xml-parser/src/fxp.js');
+  const { XMLParser } = await import('file://C:/Users/Acer/pica/node_modules/fast-xml-parser/src/fxp.js');
   const parser = new XMLParser({
     isArray: (tagName) => ["url", "image", "video", "link", "tag", "price"].includes(tagName),
     removeNSPrefix: true,
@@ -3934,7 +3953,7 @@ function attachUrlWarnings(sources) {
   }
   return sources;
 }
-const _vlUmov = defineEventHandler(async (e) => {
+const _nsKO5G = defineEventHandler(async (e) => {
   const _runtimeConfig = useSitemapRuntimeConfig();
   const siteConfig = getSiteConfig(e);
   const { sitemaps: _sitemaps } = _runtimeConfig;
@@ -3959,7 +3978,7 @@ const _vlUmov = defineEventHandler(async (e) => {
   };
 });
 
-const _FnlCul = defineEventHandler(async (e) => {
+const _kOrydB = defineEventHandler(async (e) => {
   const fixPath = createSitePathResolver(e, { absolute: false, withBase: true });
   const { sitemapName: fallbackSitemapName, cacheMaxAgeSeconds, version, xslColumns, xslTips } = useSitemapRuntimeConfig();
   setHeader(e, "Content-Type", "application/xslt+xml");
@@ -4974,7 +4993,7 @@ async function sitemapXmlEventHandler(e) {
   return createSitemap(e, Object.values(sitemaps)[0], runtimeConfig);
 }
 
-const _iZwjxL = defineEventHandler(sitemapXmlEventHandler);
+const _2E1EzU = defineEventHandler(sitemapXmlEventHandler);
 
 function defineNitroPlugin(def) {
   return def;
@@ -5096,7 +5115,7 @@ const useDb = async () => {
   }
 };
 
-const _vex3R7 = lazyEventHandler(() => {
+const _19aWza = lazyEventHandler(() => {
   const opts = useRuntimeConfig().ipx || {};
   const fsDir = opts?.fs?.dir ? (Array.isArray(opts.fs.dir) ? opts.fs.dir : [opts.fs.dir]).map((dir) => isAbsolute(dir) ? dir : fileURLToPath(new URL(dir, globalThis._importMeta_.url))) : void 0;
   const fsStorage = opts.fs?.dir ? ipxFSStorage({ ...opts.fs, dir: fsDir }) : void 0;
@@ -5114,75 +5133,75 @@ const _vex3R7 = lazyEventHandler(() => {
   return useBase(opts.baseURL, ipxHandler);
 });
 
-const _lazy_JF3G74 = () => Promise.resolve().then(function () { return addMaintenance_post$1; });
-const _lazy_b1dZwp = () => Promise.resolve().then(function () { return allPortalVehicles_get$1; });
-const _lazy_GLGqgY = () => Promise.resolve().then(function () { return createPortalUser_post$1; });
-const _lazy_WKgqfV = () => Promise.resolve().then(function () { return deleteMaintenance_delete$1; });
-const _lazy_80QQY2 = () => Promise.resolve().then(function () { return deletePortalDocument_delete$1; });
-const _lazy_l1Fzu_ = () => Promise.resolve().then(function () { return deletePortalUser_delete$1; });
-const _lazy_k2sA9u = () => Promise.resolve().then(function () { return portalData_get$1; });
-const _lazy_Jby9H_ = () => Promise.resolve().then(function () { return tradeIns_get$1; });
-const _lazy_EF9MdB = () => Promise.resolve().then(function () { return updatePortalVehicle_post$1; });
-const _lazy_FttXr6 = () => Promise.resolve().then(function () { return uploadPortalDocument_post$1; });
-const _lazy_decitc = () => Promise.resolve().then(function () { return portalLogin_post$1; });
-const _lazy_epe1dU = () => Promise.resolve().then(function () { return _id__delete$3; });
-const _lazy_1P1Zl9 = () => Promise.resolve().then(function () { return _id__put$3; });
-const _lazy_LLr2W0 = () => Promise.resolve().then(function () { return _slug__get$1; });
-const _lazy_MrL4Pv = () => Promise.resolve().then(function () { return index_get$1; });
-const _lazy_qNNHkE = () => Promise.resolve().then(function () { return index_post$1; });
-const _lazy_MhPvCE = () => Promise.resolve().then(function () { return maintenance_get$1; });
-const _lazy_Ge5Ifl = () => Promise.resolve().then(function () { return related_get$1; });
-const _lazy_At8tqs = () => Promise.resolve().then(function () { return debugBlog_get$1; });
-const _lazy_IN1FjT = () => Promise.resolve().then(function () { return leads_get$1; });
-const _lazy_qlqT2Z = () => Promise.resolve().then(function () { return leads_post$1; });
-const _lazy_NAGID_ = () => Promise.resolve().then(function () { return data_get$1; });
-const _lazy_Ri3XDJ = () => Promise.resolve().then(function () { return tradeIns_post$1; });
-const _lazy_KYFwQw = () => Promise.resolve().then(function () { return veicoli_get$1; });
-const _lazy_up841C = () => Promise.resolve().then(function () { return veicoli_post$1; });
-const _lazy_ZRQTMZ = () => Promise.resolve().then(function () { return _id__delete$1; });
-const _lazy_eBx7j3 = () => Promise.resolve().then(function () { return _id__get$1; });
-const _lazy_Wqz0rK = () => Promise.resolve().then(function () { return _id__put$1; });
-const _lazy_mV2l2o = () => Promise.resolve().then(function () { return renderer$1; });
+const _lazy_d07mtA = () => Promise.resolve().then(function () { return addMaintenance_post$1; });
+const _lazy_6s7Nxh = () => Promise.resolve().then(function () { return allPortalVehicles_get$1; });
+const _lazy_N_RbQT = () => Promise.resolve().then(function () { return createPortalUser_post$1; });
+const _lazy_w11v3l = () => Promise.resolve().then(function () { return deleteMaintenance_delete$1; });
+const _lazy_EjX4UE = () => Promise.resolve().then(function () { return deletePortalDocument_delete$1; });
+const _lazy_LhQeea = () => Promise.resolve().then(function () { return deletePortalUser_delete$1; });
+const _lazy_9RXkv7 = () => Promise.resolve().then(function () { return portalData_get$1; });
+const _lazy_KhaI68 = () => Promise.resolve().then(function () { return tradeIns_get$1; });
+const _lazy_NY1WCx = () => Promise.resolve().then(function () { return updatePortalVehicle_post$1; });
+const _lazy_ezsLtE = () => Promise.resolve().then(function () { return uploadPortalDocument_post$1; });
+const _lazy_aWqv0L = () => Promise.resolve().then(function () { return portalLogin_post$1; });
+const _lazy_p4xzrI = () => Promise.resolve().then(function () { return _id__delete$3; });
+const _lazy_UtcrzU = () => Promise.resolve().then(function () { return _id__put$3; });
+const _lazy_A0aFBM = () => Promise.resolve().then(function () { return _slug__get$1; });
+const _lazy_yD3NVU = () => Promise.resolve().then(function () { return index_get$1; });
+const _lazy_O_mNoB = () => Promise.resolve().then(function () { return index_post$1; });
+const _lazy_yHNkDo = () => Promise.resolve().then(function () { return maintenance_get$1; });
+const _lazy_AYUznv = () => Promise.resolve().then(function () { return related_get$1; });
+const _lazy_lf_kSE = () => Promise.resolve().then(function () { return debugBlog_get$1; });
+const _lazy_YCAlF9 = () => Promise.resolve().then(function () { return leads_get$1; });
+const _lazy_ZXrGbA = () => Promise.resolve().then(function () { return leads_post$1; });
+const _lazy_o4jhZx = () => Promise.resolve().then(function () { return data_get$1; });
+const _lazy_31PHYS = () => Promise.resolve().then(function () { return tradeIns_post$1; });
+const _lazy_bnwVs7 = () => Promise.resolve().then(function () { return veicoli_get$1; });
+const _lazy_zCIYZh = () => Promise.resolve().then(function () { return veicoli_post$1; });
+const _lazy_9v8TQv = () => Promise.resolve().then(function () { return _id__delete$1; });
+const _lazy_Qvp4oO = () => Promise.resolve().then(function () { return _id__get$1; });
+const _lazy_cSr8kD = () => Promise.resolve().then(function () { return _id__put$1; });
+const _lazy_2rrIMW = () => Promise.resolve().then(function () { return renderer; });
 
 const handlers = [
-  { route: '', handler: _FM8OA4, lazy: false, middleware: true, method: undefined },
-  { route: '/api/admin/add-maintenance', handler: _lazy_JF3G74, lazy: true, middleware: false, method: "post" },
-  { route: '/api/admin/all-portal-vehicles', handler: _lazy_b1dZwp, lazy: true, middleware: false, method: "get" },
-  { route: '/api/admin/create-portal-user', handler: _lazy_GLGqgY, lazy: true, middleware: false, method: "post" },
-  { route: '/api/admin/delete-maintenance', handler: _lazy_WKgqfV, lazy: true, middleware: false, method: "delete" },
-  { route: '/api/admin/delete-portal-document', handler: _lazy_80QQY2, lazy: true, middleware: false, method: "delete" },
-  { route: '/api/admin/delete-portal-user', handler: _lazy_l1Fzu_, lazy: true, middleware: false, method: "delete" },
-  { route: '/api/admin/portal-data', handler: _lazy_k2sA9u, lazy: true, middleware: false, method: "get" },
-  { route: '/api/admin/trade-ins', handler: _lazy_Jby9H_, lazy: true, middleware: false, method: "get" },
-  { route: '/api/admin/update-portal-vehicle', handler: _lazy_EF9MdB, lazy: true, middleware: false, method: "post" },
-  { route: '/api/admin/upload-portal-document', handler: _lazy_FttXr6, lazy: true, middleware: false, method: "post" },
-  { route: '/api/auth/portal-login', handler: _lazy_decitc, lazy: true, middleware: false, method: "post" },
-  { route: '/api/blog/:id', handler: _lazy_epe1dU, lazy: true, middleware: false, method: "delete" },
-  { route: '/api/blog/:id', handler: _lazy_1P1Zl9, lazy: true, middleware: false, method: "put" },
-  { route: '/api/blog/:slug', handler: _lazy_LLr2W0, lazy: true, middleware: false, method: "get" },
-  { route: '/api/blog', handler: _lazy_MrL4Pv, lazy: true, middleware: false, method: "get" },
-  { route: '/api/blog', handler: _lazy_qNNHkE, lazy: true, middleware: false, method: "post" },
-  { route: '/api/blog/maintenance', handler: _lazy_MhPvCE, lazy: true, middleware: false, method: "get" },
-  { route: '/api/blog/related', handler: _lazy_Ge5Ifl, lazy: true, middleware: false, method: "get" },
-  { route: '/api/debug-blog', handler: _lazy_At8tqs, lazy: true, middleware: false, method: "get" },
-  { route: '/api/leads', handler: _lazy_IN1FjT, lazy: true, middleware: false, method: "get" },
-  { route: '/api/leads', handler: _lazy_qlqT2Z, lazy: true, middleware: false, method: "post" },
-  { route: '/api/portal/data', handler: _lazy_NAGID_, lazy: true, middleware: false, method: "get" },
-  { route: '/api/trade-ins', handler: _lazy_Ri3XDJ, lazy: true, middleware: false, method: "post" },
-  { route: '/api/veicoli', handler: _lazy_KYFwQw, lazy: true, middleware: false, method: "get" },
-  { route: '/api/veicoli', handler: _lazy_up841C, lazy: true, middleware: false, method: "post" },
-  { route: '/api/veicoli/:id', handler: _lazy_ZRQTMZ, lazy: true, middleware: false, method: "delete" },
-  { route: '/api/veicoli/:id', handler: _lazy_eBx7j3, lazy: true, middleware: false, method: "get" },
-  { route: '/api/veicoli/:id', handler: _lazy_Wqz0rK, lazy: true, middleware: false, method: "put" },
-  { route: '/__nuxt_error', handler: _lazy_mV2l2o, lazy: true, middleware: false, method: undefined },
-  { route: '/__nuxt_island/**', handler: _SxA8c9, lazy: false, middleware: false, method: undefined },
-  { route: '', handler: _c3hG90, lazy: false, middleware: true, method: undefined },
-  { route: '/__site-config__/debug.json', handler: _gEjiKX, lazy: false, middleware: false, method: undefined },
-  { route: '/__sitemap__/debug.json', handler: _vlUmov, lazy: false, middleware: false, method: undefined },
-  { route: '/__sitemap__/style.xsl', handler: _FnlCul, lazy: false, middleware: false, method: undefined },
-  { route: '/sitemap.xml', handler: _iZwjxL, lazy: false, middleware: false, method: undefined },
-  { route: '/_ipx/**', handler: _vex3R7, lazy: false, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_mV2l2o, lazy: true, middleware: false, method: undefined }
+  { route: '', handler: _EI5waZ, lazy: false, middleware: true, method: undefined },
+  { route: '/api/admin/add-maintenance', handler: _lazy_d07mtA, lazy: true, middleware: false, method: "post" },
+  { route: '/api/admin/all-portal-vehicles', handler: _lazy_6s7Nxh, lazy: true, middleware: false, method: "get" },
+  { route: '/api/admin/create-portal-user', handler: _lazy_N_RbQT, lazy: true, middleware: false, method: "post" },
+  { route: '/api/admin/delete-maintenance', handler: _lazy_w11v3l, lazy: true, middleware: false, method: "delete" },
+  { route: '/api/admin/delete-portal-document', handler: _lazy_EjX4UE, lazy: true, middleware: false, method: "delete" },
+  { route: '/api/admin/delete-portal-user', handler: _lazy_LhQeea, lazy: true, middleware: false, method: "delete" },
+  { route: '/api/admin/portal-data', handler: _lazy_9RXkv7, lazy: true, middleware: false, method: "get" },
+  { route: '/api/admin/trade-ins', handler: _lazy_KhaI68, lazy: true, middleware: false, method: "get" },
+  { route: '/api/admin/update-portal-vehicle', handler: _lazy_NY1WCx, lazy: true, middleware: false, method: "post" },
+  { route: '/api/admin/upload-portal-document', handler: _lazy_ezsLtE, lazy: true, middleware: false, method: "post" },
+  { route: '/api/auth/portal-login', handler: _lazy_aWqv0L, lazy: true, middleware: false, method: "post" },
+  { route: '/api/blog/:id', handler: _lazy_p4xzrI, lazy: true, middleware: false, method: "delete" },
+  { route: '/api/blog/:id', handler: _lazy_UtcrzU, lazy: true, middleware: false, method: "put" },
+  { route: '/api/blog/:slug', handler: _lazy_A0aFBM, lazy: true, middleware: false, method: "get" },
+  { route: '/api/blog', handler: _lazy_yD3NVU, lazy: true, middleware: false, method: "get" },
+  { route: '/api/blog', handler: _lazy_O_mNoB, lazy: true, middleware: false, method: "post" },
+  { route: '/api/blog/maintenance', handler: _lazy_yHNkDo, lazy: true, middleware: false, method: "get" },
+  { route: '/api/blog/related', handler: _lazy_AYUznv, lazy: true, middleware: false, method: "get" },
+  { route: '/api/debug-blog', handler: _lazy_lf_kSE, lazy: true, middleware: false, method: "get" },
+  { route: '/api/leads', handler: _lazy_YCAlF9, lazy: true, middleware: false, method: "get" },
+  { route: '/api/leads', handler: _lazy_ZXrGbA, lazy: true, middleware: false, method: "post" },
+  { route: '/api/portal/data', handler: _lazy_o4jhZx, lazy: true, middleware: false, method: "get" },
+  { route: '/api/trade-ins', handler: _lazy_31PHYS, lazy: true, middleware: false, method: "post" },
+  { route: '/api/veicoli', handler: _lazy_bnwVs7, lazy: true, middleware: false, method: "get" },
+  { route: '/api/veicoli', handler: _lazy_zCIYZh, lazy: true, middleware: false, method: "post" },
+  { route: '/api/veicoli/:id', handler: _lazy_9v8TQv, lazy: true, middleware: false, method: "delete" },
+  { route: '/api/veicoli/:id', handler: _lazy_Qvp4oO, lazy: true, middleware: false, method: "get" },
+  { route: '/api/veicoli/:id', handler: _lazy_cSr8kD, lazy: true, middleware: false, method: "put" },
+  { route: '/__nuxt_error', handler: _lazy_2rrIMW, lazy: true, middleware: false, method: undefined },
+  { route: '/__nuxt_island/**', handler: handler$1, lazy: false, middleware: false, method: undefined },
+  { route: '', handler: _1zx9fb, lazy: false, middleware: true, method: undefined },
+  { route: '/__site-config__/debug.json', handler: _XkZjDu, lazy: false, middleware: false, method: undefined },
+  { route: '/__sitemap__/debug.json', handler: _nsKO5G, lazy: false, middleware: false, method: undefined },
+  { route: '/__sitemap__/style.xsl', handler: _kOrydB, lazy: false, middleware: false, method: undefined },
+  { route: '/sitemap.xml', handler: _2E1EzU, lazy: false, middleware: false, method: undefined },
+  { route: '/_ipx/**', handler: _19aWza, lazy: false, middleware: false, method: undefined },
+  { route: '/**', handler: _lazy_2rrIMW, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {
@@ -5457,31 +5476,31 @@ const sources$1 = [
         },
         "urls": [
             {
-                "loc": "/admin"
-            },
-            {
-                "loc": "/"
-            },
-            {
-                "loc": "/blog"
-            },
-            {
-                "loc": "/legal-notes"
-            },
-            {
-                "loc": "/cookie-policy"
+                "loc": "/portale/dashboard"
             },
             {
                 "loc": "/portale/login"
             },
             {
-                "loc": "/veicoli"
+                "loc": "/admin"
+            },
+            {
+                "loc": "/blog"
+            },
+            {
+                "loc": "/cookie-policy"
+            },
+            {
+                "loc": "/legal-notes"
             },
             {
                 "loc": "/privacy-policy"
             },
             {
-                "loc": "/portale/dashboard"
+                "loc": "/veicoli"
+            },
+            {
+                "loc": "/"
             }
         ],
         "sourceType": "app"
@@ -6021,7 +6040,7 @@ const _slug__get = defineEventHandler(async (event) => {
       slug: { $regex: new RegExp(`^${slug}$`, "i") }
     });
     if (!post && slug.length === 24) {
-      const { ObjectId } = await import('file://C:/Users/michele/Desktop/pica/node_modules/mongodb/lib/index.js');
+      const { ObjectId } = await import('file://C:/Users/Acer/pica/node_modules/mongodb/lib/index.js');
       try {
         post = await collection.findOne({ _id: new ObjectId(slug) });
       } catch (e) {
@@ -6043,7 +6062,7 @@ const _slug__get = defineEventHandler(async (event) => {
     const vehicleIdsRaw = post.relatedVehicles || post.relatedMotos || [];
     if (vehicleIdsRaw.length > 0) {
       const veicoliCollection = db.collection("veicoli");
-      const { ObjectId } = await import('file://C:/Users/michele/Desktop/pica/node_modules/mongodb/lib/index.js');
+      const { ObjectId } = await import('file://C:/Users/Acer/pica/node_modules/mongodb/lib/index.js');
       const ids = vehicleIdsRaw.map((id) => {
         try {
           return new ObjectId(id);
@@ -6452,7 +6471,7 @@ const leads_post = defineEventHandler(async (event) => {
   if (!config.mongodbUri) {
     throw createError({ statusCode: 500, statusMessage: "Database non configurato." });
   }
-  const { MongoClient } = await import('file://C:/Users/michele/Desktop/pica/node_modules/mongodb/lib/index.js');
+  const { MongoClient } = await import('file://C:/Users/Acer/pica/node_modules/mongodb/lib/index.js');
   const client = new MongoClient(config.mongodbUri);
   try {
     await client.connect();
@@ -6978,7 +6997,7 @@ const _id__put$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty
 
 function renderPayloadResponse(ssrContext) {
 	return {
-		body: stringify(splitPayload(ssrContext).payload, ssrContext["~payloadReducers"]) ,
+		body: encodeForwardSlashes(stringify(splitPayload(ssrContext).payload, ssrContext["~payloadReducers"])) ,
 		statusCode: getResponseStatus(ssrContext.event),
 		statusMessage: getResponseStatusText(ssrContext.event),
 		headers: {
@@ -6988,7 +7007,7 @@ function renderPayloadResponse(ssrContext) {
 	};
 }
 function renderPayloadJsonScript(opts) {
-	const contents = opts.data ? stringify(opts.data, opts.ssrContext["~payloadReducers"]) : "";
+	const contents = opts.data ? encodeForwardSlashes(stringify(opts.data, opts.ssrContext["~payloadReducers"])) : "";
 	const payload = {
 		"type": "application/json",
 		"innerHTML": contents,
@@ -7003,6 +7022,14 @@ function renderPayloadJsonScript(opts) {
 	}
 	const config = uneval(opts.ssrContext.config);
 	return [payload, { innerHTML: `window.__NUXT__={};window.__NUXT__.config=${config}` }];
+}
+/**
+* Encode forward slashes as unicode escape sequences to prevent
+* Google from treating them as internal links and trying to crawl them.
+* @see https://github.com/nuxt/nuxt/issues/24175
+*/
+function encodeForwardSlashes(str) {
+	return str.replaceAll("/", "\\u002F");
 }
 function splitPayload(ssrContext) {
 	const { data, prerenderedAt, ...initial } = ssrContext.payload;
@@ -7029,7 +7056,7 @@ const APP_TELEPORT_OPEN_TAG = HAS_APP_TELEPORTS ? `<${appTeleportTag}${propsToSt
 const APP_TELEPORT_CLOSE_TAG = HAS_APP_TELEPORTS ? `</${appTeleportTag}>` : "";
 const PAYLOAD_URL_RE = /^[^?]*\/_payload.json(?:\?.*)?$/ ;
 const PAYLOAD_FILENAME = "_payload.json" ;
-const renderer = defineRenderHandler(async (event) => {
+const handler = defineRenderHandler(async (event) => {
 	const nitroApp = useNitroApp();
 	// Whether we're rendering an error page
 	const ssrError = event.path.startsWith("/__nuxt_error") ? getQuery$1(event) : null;
@@ -7063,6 +7090,10 @@ const renderer = defineRenderHandler(async (event) => {
 	const routeOptions = getRouteRules(event);
 	// Whether we are prerendering route or using ISR/SWR caching
 	const _PAYLOAD_EXTRACTION = !ssrContext.noSSR && (NUXT_RUNTIME_PAYLOAD_EXTRACTION);
+	// When NUXT_PAYLOAD_INLINE is true (payloadExtraction: 'client'), we inline the full payload
+	// in the HTML to avoid a separate _payload.json fetch on initial load (which would trigger a
+	// second render or lambda invocation). The _payload.json endpoint still works for client-side nav.
+	const _PAYLOAD_INLINE = !_PAYLOAD_EXTRACTION || NUXT_PAYLOAD_INLINE;
 	const isRenderingPayload = (_PAYLOAD_EXTRACTION || routeOptions.prerender) && PAYLOAD_URL_RE.test(ssrContext.url);
 	if (isRenderingPayload) {
 		const url = ssrContext.url.substring(0, ssrContext.url.lastIndexOf("/")) || "/";
@@ -7110,25 +7141,14 @@ const renderer = defineRenderHandler(async (event) => {
 	// Setup head
 	const { styles, scripts } = getRequestDependencies(ssrContext, renderer.rendererContext);
 	// 1. Preload payloads and app manifest
-	if (_PAYLOAD_EXTRACTION && !NO_SCRIPTS) {
+	// Skip preload when inlining full payload in HTML (no separate fetch needed for initial load)
+	if (_PAYLOAD_EXTRACTION && !_PAYLOAD_INLINE && !NO_SCRIPTS) {
 		ssrContext.head.push({ link: [{
 			rel: "preload",
 			as: "fetch",
 			crossorigin: "anonymous",
 			href: payloadURL
 		} ] }, headEntryOptions);
-	}
-	if (ssrContext["~preloadManifest"] && !NO_SCRIPTS) {
-		ssrContext.head.push({ link: [{
-			rel: "preload",
-			as: "fetch",
-			fetchpriority: "low",
-			crossorigin: "anonymous",
-			href: buildAssetsURL(`builds/meta/${ssrContext.runtimeConfig.app.buildId}.json`)
-		}] }, {
-			...headEntryOptions,
-			tagPriority: "low"
-		});
 	}
 	// 2. Styles
 	if (inlinedStyles.length) {
@@ -7164,13 +7184,13 @@ const renderer = defineRenderHandler(async (event) => {
 		ssrContext.head.push({ link: getPreloadLinks(ssrContext, renderer.rendererContext) }, headEntryOptions);
 		ssrContext.head.push({ link: getPrefetchLinks(ssrContext, renderer.rendererContext) }, headEntryOptions);
 		// 5. Payloads
-		ssrContext.head.push({ script: _PAYLOAD_EXTRACTION ? renderPayloadJsonScript({
+		ssrContext.head.push({ script: _PAYLOAD_INLINE ? renderPayloadJsonScript({
+			ssrContext,
+			data: ssrContext.payload
+		})  : renderPayloadJsonScript({
 			ssrContext,
 			data: splitPayload(ssrContext).initial,
 			src: payloadURL
-		})  : renderPayloadJsonScript({
-			ssrContext,
-			data: ssrContext.payload
 		})  }, {
 			...headEntryOptions,
 			tagPosition: "bodyClose",
@@ -7234,8 +7254,8 @@ function renderHTMLDocument(html) {
 	return "<!DOCTYPE html>" + `<html${joinAttrs(html.htmlAttrs)}>` + `<head>${joinTags(html.head)}</head>` + `<body${joinAttrs(html.bodyAttrs)}>${joinTags(html.bodyPrepend)}${joinTags(html.body)}${joinTags(html.bodyAppend)}</body>` + "</html>";
 }
 
-const renderer$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+const renderer = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
-  default: renderer
+  default: handler
 }, Symbol.toStringTag, { value: 'Module' }));
 //# sourceMappingURL=index.mjs.map

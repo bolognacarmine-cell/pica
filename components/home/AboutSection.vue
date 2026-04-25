@@ -127,83 +127,81 @@ onMounted(async () => {
 </script>
 
 <template>
-  <section id="azienda" class="about-section section">
-    <div class="container">
-      <div class="about-grid grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+  <section id="azienda" class="about-section">
+    <div class="container about-container">
+      <div class="about-grid">
         
-        <!-- Parte Visiva con Immagine Coerente -->
-        <div class="about-visual relative order-2 lg:order-1">
-          <div class="about-image-wrapper relative rounded-[48px] overflow-hidden shadow-2xl group">
-            <nuxt-img 
-              src="https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&q=85&w=800" 
-              alt="Officina specializzata camper e roulotte Pica Caravan" 
-              class="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
-              format="webp"
-              width="800"
-              height="600"
-            />
-            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
-            
-            <!-- Experience Badge -->
-            <div class="absolute bottom-8 left-8 p-6 bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-2xl">
-              <div class="flex items-center gap-4">
-                <span class="text-4xl font-black text-primary">30+</span>
-                <div class="flex flex-col">
-                  <span class="text-[10px] font-black text-white uppercase tracking-widest leading-none">Anni di</span>
-                  <span class="text-xs font-bold text-gray-300 uppercase tracking-tighter">Esperienza</span>
-                </div>
-              </div>
-            </div>
+        <!-- Parte Testuale -->
+        <div class="about-content">
+          <div class="about-header">
+            <p class="section-kicker">La nostra realtà</p>
+            <h2 class="about-title">PICA CARAVAN: La tua casa in movimento</h2>
+            <p class="about-subtitle">Esperienza e professionalità nel mondo del plein air a San Nicola la Strada.</p>
           </div>
           
-          <!-- Decorative Elements -->
-          <div class="absolute -top-6 -right-6 w-32 h-32 bg-primary/10 rounded-full blur-3xl"></div>
-          <div class="absolute -bottom-10 -left-10 w-48 h-48 bg-primary/5 rounded-full blur-3xl"></div>
-        </div>
+          <div class="about-text">
+            <p>
+              Situata strategicamente a <strong>San Nicola la Strada (CE)</strong>, Pica Caravan è l'azienda leader per chi ama viaggiare in libertà. Guidata dall'esperienza di <strong>Antimo Pica</strong>, la nostra realtà è specializzata nella <strong>vendita di articoli da campeggio, riparazione e ristrutturazione di camper, roulotte e container</strong>.
+            </p>
+            <p>
+              Siamo orgogliosi di essere <strong>Concessionario Across Car</strong>, produttore europeo d'eccellenza per Camper e Roulotte. Inoltre, realizziamo <strong>allestimenti Street-Food</strong> personalizzati, trasformando la nostra competenza tecnica in soluzioni professionali per il tuo business su ruote.
+            </p>
+            <p>
+              Qualità e sicurezza sono i nostri pilastri: siamo <strong>Service Center autorizzato VIESA, THETFORD e WEBASTO</strong>, garantendo interventi certificati e ricambi di altissimo livello per ogni esigenza di climatizzazione e comfort.
+            </p>
+          </div>
 
-        <!-- Parte Testuale -->
-        <div class="about-content order-1 lg:order-2">
-          <div class="mb-12">
-            <span class="text-[11px] font-black text-primary uppercase tracking-[0.35em] mb-6 inline-block bg-primary/10 px-4 py-2 rounded-full">La nostra realtà</span>
-            <h2 class="text-4xl md:text-5xl lg:text-7xl font-black mb-10 dark:text-white uppercase tracking-tighter leading-[0.95]">
-              Pica Caravan: <br><span class="text-primary italic">In Movimento</span>
-            </h2>
-            <div class="space-y-8 text-gray-500 dark:text-gray-400 text-xl leading-relaxed font-medium max-w-xl">
-              <p>
-                Situata a <span class="text-white border-b-2 border-primary/30">San Nicola la Strada</span>, Pica Caravan è il punto di riferimento per gli amanti del plein air. Guidata da <span class="text-primary font-black">Antimo Pica</span>, offriamo soluzioni complete per ogni esigenza.
-              </p>
-              <p class="text-lg font-normal opacity-80">
-                Siamo orgogliosi di essere <span class="text-white font-bold">Concessionario Across Car</span> e centro assistenza autorizzato per i migliori brand del settore come <span class="text-white">Viesa, Thetford e Webasto</span>.
-              </p>
+          <div class="about-values">
+            <div class="value-card glass-panel">
+              <div class="value-icon">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
+              </div>
+              <div class="value-info">
+                <strong>Soluzioni Su Misura</strong>
+                <p>Dal primo camper alla roulotte per tutta la famiglia, ti guidiamo nella scelta migliore.</p>
+              </div>
+            </div>
+            <div class="value-card glass-panel">
+              <div class="value-icon">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+              </div>
+              <div class="value-info">
+                <strong>Affidabilità Locale</strong>
+                <p>Un nome storico sul territorio casertano, sinonimo di fiducia e assistenza continua.</p>
+              </div>
             </div>
           </div>
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 gap-8 mb-16">
-            <div class="group p-8 bg-white dark:bg-white/5 rounded-2xl border border-white/5 hover:border-primary/20 transition-all duration-500 shadow-xl hover:shadow-primary/5">
-              <div class="w-14 h-14 mb-6 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-500">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
-              </div>
-              <h4 class="text-base font-black dark:text-white uppercase tracking-widest mb-3">Su Misura</h4>
-              <p class="text-sm text-gray-400 leading-relaxed">Ti guidiamo nella scelta del tuo primo camper o roulotte con consulenza dedicata.</p>
-            </div>
-            <div class="group p-8 bg-white dark:bg-white/5 rounded-2xl border border-white/5 hover:border-primary/20 transition-all duration-500 shadow-xl hover:shadow-primary/5">
-              <div class="w-14 h-14 mb-6 rounded-2xl bg-primary/10 text-primary flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all duration-500">
-                <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
-              </div>
-              <h4 class="text-base font-black dark:text-white uppercase tracking-widest mb-3">Affidabilità</h4>
-              <p class="text-sm text-gray-400 leading-relaxed">Un nome storico sinonimo di fiducia, trasparenza e assistenza continua nel tempo.</p>
-            </div>
-          </div>
-
-          <div class="flex flex-wrap gap-6">
-            <NuxtLink to="/veicoli" class="px-10 py-5 bg-primary text-white text-[11px] font-black rounded-2xl uppercase tracking-widest shadow-2xl shadow-primary/20 hover:bg-white hover:text-black transition-all duration-500 transform hover:-translate-y-1">
-              Scopri i veicoli
+          <div class="about-actions">
+            <NuxtLink to="/veicoli" class="btn-premium">
+              Scopri il parco veicoli
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </NuxtLink>
-            <a href="#contatti" class="px-10 py-5 bg-white/5 text-white text-[11px] font-black rounded-2xl border border-white/10 uppercase tracking-widest hover:bg-white hover:text-black transition-all duration-500 transform hover:-translate-y-1">
-              Contattaci
-            </a>
+            <a href="#contatti" class="btn-secondary-glass">Richiedi informazioni</a>
           </div>
         </div>
+
+        <!-- Parte Visuale (Layered Animation) -->
+        <div class="about-visual-container">
+          <div class="visual-wrapper">
+            <!-- Sfondo astratto o decorativo -->
+            <div class="visual-layer layer-bg"></div>
+            <!-- Cornice principale -->
+            <div class="visual-layer layer-frame"></div>
+            <!-- Immagine principale -->
+            <div class="visual-layer layer-main">
+              <img src="https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?auto=format&fit=crop&q=80&w=1000" alt="Pica Caravan - Vendita e Assistenza" class="founder-img" />
+            </div>
+            <!-- Badge esperienza -->
+            <div class="visual-layer layer-badge">
+              <div class="experience-badge-content">
+                <span class="years">Expert</span>
+                <span class="label">Plein Air</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -211,216 +209,53 @@ onMounted(async () => {
 
 <style scoped>
 .about-section {
+  padding: 120px 0;
   background: var(--bg);
-  position: relative;
+  color: #fff;
   overflow: hidden;
-  padding: 4rem 0;
+  position: relative;
 }
 
-@media (min-width: 768px) {
-  .about-section {
-    padding: 5rem 0;
-  }
-}
-
-@media (min-width: 1024px) {
-  .about-section {
-    padding: 6rem 0;
-  }
+.about-container {
+  position: relative;
+  z-index: 2;
 }
 
 .about-grid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 3rem;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: 100px;
   align-items: center;
 }
 
-@media (min-width: 1024px) {
-  .about-grid {
-    grid-template-columns: 1fr 1fr;
-    gap: 4rem;
-  }
-}
-
-@media (min-width: 1280px) {
-  .about-grid {
-    gap: 5rem;
-  }
-}
-
-/* Content Styles */
-.about-content {
-  max-width: 600px;
-}
-
-.about-header {
-  margin-bottom: var(--space-2xl);
-}
-
-.about-text {
-  font-size: var(--text-lg);
-  line-height: 1.7;
-  color: var(--text-secondary);
-  margin-bottom: var(--space-2xl);
-}
-
-.about-text p {
-  margin-bottom: var(--space-lg);
-}
-
-.about-text p:last-child {
-  margin-bottom: 0;
-}
-
-.about-text strong {
-  color: var(--text-primary);
-  font-weight: 700;
-}
-
-/* Values Grid */
-.values-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: var(--space-lg);
-  margin-bottom: var(--space-2xl);
-}
-
-.value-card {
-  display: flex;
-  gap: var(--space-md);
-  align-items: flex-start;
-  transition: all var(--transition-base);
-}
-
-.value-card:hover {
-  transform: translateY(-2px);
-  border-color: var(--primary);
-}
-
-.value-icon {
-  background: rgba(255, 107, 53, 0.1);
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: var(--radius-lg);
-  border: 1px solid rgba(255, 107, 53, 0.2);
-  flex-shrink: 0;
-  color: var(--primary);
-}
-
-.value-content h4 {
-  font-size: var(--text-lg);
-  font-weight: 700;
-  margin-bottom: var(--space-sm);
-  color: var(--text-primary);
-}
-
-.value-content p {
-  font-size: var(--text-sm);
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-
-.about-actions {
-  display: flex;
-  gap: var(--space-lg);
-  flex-wrap: wrap;
-}
-
-/* Visual Styles */
-.about-visual {
+/* Visual Layered Styles */
+.about-visual-container {
   position: relative;
+  height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
 }
 
-.about-image-container {
+.visual-wrapper {
   position: relative;
-  width: 100%;
-  aspect-ratio: 4/3;
-  border-radius: 1.5rem;
-  overflow: hidden;
-  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
-}
-
-@media (min-width: 768px) {
-  .about-image-container {
-    aspect-ratio: 5/4;
-  }
-}
-
-@media (min-width: 1024px) {
-  .about-image-container {
-    aspect-ratio: 3/2;
-  }
-}
-
-.about-main-image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
-  object-position: center;
-  transition: transform 0.6s ease;
-}
-
-.about-image-container:hover .about-main-image {
-  transform: scale(1.05);
-}
-
-.image-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 0.1) 0%,
-    rgba(0, 0, 0, 0.05) 50%,
-    rgba(0, 0, 0, 0.2) 100%
-  );
-  pointer-events: none;
-}
-
-.image-badge {
-  position: absolute;
-  top: 1.5rem;
-  left: 1.5rem;
-  background: rgba(255, 255, 255, 0.95);
-  backdrop-filter: blur(12px);
-  padding: 0.5rem 1rem;
-  border-radius: 2rem;
-  font-size: 0.875rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-}
-
-@media (max-width: 640px) {
-  .image-badge {
-    top: 1rem;
-    left: 1rem;
-    font-size: 0.75rem;
-    padding: 0.375rem 0.75rem;
-  }
 }
 
 .visual-layer {
   position: absolute;
-  border-radius: var(--radius-2xl);
-  transition: transform var(--transition-slow);
+  border-radius: var(--radius-lg);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .layer-bg {
   top: 10%;
   right: 0;
-  width: 85%;
-  height: 75%;
-  background: var(--primary-gradient);
-  opacity: 0.1;
+  width: 80%;
+  height: 70%;
+  background: linear-gradient(135deg, rgba(241, 110, 34, 0.05) 0%, rgba(241, 110, 34, 0) 100%);
+  border: 1px solid rgba(241, 110, 34, 0.1);
   z-index: 1;
 }
 
@@ -429,7 +264,7 @@ onMounted(async () => {
   left: 5%;
   width: 75%;
   height: 75%;
-  border: 2px solid var(--line-elevated);
+  border: 2px solid var(--line);
   z-index: 2;
 }
 
@@ -438,156 +273,188 @@ onMounted(async () => {
   left: 10%;
   width: 80%;
   height: 80%;
-  background: var(--surface);
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(20px);
+  border: 1px solid var(--line);
   z-index: 3;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-xl);
-  padding: var(--space-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 24px;
 }
 
-.main-image {
+.layer-main img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  border-radius: var(--radius-lg);
+  border-radius: var(--radius-md);
 }
 
 .layer-badge {
-  bottom: 8%;
+  bottom: 5%;
   right: -5%;
   z-index: 4;
 }
 
-.experience-badge {
+.experience-badge-content {
   background: var(--primary-gradient);
-  padding: var(--space-lg) var(--space-xl);
-  border-radius: var(--radius-xl);
+  padding: 24px 32px;
+  border-radius: var(--radius-lg);
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: var(--shadow-primary);
-  transform: rotate(3deg);
-  transition: all var(--transition-base);
+  box-shadow: 0 15px 30px var(--primary-glow);
+  transform: rotate(4deg);
 }
 
-.experience-badge:hover {
-  transform: rotate(0deg) scale(1.05);
-}
-
-.badge-years {
-  font-size: var(--text-2xl);
+.experience-badge-content .years {
+  font-size: 2.5rem;
   font-weight: 900;
   line-height: 1;
-  color: var(--text-inverse);
+  color: #fff;
+  letter-spacing: -0.02em;
 }
 
-.badge-label {
-  font-size: var(--text-xs);
+.experience-badge-content .label {
+  font-size: 0.75rem;
   font-weight: 800;
   text-transform: uppercase;
-  letter-spacing: 0.15em;
-  margin-top: var(--space-xs);
-  color: var(--text-inverse);
-  opacity: 0.9;
+  letter-spacing: 0.2em;
+  margin-top: 4px;
+  color: rgba(255, 255, 255, 0.9);
 }
 
-/* Showroom Styles */
-.about-showroom-image {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: var(--radius-lg);
-  overflow: hidden;
+/* Content Styles Refinement */
+.value-card {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  padding: 24px;
+  transition: all 0.4s ease;
 }
 
-.showroom-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
+.value-card:hover {
+  border-color: var(--primary);
+  transform: translateY(-5px);
+  background: rgba(255, 255, 255, 0.05);
 }
 
-.showroom-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 100%);
+@media (max-width: 1200px) {
+  .about-grid { gap: 60px; }
+  .layer-badge { right: 0; }
+}
+
+.about-title {
+  font-size: clamp(2.25rem, 5vw, 3.5rem);
+  font-weight: 950;
+  line-height: 1.05;
+  margin-bottom: 24px;
+  letter-spacing: -0.03em;
+  text-transform: uppercase;
+}
+
+.about-subtitle {
+  font-size: 1.25rem;
+  color: var(--text-dim);
+  margin-bottom: 32px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.about-text {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--text-dim);
+  margin-bottom: 48px;
+}
+
+.about-text p {
+  margin-bottom: 20px;
+}
+
+.about-text strong {
+  color: #fff;
+  font-weight: 800;
+}
+
+.about-values {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  margin-bottom: 48px;
+}
+
+.value-info strong {
+  display: block;
+  font-size: 1.1rem;
+  margin-bottom: 4px;
+  color: #fff;
+}
+
+.value-info p {
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  line-height: 1.5;
+}
+
+.value-icon {
+  background: var(--primary-glow);
+  color: var(--primary);
+  width: 48px;
+  height: 48px;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: var(--space-xl);
+  border-radius: 12px;
+  border: 1px solid var(--primary);
+  flex-shrink: 0;
 }
 
-.overlay-content {
-  text-align: center;
+.about-actions {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.btn-secondary-glass {
+  display: inline-flex;
+  align-items: center;
+  padding: 16px 32px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
   color: white;
-}
-
-.overlay-content h3 {
-  font-size: var(--text-2xl);
+  font-size: 0.75rem;
   font-weight: 800;
-  margin-bottom: var(--space-md);
-  text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  transition: all 0.3s ease;
 }
 
-.overlay-content p {
-  font-size: var(--text-base);
-  opacity: 0.9;
-  max-width: 300px;
-  line-height: 1.6;
+.btn-secondary-glass:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: translateY(-2px);
 }
 
-/* Value Icons */
-.value-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: var(--radius-lg);
-}
-
-/* Responsive Design */
 @media (max-width: 1024px) {
-  .about-grid {
-    grid-template-columns: 1fr;
-    gap: var(--space-3xl);
-  }
-  
-  .about-visual {
-    height: 500px;
-    order: -1;
-  }
-  
-  .values-grid {
-    grid-template-columns: 1fr;
-  }
+  .about-grid { grid-template-columns: 1fr; }
+  .about-visual-container { height: 500px; order: -1; }
+  .layer-main { padding: 30px; }
 }
 
 @media (max-width: 640px) {
+  .about-values {
+    grid-template-columns: 1fr;
+  }
   .about-actions {
     flex-direction: column;
-    gap: var(--space-md);
   }
-  
-  .about-actions .btn {
-    width: 100%;
-    justify-content: center;
-  }
-  
-  .about-visual {
-    height: 400px;
-  }
-  
-  .layer-main {
-    padding: var(--space-md);
-  }
-  
-  .experience-badge {
-    padding: var(--space-md) var(--space-lg);
+  .btn-primary-custom, .btn-outline-custom {
+    text-align: center;
   }
 }
 </style>
