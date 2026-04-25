@@ -1,6 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, onUnmounted, nextTick, watch } from 'vue'
-import { gsap } from 'gsap'
+import { ref, computed, watch } from 'vue'
 import { useSearch } from '~/composables/useSearch'
 import { useFilter } from '~/composables/useFilter'
 import VehicleCarousel from '~/components/veicoli/VehicleCarousel.vue'
@@ -137,45 +136,6 @@ const formatImages = (moto) => {
   return ['https://images.unsplash.com/photo-1517030330234-94c4fa948ec3?q=80&w=2070']
 }
 
-// Animazioni GSAP
-let ctx
-
-const animateCards = () => {
-  if (ctx) ctx.revert()
-  ctx = gsap.context(() => {
-    const cards = document.querySelectorAll('.featured-grid .moto-card')
-    if (cards.length > 0) {
-      gsap.fromTo(cards, 
-        { y: 28, opacity: 0 },
-        { 
-          y: 0, 
-          opacity: 1, 
-          duration: 0.7, 
-          stagger: 0.12, 
-          delay: 0.2, 
-          ease: 'power2.out',
-          clearProps: 'opacity,transform'
-        }
-      )
-    }
-  })
-}
-
-// Watch per riattivare l'animazione quando cambiano i veicoli filtrati
-watch([featuredMotos, searchQuery], () => {
-  nextTick(() => {
-    animateCards()
-  })
-}, { deep: true })
-
-onMounted(async () => {
-  await nextTick()
-  animateCards()
-})
-
-onUnmounted(() => {
-  if (ctx) ctx.revert()
-})
 </script>
 
 <template>
@@ -454,11 +414,10 @@ onUnmounted(() => {
   position: absolute;
   left: 20px;
   top: 50%;
-  transform: translateY(-50%);
+  margin-top: -9px;
   width: 18px;
   height: 18px;
   color: var(--text-dim);
-  transition: color 0.3s ease;
   z-index: 1;
 }
 
@@ -470,8 +429,8 @@ onUnmounted(() => {
   color: #fff;
   font-size: 0.95rem;
   font-weight: 500;
-  transition: all 0.3s ease;
   -webkit-appearance: none;
+  appearance: none;
 }
 
 .search-input:focus {
@@ -526,7 +485,6 @@ onUnmounted(() => {
   border-radius: var(--radius-xl);
   color: white;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   display: flex;
   align-items: center;
   gap: 12px;
@@ -535,16 +493,9 @@ onUnmounted(() => {
   flex-shrink: 0;
 }
 
-.main-tab-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.2);
-}
-
 .main-tab-btn.active {
-  background: var(--primary-gradient);
+  background: var(--primary);
   border-color: transparent;
-  box-shadow: 0 8px 20px var(--primary-glow);
 }
 
 .main-tab-btn.active .tab-label,
@@ -586,7 +537,7 @@ onUnmounted(() => {
 }
 
 .promo-tab.active::before {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  background: #f59e0b;
 }
 
 .promo-tab.active {
@@ -598,7 +549,7 @@ onUnmounted(() => {
 }
 
 .sold-tab.active::before {
-  background: linear-gradient(135deg, #4b5563, #1f2937);
+  background: #4b5563;
 }
 
 .sold-tab.active {
@@ -622,7 +573,6 @@ onUnmounted(() => {
   pointer-events: none;
   z-index: 10;
   background: rgba(0, 0, 0, 0.2);
-  backdrop-filter: grayscale(0.5);
 }
 
 .sold-stamp {
@@ -633,25 +583,10 @@ onUnmounted(() => {
   padding: 10px 30px;
   border: 8px solid #ff3e3e;
   border-radius: 12px;
-  transform: rotate(-20deg);
-  opacity: 0.9;
   letter-spacing: 4px;
   font-family: 'Inter', sans-serif;
   box-shadow: 0 0 0 4px rgba(255, 62, 62, 0.2);
-  text-shadow: 0 0 10px rgba(0,0,0,0.3);
   position: relative;
-}
-
-.sold-stamp::after {
-  content: "VENDUTO";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  color: rgba(255, 62, 62, 0.1);
-  transform: translate(2px, 2px);
-  z-index: -1;
 }
 
 @media (max-width: 414px) {
@@ -688,7 +623,6 @@ onUnmounted(() => {
   font-size: 0.9rem;
   cursor: pointer;
   outline: none;
-  transition: all 0.3s ease;
 }
 
 .premium-select:focus {
@@ -747,14 +681,8 @@ onUnmounted(() => {
   font-weight: 700;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.3s ease;
   min-width: 200px;
   outline: none;
-}
-
-.filter-select:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: var(--primary);
 }
 
 .filter-select option {
@@ -771,20 +699,13 @@ onUnmounted(() => {
   font-weight: 700;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.3s ease;
   text-transform: capitalize;
-}
-
-.filter-btn:hover {
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
 }
 
 .filter-btn.active {
   background: var(--primary);
   border-color: var(--primary);
   color: #fff;
-  box-shadow: 0 10px 20px -5px var(--primary-glow);
 }
 
 .featured-grid {
@@ -796,14 +717,7 @@ onUnmounted(() => {
 
 .moto-card {
   position: relative;
-  transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
   height: 100%;
-}
-
-.moto-card:hover {
-  transform: translateY(-12px);
-  border-color: var(--primary);
-  box-shadow: var(--shadow-lg), 0 0 30px var(--primary-glow);
 }
 
 .card-visual {
@@ -813,19 +727,13 @@ onUnmounted(() => {
 
 .card-overlay-actions {
   position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
   display: flex;
   align-items: center;
-  justify-content: center;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  backdrop-filter: blur(4px);
+  justify-content: flex-end;
   z-index: 5;
-}
-
-.moto-card:hover .card-overlay-actions {
-  opacity: 1;
 }
 
 
@@ -986,16 +894,8 @@ onUnmounted(() => {
   font-weight: 800;
   color: #fff;
   border: 1px solid var(--line);
-  transition: all 0.4s ease;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-}
-
-.btn-quote-minimal:hover {
-  background: var(--primary-gradient);
-  border-color: transparent;
-  transform: scale(1.05);
-  box-shadow: 0 8px 16px var(--primary-glow);
 }
 
 .state-box {
@@ -1028,14 +928,6 @@ onUnmounted(() => {
   border-radius: 100px;
   font-weight: 700;
   text-decoration: none;
-  transition: all 0.3s ease;
-}
-
-.btn-read-more-section:hover {
-  background: rgba(255, 255, 255, 0.08);
-  border-color: var(--primary-2);
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0,0,0,0.2);
 }
 
 .mt-5 { margin-top: 3rem; }

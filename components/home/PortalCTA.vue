@@ -31,7 +31,7 @@
 }
 
 .portal-card {
-  background: linear-gradient(135deg, rgba(241, 110, 34, 0.1), transparent), var(--panel);
+  background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 32px;
   padding: 60px;
@@ -39,22 +39,8 @@
   grid-template-columns: auto 1fr auto;
   align-items: center;
   gap: 48px;
-  box-shadow: var(--shadow);
   position: relative;
   overflow: hidden;
-}
-
-.portal-card::after {
-  content: '';
-  position: absolute;
-  top: -50%;
-  right: -10%;
-  width: 300px;
-  height: 300px;
-  background: var(--primary);
-  filter: blur(150px);
-  opacity: 0.1;
-  pointer-events: none;
 }
 
 @media (max-width: 1024px) {

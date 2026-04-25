@@ -1,13 +1,5 @@
 
 <script setup>
-import { onMounted, nextTick } from 'vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-if (process.client) {
-  gsap.registerPlugin(ScrollTrigger)
-}
-
 const services = [
   {
     title: 'Vendita Veicoli',
@@ -28,49 +20,6 @@ const services = [
     type: 'parts'
   }
 ]
-
-let ctx
-onMounted(async () => {
-  await nextTick()
-  ctx = gsap.context(() => {
-    const serviceCards = document.querySelectorAll('.service-card')
-    if (serviceCards.length > 0) {
-      gsap.fromTo(serviceCards, 
-        { opacity: 0, y: 40 },
-        {
-          scrollTrigger: {
-            trigger: '.services-grid',
-            start: 'top 80%',
-          },
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          stagger: 0.2,
-          ease: 'power3.out',
-          clearProps: 'all'
-        }
-      )
-    }
-
-    const supportCtaBox = document.querySelector('.support-cta-box')
-    if (supportCtaBox) {
-      gsap.fromTo(supportCtaBox,
-        { opacity: 0, scale: 0.95 },
-        {
-          scrollTrigger: {
-            trigger: '.support-cta-box',
-            start: 'top 85%',
-          },
-          opacity: 1,
-          scale: 1,
-          duration: 1.2,
-          ease: 'expo.out',
-          clearProps: 'all'
-        }
-      )
-    }
-  })
-})
 </script>
 
 <template>
@@ -170,17 +119,10 @@ onMounted(async () => {
 
 .service-card {
   padding: 40px;
-  transition: all 0.4s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-}
-
-.service-card:hover {
-  transform: translateY(-8px);
-  border-color: var(--primary);
-  box-shadow: 0 30px 60px -12px rgba(0, 0, 0, 0.5);
 }
 
 .card-top {
@@ -206,8 +148,7 @@ onMounted(async () => {
 .service-tag {
   font-size: 0.65rem;
   font-weight: 900;
-  color: var(--primary);
-  opacity: 0.5;
+  color: rgba(241, 110, 34, 0.75);
   letter-spacing: 0.15em;
   text-transform: uppercase;
 }
@@ -269,30 +210,18 @@ onMounted(async () => {
   align-items: center;
   gap: 12px;
   padding: 16px 32px;
-  background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+  background: #25D366;
   color: white;
   border-radius: 100px;
   font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
   box-shadow: 0 8px 24px rgba(37, 211, 102, 0.2);
 }
 
-.btn-whatsapp:hover {
-  transform: translateY(-4px) scale(1.02);
-  box-shadow: 0 16px 32px rgba(37, 211, 102, 0.3);
-  filter: brightness(1.1);
-}
-
 .btn-primary-custom {
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
   position: relative;
   overflow: hidden;
-}
-
-.btn-primary-custom:hover {
-  transform: translateY(-5px) scale(1.03);
 }
 
 @media (max-width: 1100px) {

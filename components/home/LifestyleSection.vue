@@ -1,13 +1,5 @@
 
 <script setup>
-import { onMounted, nextTick } from 'vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-if (process.client) {
-  gsap.registerPlugin(ScrollTrigger)
-}
-
 const lifestyleItems = [
   {
     title: 'Caschi & Accessori',
@@ -24,28 +16,6 @@ const lifestyleItems = [
     link: '/blog'
   }
 ]
-
-let ctx
-onMounted(async () => {
-  await nextTick()
-  ctx = gsap.context(() => {
-    gsap.fromTo('.lifestyle-card', 
-      { opacity: 0, scale: 0.9 },
-      {
-        scrollTrigger: {
-          trigger: '.lifestyle-grid',
-          start: 'top 80%',
-        },
-        opacity: 1,
-        scale: 1,
-        duration: 1,
-        stagger: 0.2,
-        ease: 'back.out(1.2)',
-        clearProps: 'all'
-      }
-    )
-  })
-})
 </script>
 
 <template>
@@ -69,7 +39,6 @@ onMounted(async () => {
               loading="lazy"
               @error="(e) => e.target.src = 'https://images.unsplash.com/photo-1558981403-c5f9899a28bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'"
             />
-            <div class="card-overlay"></div>
             <div class="lifestyle-icon-badge" v-html="item.icon"></div>
           </div>
           <div class="lifestyle-info">
@@ -111,7 +80,7 @@ onMounted(async () => {
 
 .section-subtitle {
   font-size: 1.2rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: #e5e7eb;
 }
 
 .lifestyle-grid {
@@ -121,20 +90,13 @@ onMounted(async () => {
 }
 
 .lifestyle-card {
-  background: rgba(255, 255, 255, 0.03);
+  background: #111;
   padding: 0;
   border-radius: 40px;
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  transition: all 0.4s ease;
-}
-
-.lifestyle-card:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(225, 29, 72, 0.3);
-  transform: translateY(-10px);
 }
 
 .card-image-wrapper {
@@ -149,17 +111,6 @@ onMounted(async () => {
   height: 100%;
   object-fit: cover;
   object-position: center top;
-  transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-
-.lifestyle-card:hover .card-image {
-  transform: scale(1.1);
-}
-
-.card-overlay {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(to bottom, transparent 40%, rgba(5, 5, 5, 0.8));
 }
 
 .lifestyle-icon-badge {
@@ -167,15 +118,14 @@ onMounted(async () => {
   bottom: 20px;
   right: 24px;
   font-size: 2rem;
-  background: rgba(241, 110, 34, 0.15);
-  backdrop-filter: blur(10px);
+  background: #111;
   width: 60px;
   height: 60px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   color: #fff;
 }
 
@@ -191,7 +141,7 @@ onMounted(async () => {
 }
 
 .lifestyle-info p {
-  color: rgba(255, 255, 255, 0.6);
+  color: #cbd5e1;
   line-height: 1.6;
   margin-bottom: 32px;
   font-size: 1.1rem;
@@ -205,12 +155,6 @@ onMounted(async () => {
   text-decoration: none;
   border-radius: 100px;
   font-weight: 800;
-  transition: all 0.3s ease;
-}
-
-.btn-lifestyle:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(225, 29, 72, 0.3);
 }
 
 @media (max-width: 768px) {

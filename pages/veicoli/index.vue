@@ -35,7 +35,6 @@ useHead({
   <div class="vehicles-page section">
     <!-- Hero Section Parco Veicoli -->
     <div class="vehicles-hero">
-      <div class="hero-overlay"></div>
       <div class="container">
         <div class="hero-content">
           <h1 class="hero-title">Parco Veicoli Premium</h1>
@@ -61,7 +60,6 @@ useHead({
     <div class="container">
       <!-- Loading State -->
       <div v-if="loading" class="loading-state">
-        <div class="loading-spinner"></div>
         <p>Caricamento veicoli...</p>
       </div>
       
@@ -112,10 +110,9 @@ useHead({
 .vehicles-hero {
   position: relative;
   height: 70vh;
-  background: linear-gradient(135deg, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.5) 100%), url('https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&q=85&w=1920');
+  background: url('https://images.unsplash.com/photo-1542362567-b07e54358753?auto=format&fit=crop&q=85&w=1920');
   background-size: cover;
   background-position: center 30%;
-  background-blend-mode: overlay;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -133,20 +130,6 @@ useHead({
   .vehicles-hero {
     height: 45vh;
   }
-}
-
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(
-    135deg,
-    rgba(0, 0, 0, 0.4) 0%,
-    rgba(0, 0, 0, 0.2) 50%,
-    rgba(0, 0, 0, 0.6) 100%
-  );
 }
 
 .hero-content {
@@ -177,7 +160,6 @@ useHead({
   margin-bottom: 2rem;
   max-width: 600px;
   line-height: 1.5;
-  opacity: 0.95;
   text-shadow: 0 1px 3px rgba(0,0,0,0.3);
 }
 
@@ -206,17 +188,10 @@ useHead({
 .stat-item {
   text-align: center;
   padding: 1.25rem 1.5rem;
-  background: rgba(255, 255, 255, 0.08);
-  backdrop-filter: blur(12px);
+  background: #0a0a0a;
   border-radius: 1rem;
   border: 1px solid rgba(255, 255, 255, 0.15);
   min-width: 140px;
-  transition: transform 0.3s ease, background-color 0.3s ease;
-}
-
-.stat-item:hover {
-  transform: translateY(-2px);
-  background: rgba(255, 255, 255, 0.12);
 }
 
 @media (max-width: 768px) {
@@ -238,7 +213,6 @@ useHead({
   font-size: var(--text-sm);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  opacity: 0.8;
 }
 
 /* Vehicles CTA */
@@ -260,7 +234,7 @@ useHead({
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, var(--primary), #ff6b35);
+  background: var(--primary);
 }
 
 @media (max-width: 768px) {
@@ -306,21 +280,6 @@ useHead({
   justify-content: center;
   padding: var(--space-4xl) 0;
   text-align: center;
-}
-
-.loading-spinner {
-  width: 48px;
-  height: 48px;
-  border: 3px solid var(--line);
-  border-radius: var(--radius-full);
-  border-top-color: var(--primary);
-  animation: spin 1s linear infinite;
-  margin-bottom: var(--space-lg);
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
 }
 
 .loading-state p {

@@ -1,129 +1,5 @@
 
 <script setup>
-import { onMounted, nextTick } from 'vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-if (process.client) {
-  gsap.registerPlugin(ScrollTrigger)
-}
-
-let ctx
-
-onMounted(async () => {
-  await nextTick()
-  ctx = gsap.context(() => {
-    // Reveal Titolo e Sottotitolo
-    const headerElements = document.querySelectorAll('.about-header > *')
-    if (headerElements.length > 0) {
-      gsap.fromTo(headerElements, 
-        { y: 40, opacity: 0 },
-        {
-          scrollTrigger: {
-            trigger: '.about-section',
-            start: 'top 80%',
-          },
-          y: 0,
-          opacity: 1,
-          duration: 1.2,
-          stagger: 0.15,
-          ease: 'power4.out',
-          clearProps: 'all'
-        }
-      )
-    }
-
-    // Reveal Paragrafi Testo con Stagger
-    const textParagraphs = document.querySelectorAll('.about-text p')
-    if (textParagraphs.length > 0) {
-      gsap.fromTo(textParagraphs, 
-        { y: 30, opacity: 0 },
-        {
-          scrollTrigger: {
-            trigger: '.about-text',
-            start: 'top 85%',
-          },
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          stagger: 0.2,
-          ease: 'power3.out',
-          clearProps: 'all'
-        }
-      )
-    }
-
-    // Animazione Visual Layered (Effetto Parallasse)
-    const visualElements = document.querySelectorAll('.visual-layer')
-    if (visualElements.length > 0) {
-      visualElements.forEach((el, i) => {
-        gsap.fromTo(el, 
-          { y: 60 * (i + 1), opacity: 0, scale: 0.9 },
-          {
-            scrollTrigger: {
-              trigger: '.about-visual-container',
-              start: 'top 75%',
-            },
-            y: 0,
-            opacity: 1,
-            scale: 1,
-            duration: 1.5,
-            delay: i * 0.2,
-            ease: 'expo.out',
-            clearProps: 'all'
-          }
-        )
-      })
-    }
-
-    // Parallasse continuo al movimento dello scroll
-    const layerBg = document.querySelector('.layer-bg')
-    if (layerBg) {
-      gsap.to(layerBg, {
-        y: -50,
-        scrollTrigger: {
-          trigger: '.about-section',
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true
-        }
-      })
-    }
-    
-    const layerMain = document.querySelector('.layer-main')
-    if (layerMain) {
-      gsap.to(layerMain, {
-        y: 30,
-        scrollTrigger: {
-          trigger: '.about-section',
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true
-        }
-      })
-    }
-
-    // Hover sulle icone valori
-    const valueCards = document.querySelectorAll('.value-card')
-    if (valueCards.length > 0) {
-      gsap.fromTo(valueCards, 
-        { scale: 0.9, opacity: 0 },
-        {
-          scrollTrigger: {
-            trigger: '.about-values',
-            start: 'top 90%',
-          },
-          scale: 1,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: 'back.out(1.7)',
-          clearProps: 'all'
-        }
-      )
-    }
-  })
-})
 </script>
 
 <template>
@@ -246,7 +122,6 @@ onMounted(async () => {
 .visual-layer {
   position: absolute;
   border-radius: var(--radius-lg);
-  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .layer-bg {
@@ -254,7 +129,7 @@ onMounted(async () => {
   right: 0;
   width: 80%;
   height: 70%;
-  background: linear-gradient(135deg, rgba(241, 110, 34, 0.05) 0%, rgba(241, 110, 34, 0) 100%);
+  background: rgba(241, 110, 34, 0.06);
   border: 1px solid rgba(241, 110, 34, 0.1);
   z-index: 1;
 }
@@ -274,7 +149,6 @@ onMounted(async () => {
   width: 80%;
   height: 80%;
   background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(20px);
   border: 1px solid var(--line);
   z-index: 3;
   display: flex;
@@ -306,7 +180,6 @@ onMounted(async () => {
   flex-direction: column;
   align-items: center;
   box-shadow: 0 15px 30px var(--primary-glow);
-  transform: rotate(4deg);
 }
 
 .experience-badge-content .years {
@@ -332,13 +205,6 @@ onMounted(async () => {
   gap: 16px;
   align-items: center;
   padding: 24px;
-  transition: all 0.4s ease;
-}
-
-.value-card:hover {
-  border-color: var(--primary);
-  transform: translateY(-5px);
-  background: rgba(255, 255, 255, 0.05);
 }
 
 @media (max-width: 1200px) {
@@ -418,27 +284,6 @@ onMounted(async () => {
   flex-wrap: wrap;
 }
 
-.btn-secondary-glass {
-  display: inline-flex;
-  align-items: center;
-  padding: 16px 32px;
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 100px;
-  color: white;
-  font-size: 0.75rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  transition: all 0.3s ease;
-}
-
-.btn-secondary-glass:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.2);
-  transform: translateY(-2px);
-}
 
 @media (max-width: 1024px) {
   .about-grid { grid-template-columns: 1fr; }

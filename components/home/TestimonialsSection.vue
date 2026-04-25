@@ -1,11 +1,5 @@
 <script setup>
-import { ref, onMounted, nextTick } from 'vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-if (process.client) {
-  gsap.registerPlugin(ScrollTrigger)
-}
+import { ref } from 'vue'
 
 const testimonials = ref([
   {
@@ -70,39 +64,6 @@ const testimonials = ref([
   }
 ])
 
-let ctx
-
-onMounted(async () => {
-  if (process.client) {
-    await nextTick()
-    ctx = gsap.context(() => {
-      // Animazione delle testimonianze
-      const testimonialCards = document.querySelectorAll('.testimonial-card')
-      if (testimonialCards.length > 0) {
-        gsap.fromTo(testimonialCards, 
-          { opacity: 0, y: 40, scale: 0.9 },
-          {
-            scrollTrigger: {
-              trigger: '.testimonials-section',
-              start: 'top 80%',
-            },
-            opacity: 1,
-            y: 0,
-            scale: 1,
-            duration: 1,
-            stagger: 0.15,
-            ease: 'power3.out',
-            clearProps: 'all'
-          }
-        )
-      }
-    })
-  }
-})
-
-onUnmounted(() => {
-  if (process.client && ctx) ctx.revert()
-})
 </script>
 
 <template>
@@ -117,7 +78,7 @@ onUnmounted(() => {
       </div>
 
       <div class="testimonials-grid grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <article v-for="testimonial in testimonials" :key="testimonial.id" class="testimonial-card group p-8 bg-white dark:bg-white/5 rounded-[32px] border border-transparent hover:border-primary/20 transition-all duration-500 hover:shadow-2xl flex flex-col justify-between">
+        <article v-for="testimonial in testimonials" :key="testimonial.id" class="testimonial-card flex flex-col justify-between">
           <div>
             <div class="flex items-center gap-4 mb-6">
               <div class="w-14 h-14 rounded-2xl overflow-hidden border-2 border-primary/20 shadow-lg">
@@ -238,16 +199,9 @@ onUnmounted(() => {
   border: 1px solid var(--line);
   border-radius: var(--radius-2xl);
   padding: var(--space-2xl);
-  transition: all var(--transition-base);
   height: 100%;
   display: flex;
   flex-direction: column;
-}
-
-.testimonial-card:hover {
-  transform: translateY(-4px);
-  border-color: var(--primary);
-  box-shadow: var(--shadow-lg);
 }
 
 /* Testimonial Header */
@@ -325,7 +279,6 @@ onUnmounted(() => {
 
 .star {
   color: var(--primary);
-  transition: all var(--transition-base);
 }
 
 /* Testimonial Content */
@@ -351,25 +304,6 @@ onUnmounted(() => {
   position: relative;
 }
 
-.testimonial-text p::before {
-  content: '"';
-  position: absolute;
-  top: -10px;
-  left: -10px;
-  font-size: var(--text-4xl);
-  color: var(--primary);
-  opacity: 0.2;
-}
-
-.testimonial-text p::after {
-  content: '"';
-  position: absolute;
-  bottom: -20px;
-  right: -10px;
-  font-size: var(--text-4xl);
-  color: var(--primary);
-  opacity: 0.2;
-}
 
 .testimonial-vehicle {
   display: flex;

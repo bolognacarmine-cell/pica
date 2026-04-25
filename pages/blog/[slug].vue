@@ -1,15 +1,10 @@
 <script setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-if (process.client) {
-  gsap.registerPlugin(ScrollTrigger)
-}
+import { ref } from 'vue'
 
 const route = useRoute()
 const loading = ref(true)
 const error = ref(null)
+const post = ref(null)
 
 // Articoli realistici con slug matching
 const articles = {
@@ -228,63 +223,7 @@ const renderMarkdown = (text) => {
   return `<div class="article-content"><p class="article-p">${html}</p></div>`
 }
 
-let ctx
-
-onMounted(async () => {
-  await nextTick()
-  ctx = gsap.context(() => {
-    // Article animations con slide-in da sinistra
-    const articleElements = document.querySelectorAll('.article-content > *')
-    if (articleElements.length > 0) {
-      gsap.fromTo(articleElements,
-        { translateX: -30, opacity: 0 },
-        {
-          scrollTrigger: {
-            trigger: '.article-content',
-            start: 'top 80%',
-          },
-          translateX: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.08,
-          ease: 'power2.out',
-          clearProps: 'transform'
-        }
-      )
-    }
-
-    // Hero image animation con slide-in
-    const heroImage = document.querySelector('.article-hero-image')
-    if (heroImage) {
-      gsap.fromTo(heroImage,
-        { scale: 1.05, translateX: -20, opacity: 0 },
-        {
-          scrollTrigger: {
-            trigger: '.article-hero',
-            start: 'top 70%',
-          },
-          scale: 1,
-          translateX: 0,
-          opacity: 1,
-          duration: 1.2,
-          ease: 'power2.out',
-          clearProps: 'all'
-        }
-      )
-    }
-  })
-  
-  fetchPost()
-})
-
-onUnmounted(() => {
-  if (ctx) ctx.revert()
-})
-
-const optimizedHeroImage = computed(() => {
-  if (!post.value?.imageCover) return '/logo-pica-caravan.jpg'
-  return transformImage(post.value.imageCover, { width: 1920, height: 1080, crop: 'fill', quality: 'auto', format: 'webp' })
-})
+await fetchPost()
 
 const formatDate = (d) => new Date(d).toLocaleDateString('it-IT', {
   day: 'numeric',
@@ -303,112 +242,94 @@ const readingTime = (content) => {
 
 <template>
   <div class="blog-post-page section">
-    <!-- Background Decor -->
-    <div class="post-background">
-      <div class="bg-pattern"></div>
+    <div v-if="loading" class="loading-state">
+      <p>Caricamento articolo...</p>
     </div>
-    
-    <Transition name="article-slide" mode="out-in">
-      <div v-if="loading" class="loading-state" key="loading">
-        <div class="loading-spinner"></div>
-        <p>Caricamento articolo...</p>
-      </div>
 
-      <div v-else-if="error" class="error-state" key="error">
-        <h2>{{ error }}</h2>
-        <p>Impossibile caricare l'articolo richiesto.</p>
-        <NuxtLink to="/blog" class="btn btn-primary">Torna al Blog</NuxtLink>
-      </div>
+    <div v-else-if="error" class="error-state">
+      <h2>{{ error }}</h2>
+      <p>Impossibile caricare l'articolo richiesto.</p>
+      <NuxtLink to="/blog" class="btn btn-primary">Torna al Blog</NuxtLink>
+    </div>
 
-      <div v-else-if="post" class="article-container" :key="post.slug">
-        <!-- Article Hero -->
-        <Transition name="hero-slide" appear>
-          <div class="article-hero">
-            <div class="hero-overlay"></div>
-            <nuxt-img 
-              :src="post.image" 
-              :alt="post.title"
-              class="article-hero-image"
-              format="webp"
-              width="1920"
-              height="1080"
-            />
-            <div class="hero-content">
-              <div class="container">
-                <div class="hero-breadcrumb">
-                  <NuxtLink to="/blog" class="breadcrumb-link">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                    <span>Torna al Blog</span>
-                  </NuxtLink>
-                </div>
-                <div class="hero-meta">
-                  <span class="category-badge">{{ post.category }}</span>
-                  <div class="meta-details">
-                    <span class="meta-date">{{ formatDate(post.date) }}</span>
-                    <span class="meta-separator">•</span>
-                    <span class="meta-author">{{ post.author }}</span>
-                    <span class="meta-separator">•</span>
-                    <span class="meta-time">{{ post.readTime }}</span>
-                  </div>
-                </div>
-                <h1 class="hero-title">{{ post.title }}</h1>
-                <p class="hero-excerpt">{{ post.excerpt }}</p>
+    <div v-else-if="post" class="article-container">
+      <div class="article-hero">
+        <nuxt-img 
+          :src="post.image" 
+          :alt="post.title"
+          class="article-hero-image"
+          format="webp"
+          width="1920"
+          height="1080"
+        />
+        <div class="hero-content">
+          <div class="container">
+            <div class="hero-breadcrumb">
+              <NuxtLink to="/blog" class="breadcrumb-link">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                <span>Torna al Blog</span>
+              </NuxtLink>
+            </div>
+            <div class="hero-meta">
+              <span class="category-badge">{{ post.category }}</span>
+              <div class="meta-details">
+                <span class="meta-date">{{ formatDate(post.date) }}</span>
+                <span class="meta-separator">•</span>
+                <span class="meta-author">{{ post.author }}</span>
+                <span class="meta-separator">•</span>
+                <span class="meta-time">{{ post.readTime }}</span>
               </div>
             </div>
+            <h1 class="hero-title">{{ post.title }}</h1>
+            <p class="hero-excerpt">{{ post.excerpt }}</p>
           </div>
-        </Transition>
+        </div>
+      </div>
 
-        <!-- Article Content -->
-        <Transition name="content-slide" appear>
-          <div class="article-content-wrapper">
-            <div class="container">
-              <div class="article-main">
-                <div class="article-body" v-html="renderMarkdown(post.content)"></div>
-                
-                <!-- Article Tags -->
-                <div class="article-tags">
-                  <h3 class="tags-title">Argomenti correlati</h3>
-                  <div class="tags-list">
-                    <span v-for="tag in post.tags" :key="tag" class="tag">{{ tag }}</span>
-                  </div>
-                </div>
-
-                <!-- Share Section -->
-                <div class="article-share">
-                  <h3 class="share-title">Condividi questo articolo</h3>
-                  <div class="share-buttons">
-                    <a href="#" class="share-btn facebook">
-                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
-                      <span>Facebook</span>
-                    </a>
-                    <a href="#" class="share-btn twitter">
-                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
-                      <span>Twitter</span>
-                    </a>
-                    <a href="#" class="share-btn linkedin">
-                      <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
-                      <span>LinkedIn</span>
-                    </a>
-                  </div>
-                </div>
-
-                <!-- Navigation -->
-                <div class="article-navigation">
-                  <NuxtLink to="/blog" class="nav-link back-link">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
-                    <span>Torna agli Articoli</span>
-                  </NuxtLink>
-                  <NuxtLink to="/contatti" class="nav-link contact-link">
-                    <span>Contatta Esperto</span>
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
-                  </NuxtLink>
-                </div>
+      <div class="article-content-wrapper">
+        <div class="container">
+          <div class="article-main">
+            <div class="article-body" v-html="renderMarkdown(post.content)"></div>
+            
+            <div class="article-tags">
+              <h3 class="tags-title">Argomenti correlati</h3>
+              <div class="tags-list">
+                <span v-for="tag in post.tags" :key="tag" class="tag">{{ tag }}</span>
               </div>
             </div>
+
+            <div class="article-share">
+              <h3 class="share-title">Condividi questo articolo</h3>
+              <div class="share-buttons">
+                <a href="#" class="share-btn facebook">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+                  <span>Facebook</span>
+                </a>
+                <a href="#" class="share-btn twitter">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+                  <span>Twitter</span>
+                </a>
+                <a href="#" class="share-btn linkedin">
+                  <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+                  <span>LinkedIn</span>
+                </a>
+              </div>
+            </div>
+
+            <div class="article-navigation">
+              <NuxtLink to="/blog" class="nav-link back-link">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/></svg>
+                <span>Torna agli Articoli</span>
+              </NuxtLink>
+              <NuxtLink to="/contatti" class="nav-link contact-link">
+                <span>Contatta Esperto</span>
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"/></svg>
+              </NuxtLink>
+            </div>
           </div>
-        </Transition>
+        </div>
       </div>
-    </Transition>
+    </div>
   </div>
 </template>
 
@@ -421,26 +342,6 @@ const readingTime = (content) => {
   min-height: 100vh;
 }
 
-.post-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  opacity: 0.02;
-  pointer-events: none;
-}
-
-.bg-pattern {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    radial-gradient(circle at 25% 25%, var(--primary) 0%, transparent 50%),
-    radial-gradient(circle at 75% 75%, var(--secondary) 0%, transparent 50%);
-  opacity: 0.03;
-}
-
 /* Loading State */
 .loading-state {
   display: flex;
@@ -449,20 +350,6 @@ const readingTime = (content) => {
   justify-content: center;
   min-height: 60vh;
   text-align: center;
-}
-
-.loading-spinner {
-  width: 48px;
-  height: 48px;
-  border: 3px solid var(--line);
-  border-top-color: var(--primary);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin-bottom: var(--space-lg);
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
 }
 
 /* Error State */
@@ -496,16 +383,6 @@ const readingTime = (content) => {
   align-items: flex-end;
 }
 
-.hero-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.8) 100%);
-  z-index: 2;
-}
-
 .article-hero-image {
   position: absolute;
   top: 0;
@@ -520,6 +397,7 @@ const readingTime = (content) => {
   position: relative;
   z-index: 3;
   padding-bottom: var(--space-4xl);
+  background: rgba(0, 0, 0, 0.9);
 }
 
 .hero-breadcrumb {
@@ -536,11 +414,6 @@ const readingTime = (content) => {
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  transition: color var(--transition-base);
-}
-
-.breadcrumb-link:hover {
-  color: var(--primary);
 }
 
 .hero-meta {
@@ -570,7 +443,6 @@ const readingTime = (content) => {
 
 .meta-separator {
   color: var(--primary);
-  opacity: 0.5;
 }
 
 .hero-title {
@@ -586,7 +458,6 @@ const readingTime = (content) => {
   font-size: var(--text-xl);
   line-height: 1.6;
   color: var(--text-inverse);
-  opacity: 0.9;
   max-width: 800px;
   text-shadow: 0 1px 2px rgba(0,0,0,0.5);
 }
@@ -651,69 +522,5 @@ const readingTime = (content) => {
 .article-em {
   color: var(--primary);
   font-style: italic;
-}
-/* Slide-in transitions per Blog Article */
-.article-slide-enter-active {
-  transition: all 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.article-slide-leave-active {
-  transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.article-slide-enter-from {
-  transform: translateX(-100%);
-  opacity: 0;
-}
-
-.article-slide-leave-to {
-  transform: translateX(50px);
-  opacity: 0;
-}
-
-.hero-slide-enter-active {
-  transition: all 600ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.hero-slide-enter-from {
-  transform: translateX(-80%);
-  opacity: 0;
-}
-
-.content-slide-enter-active {
-  transition: all 500ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
-}
-
-.content-slide-enter-from {
-  transform: translateX(-60%);
-  opacity: 0;
-}
-
-@media (max-width: 768px) {
-  .article-slide-enter-from {
-    transform: translateX(-80%);
-  }
-  
-  .hero-slide-enter-from {
-    transform: translateX(-60%);
-  }
-  
-  .content-slide-enter-from {
-    transform: translateX(-40%);
-  }
-}
-
-@media (max-width: 480px) {
-  .article-slide-enter-from {
-    transform: translateX(-60%);
-  }
-  
-  .hero-slide-enter-from {
-    transform: translateX(-40%);
-  }
-  
-  .content-slide-enter-from {
-    transform: translateX(-30%);
-  }
 }
 </style>

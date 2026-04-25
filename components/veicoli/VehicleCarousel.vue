@@ -146,29 +146,20 @@ onUnmounted(() => {
   position: absolute;
   top: 0;
   left: 0;
-  transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .carousel-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 1.2s ease;
-}
-
-.carousel-container:hover .carousel-img {
-  transform: scale(1.05);
 }
 
 .nav-btn {
   position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
+  top: calc(50% - 22px);
   width: 44px;
   height: 44px;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  background: rgba(0, 0, 0, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: white;
   border-radius: 50%;
@@ -177,14 +168,6 @@ onUnmounted(() => {
   justify-content: center;
   cursor: pointer;
   z-index: 10;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.nav-btn:hover {
-  background: #f16e22;
-  border-color: #f16e22;
-  transform: translateY(-50%) scale(1.1);
-  box-shadow: 0 0 20px rgba(241, 110, 34, 0.4);
 }
 
 .prev { left: 20px; }
@@ -193,14 +176,14 @@ onUnmounted(() => {
 .carousel-dots {
   position: absolute;
   bottom: 20px;
-  left: 50%;
-  transform: translateX(-50%);
+  left: 0;
+  right: 0;
   display: flex;
+  justify-content: center;
   gap: 10px;
   z-index: 10;
   padding: 6px 12px;
   background: rgba(0,0,0,0.2);
-  backdrop-filter: blur(8px);
   border-radius: 100px;
   border: 1px solid rgba(255,255,255,0.05);
 }
@@ -211,7 +194,6 @@ onUnmounted(() => {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 50%;
   cursor: pointer;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .dot.active {

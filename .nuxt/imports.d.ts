@@ -40,5 +40,5 @@ export { updateSiteConfig } from '../node_modules/nuxt-site-config/dist/runtime/
 export { useNitroOrigin } from '../node_modules/nuxt-site-config/dist/runtime/app/composables/useNitroOrigin';
 export { useSiteConfig } from '../node_modules/nuxt-site-config/dist/runtime/app/composables/useSiteConfig';
 export { createSitePathResolver, withSiteTrailingSlash, withSiteUrl } from '../node_modules/nuxt-site-config/dist/runtime/app/composables/utils';
-export { useImage } from '../node_modules/@nuxt/image/dist/runtime/composables';
+export { useImage } from '../node_modules/.pnpm/@nuxt+image@2.0.0_db0@0.3.4_631e74ece614e16f0549727fc9d9ed71/node_modules/@nuxt/image/dist/runtime/composables';
 export { useNuxtDevTools } from '../node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';

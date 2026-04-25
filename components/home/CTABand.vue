@@ -4,9 +4,7 @@
 <template>
 <section class="cta-band">
   <div class="container">
-    <div class="cta-band-shell glass-panel">
-      <!-- Background effects -->
-      <div class="glow-effect"></div>
+    <div class="cta-band-shell">
       
       <div class="cta-content">
         <p class="section-kicker">Pica Caravan</p>
@@ -48,19 +46,9 @@
   align-items: center;
   padding: 64px;
   border-radius: var(--radius-xl);
+  background: var(--panel);
   box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.8);
   overflow: hidden;
-}
-
-.glow-effect {
-  position: absolute;
-  top: -50%;
-  right: -20%;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, rgba(241, 110, 34, 0.15) 0%, transparent 70%);
-  pointer-events: none;
-  z-index: 0;
 }
 
 .cta-content {
@@ -113,14 +101,6 @@
   gap: 16px;
 }
 
-.btn-icon {
-  transition: transform 0.3s ease;
-}
-
-.btn-secondary-glass:hover .btn-icon,
-.btn-whatsapp:hover .btn-icon {
-  transform: rotate(-10deg) scale(1.1);
-}
 
 .desktop-only {
   display: none;

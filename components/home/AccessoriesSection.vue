@@ -1,74 +1,9 @@
 
 <script setup>
-import { onMounted, nextTick } from 'vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-if (process.client) {
-  gsap.registerPlugin(ScrollTrigger)
-}
-
-let ctx
-
-onMounted(async () => {
-  await nextTick()
-  ctx = gsap.context(() => {
-    // Animazione Intestazione
-    const headerElements = document.querySelectorAll('.accessories-header > *')
-    if (headerElements.length > 0) {
-      gsap.from(headerElements, {
-        scrollTrigger: {
-          trigger: '.accessories-section',
-          start: 'top 80%',
-        },
-        y: 30,
-        opacity: 0,
-        duration: 1,
-        stagger: 0.2,
-        ease: 'power3.out'
-      })
-    }
-
-    // Animazione Card Caschi
-    const helmetCards = document.querySelectorAll('.helmet-card')
-    if (helmetCards.length > 0) {
-      gsap.from(helmetCards, {
-        scrollTrigger: {
-          trigger: '.helmets-grid',
-          start: 'top 75%',
-        },
-        y: 50,
-        opacity: 0,
-        duration: 1.2,
-        stagger: 0.15,
-        ease: 'power4.out'
-      })
-    }
-
-    // Effetto parallasse sullo sfondo decorativo
-    const bgDecoration = document.querySelector('.bg-decoration')
-    if (bgDecoration) {
-      gsap.to(bgDecoration, {
-        y: -100,
-        scrollTrigger: {
-          trigger: '.accessories-section',
-          start: 'top bottom',
-          end: 'bottom top',
-          scrub: true
-        }
-      })
-    }
-  })
-})
 </script>
 
 <template>
   <section id="accessori" class="accessories-section section">
-    <!-- Background Decor -->
-    <div class="section-background">
-      <div class="bg-pattern"></div>
-    </div>
-    
     <div class="container">
       <div class="section-header">
         <span class="section-kicker">Accessori e Protezione</span>
@@ -161,24 +96,6 @@ onMounted(async () => {
   overflow: hidden;
 }
 
-.section-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1;
-}
-
-.bg-pattern {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    radial-gradient(circle at 20% 20%, var(--primary) 0%, transparent 50%),
-    radial-gradient(circle at 80% 80%, var(--secondary) 0%, transparent 50%);
-  opacity: 0.03;
-}
-
 .container {
   position: relative;
   z-index: 2;
@@ -204,23 +121,13 @@ onMounted(async () => {
 }
 
 .accessory-card {
-  transition: all var(--transition-base);
-}
-
-.accessory-card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-xl);
+  background: var(--panel);
+  border: 1px solid var(--line);
 }
 
 .accessory-card.featured {
-  background: var(--primary-gradient);
-  background-size: 200% 200%;
-  animation: gradient-shift 8s ease infinite;
-}
-
-@keyframes gradient-shift {
-  0%, 100% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
+  background: var(--panel);
+  border-color: var(--primary);
 }
 
 .accessory-visual {
@@ -240,13 +147,6 @@ onMounted(async () => {
   justify-content: center;
   border: 1px solid var(--line);
   color: var(--primary);
-  transition: all var(--transition-base);
-}
-
-.accessory-card:hover .accessory-icon {
-  background: var(--primary);
-  color: var(--text-inverse);
-  transform: scale(1.05);
 }
 
 .accessory-tag {

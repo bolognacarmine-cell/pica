@@ -3,8 +3,6 @@
       <!-- Login Section -->
     <div v-if="!isAuthenticated" class="login-wall bg-[var(--bg)]">
       <div class="glass-panel p-10 w-full max-w-md relative overflow-hidden">
-        <div class="absolute top-0 right-0 w-32 h-32 bg-[var(--primary)]/10 rounded-full blur-3xl -mr-16 -mt-16"></div>
-        
         <div class="mb-10 flex flex-col items-center">
           <img src="/logo-pica.png" alt="Pica Caravan" class="h-16 w-auto mb-6" />
           <h1 class="text-3xl font-black text-white tracking-tighter uppercase">PICA CARAVAN</h1>
@@ -65,8 +63,8 @@
             ]"
             :key="tab.id"
             @click="tab.id === 'add' ? openAddForm() : (currentTab = tab.id); if(tab.id === 'leads') fetchLeads(); if(tab.id === 'tradeIns') fetchTradeIns(); if(tab.id === 'portal' || tab.id === 'deadlines') fetchPortalUsers(); if(tab.id === 'blog') fetchBlogPosts();"
-            class="w-full flex items-center justify-between p-4 rounded-[var(--radius-md)] transition-all group"
-            :class="currentTab === tab.id ? 'bg-[var(--primary)] text-white shadow-lg shadow-[var(--primary-glow)]' : 'text-[var(--text-dim)] hover:bg-[var(--line)] hover:text-white'"
+            class="w-full flex items-center justify-between p-4 rounded-[var(--radius-md)]"
+            :class="currentTab === tab.id ? 'bg-[var(--primary)] text-white shadow-lg shadow-[var(--primary-glow)]' : 'text-[var(--text-dim)]'"
           >
             <div class="flex items-center gap-3">
               <span class="text-lg">{{ tab.icon }}</span>
@@ -74,13 +72,13 @@
             </div>
             <span v-if="tab.count" 
                   class="px-2 py-0.5 rounded-full text-[10px] font-black"
-                  :class="currentTab === tab.id ? 'bg-[var(--primary)] text-white shadow-lg shadow-[var(--primary-glow)]' : (tab.urgent ? 'bg-[var(--primary)] text-white animate-pulse' : 'bg-[var(--line)] text-[var(--text-dim)] hover:bg-[var(--line)] hover:text-white')">
+                  :class="currentTab === tab.id ? 'bg-[var(--primary)] text-white shadow-lg shadow-[var(--primary-glow)]' : (tab.urgent ? 'bg-red-500/20 text-red-200 border border-red-500/30' : 'bg-[var(--line)] text-[var(--text-dim)]')">
               {{ tab.count }}
             </span>
           </button>
         </nav>
 
-        <button @click="logout" class="mt-10 p-4 border border-[var(--line)] rounded-[var(--radius-md)] text-[var(--text-dim)] text-[10px] font-black uppercase tracking-widest hover:bg-red-500/10 hover:text-red-500 hover:border-red-500/20 transition-all">
+        <button @click="logout" class="mt-10 p-4 border border-[var(--line)] rounded-[var(--radius-md)] text-[var(--text-dim)] text-[10px] font-black uppercase tracking-widest">
           Disconnetti
         </button>
       </aside>
@@ -98,8 +96,8 @@
             </button>
           </div>
 
-          <div v-if="loading" class="flex items-center justify-center py-20">
-             <div class="w-10 h-10 border-4 border-[var(--primary)]/20 border-t-[var(--primary)] rounded-full animate-spin"></div>
+          <div v-if="loading" class="py-20 text-center">
+            <p class="text-white font-black uppercase tracking-widest text-[10px]">Caricamento...</p>
           </div>
           
           <div v-else-if="vehicles.length === 0" class="glass-panel p-20 text-center">
@@ -134,10 +132,10 @@
                 </div>
 
                 <div class="flex gap-3 mt-auto">
-                  <button @click="editVehicle(m)" class="flex-1 py-3 bg-[var(--line)] hover:opacity-80 border border-[var(--line)] rounded-[var(--radius-md)] text-[10px] font-black uppercase tracking-widest text-white transition-all">
+                  <button @click="editVehicle(m)" class="flex-1 py-3 bg-[var(--line)] border border-[var(--line)] rounded-[var(--radius-md)] text-[10px] font-black uppercase tracking-widest text-white">
                     Modifica
                   </button>
-                  <button @click="confirmDelete(m)" class="px-4 py-3 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white border border-red-500/20 rounded-[var(--radius-md)] transition-all">
+                  <button @click="confirmDelete(m)" class="px-4 py-3 bg-red-500/10 text-red-500 border border-red-500/20 rounded-[var(--radius-md)]">
                     🗑️
                   </button>
                 </div>
@@ -220,18 +218,18 @@
               
               <div class="form-group md:col-span-2 lg:col-span-3">
                 <label class="premium-label">Immagini</label>
-                <div class="border-2 border-dashed border-[var(--line)] rounded-[var(--radius-md)] p-8 text-center hover:border-[var(--primary)]/50 transition-all group">
+                <div class="border-2 border-dashed border-[var(--line)] rounded-[var(--radius-md)] p-8 text-center">
                   <input type="file" @change="handleImageUpload" id="fileInput" multiple accept="image/*" class="hidden" />
                   <label for="fileInput" class="cursor-pointer flex flex-col items-center gap-4">
-                    <span class="text-4xl group-hover:scale-110 transition-transform">📸</span>
-                    <span class="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)] group-hover:text-[var(--primary)]">Trascina o clicca per caricare foto</span>
+                    <span class="text-4xl">📸</span>
+                    <span class="text-[10px] font-black uppercase tracking-widest text-[var(--text-dim)]">Trascina o clicca per caricare foto</span>
                   </label>
                 </div>
                 
                 <div v-if="imagePreviews.length" class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 mt-6">
                   <div v-for="(preview, index) in imagePreviews" :key="index" class="relative aspect-video rounded-[var(--radius-md)] overflow-hidden border border-[var(--line)] group">
                     <img :src="preview" class="w-full h-full object-cover" />
-                    <button @click="removeImage(index)" type="button" class="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs opacity-0 group-hover:opacity-100 transition-opacity">×</button>
+                    <button @click="removeImage(index)" type="button" class="absolute top-2 right-2 w-6 h-6 bg-red-500 text-white rounded-full flex items-center justify-center text-xs">×</button>
                   </div>
                 </div>
               </div>
@@ -255,8 +253,8 @@
             </div>
           </div>
 
-          <div v-if="loading" class="flex items-center justify-center py-20">
-             <div class="w-10 h-10 border-4 border-[var(--primary)]/20 border-t-[var(--primary)] rounded-full animate-spin"></div>
+          <div v-if="loading" class="py-20 text-center">
+            <p class="text-white font-black uppercase tracking-widest text-[10px]">Caricamento...</p>
           </div>
           
           <div v-else-if="leads.length === 0" class="glass-panel p-20 text-center">
@@ -325,8 +323,8 @@
             </div>
           </div>
 
-          <div v-if="loading" class="flex items-center justify-center py-20">
-             <div class="w-10 h-10 border-4 border-[var(--primary)]/20 border-t-[var(--primary)] rounded-full animate-spin"></div>
+          <div v-if="loading" class="py-20 text-center">
+            <p class="text-white font-black uppercase tracking-widest text-[10px]">Caricamento...</p>
           </div>
           
           <div v-else-if="tradeIns.length === 0" class="glass-panel p-20 text-center">
@@ -401,7 +399,7 @@
               <div v-if="t.images && t.images.length" class="mt-8">
                 <span class="text-[10px] font-black uppercase tracking-widest text-[var(--primary)] block mb-4">Foto Allegate</span>
                 <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-                  <a v-for="(img, idx) in t.images" :key="idx" :href="img" target="_blank" class="aspect-square rounded-[var(--radius-md)] overflow-hidden border border-[var(--line)] hover:border-[var(--primary)]/50 transition-all">
+              <a v-for="(img, idx) in t.images" :key="idx" :href="img" target="_blank" class="aspect-square rounded-[var(--radius-md)] overflow-hidden border border-[var(--line)]">
                     <img :src="img" class="w-full h-full object-cover" />
                   </a>
                 </div>
@@ -419,9 +417,9 @@
             </div>
           </div>
 
-          <div v-if="loading" class="flex items-center justify-center py-20">
-             <div class="w-10 h-10 border-4 border-[var(--primary)]/20 border-t-[var(--primary)] rounded-full animate-spin"></div>
-          </div>
+             <div v-if="loading" class="py-20 text-center">
+              <p class="text-white font-black uppercase tracking-widest text-[10px]">Caricamento...</p>
+             </div>
 
           <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-10">
             <!-- Form per nuovo utente -->
@@ -454,7 +452,7 @@
 
             <!-- Lista utenti -->
             <div class="lg:col-span-2 space-y-4">
-              <div v-for="u in portalUsers" :key="u._id" class="admin-card glass-panel flex flex-wrap items-center justify-between gap-6 hover:bg-[var(--line)] transition-all duration-300">
+              <div v-for="u in portalUsers" :key="u._id" class="admin-card glass-panel flex flex-wrap items-center justify-between gap-6">
                 <div class="flex items-center gap-4">
                   <div class="w-10 h-10 bg-[var(--primary)]/10 rounded-full flex items-center justify-center text-[var(--primary)] font-black">
                     {{ u.nome.charAt(0) }}{{ u.cognome.charAt(0) }}
@@ -465,9 +463,9 @@
                   </div>
                 </div>
                 <div class="flex gap-2">
-                  <button @click="openManageVehicle(u)" class="px-4 py-2 bg-[var(--line)] hover:opacity-80 border border-[var(--line)] rounded-[var(--radius-sm)] text-[9px] font-black uppercase tracking-widest text-white transition-all">Veicolo</button>
-                  <button @click="openMaintenance(u)" class="px-4 py-2 bg-[var(--line)] hover:opacity-80 border border-[var(--line)] rounded-[var(--radius-sm)] text-[9px] font-black uppercase tracking-widest text-white transition-all">Manutenzione</button>
-                  <button @click="deletePortalUser(u._id)" class="px-4 py-2 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white border border-red-500/20 rounded-[var(--radius-sm)] text-[9px] font-black uppercase tracking-widest transition-all">Elimina</button>
+                  <button @click="openManageVehicle(u)" class="px-4 py-2 bg-[var(--line)] border border-[var(--line)] rounded-[var(--radius-sm)] text-[9px] font-black uppercase tracking-widest text-white">Veicolo</button>
+                  <button @click="openMaintenance(u)" class="px-4 py-2 bg-[var(--line)] border border-[var(--line)] rounded-[var(--radius-sm)] text-[9px] font-black uppercase tracking-widest text-white">Manutenzione</button>
+                  <button @click="deletePortalUser(u._id)" class="px-4 py-2 bg-red-500/10 text-red-500 border border-red-500/20 rounded-[var(--radius-sm)] text-[9px] font-black uppercase tracking-widest">Elimina</button>
                 </div>
               </div>
               <div v-if="portalUsers.length === 0" class="glass-panel p-12 text-center">
@@ -486,8 +484,8 @@
             </div>
           </div>
 
-          <div v-if="loading" class="flex items-center justify-center py-20">
-             <div class="w-10 h-10 border-4 border-[var(--primary)]/20 border-t-[var(--primary)] rounded-full animate-spin"></div>
+          <div v-if="loading" class="py-20 text-center">
+            <p class="text-white font-black uppercase tracking-widest text-[10px]">Caricamento...</p>
           </div>
 
           <div v-else-if="upcomingDeadlines.length === 0" class="glass-panel p-20 text-center">
@@ -545,7 +543,7 @@
               </div>
 
               <a :href="generateWhatsAppLink(d)" target="_blank" 
-                 class="btn-premium w-full justify-center bg-[#25D366] border-[#25D366] hover:bg-[#128C7E] hover:border-[#128C7E] shadow-none hover:shadow-lg hover:shadow-[#25D366]/20">
+                 class="btn-premium w-full justify-center bg-[#25D366] border-[#25D366] shadow-none">
                 <span class="flex items-center gap-2">
                   <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.438 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-.868-2.031-.967-.272-.099-.47-.149-.669.149-.198.297-.768.967-.941 1.165-.173.198-.347.223-.644.074-.297-.149-1.255-.462-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.297-.347.446-.521.151-.172.2-.296.3-.495.099-.198.05-.372-.025-.521-.075-.148-.669-1.611-.916-2.206-.242-.579-.487-.501-.669-.51l-.57-.01c-.198 0-.52.074-.792.372s-1.04 1.016-1.04 2.479 1.065 2.876 1.213 3.074c.149.198 2.095 3.2 5.076 4.487.709.306 1.263.489 1.694.626.712.226 1.36.194 1.872.118.571-.085 1.758-.719 2.006-1.413.248-.695.248-1.29.173-1.414z"/></svg>
                   Avvisa Cliente
@@ -567,14 +565,14 @@
             </button>
           </div>
 
-          <div v-if="loading" class="flex items-center justify-center py-20">
-             <div class="w-10 h-10 border-4 border-[var(--primary)]/20 border-t-[var(--primary)] rounded-full animate-spin"></div>
+          <div v-if="loading" class="py-20 text-center">
+            <p class="text-white font-black uppercase tracking-widest text-[10px]">Caricamento...</p>
           </div>
           
           <div v-else class="grid grid-cols-1 gap-4">
-            <div v-for="p in blogPosts" :key="p._id" class="admin-card glass-panel flex items-center gap-6 group hover:bg-[var(--line)] transition-all duration-300">
+            <div v-for="p in blogPosts" :key="p._id" class="admin-card glass-panel flex items-center gap-6">
               <div class="w-32 h-20 rounded-[var(--radius-sm)] overflow-hidden border border-[var(--line)] shrink-0">
-                <img :src="p.imageCover || '/logo-pica-caravan.jpg'" class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500" />
+                <img :src="p.imageCover || '/logo-pica-caravan.jpg'" class="w-full h-full object-cover" />
               </div>
               <div class="flex-grow">
                 <div class="flex items-center gap-3 mb-1">
@@ -585,8 +583,8 @@
                 <h3 class="text-lg font-black text-white uppercase tracking-tight">{{ p.title }}</h3>
               </div>
               <div class="flex gap-2">
-                <button @click="editBlog(p)" class="px-4 py-2 bg-[var(--line)] hover:opacity-80 border border-[var(--line)] rounded-[var(--radius-sm)] text-[9px] font-black uppercase tracking-widest text-white transition-all">Modifica</button>
-                <button @click="deleteBlog(p._id)" class="px-4 py-2 bg-red-500/10 hover:bg-red-500 text-red-500 hover:text-white border border-red-500/20 rounded-[var(--radius-sm)] text-[9px] font-black uppercase tracking-widest transition-all">Elimina</button>
+                <button @click="editBlog(p)" class="px-4 py-2 bg-[var(--line)] border border-[var(--line)] rounded-[var(--radius-sm)] text-[9px] font-black uppercase tracking-widest text-white">Modifica</button>
+                <button @click="deleteBlog(p._id)" class="px-4 py-2 bg-red-500/10 text-red-500 border border-red-500/20 rounded-[var(--radius-sm)] text-[9px] font-black uppercase tracking-widest">Elimina</button>
               </div>
             </div>
             <div v-if="blogPosts.length === 0" class="glass-panel p-20 text-center">
@@ -663,27 +661,27 @@
 
     <!-- Delete Confirmation Modal -->
     <div v-if="showDeleteModal" class="fixed inset-0 z-[100] flex items-center justify-center p-6">
-      <div class="absolute inset-0 bg-black/80 backdrop-blur-md" @click="showDeleteModal = false"></div>
+      <div class="absolute inset-0 bg-black/80" @click="showDeleteModal = false"></div>
       <div class="glass-panel max-w-md w-full p-10 relative z-10 border-[var(--primary)]/20">
         <h3 class="text-2xl font-black text-white uppercase tracking-tighter mb-4">Conferma Eliminazione</h3>
         <p class="text-[var(--text-dim)] text-sm mb-8 leading-relaxed">Sei sicuro di voler eliminare definitivamente <strong class="text-white">{{ vehicleToDelete?.marca }} {{ vehicleToDelete?.modello }}</strong>? Questa azione non può essere annullata.</p>
         <div class="flex gap-4">
-          <button @click="showDeleteModal = false" class="flex-1 px-6 py-4 bg-[var(--line)] hover:opacity-80 border border-[var(--line)] rounded-[var(--radius-md)] text-[10px] font-black uppercase tracking-widest text-white transition-all">Annulla</button>
-          <button @click="deleteVehicle" class="flex-1 px-6 py-4 bg-red-500 hover:bg-red-600 border border-red-500 rounded-[var(--radius-md)] text-[10px] font-black uppercase tracking-widest text-white transition-all">Sì, Elimina</button>
+          <button @click="showDeleteModal = false" class="flex-1 px-6 py-4 bg-[var(--line)] border border-[var(--line)] rounded-[var(--radius-md)] text-[10px] font-black uppercase tracking-widest text-white">Annulla</button>
+          <button @click="deleteVehicle" class="flex-1 px-6 py-4 bg-red-500 border border-red-500 rounded-[var(--radius-md)] text-[10px] font-black uppercase tracking-widest text-white">Sì, Elimina</button>
         </div>
       </div>
     </div>
 
     <!-- Portal: Manage Vehicle Modal -->
     <div v-if="showPortalVehicleModal" class="fixed inset-0 z-[100] flex items-center justify-center p-6">
-      <div class="absolute inset-0 bg-black/80 backdrop-blur-md" @click="showPortalVehicleModal = false"></div>
+      <div class="absolute inset-0 bg-black/80" @click="showPortalVehicleModal = false"></div>
       <div class="glass-panel max-w-4xl w-full p-10 relative z-10 max-h-[90vh] overflow-y-auto">
         <div class="flex justify-between items-start mb-10">
           <div>
             <h3 class="text-2xl font-black text-white uppercase tracking-tighter">Gestisci Veicolo Utente</h3>
             <span class="text-[10px] font-black uppercase tracking-widest text-[var(--primary)]">Targa: <code class="bg-[var(--primary)]/10 px-2 py-1 rounded-[var(--radius-sm)]">{{ selectedUserForAction?.targa }}</code></span>
           </div>
-          <button @click="showPortalVehicleModal = false" class="text-[var(--text-dim)] hover:text-white transition-colors">
+          <button @click="showPortalVehicleModal = false" class="text-[var(--text-dim)]">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
           </button>
         </div>
@@ -737,7 +735,7 @@
           </div>
           
           <div class="flex gap-4 pt-8 border-t border-[var(--line)]">
-            <button type="button" @click="showPortalVehicleModal = false" class="flex-1 px-6 py-4 bg-[var(--line)] hover:opacity-80 border border-[var(--line)] rounded-[var(--radius-md)] text-[10px] font-black uppercase tracking-widest text-white transition-all">Annulla</button>
+            <button type="button" @click="showPortalVehicleModal = false" class="flex-1 px-6 py-4 bg-[var(--line)] border border-[var(--line)] rounded-[var(--radius-md)] text-[10px] font-black uppercase tracking-widest text-white">Annulla</button>
             <button type="submit" class="flex-1 btn-premium">Salva Veicolo</button>
           </div>
         </form>
@@ -746,20 +744,20 @@
 
     <!-- Portal: Maintenance History Modal -->
     <div v-if="showMaintenanceModal" class="fixed inset-0 z-[100] flex items-center justify-center p-6">
-      <div class="absolute inset-0 bg-black/80 backdrop-blur-md" @click="showMaintenanceModal = false"></div>
+      <div class="absolute inset-0 bg-black/80" @click="showMaintenanceModal = false"></div>
       <div class="glass-panel max-w-4xl w-full p-10 relative z-10 max-h-[90vh] flex flex-col">
         <div class="flex justify-between items-start mb-10">
           <div>
             <h3 class="text-2xl font-black text-white uppercase tracking-tighter">Storico Interventi</h3>
             <span class="text-[10px] font-black uppercase tracking-widest text-[var(--primary)]">Targa: <code class="bg-[var(--primary)]/10 px-2 py-1 rounded-[var(--radius-sm)]">{{ selectedUserForAction?.targa }}</code></span>
           </div>
-          <button @click="showMaintenanceModal = false" class="text-[var(--text-dim)] hover:text-white transition-colors">
+          <button @click="showMaintenanceModal = false" class="text-[var(--text-dim)]">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
           </button>
         </div>
 
         <div class="flex-grow overflow-y-auto pr-4 space-y-4 mb-10 custom-scrollbar">
-          <div v-for="rec in maintenanceHistory" :key="rec._id" class="p-6 rounded-[var(--radius-md)] bg-[var(--line)] border border-[var(--line)] group hover:border-[var(--primary)]/30 transition-all duration-300">
+          <div v-for="rec in maintenanceHistory" :key="rec._id" class="p-6 rounded-[var(--radius-md)] bg-[var(--line)] border border-[var(--line)]">
             <div class="flex justify-between items-start">
               <div>
                 <div class="flex items-center gap-3 mb-2">
@@ -771,7 +769,7 @@
                 <p v-if="rec.partiSostituite" class="text-xs text-[var(--text-dim)] italic">Parti: {{ rec.partiSostituite }}</p>
                 <p v-if="rec.costo" class="text-sm font-black text-[var(--primary)] mt-3">€ {{ rec.costo }}</p>
               </div>
-              <button @click="deleteMaintenance(rec._id)" class="p-2 bg-red-500/10 text-red-500 rounded-[var(--radius-sm)] opacity-0 group-hover:opacity-100 transition-all hover:bg-red-500 hover:text-white">
+              <button @click="deleteMaintenance(rec._id)" class="p-2 bg-red-500/10 text-red-500 rounded-[var(--radius-sm)]">
                 <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
               </button>
             </div>
@@ -1496,7 +1494,6 @@ onMounted(() => {
   text-align: left;
   border-radius: var(--radius-sm);
   cursor: pointer;
-  transition: all 0.3s;
   font-size: 1rem;
 }
 
@@ -1555,11 +1552,6 @@ onMounted(() => {
   border-radius: var(--radius-md);
   overflow: hidden;
   border: 1px solid var(--line);
-  transition: transform 0.3s;
-}
-
-.moto-card-admin:hover {
-  transform: translateY(-5px);
 }
 
 .moto-img-admin {
@@ -1690,7 +1682,6 @@ onMounted(() => {
   border: none;
   cursor: pointer;
   font-weight: 600;
-  transition: opacity 0.2s;
 }
 
 .btn-edit {
@@ -1701,10 +1692,6 @@ onMounted(() => {
 .btn-delete {
   background: rgba(239, 68, 68, 0.1);
   color: var(--danger);
-}
-
-.btn-edit:hover, .btn-delete:hover {
-  opacity: 0.8;
 }
 
 .btn-logout:hover {
@@ -1826,11 +1813,6 @@ onMounted(() => {
   object-fit: cover;
   border-radius: var(--radius-sm);
   border: 1px solid var(--line);
-  transition: transform 0.3s;
-}
-
-.images-preview-grid img:hover {
-  transform: scale(1.05);
 }
 
 .lead-info p, .lead-moto p, .lead-payment p {
@@ -1896,12 +1878,6 @@ onMounted(() => {
   font-size: 0.8rem;
   cursor: pointer;
   margin-left: 8px;
-  transition: all 0.3s ease;
-}
-
-.btn-edit-small:hover {
-  background: var(--primary-2);
-  border-color: var(--primary-2);
 }
 
 .btn-delete-red {
@@ -2250,12 +2226,11 @@ onMounted(() => {
   justify-content: space-between;
   align-items: center;
   gap: 30px;
-  transition: all 0.3s ease;
 }
 
 .deadline-card.expired {
   border-color: rgba(225, 29, 72, 0.3);
-  background: linear-gradient(90deg, rgba(225, 29, 72, 0.05), transparent);
+  background: var(--panel-2);
 }
 
 .deadline-info {
@@ -2305,31 +2280,15 @@ onMounted(() => {
 .deadline-item.urgent { 
   border-left: 4px solid #ffc107; 
   color: #ffc107; 
-  animation: blink-urgent 1.5s infinite;
 }
 .deadline-item.warning { border-left: 4px solid #94a3b8; }
 .deadline-item.expired { 
   border-left: 4px solid var(--primary); 
   color: var(--primary-2); 
-  animation: blink-expired 1s infinite;
 }
 
 .badge-count.blink-badge {
-  animation: blink-urgent 1s infinite;
   background: var(--primary);
-  box-shadow: 0 0 10px var(--primary);
-}
-
-@keyframes blink-urgent {
-  0% { opacity: 1; }
-  50% { opacity: 0.5; }
-  100% { opacity: 1; }
-}
-
-@keyframes blink-expired {
-  0% { background: rgba(225, 29, 72, 0.1); opacity: 1; }
-  50% { background: rgba(225, 29, 72, 0.3); opacity: 0.7; }
-  100% { background: rgba(225, 29, 72, 0.1); opacity: 1; }
 }
 
 .deadline-item .days {
@@ -2346,14 +2305,7 @@ onMounted(() => {
   font-weight: 800;
   font-size: 0.85rem;
   text-decoration: none;
-  transition: all 0.3s ease;
   display: inline-block;
-}
-
-.btn-whatsapp-small:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
-  filter: brightness(1.1);
 }
 
 @media (max-width: 1024px) {

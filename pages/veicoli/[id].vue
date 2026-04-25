@@ -68,7 +68,6 @@ const formatImages = (images) => {
 
       <!-- Loading State -->
       <div v-if="loading" class="loading-box">
-        <div class="spinner"></div>
         <p>Caricamento dettagli...</p>
       </div>
 
@@ -158,7 +157,6 @@ const formatImages = (images) => {
   color: var(--text-muted);
   text-decoration: none;
   font-weight: 600;
-  transition: color 0.3s ease, background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
   padding: 0.5rem 1rem;
   background: rgba(255, 255, 255, 0.05);
   border-radius: 2rem;
@@ -171,21 +169,6 @@ const formatImages = (images) => {
     font-size: 0.875rem;
     padding: 0.375rem 0.75rem;
   }
-}
-
-.btn-back .arrow {
-  transition: transform 0.3s ease;
-}
-
-.btn-back:hover {
-  color: var(--text-primary);
-  background: rgba(255, 255, 255, 0.1);
-  border-color: var(--primary);
-  transform: translateY(-1px);
-}
-
-.btn-back:hover .arrow {
-  transform: translateX(-2px);
 }
 
 .moto-detail-grid {
@@ -307,14 +290,8 @@ const formatImages = (images) => {
   border-radius: 12px;
   font-weight: 800;
   text-decoration: none;
-  transition: transform 0.3s, box-shadow 0.3s;
   border: none;
   cursor: pointer;
-}
-
-.btn-quote:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 20px rgba(0, 90, 90, 0.3);
 }
 
 .btn-whatsapp {
@@ -325,7 +302,6 @@ const formatImages = (images) => {
   border-radius: 12px;
   font-weight: 700;
   text-decoration: none;
-  transition: opacity 0.3s;
 }
 
 .btn-call {
@@ -336,16 +312,10 @@ const formatImages = (images) => {
   border-radius: 12px;
   font-weight: 700;
   text-decoration: none;
-  transition: opacity 0.3s;
-}
-
-.btn-whatsapp:hover, .btn-call:hover {
-  opacity: 0.9;
 }
 
 .sticky-panel {
-  position: sticky;
-  top: 100px;
+  position: static;
 }
 
 .related-posts-section {
@@ -372,12 +342,6 @@ const formatImages = (images) => {
   border: 1px solid var(--line);
   padding: 12px;
   border-radius: 16px;
-  transition: all 0.3s ease;
-}
-
-.mini-blog-card:hover {
-  border-color: var(--primary-2);
-  transform: translateY(-5px);
 }
 
 .mini-blog-card img {
@@ -416,34 +380,11 @@ const formatImages = (images) => {
   color: var(--primary-2);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  opacity: 0;
-  transform: translateX(-10px);
-  transition: all 0.3s ease;
-}
-
-.mini-blog-card:hover .mini-read-more {
-  opacity: 1;
-  transform: translateX(0);
 }
 
 .loading-box, .error-box {
   text-align: center;
   padding: 100px 20px;
-}
-
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(0, 90, 90, 0.3);
-  border-radius: 50%;
-  border-top-color: var(--primary);
-  animation: spin 1s ease-in-out infinite;
-  margin: 0 auto 20px;
-}
-
-@keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
 }
 
 @media (max-width: 900px) {

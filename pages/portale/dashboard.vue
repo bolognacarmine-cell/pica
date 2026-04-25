@@ -69,10 +69,10 @@ const getDateStatus = (dateStr) => {
 <template>
   <div class="portal-dashboard bg-[#030303] min-h-screen text-white">
     <!-- Top Bar -->
-    <header class="border-b border-white/5 bg-[#050505]/80 backdrop-blur-md sticky top-0 z-50">
+    <header class="border-b border-white bg-[#050505] fixed top-0 left-0 right-0 z-50">
       <div class="container mx-auto px-6 h-20 flex items-center justify-between">
         <div class="flex items-center gap-4">
-          <img src="/logo-pica-caravan.jpg" alt="Logo" class="h-10 w-10 rounded-full border border-white/10" />
+          <img src="/logo-pica-caravan.jpg" alt="Logo" class="h-10 w-10 rounded-full border border-white" />
           <div class="flex flex-col">
             <span class="text-sm font-black uppercase tracking-tighter">Pica Caravan</span>
             <span class="text-[10px] text-primary font-black uppercase tracking-[0.2em]">Area Clienti</span>
@@ -81,30 +81,28 @@ const getDateStatus = (dateStr) => {
         <div v-if="user" class="flex items-center gap-6">
           <div class="hidden md:flex flex-col items-end">
             <span class="text-xs font-black uppercase tracking-widest text-white">{{ user.nome }} {{ user.cognome }}</span>
-            <span class="text-[9px] text-white/40 uppercase font-bold tracking-widest">Cliente Verificato</span>
+            <span class="text-[9px] text-white uppercase font-bold tracking-widest">Cliente Verificato</span>
           </div>
-          <button @click="logout" class="px-4 py-2 border border-white/10 rounded-lg text-[10px] font-black uppercase tracking-widest hover:bg-red-500/10 hover:text-red-500 hover:border-red-500/20 transition-all">
+          <button @click="logout" class="px-4 py-2 border border-white rounded-lg text-[10px] font-black uppercase tracking-widest">
             Esci
           </button>
         </div>
       </div>
     </header>
 
-    <main class="container mx-auto px-6 py-12">
+    <main class="container mx-auto px-6 pt-32 pb-12">
       <div v-if="loading" class="flex flex-col items-center justify-center py-32">
-        <div class="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin mb-4"></div>
-        <p class="text-white/40 text-xs font-black uppercase tracking-widest">Sincronizzazione dati veicolo...</p>
+        <p class="text-white text-xs font-black uppercase tracking-widest">Sincronizzazione dati veicolo...</p>
       </div>
 
       <div v-else-if="data.vehicle" class="grid grid-cols-1 lg:grid-cols-12 gap-12">
         <!-- Sidebar -->
         <aside class="lg:col-span-3 space-y-8">
           <div class="glass-panel p-6 overflow-hidden relative">
-            <div class="absolute top-0 right-0 w-20 h-20 bg-primary/10 rounded-full blur-2xl -mr-10 -mt-10"></div>
             <img :src="data.vehicle.photoUrl || '/logo-pica-caravan.jpg'" alt="Veicolo" class="w-full h-40 object-cover rounded-xl mb-6 border border-white/5" />
             <div class="space-y-1">
               <h3 class="text-lg font-black uppercase tracking-tighter">{{ data.vehicle.marca }} {{ data.vehicle.modello }}</h3>
-              <span class="inline-block px-3 py-1 bg-primary/20 text-primary text-[10px] font-black rounded-md tracking-widest">{{ data.vehicle.targa }}</span>
+              <span class="inline-block px-3 py-1 bg-primary text-white text-[10px] font-black rounded-md tracking-widest">{{ data.vehicle.targa }}</span>
             </div>
           </div>
 
@@ -117,8 +115,8 @@ const getDateStatus = (dateStr) => {
               ]"
               :key="tab.id"
               @click="activeTab = tab.id"
-              class="w-full flex items-center gap-4 p-4 rounded-xl transition-all font-black uppercase tracking-widest text-[10px]"
-              :class="activeTab === tab.id ? 'bg-primary text-white shadow-lg shadow-primary/20' : 'text-white/40 hover:bg-white/5 hover:text-white'"
+              class="w-full flex items-center gap-4 p-4 rounded-xl font-black uppercase tracking-widest text-[10px] border border-white"
+              :class="activeTab === tab.id ? 'bg-primary text-white' : 'bg-[#050505] text-white'"
             >
               <span class="text-lg">{{ tab.icon }}</span>
               {{ tab.label }}
@@ -132,7 +130,7 @@ const getDateStatus = (dateStr) => {
           <div v-if="activeTab === 'profile'" class="space-y-10">
             <div class="flex justify-between items-center">
               <h2 class="text-3xl font-black uppercase tracking-tighter">Il tuo Veicolo</h2>
-              <span v-if="data.vehicle.avvisi" class="status-badge primary animate-pulse">Avviso Importante</span>
+              <span v-if="data.vehicle.avvisi" class="status-badge primary">Avviso Importante</span>
               <span v-else class="status-badge dim">Dati Sincronizzati</span>
             </div>
             
@@ -141,7 +139,7 @@ const getDateStatus = (dateStr) => {
                 <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Dati Tecnici</h4>
                 <div class="space-y-4">
                   <div v-for="(val, label) in { 'Marca': data.vehicle.marca, 'Modello': data.vehicle.modello, 'Data Acquisto': data.vehicle.dataAcquisto ? formatDate(data.vehicle.dataAcquisto) : 'N.D.', 'Km Iniziali': (data.vehicle.kmIniziali || 0) + ' km' }" :key="label" class="flex justify-between border-b border-white/5 pb-2">
-                    <span class="text-xs text-white/40 font-bold uppercase">{{ label }}</span>
+                    <span class="text-xs text-white font-bold uppercase">{{ label }}</span>
                     <span class="text-xs text-white font-black uppercase">{{ val }}</span>
                   </div>
                 </div>
@@ -151,11 +149,11 @@ const getDateStatus = (dateStr) => {
                 <h4 class="text-[10px] font-black uppercase tracking-[0.2em] text-primary">Stato Attuale</h4>
                 <div class="space-y-4">
                   <div class="flex justify-between border-b border-white/5 pb-2">
-                    <span class="text-xs text-white/40 font-bold uppercase">Km Attuali</span>
+                    <span class="text-xs text-white font-bold uppercase">Km Attuali</span>
                     <span class="text-sm text-primary font-black">{{ data.vehicle.kmAttuali || 0 }} km</span>
                   </div>
                   <div class="flex justify-between border-b border-white/5 pb-2">
-                    <span class="text-xs text-white/40 font-bold uppercase">Prossima Scadenza</span>
+                    <span class="text-xs text-white font-bold uppercase">Prossima Scadenza</span>
                     <span class="text-xs text-white font-black uppercase">{{ data.vehicle.prossimaManutenzione || 'In aggiornamento' }}</span>
                   </div>
                 </div>
@@ -172,24 +170,24 @@ const getDateStatus = (dateStr) => {
                 ]" :key="scad.label" 
                 class="glass-panel p-6 flex flex-col items-center text-center gap-3 border-l-4"
                 :class="[
-                  getDateStatus(scad.date) === 'expired' ? 'border-l-red-500 bg-red-500/5' : 
-                  getDateStatus(scad.date) === 'upcoming' ? 'border-l-primary bg-primary/5' : 'border-l-green-500 bg-green-500/5'
+                  getDateStatus(scad.date) === 'expired' ? 'border-l-red-500 bg-[#050505]' : 
+                  getDateStatus(scad.date) === 'upcoming' ? 'border-l-primary bg-[#050505]' : 'border-l-green-500 bg-[#050505]'
                 ]">
-                  <span class="text-[10px] font-black uppercase tracking-widest text-white/40">{{ scad.label }}</span>
+                  <span class="text-[10px] font-black uppercase tracking-widest text-white">{{ scad.label }}</span>
                   <span class="text-lg font-black">{{ scad.date ? formatDate(scad.date) : 'N.D.' }}</span>
-                  <span class="text-[9px] font-black uppercase tracking-widest" :class="getDateStatus(scad.date) === 'expired' ? 'text-red-500' : 'text-white/20'">
+                  <span class="text-[9px] font-black uppercase tracking-widest" :class="getDateStatus(scad.date) === 'expired' ? 'text-red-500' : 'text-white'">
                     {{ getDateStatus(scad.date) === 'expired' ? 'Scaduto' : (getDateStatus(scad.date) === 'upcoming' ? 'In Scadenza' : 'In Regola') }}
                   </span>
                 </div>
               </div>
             </div>
 
-            <div v-if="data.vehicle.avvisi" class="glass-panel p-8 bg-primary/5 border-primary/20">
+            <div v-if="data.vehicle.avvisi" class="glass-panel p-8 bg-[#050505] border-white">
               <div class="flex items-start gap-4">
                 <span class="text-2xl">⚠️</span>
                 <div>
                   <h4 class="text-sm font-black uppercase tracking-widest text-primary mb-2">Nota del Team Pica</h4>
-                  <p class="text-white/60 text-sm leading-relaxed font-medium">{{ data.vehicle.avvisi }}</p>
+                  <p class="text-white text-sm leading-relaxed font-medium">{{ data.vehicle.avvisi }}</p>
                 </div>
               </div>
             </div>
@@ -199,10 +197,10 @@ const getDateStatus = (dateStr) => {
               <h3 class="text-xl font-black uppercase tracking-tighter text-white">Consigli per il tuo viaggio</h3>
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <NuxtLink v-for="post in data.blogPosts" :key="post._id" :to="`/blog/${post.slug}`" class="admin-card group p-4 flex gap-4 items-center">
-                  <img :src="post.imageCover || '/logo-pica-caravan.jpg'" alt="Blog" class="w-20 h-20 object-cover rounded-lg grayscale group-hover:grayscale-0 transition-all" />
+                  <img :src="post.imageCover || '/logo-pica-caravan.jpg'" alt="Blog" class="w-20 h-20 object-cover rounded-lg" />
                   <div>
-                    <h4 class="text-xs font-black uppercase tracking-tight mb-2 group-hover:text-primary transition-colors">{{ post.title }}</h4>
-                    <span class="text-[9px] font-black uppercase tracking-widest text-white/40">Approfondisci →</span>
+                    <h4 class="text-xs font-black uppercase tracking-tight mb-2 text-white">{{ post.title }}</h4>
+                    <span class="text-[9px] font-black uppercase tracking-widest text-white">Approfondisci →</span>
                   </div>
                 </NuxtLink>
               </div>
@@ -213,21 +211,21 @@ const getDateStatus = (dateStr) => {
           <div v-if="activeTab === 'history'" class="space-y-10">
             <h2 class="text-3xl font-black uppercase tracking-tighter">Cronologia Interventi</h2>
             <div v-if="data.maintenance.length === 0" class="glass-panel p-20 text-center">
-              <p class="text-white/40 font-bold uppercase tracking-widest text-[10px]">Nessun intervento registrato a sistema</p>
+              <p class="text-white font-bold uppercase tracking-widest text-[10px]">Nessun intervento registrato a sistema</p>
             </div>
             <div v-else class="space-y-4">
               <div v-for="item in data.maintenance" :key="item._id" class="admin-card flex flex-col md:flex-row justify-between gap-6">
                 <div class="space-y-2">
                   <div class="flex items-center gap-3">
                     <span class="text-xs font-black text-primary">{{ formatDate(item.data) }}</span>
-                    <span class="w-1 h-1 bg-white/20 rounded-full"></span>
-                    <span class="text-xs font-black text-white/60">{{ item.km }} KM</span>
+                    <span class="w-1 h-1 bg-white rounded-full"></span>
+                    <span class="text-xs font-black text-white">{{ item.km }} KM</span>
                   </div>
                   <h4 class="text-lg font-black uppercase tracking-tight text-white">{{ item.descrizione }}</h4>
-                  <p v-if="item.partiSostituite" class="text-xs text-white/40 font-medium">Parti: {{ item.partiSostituite }}</p>
+                  <p v-if="item.partiSostituite" class="text-xs text-white font-medium">Parti: {{ item.partiSostituite }}</p>
                 </div>
                 <div class="flex items-center">
-                  <span class="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-sm font-black">€ {{ item.costo }}</span>
+                  <span class="px-4 py-2 bg-[#050505] border border-white rounded-xl text-sm font-black">€ {{ item.costo }}</span>
                 </div>
               </div>
             </div>
@@ -263,16 +261,6 @@ const getDateStatus = (dateStr) => {
   min-height: 100vh;
   background: #050505;
   color: #fff;
-}
-
-.dashboard-header {
-  height: 80px;
-  background: rgba(15, 15, 15, 0.8);
-  backdrop-filter: blur(10px);
-  border-bottom: 1px solid var(--line);
-  position: sticky;
-  top: 0;
-  z-index: 100;
 }
 
 .header-shell {
@@ -390,7 +378,6 @@ const getDateStatus = (dateStr) => {
   font-size: 0.95rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.3s ease;
   display: flex;
   align-items: center;
   gap: 12px;
@@ -398,11 +385,6 @@ const getDateStatus = (dateStr) => {
 
 .nav-links button .icon {
   font-size: 1.2rem;
-}
-
-.nav-links button:hover {
-  background: rgba(255,255,255,0.03);
-  color: #fff;
 }
 
 .nav-links button.active {
@@ -631,12 +613,6 @@ const getDateStatus = (dateStr) => {
   border: 1px solid var(--line);
   border-radius: 16px;
   overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-.portal-blog-card:hover {
-  background: rgba(255,255,255,0.05);
-  border-color: var(--primary-2);
 }
 
 .portal-blog-card img {
@@ -670,19 +646,6 @@ const getDateStatus = (dateStr) => {
   padding: 100px 0;
 }
 
-.spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid rgba(215, 24, 42, 0.2);
-  border-top-color: var(--primary-2);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-  margin: 0 auto 20px;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
 .deadlines-section {
   margin-top: 40px;
   padding: 30px;

@@ -22,7 +22,6 @@ const openConsentManager = () => {
         <h1 class="legal-title">Privacy Policy</h1>
         <p class="legal-subtitle">Informativa sul trattamento dei dati personali ai sensi del GDPR.</p>
       </div>
-      <div class="hero-glow"></div>
     </div>
 
     <div class="container legal-container">
@@ -156,21 +155,10 @@ const openConsentManager = () => {
 /* Hero Section */
 .legal-hero {
   padding: 160px 0 80px;
-  background: linear-gradient(to bottom, #0a0a0a, #030303);
+  background: #0a0a0a;
   position: relative;
   overflow: hidden;
   text-align: center;
-}
-
-.hero-glow {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.15) 0%, transparent 70%);
-  pointer-events: none;
 }
 
 .legal-badge {
@@ -192,14 +180,12 @@ const openConsentManager = () => {
   font-weight: 950;
   margin-bottom: 16px;
   letter-spacing: -0.02em;
-  background: linear-gradient(to bottom, #fff, #888);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #fff;
 }
 
 .legal-subtitle {
   font-size: 1.25rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: #fff;
   max-width: 600px;
   margin: 0 auto;
 }
@@ -226,10 +212,9 @@ const openConsentManager = () => {
 
 /* Sidebar */
 .index-card {
-  position: sticky;
-  top: 120px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: static;
+  background: #0a0a0a;
+  border: 1px solid var(--line);
   border-radius: 24px;
   padding: 32px;
 }
@@ -251,22 +236,16 @@ const openConsentManager = () => {
 }
 
 .index-card a {
-  color: rgba(255, 255, 255, 0.5);
+  color: #fff;
   text-decoration: none;
   font-size: 0.95rem;
-  transition: all 0.3s ease;
-}
-
-.index-card a:hover {
-  color: #fff;
-  padding-left: 5px;
 }
 
 /* Content Sections */
 .update-info {
   margin-bottom: 60px;
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.3);
+  color: #fff;
   font-weight: 600;
 }
 
@@ -278,7 +257,7 @@ const openConsentManager = () => {
 .section-number {
   font-size: 4rem;
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.03);
+  color: #111;
   position: absolute;
   top: -20px;
   left: -20px;
@@ -294,7 +273,7 @@ const openConsentManager = () => {
 }
 
 .section-body {
-  color: rgba(255, 255, 255, 0.6);
+  color: #fff;
   line-height: 1.8;
   font-size: 1.1rem;
 }
@@ -312,16 +291,10 @@ const openConsentManager = () => {
 }
 
 .data-item {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: #0a0a0a;
+  border: 1px solid var(--line);
   padding: 24px;
   border-radius: 20px;
-  transition: transform 0.3s ease;
-}
-
-.data-item:hover {
-  transform: translateY(-5px);
-  border-color: rgba(225, 29, 72, 0.2);
 }
 
 .data-item strong {
@@ -399,12 +372,6 @@ const openConsentManager = () => {
   border-radius: 100px;
   font-weight: 800;
   cursor: pointer;
-  transition: all 0.3s ease;
-}
-
-.btn-consent:hover {
-  transform: scale(1.05);
-  box-shadow: 0 10px 20px rgba(225, 29, 72, 0.2);
 }
 
 .btn-email {
@@ -414,10 +381,5 @@ const openConsentManager = () => {
   font-weight: 800;
   color: var(--primary-2);
   text-decoration: none;
-  transition: opacity 0.3s ease;
-}
-
-.btn-email:hover {
-  opacity: 0.8;
 }
 </style>

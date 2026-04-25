@@ -115,51 +115,43 @@ function destr(value, options = {}) {
   }
 }
 
-const HASH_RE = /#/g;
-const AMPERSAND_RE = /&/g;
-const SLASH_RE = /\//g;
-const EQUAL_RE = /=/g;
-const IM_RE = /\?/g;
-const PLUS_RE = /\+/g;
-const ENC_CARET_RE = /%5e/gi;
-const ENC_BACKTICK_RE = /%60/gi;
-const ENC_PIPE_RE = /%7c/gi;
-const ENC_SPACE_RE = /%20/gi;
-const ENC_SLASH_RE = /%2f/gi;
-const ENC_ENC_SLASH_RE = /%252f/gi;
-function encode(text) {
-  return encodeURI("" + text).replace(ENC_PIPE_RE, "|");
+const HASH_RE$1 = /#/g;
+const AMPERSAND_RE$1 = /&/g;
+const SLASH_RE$1 = /\//g;
+const EQUAL_RE$1 = /=/g;
+const PLUS_RE$1 = /\+/g;
+const ENC_CARET_RE$1 = /%5e/gi;
+const ENC_BACKTICK_RE$1 = /%60/gi;
+const ENC_PIPE_RE$1 = /%7c/gi;
+const ENC_SPACE_RE$1 = /%20/gi;
+const ENC_SLASH_RE$1 = /%2f/gi;
+function encode$1(text) {
+  return encodeURI("" + text).replace(ENC_PIPE_RE$1, "|");
 }
-function encodeQueryValue(input) {
-  return encode(typeof input === "string" ? input : JSON.stringify(input)).replace(PLUS_RE, "%2B").replace(ENC_SPACE_RE, "+").replace(HASH_RE, "%23").replace(AMPERSAND_RE, "%26").replace(ENC_BACKTICK_RE, "`").replace(ENC_CARET_RE, "^").replace(SLASH_RE, "%2F");
+function encodeQueryValue$1(input) {
+  return encode$1(typeof input === "string" ? input : JSON.stringify(input)).replace(PLUS_RE$1, "%2B").replace(ENC_SPACE_RE$1, "+").replace(HASH_RE$1, "%23").replace(AMPERSAND_RE$1, "%26").replace(ENC_BACKTICK_RE$1, "`").replace(ENC_CARET_RE$1, "^").replace(SLASH_RE$1, "%2F");
 }
-function encodeQueryKey(text) {
-  return encodeQueryValue(text).replace(EQUAL_RE, "%3D");
+function encodeQueryKey$1(text) {
+  return encodeQueryValue$1(text).replace(EQUAL_RE$1, "%3D");
 }
-function encodePath(text) {
-  return encode(text).replace(HASH_RE, "%23").replace(IM_RE, "%3F").replace(ENC_ENC_SLASH_RE, "%2F").replace(AMPERSAND_RE, "%26").replace(PLUS_RE, "%2B");
-}
-function encodeParam(text) {
-  return encodePath(text).replace(SLASH_RE, "%2F");
-}
-function decode(text = "") {
+function decode$1(text = "") {
   try {
     return decodeURIComponent("" + text);
   } catch {
     return "" + text;
   }
 }
-function decodePath(text) {
-  return decode(text.replace(ENC_SLASH_RE, "%252F"));
+function decodePath$1(text) {
+  return decode$1(text.replace(ENC_SLASH_RE$1, "%252F"));
 }
-function decodeQueryKey(text) {
-  return decode(text.replace(PLUS_RE, " "));
+function decodeQueryKey$1(text) {
+  return decode$1(text.replace(PLUS_RE$1, " "));
 }
-function decodeQueryValue(text) {
-  return decode(text.replace(PLUS_RE, " "));
+function decodeQueryValue$1(text) {
+  return decode$1(text.replace(PLUS_RE$1, " "));
 }
 
-function parseQuery(parametersString = "") {
+function parseQuery$1(parametersString = "") {
   const object = /* @__PURE__ */ Object.create(null);
   if (parametersString[0] === "?") {
     parametersString = parametersString.slice(1);
@@ -169,11 +161,11 @@ function parseQuery(parametersString = "") {
     if (s.length < 2) {
       continue;
     }
-    const key = decodeQueryKey(s[1]);
+    const key = decodeQueryKey$1(s[1]);
     if (key === "__proto__" || key === "constructor") {
       continue;
     }
-    const value = decodeQueryValue(s[2] || "");
+    const value = decodeQueryValue$1(s[2] || "");
     if (object[key] === void 0) {
       object[key] = value;
     } else if (Array.isArray(object[key])) {
@@ -184,110 +176,76 @@ function parseQuery(parametersString = "") {
   }
   return object;
 }
-function encodeQueryItem(key, value) {
+function encodeQueryItem$1(key, value) {
   if (typeof value === "number" || typeof value === "boolean") {
     value = String(value);
   }
   if (!value) {
-    return encodeQueryKey(key);
+    return encodeQueryKey$1(key);
   }
   if (Array.isArray(value)) {
     return value.map(
-      (_value) => `${encodeQueryKey(key)}=${encodeQueryValue(_value)}`
+      (_value) => `${encodeQueryKey$1(key)}=${encodeQueryValue$1(_value)}`
     ).join("&");
   }
-  return `${encodeQueryKey(key)}=${encodeQueryValue(value)}`;
+  return `${encodeQueryKey$1(key)}=${encodeQueryValue$1(value)}`;
 }
-function stringifyQuery(query) {
-  return Object.keys(query).filter((k) => query[k] !== void 0).map((k) => encodeQueryItem(k, query[k])).filter(Boolean).join("&");
+function stringifyQuery$1(query) {
+  return Object.keys(query).filter((k) => query[k] !== void 0).map((k) => encodeQueryItem$1(k, query[k])).filter(Boolean).join("&");
 }
 
-const PROTOCOL_STRICT_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{1,2})/;
-const PROTOCOL_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{2})?/;
-const PROTOCOL_RELATIVE_REGEX = /^([/\\]\s*){2,}[^/\\]/;
-const PROTOCOL_SCRIPT_RE = /^[\s\0]*(blob|data|javascript|vbscript):$/i;
-const TRAILING_SLASH_RE = /\/$|\/\?|\/#/;
-const JOIN_LEADING_SLASH_RE = /^\.?\//;
-function hasProtocol(inputString, opts = {}) {
+const PROTOCOL_STRICT_REGEX$1 = /^[\s\w\0+.-]{2,}:([/\\]{1,2})/;
+const PROTOCOL_REGEX$1 = /^[\s\w\0+.-]{2,}:([/\\]{2})?/;
+const PROTOCOL_RELATIVE_REGEX$1 = /^([/\\]\s*){2,}[^/\\]/;
+const JOIN_LEADING_SLASH_RE$1 = /^\.?\//;
+function hasProtocol$1(inputString, opts = {}) {
   if (typeof opts === "boolean") {
     opts = { acceptRelative: opts };
   }
   if (opts.strict) {
-    return PROTOCOL_STRICT_REGEX.test(inputString);
+    return PROTOCOL_STRICT_REGEX$1.test(inputString);
   }
-  return PROTOCOL_REGEX.test(inputString) || (opts.acceptRelative ? PROTOCOL_RELATIVE_REGEX.test(inputString) : false);
+  return PROTOCOL_REGEX$1.test(inputString) || (opts.acceptRelative ? PROTOCOL_RELATIVE_REGEX$1.test(inputString) : false);
 }
-function isScriptProtocol(protocol) {
-  return !!protocol && PROTOCOL_SCRIPT_RE.test(protocol);
-}
-function hasTrailingSlash(input = "", respectQueryAndFragment) {
-  if (!respectQueryAndFragment) {
+function hasTrailingSlash$1(input = "", respectQueryAndFragment) {
+  {
     return input.endsWith("/");
   }
-  return TRAILING_SLASH_RE.test(input);
 }
-function withoutTrailingSlash(input = "", respectQueryAndFragment) {
-  if (!respectQueryAndFragment) {
-    return (hasTrailingSlash(input) ? input.slice(0, -1) : input) || "/";
+function withoutTrailingSlash$1(input = "", respectQueryAndFragment) {
+  {
+    return (hasTrailingSlash$1(input) ? input.slice(0, -1) : input) || "/";
   }
-  if (!hasTrailingSlash(input, true)) {
-    return input || "/";
-  }
-  let path = input;
-  let fragment = "";
-  const fragmentIndex = input.indexOf("#");
-  if (fragmentIndex !== -1) {
-    path = input.slice(0, fragmentIndex);
-    fragment = input.slice(fragmentIndex);
-  }
-  const [s0, ...s] = path.split("?");
-  const cleanPath = s0.endsWith("/") ? s0.slice(0, -1) : s0;
-  return (cleanPath || "/") + (s.length > 0 ? `?${s.join("?")}` : "") + fragment;
 }
-function withTrailingSlash(input = "", respectQueryAndFragment) {
-  if (!respectQueryAndFragment) {
+function withTrailingSlash$1(input = "", respectQueryAndFragment) {
+  {
     return input.endsWith("/") ? input : input + "/";
   }
-  if (hasTrailingSlash(input, true)) {
-    return input || "/";
-  }
-  let path = input;
-  let fragment = "";
-  const fragmentIndex = input.indexOf("#");
-  if (fragmentIndex !== -1) {
-    path = input.slice(0, fragmentIndex);
-    fragment = input.slice(fragmentIndex);
-    if (!path) {
-      return fragment;
-    }
-  }
-  const [s0, ...s] = path.split("?");
-  return s0 + "/" + (s.length > 0 ? `?${s.join("?")}` : "") + fragment;
 }
-function hasLeadingSlash(input = "") {
+function hasLeadingSlash$1(input = "") {
   return input.startsWith("/");
 }
-function withLeadingSlash(input = "") {
-  return hasLeadingSlash(input) ? input : "/" + input;
+function withLeadingSlash$1(input = "") {
+  return hasLeadingSlash$1(input) ? input : "/" + input;
 }
-function withBase(input, base) {
-  if (isEmptyURL(base) || hasProtocol(input)) {
+function withBase$1(input, base) {
+  if (isEmptyURL$1(base) || hasProtocol$1(input)) {
     return input;
   }
-  const _base = withoutTrailingSlash(base);
+  const _base = withoutTrailingSlash$1(base);
   if (input.startsWith(_base)) {
     const nextChar = input[_base.length];
     if (!nextChar || nextChar === "/" || nextChar === "?") {
       return input;
     }
   }
-  return joinURL(_base, input);
+  return joinURL$1(_base, input);
 }
-function withoutBase(input, base) {
-  if (isEmptyURL(base)) {
+function withoutBase$1(input, base) {
+  if (isEmptyURL$1(base)) {
     return input;
   }
-  const _base = withoutTrailingSlash(base);
+  const _base = withoutTrailingSlash$1(base);
   if (!input.startsWith(_base)) {
     return input;
   }
@@ -298,27 +256,27 @@ function withoutBase(input, base) {
   const trimmed = input.slice(_base.length);
   return trimmed[0] === "/" ? trimmed : "/" + trimmed;
 }
-function withQuery(input, query) {
-  const parsed = parseURL(input);
-  const mergedQuery = { ...parseQuery(parsed.search), ...query };
-  parsed.search = stringifyQuery(mergedQuery);
-  return stringifyParsedURL(parsed);
+function withQuery$1(input, query) {
+  const parsed = parseURL$1(input);
+  const mergedQuery = { ...parseQuery$1(parsed.search), ...query };
+  parsed.search = stringifyQuery$1(mergedQuery);
+  return stringifyParsedURL$1(parsed);
 }
-function getQuery$1(input) {
-  return parseQuery(parseURL(input).search);
+function getQuery$3(input) {
+  return parseQuery$1(parseURL$1(input).search);
 }
-function isEmptyURL(url) {
+function isEmptyURL$1(url) {
   return !url || url === "/";
 }
-function isNonEmptyURL(url) {
+function isNonEmptyURL$1(url) {
   return url && url !== "/";
 }
-function joinURL(base, ...input) {
+function joinURL$1(base, ...input) {
   let url = base || "";
-  for (const segment of input.filter((url2) => isNonEmptyURL(url2))) {
+  for (const segment of input.filter((url2) => isNonEmptyURL$1(url2))) {
     if (url) {
-      const _segment = segment.replace(JOIN_LEADING_SLASH_RE, "");
-      url = withTrailingSlash(url) + _segment;
+      const _segment = segment.replace(JOIN_LEADING_SLASH_RE$1, "");
+      url = withTrailingSlash$1(url) + _segment;
     } else {
       url = segment;
     }
@@ -339,7 +297,7 @@ function joinRelativeURL(..._input) {
         continue;
       }
       if (s === "..") {
-        if (segments.length === 1 && hasProtocol(segments[0])) {
+        if (segments.length === 1 && hasProtocol$1(segments[0])) {
           continue;
         }
         segments.pop();
@@ -369,11 +327,11 @@ function joinRelativeURL(..._input) {
   }
   return url;
 }
-function withHttps(input) {
-  return withProtocol(input, "https://");
+function withHttps$1(input) {
+  return withProtocol$1(input, "https://");
 }
-function withProtocol(input, protocol) {
-  let match = input.match(PROTOCOL_REGEX);
+function withProtocol$1(input, protocol) {
+  let match = input.match(PROTOCOL_REGEX$1);
   if (!match) {
     match = input.match(/^\/{2,}/);
   }
@@ -383,8 +341,8 @@ function withProtocol(input, protocol) {
   return protocol + input.slice(match[0].length);
 }
 
-const protocolRelative = Symbol.for("ufo:protocolRelative");
-function parseURL(input = "", defaultProto) {
+const protocolRelative$1 = Symbol.for("ufo:protocolRelative");
+function parseURL$1(input = "", defaultProto) {
   const _specialProtoMatch = input.match(
     /^[\s\0]*(blob:|data:|javascript:|vbscript:)(.*)/i
   );
@@ -400,15 +358,15 @@ function parseURL(input = "", defaultProto) {
       hash: ""
     };
   }
-  if (!hasProtocol(input, { acceptRelative: true })) {
-    return defaultProto ? parseURL(defaultProto + input) : parsePath(input);
+  if (!hasProtocol$1(input, { acceptRelative: true })) {
+    return parsePath$1(input);
   }
   const [, protocol = "", auth, hostAndPath = ""] = input.replace(/\\/g, "/").match(/^[\s\0]*([\w+.-]{2,}:)?\/\/([^/@]+@)?(.*)/) || [];
   let [, host = "", path = ""] = hostAndPath.match(/([^#/?]*)(.*)?/) || [];
   if (protocol === "file:") {
     path = path.replace(/\/(?=[A-Za-z]:)/, "");
   }
-  const { pathname, search, hash } = parsePath(path);
+  const { pathname, search, hash } = parsePath$1(path);
   return {
     protocol: protocol.toLowerCase(),
     auth: auth ? auth.slice(0, Math.max(0, auth.length - 1)) : "",
@@ -416,10 +374,10 @@ function parseURL(input = "", defaultProto) {
     pathname,
     search,
     hash,
-    [protocolRelative]: !protocol
+    [protocolRelative$1]: !protocol
   };
 }
-function parsePath(input = "") {
+function parsePath$1(input = "") {
   const [pathname = "", search = "", hash = ""] = (input.match(/([^#?]*)(\?[^#]*)?(#.*)?/) || []).splice(1);
   return {
     pathname,
@@ -427,42 +385,42 @@ function parsePath(input = "") {
     hash
   };
 }
-function stringifyParsedURL(parsed) {
+function stringifyParsedURL$1(parsed) {
   const pathname = parsed.pathname || "";
   const search = parsed.search ? (parsed.search.startsWith("?") ? "" : "?") + parsed.search : "";
   const hash = parsed.hash || "";
   const auth = parsed.auth ? parsed.auth + "@" : "";
   const host = parsed.host || "";
-  const proto = parsed.protocol || parsed[protocolRelative] ? (parsed.protocol || "") + "//" : "";
+  const proto = parsed.protocol || parsed[protocolRelative$1] ? (parsed.protocol || "") + "//" : "";
   return proto + auth + host + pathname + search + hash;
 }
 
-const NODE_TYPES = {
+const NODE_TYPES$1 = {
   NORMAL: 0,
   WILDCARD: 1,
   PLACEHOLDER: 2
 };
 
-function createRouter$1(options = {}) {
+function createRouter$2(options = {}) {
   const ctx = {
     options,
-    rootNode: createRadixNode(),
+    rootNode: createRadixNode$1(),
     staticRoutesMap: {}
   };
   const normalizeTrailingSlash = (p) => options.strictTrailingSlash ? p : p.replace(/\/$/, "") || "/";
   if (options.routes) {
     for (const path in options.routes) {
-      insert$1(ctx, normalizeTrailingSlash(path), options.routes[path]);
+      insert$2(ctx, normalizeTrailingSlash(path), options.routes[path]);
     }
   }
   return {
     ctx,
-    lookup: (path) => lookup(ctx, normalizeTrailingSlash(path)),
-    insert: (path, data) => insert$1(ctx, normalizeTrailingSlash(path), data),
-    remove: (path) => remove(ctx, normalizeTrailingSlash(path))
+    lookup: (path) => lookup$1(ctx, normalizeTrailingSlash(path)),
+    insert: (path, data) => insert$2(ctx, normalizeTrailingSlash(path), data),
+    remove: (path) => remove$1(ctx, normalizeTrailingSlash(path))
   };
 }
-function lookup(ctx, path) {
+function lookup$1(ctx, path) {
   const staticPathNode = ctx.staticRoutesMap[path];
   if (staticPathNode) {
     return staticPathNode.data;
@@ -514,7 +472,7 @@ function lookup(ctx, path) {
   }
   return node.data;
 }
-function insert$1(ctx, path, data) {
+function insert$2(ctx, path, data) {
   let isStaticRoute = true;
   const sections = path.split("/");
   let node = ctx.rootNode;
@@ -525,14 +483,14 @@ function insert$1(ctx, path, data) {
     if (childNode = node.children.get(section)) {
       node = childNode;
     } else {
-      const type = getNodeType(section);
-      childNode = createRadixNode({ type, parent: node });
+      const type = getNodeType$1(section);
+      childNode = createRadixNode$1({ type, parent: node });
       node.children.set(section, childNode);
-      if (type === NODE_TYPES.PLACEHOLDER) {
+      if (type === NODE_TYPES$1.PLACEHOLDER) {
         childNode.paramName = section === "*" ? `_${_unnamedPlaceholderCtr++}` : section.slice(1);
         node.placeholderChildren.push(childNode);
         isStaticRoute = false;
-      } else if (type === NODE_TYPES.WILDCARD) {
+      } else if (type === NODE_TYPES$1.WILDCARD) {
         node.wildcardChildNode = childNode;
         childNode.paramName = section.slice(
           3
@@ -553,7 +511,7 @@ function insert$1(ctx, path, data) {
   }
   return node;
 }
-function remove(ctx, path) {
+function remove$1(ctx, path) {
   let success = false;
   const sections = path.split("/");
   let node = ctx.rootNode;
@@ -575,9 +533,9 @@ function remove(ctx, path) {
   }
   return success;
 }
-function createRadixNode(options = {}) {
+function createRadixNode$1(options = {}) {
   return {
-    type: options.type || NODE_TYPES.NORMAL,
+    type: options.type || NODE_TYPES$1.NORMAL,
     maxDepth: 0,
     parent: options.parent || null,
     children: /* @__PURE__ */ new Map(),
@@ -587,47 +545,47 @@ function createRadixNode(options = {}) {
     placeholderChildren: []
   };
 }
-function getNodeType(str) {
+function getNodeType$1(str) {
   if (str.startsWith("**")) {
-    return NODE_TYPES.WILDCARD;
+    return NODE_TYPES$1.WILDCARD;
   }
   if (str[0] === ":" || str === "*") {
-    return NODE_TYPES.PLACEHOLDER;
+    return NODE_TYPES$1.PLACEHOLDER;
   }
-  return NODE_TYPES.NORMAL;
+  return NODE_TYPES$1.NORMAL;
 }
 
-function toRouteMatcher(router) {
-  const table = _routerNodeToTable("", router.ctx.rootNode);
-  return _createMatcher(table, router.ctx.options.strictTrailingSlash);
+function toRouteMatcher$1(router) {
+  const table = _routerNodeToTable$1("", router.ctx.rootNode);
+  return _createMatcher$1(table, router.ctx.options.strictTrailingSlash);
 }
-function _createMatcher(table, strictTrailingSlash) {
+function _createMatcher$1(table, strictTrailingSlash) {
   return {
     ctx: { table },
-    matchAll: (path) => _matchRoutes(path, table, strictTrailingSlash)
+    matchAll: (path) => _matchRoutes$1(path, table, strictTrailingSlash)
   };
 }
-function _createRouteTable() {
+function _createRouteTable$1() {
   return {
     static: /* @__PURE__ */ new Map(),
     wildcard: /* @__PURE__ */ new Map(),
     dynamic: /* @__PURE__ */ new Map()
   };
 }
-function _matchRoutes(path, table, strictTrailingSlash) {
+function _matchRoutes$1(path, table, strictTrailingSlash) {
   if (strictTrailingSlash !== true && path.endsWith("/")) {
     path = path.slice(0, -1) || "/";
   }
   const matches = [];
-  for (const [key, value] of _sortRoutesMap(table.wildcard)) {
+  for (const [key, value] of _sortRoutesMap$1(table.wildcard)) {
     if (path === key || path.startsWith(key + "/")) {
       matches.push(value);
     }
   }
-  for (const [key, value] of _sortRoutesMap(table.dynamic)) {
+  for (const [key, value] of _sortRoutesMap$1(table.dynamic)) {
     if (path.startsWith(key + "/")) {
       const subPath = "/" + path.slice(key.length).split("/").splice(2).join("/");
-      matches.push(..._matchRoutes(subPath, value));
+      matches.push(..._matchRoutes$1(subPath, value));
     }
   }
   const staticMatch = table.static.get(path);
@@ -636,21 +594,21 @@ function _matchRoutes(path, table, strictTrailingSlash) {
   }
   return matches.filter(Boolean);
 }
-function _sortRoutesMap(m) {
+function _sortRoutesMap$1(m) {
   return [...m.entries()].sort((a, b) => a[0].length - b[0].length);
 }
-function _routerNodeToTable(initialPath, initialNode) {
-  const table = _createRouteTable();
+function _routerNodeToTable$1(initialPath, initialNode) {
+  const table = _createRouteTable$1();
   function _addNode(path, node) {
     if (path) {
-      if (node.type === NODE_TYPES.NORMAL && !(path.includes("*") || path.includes(":"))) {
+      if (node.type === NODE_TYPES$1.NORMAL && !(path.includes("*") || path.includes(":"))) {
         if (node.data) {
           table.static.set(path, node.data);
         }
-      } else if (node.type === NODE_TYPES.WILDCARD) {
+      } else if (node.type === NODE_TYPES$1.WILDCARD) {
         table.wildcard.set(path.replace("/**", ""), node.data);
-      } else if (node.type === NODE_TYPES.PLACEHOLDER) {
-        const subTable = _routerNodeToTable("", node);
+      } else if (node.type === NODE_TYPES$1.PLACEHOLDER) {
+        const subTable = _routerNodeToTable$1("", node);
         if (node.data) {
           subTable.static.set("/", node.data);
         }
@@ -666,7 +624,7 @@ function _routerNodeToTable(initialPath, initialNode) {
   return table;
 }
 
-function isPlainObject(value) {
+function isPlainObject$1(value) {
   if (value === null || typeof value !== "object") {
     return false;
   }
@@ -683,9 +641,9 @@ function isPlainObject(value) {
   return true;
 }
 
-function _defu(baseObject, defaults, namespace = ".", merger) {
-  if (!isPlainObject(defaults)) {
-    return _defu(baseObject, {}, namespace, merger);
+function _defu$1(baseObject, defaults, namespace = ".", merger) {
+  if (!isPlainObject$1(defaults)) {
+    return _defu$1(baseObject, {}, namespace, merger);
   }
   const object = { ...defaults };
   for (const key of Object.keys(baseObject)) {
@@ -701,8 +659,8 @@ function _defu(baseObject, defaults, namespace = ".", merger) {
     }
     if (Array.isArray(value) && Array.isArray(object[key])) {
       object[key] = [...value, ...object[key]];
-    } else if (isPlainObject(value) && isPlainObject(object[key])) {
-      object[key] = _defu(
+    } else if (isPlainObject$1(value) && isPlainObject$1(object[key])) {
+      object[key] = _defu$1(
         value,
         object[key],
         (namespace ? `${namespace}.` : "") + key.toString(),
@@ -714,41 +672,23 @@ function _defu(baseObject, defaults, namespace = ".", merger) {
   }
   return object;
 }
-function createDefu(merger) {
+function createDefu$1(merger) {
   return (...arguments_) => (
     // eslint-disable-next-line unicorn/no-array-reduce
-    arguments_.reduce((p, c) => _defu(p, c, "", merger), {})
+    arguments_.reduce((p, c) => _defu$1(p, c, "", merger), {})
   );
 }
-const defu = createDefu();
-const defuFn = createDefu((object, key, currentValue) => {
+const defu$1 = createDefu$1();
+const defuFn = createDefu$1((object, key, currentValue) => {
   if (object[key] !== void 0 && typeof currentValue === "function") {
     object[key] = currentValue(object[key]);
     return true;
   }
 });
 
-function o$1(n){throw new Error(`${n} is not implemented yet!`)}let i$2 = class i extends EventEmitter{__unenv__={};readableEncoding=null;readableEnded=true;readableFlowing=false;readableHighWaterMark=0;readableLength=0;readableObjectMode=false;readableAborted=false;readableDidRead=false;closed=false;errored=null;readable=false;destroyed=false;static from(e,t){return new i(t)}constructor(e){super();}_read(e){}read(e){}setEncoding(e){return this}pause(){return this}resume(){return this}isPaused(){return  true}unpipe(e){return this}unshift(e,t){}wrap(e){return this}push(e,t){return  false}_destroy(e,t){this.removeAllListeners();}destroy(e){return this.destroyed=true,this._destroy(e),this}pipe(e,t){return {}}compose(e,t){throw new Error("Method not implemented.")}[Symbol.asyncDispose](){return this.destroy(),Promise.resolve()}async*[Symbol.asyncIterator](){throw o$1("Readable.asyncIterator")}iterator(e){throw o$1("Readable.iterator")}map(e,t){throw o$1("Readable.map")}filter(e,t){throw o$1("Readable.filter")}forEach(e,t){throw o$1("Readable.forEach")}reduce(e,t,r){throw o$1("Readable.reduce")}find(e,t){throw o$1("Readable.find")}findIndex(e,t){throw o$1("Readable.findIndex")}some(e,t){throw o$1("Readable.some")}toArray(e){throw o$1("Readable.toArray")}every(e,t){throw o$1("Readable.every")}flatMap(e,t){throw o$1("Readable.flatMap")}drop(e,t){throw o$1("Readable.drop")}take(e,t){throw o$1("Readable.take")}asIndexedPairs(e){throw o$1("Readable.asIndexedPairs")}};let l$2 = class l extends EventEmitter{__unenv__={};writable=true;writableEnded=false;writableFinished=false;writableHighWaterMark=0;writableLength=0;writableObjectMode=false;writableCorked=0;closed=false;errored=null;writableNeedDrain=false;writableAborted=false;destroyed=false;_data;_encoding="utf8";constructor(e){super();}pipe(e,t){return {}}_write(e,t,r){if(this.writableEnded){r&&r();return}if(this._data===void 0)this._data=e;else {const s=typeof this._data=="string"?Buffer$1.from(this._data,this._encoding||t||"utf8"):this._data,a=typeof e=="string"?Buffer$1.from(e,t||this._encoding||"utf8"):e;this._data=Buffer$1.concat([s,a]);}this._encoding=t,r&&r();}_writev(e,t){}_destroy(e,t){}_final(e){}write(e,t,r){const s=typeof t=="string"?this._encoding:"utf8",a=typeof t=="function"?t:typeof r=="function"?r:void 0;return this._write(e,s,a),true}setDefaultEncoding(e){return this}end(e,t,r){const s=typeof e=="function"?e:typeof t=="function"?t:typeof r=="function"?r:void 0;if(this.writableEnded)return s&&s(),this;const a=e===s?void 0:e;if(a){const u=t===s?void 0:t;this.write(a,u,s);}return this.writableEnded=true,this.writableFinished=true,this.emit("close"),this.emit("finish"),this}cork(){}uncork(){}destroy(e){return this.destroyed=true,delete this._data,this.removeAllListeners(),this}compose(e,t){throw new Error("Method not implemented.")}[Symbol.asyncDispose](){return Promise.resolve()}};const c$2=class c{allowHalfOpen=true;_destroy;constructor(e=new i$2,t=new l$2){Object.assign(this,e),Object.assign(this,t),this._destroy=m(e._destroy,t._destroy);}};function _$1(){return Object.assign(c$2.prototype,i$2.prototype),Object.assign(c$2.prototype,l$2.prototype),c$2}function m(...n){return function(...e){for(const t of n)t(...e);}}const g=_$1();let A$1 = class A extends g{__unenv__={};bufferSize=0;bytesRead=0;bytesWritten=0;connecting=false;destroyed=false;pending=false;localAddress="";localPort=0;remoteAddress="";remoteFamily="";remotePort=0;autoSelectFamilyAttemptedAddresses=[];readyState="readOnly";constructor(e){super();}write(e,t,r){return  false}connect(e,t,r){return this}end(e,t,r){return this}setEncoding(e){return this}pause(){return this}resume(){return this}setTimeout(e,t){return this}setNoDelay(e){return this}setKeepAlive(e,t){return this}address(){return {}}unref(){return this}ref(){return this}destroySoon(){this.destroy();}resetAndDestroy(){const e=new Error("ERR_SOCKET_CLOSED");return e.code="ERR_SOCKET_CLOSED",this.destroy(e),this}};class y extends i$2{aborted=false;httpVersion="1.1";httpVersionMajor=1;httpVersionMinor=1;complete=true;connection;socket;headers={};trailers={};method="GET";url="/";statusCode=200;statusMessage="";closed=false;errored=null;readable=false;constructor(e){super(),this.socket=this.connection=e||new A$1;}get rawHeaders(){const e=this.headers,t=[];for(const r in e)if(Array.isArray(e[r]))for(const s of e[r])t.push(r,s);else t.push(r,e[r]);return t}get rawTrailers(){return []}setTimeout(e,t){return this}get headersDistinct(){return p(this.headers)}get trailersDistinct(){return p(this.trailers)}}function p(n){const e={};for(const[t,r]of Object.entries(n))t&&(e[t]=(Array.isArray(r)?r:[r]).filter(Boolean));return e}class w extends l$2{statusCode=200;statusMessage="";upgrading=false;chunkedEncoding=false;shouldKeepAlive=false;useChunkedEncodingByDefault=false;sendDate=false;finished=false;headersSent=false;strictContentLength=false;connection=null;socket=null;req;_headers={};constructor(e){super(),this.req=e;}assignSocket(e){e._httpMessage=this,this.socket=e,this.connection=e,this.emit("socket",e),this._flush();}_flush(){this.flushHeaders();}detachSocket(e){}writeContinue(e){}writeHead(e,t,r){e&&(this.statusCode=e),typeof t=="string"&&(this.statusMessage=t,t=void 0);const s=r||t;if(s&&!Array.isArray(s))for(const a in s)this.setHeader(a,s[a]);return this.headersSent=true,this}writeProcessing(){}setTimeout(e,t){return this}appendHeader(e,t){e=e.toLowerCase();const r=this._headers[e],s=[...Array.isArray(r)?r:[r],...Array.isArray(t)?t:[t]].filter(Boolean);return this._headers[e]=s.length>1?s:s[0],this}setHeader(e,t){return this._headers[e.toLowerCase()]=t,this}setHeaders(e){for(const[t,r]of Object.entries(e))this.setHeader(t,r);return this}getHeader(e){return this._headers[e.toLowerCase()]}getHeaders(){return this._headers}getHeaderNames(){return Object.keys(this._headers)}hasHeader(e){return e.toLowerCase()in this._headers}removeHeader(e){delete this._headers[e.toLowerCase()];}addTrailers(e){}flushHeaders(){}writeEarlyHints(e,t){typeof t=="function"&&t();}}const E=(()=>{const n=function(){};return n.prototype=Object.create(null),n})();function R$1(n={}){const e=new E,t=Array.isArray(n)||H$1(n)?n:Object.entries(n);for(const[r,s]of t)if(s){if(e[r]===void 0){e[r]=s;continue}e[r]=[...Array.isArray(e[r])?e[r]:[e[r]],...Array.isArray(s)?s:[s]];}return e}function H$1(n){return typeof n?.entries=="function"}function v(n={}){if(n instanceof Headers)return n;const e=new Headers;for(const[t,r]of Object.entries(n))if(r!==void 0){if(Array.isArray(r)){for(const s of r)e.append(t,String(s));continue}e.set(t,String(r));}return e}const S$1=new Set([101,204,205,304]);async function b$1(n,e){const t=new y,r=new w(t);t.url=e.url?.toString()||"/";let s;if(!t.url.startsWith("/")){const d=new URL(t.url);s=d.host,t.url=d.pathname+d.search+d.hash;}t.method=e.method||"GET",t.headers=R$1(e.headers||{}),t.headers.host||(t.headers.host=e.host||s||"localhost"),t.connection.encrypted=t.connection.encrypted||e.protocol==="https",t.body=e.body||null,t.__unenv__=e.context,await n(t,r);let a=r._data;(S$1.has(r.statusCode)||t.method.toUpperCase()==="HEAD")&&(a=null,delete r._headers["content-length"]);const u={status:r.statusCode,statusText:r.statusMessage,headers:r._headers,body:a};return t.destroy(),r.destroy(),u}async function C$1(n,e,t={}){try{const r=await b$1(n,{url:e,...t});return new Response(r.body,{status:r.status,statusText:r.statusText,headers:v(r.headers)})}catch(r){return new Response(r.toString(),{status:Number.parseInt(r.statusCode||r.code)||500,statusText:r.statusText})}}
+function o$1(n){throw new Error(`${n} is not implemented yet!`)}let i$2 = class i extends EventEmitter{__unenv__={};readableEncoding=null;readableEnded=true;readableFlowing=false;readableHighWaterMark=0;readableLength=0;readableObjectMode=false;readableAborted=false;readableDidRead=false;closed=false;errored=null;readable=false;destroyed=false;static from(e,t){return new i(t)}constructor(e){super();}_read(e){}read(e){}setEncoding(e){return this}pause(){return this}resume(){return this}isPaused(){return  true}unpipe(e){return this}unshift(e,t){}wrap(e){return this}push(e,t){return  false}_destroy(e,t){this.removeAllListeners();}destroy(e){return this.destroyed=true,this._destroy(e),this}pipe(e,t){return {}}compose(e,t){throw new Error("Method not implemented.")}[Symbol.asyncDispose](){return this.destroy(),Promise.resolve()}async*[Symbol.asyncIterator](){throw o$1("Readable.asyncIterator")}iterator(e){throw o$1("Readable.iterator")}map(e,t){throw o$1("Readable.map")}filter(e,t){throw o$1("Readable.filter")}forEach(e,t){throw o$1("Readable.forEach")}reduce(e,t,r){throw o$1("Readable.reduce")}find(e,t){throw o$1("Readable.find")}findIndex(e,t){throw o$1("Readable.findIndex")}some(e,t){throw o$1("Readable.some")}toArray(e){throw o$1("Readable.toArray")}every(e,t){throw o$1("Readable.every")}flatMap(e,t){throw o$1("Readable.flatMap")}drop(e,t){throw o$1("Readable.drop")}take(e,t){throw o$1("Readable.take")}asIndexedPairs(e){throw o$1("Readable.asIndexedPairs")}};let l$2 = class l extends EventEmitter{__unenv__={};writable=true;writableEnded=false;writableFinished=false;writableHighWaterMark=0;writableLength=0;writableObjectMode=false;writableCorked=0;closed=false;errored=null;writableNeedDrain=false;writableAborted=false;destroyed=false;_data;_encoding="utf8";constructor(e){super();}pipe(e,t){return {}}_write(e,t,r){if(this.writableEnded){r&&r();return}if(this._data===void 0)this._data=e;else {const s=typeof this._data=="string"?Buffer$1.from(this._data,this._encoding||t||"utf8"):this._data,a=typeof e=="string"?Buffer$1.from(e,t||this._encoding||"utf8"):e;this._data=Buffer$1.concat([s,a]);}this._encoding=t,r&&r();}_writev(e,t){}_destroy(e,t){}_final(e){}write(e,t,r){const s=typeof t=="string"?this._encoding:"utf8",a=typeof t=="function"?t:typeof r=="function"?r:void 0;return this._write(e,s,a),true}setDefaultEncoding(e){return this}end(e,t,r){const s=typeof e=="function"?e:typeof t=="function"?t:typeof r=="function"?r:void 0;if(this.writableEnded)return s&&s(),this;const a=e===s?void 0:e;if(a){const u=t===s?void 0:t;this.write(a,u,s);}return this.writableEnded=true,this.writableFinished=true,this.emit("close"),this.emit("finish"),this}cork(){}uncork(){}destroy(e){return this.destroyed=true,delete this._data,this.removeAllListeners(),this}compose(e,t){throw new Error("Method not implemented.")}[Symbol.asyncDispose](){return Promise.resolve()}};const c$1=class c{allowHalfOpen=true;_destroy;constructor(e=new i$2,t=new l$2){Object.assign(this,e),Object.assign(this,t),this._destroy=m(e._destroy,t._destroy);}};function _$1(){return Object.assign(c$1.prototype,i$2.prototype),Object.assign(c$1.prototype,l$2.prototype),c$1}function m(...n){return function(...e){for(const t of n)t(...e);}}const g=_$1();let A$1 = class A extends g{__unenv__={};bufferSize=0;bytesRead=0;bytesWritten=0;connecting=false;destroyed=false;pending=false;localAddress="";localPort=0;remoteAddress="";remoteFamily="";remotePort=0;autoSelectFamilyAttemptedAddresses=[];readyState="readOnly";constructor(e){super();}write(e,t,r){return  false}connect(e,t,r){return this}end(e,t,r){return this}setEncoding(e){return this}pause(){return this}resume(){return this}setTimeout(e,t){return this}setNoDelay(e){return this}setKeepAlive(e,t){return this}address(){return {}}unref(){return this}ref(){return this}destroySoon(){this.destroy();}resetAndDestroy(){const e=new Error("ERR_SOCKET_CLOSED");return e.code="ERR_SOCKET_CLOSED",this.destroy(e),this}};class y extends i$2{aborted=false;httpVersion="1.1";httpVersionMajor=1;httpVersionMinor=1;complete=true;connection;socket;headers={};trailers={};method="GET";url="/";statusCode=200;statusMessage="";closed=false;errored=null;readable=false;constructor(e){super(),this.socket=this.connection=e||new A$1;}get rawHeaders(){const e=this.headers,t=[];for(const r in e)if(Array.isArray(e[r]))for(const s of e[r])t.push(r,s);else t.push(r,e[r]);return t}get rawTrailers(){return []}setTimeout(e,t){return this}get headersDistinct(){return p(this.headers)}get trailersDistinct(){return p(this.trailers)}}function p(n){const e={};for(const[t,r]of Object.entries(n))t&&(e[t]=(Array.isArray(r)?r:[r]).filter(Boolean));return e}class w extends l$2{statusCode=200;statusMessage="";upgrading=false;chunkedEncoding=false;shouldKeepAlive=false;useChunkedEncodingByDefault=false;sendDate=false;finished=false;headersSent=false;strictContentLength=false;connection=null;socket=null;req;_headers={};constructor(e){super(),this.req=e;}assignSocket(e){e._httpMessage=this,this.socket=e,this.connection=e,this.emit("socket",e),this._flush();}_flush(){this.flushHeaders();}detachSocket(e){}writeContinue(e){}writeHead(e,t,r){e&&(this.statusCode=e),typeof t=="string"&&(this.statusMessage=t,t=void 0);const s=r||t;if(s&&!Array.isArray(s))for(const a in s)this.setHeader(a,s[a]);return this.headersSent=true,this}writeProcessing(){}setTimeout(e,t){return this}appendHeader(e,t){e=e.toLowerCase();const r=this._headers[e],s=[...Array.isArray(r)?r:[r],...Array.isArray(t)?t:[t]].filter(Boolean);return this._headers[e]=s.length>1?s:s[0],this}setHeader(e,t){return this._headers[e.toLowerCase()]=t,this}setHeaders(e){for(const[t,r]of Object.entries(e))this.setHeader(t,r);return this}getHeader(e){return this._headers[e.toLowerCase()]}getHeaders(){return this._headers}getHeaderNames(){return Object.keys(this._headers)}hasHeader(e){return e.toLowerCase()in this._headers}removeHeader(e){delete this._headers[e.toLowerCase()];}addTrailers(e){}flushHeaders(){}writeEarlyHints(e,t){typeof t=="function"&&t();}}const E=(()=>{const n=function(){};return n.prototype=Object.create(null),n})();function R$1(n={}){const e=new E,t=Array.isArray(n)||H$1(n)?n:Object.entries(n);for(const[r,s]of t)if(s){if(e[r]===void 0){e[r]=s;continue}e[r]=[...Array.isArray(e[r])?e[r]:[e[r]],...Array.isArray(s)?s:[s]];}return e}function H$1(n){return typeof n?.entries=="function"}function v(n={}){if(n instanceof Headers)return n;const e=new Headers;for(const[t,r]of Object.entries(n))if(r!==void 0){if(Array.isArray(r)){for(const s of r)e.append(t,String(s));continue}e.set(t,String(r));}return e}const S$1=new Set([101,204,205,304]);async function b$1(n,e){const t=new y,r=new w(t);t.url=e.url?.toString()||"/";let s;if(!t.url.startsWith("/")){const d=new URL(t.url);s=d.host,t.url=d.pathname+d.search+d.hash;}t.method=e.method||"GET",t.headers=R$1(e.headers||{}),t.headers.host||(t.headers.host=e.host||s||"localhost"),t.connection.encrypted=t.connection.encrypted||e.protocol==="https",t.body=e.body||null,t.__unenv__=e.context,await n(t,r);let a=r._data;(S$1.has(r.statusCode)||t.method.toUpperCase()==="HEAD")&&(a=null,delete r._headers["content-length"]);const u={status:r.statusCode,statusText:r.statusMessage,headers:r._headers,body:a};return t.destroy(),r.destroy(),u}async function C$1(n,e,t={}){try{const r=await b$1(n,{url:e,...t});return new Response(r.body,{status:r.status,statusText:r.statusText,headers:v(r.headers)})}catch(r){return new Response(r.toString(),{status:Number.parseInt(r.statusCode||r.code)||500,statusText:r.statusText})}}
 
-function useBase(base, handler) {
-  base = withoutTrailingSlash(base);
-  if (!base || base === "/") {
-    return handler;
-  }
-  return eventHandler(async (event) => {
-    event.node.req.originalUrl = event.node.req.originalUrl || event.node.req.url || "/";
-    const _path = event._path || event.node.req.url || "/";
-    event._path = withoutBase(event.path || "/", base);
-    event.node.req.url = event._path;
-    try {
-      return await handler(event);
-    } finally {
-      event._path = event.node.req.url = _path;
-    }
-  });
-}
-
-function hasProp(obj, prop) {
+function hasProp$1(obj, prop) {
   try {
     return prop in obj;
   } catch {
@@ -756,7 +696,7 @@ function hasProp(obj, prop) {
   }
 }
 
-class H3Error extends Error {
+let H3Error$1 = class H3Error extends Error {
   static __h3_error__ = true;
   statusCode = 500;
   fatal = false;
@@ -773,28 +713,28 @@ class H3Error extends Error {
   toJSON() {
     const obj = {
       message: this.message,
-      statusCode: sanitizeStatusCode(this.statusCode, 500)
+      statusCode: sanitizeStatusCode$1(this.statusCode, 500)
     };
     if (this.statusMessage) {
-      obj.statusMessage = sanitizeStatusMessage(this.statusMessage);
+      obj.statusMessage = sanitizeStatusMessage$1(this.statusMessage);
     }
     if (this.data !== void 0) {
       obj.data = this.data;
     }
     return obj;
   }
-}
-function createError$1(input) {
+};
+function createError$2(input) {
   if (typeof input === "string") {
-    return new H3Error(input);
+    return new H3Error$1(input);
   }
-  if (isError(input)) {
+  if (isError$1(input)) {
     return input;
   }
-  const err = new H3Error(input.message ?? input.statusMessage ?? "", {
+  const err = new H3Error$1(input.message ?? input.statusMessage ?? "", {
     cause: input.cause || input
   });
-  if (hasProp(input, "stack")) {
+  if (hasProp$1(input, "stack")) {
     try {
       Object.defineProperty(err, "stack", {
         get() {
@@ -812,9 +752,9 @@ function createError$1(input) {
     err.data = input.data;
   }
   if (input.statusCode) {
-    err.statusCode = sanitizeStatusCode(input.statusCode, err.statusCode);
+    err.statusCode = sanitizeStatusCode$1(input.statusCode, err.statusCode);
   } else if (input.status) {
-    err.statusCode = sanitizeStatusCode(input.status, err.statusCode);
+    err.statusCode = sanitizeStatusCode$1(input.status, err.statusCode);
   }
   if (input.statusMessage) {
     err.statusMessage = input.statusMessage;
@@ -823,7 +763,7 @@ function createError$1(input) {
   }
   if (err.statusMessage) {
     const originalMessage = err.statusMessage;
-    const sanitizedMessage = sanitizeStatusMessage(err.statusMessage);
+    const sanitizedMessage = sanitizeStatusMessage$1(err.statusMessage);
     if (sanitizedMessage !== originalMessage) {
       console.warn(
         "[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default."
@@ -842,7 +782,7 @@ function sendError(event, error, debug) {
   if (event.handled) {
     return;
   }
-  const h3Error = isError(error) ? error : createError$1(error);
+  const h3Error = isError$1(error) ? error : createError$2(error);
   const responseBody = {
     statusCode: h3Error.statusCode,
     statusMessage: h3Error.statusMessage,
@@ -857,22 +797,22 @@ function sendError(event, error, debug) {
   }
   const _code = Number.parseInt(h3Error.statusCode);
   setResponseStatus(event, _code, h3Error.statusMessage);
-  event.node.res.setHeader("content-type", MIMES.json);
+  event.node.res.setHeader("content-type", MIMES$1.json);
   event.node.res.end(JSON.stringify(responseBody, void 0, 2));
 }
-function isError(input) {
+function isError$1(input) {
   return input?.constructor?.__h3_error__ === true;
 }
 
-function getQuery(event) {
-  return getQuery$1(event.path || "");
+function getQuery$2(event) {
+  return getQuery$3(event.path || "");
 }
 function getRouterParams(event, opts = {}) {
   let params = event.context.params || {};
   if (opts.decode) {
     params = { ...params };
     for (const key in params) {
-      params[key] = decode(params[key]);
+      params[key] = decode$1(params[key]);
     }
   }
   return params;
@@ -893,13 +833,13 @@ function isMethod(event, expected, allowHead) {
 }
 function assertMethod(event, expected, allowHead) {
   if (!isMethod(event, expected)) {
-    throw createError$1({
+    throw createError$2({
       statusCode: 405,
       statusMessage: "HTTP method is not allowed."
     });
   }
 }
-function getRequestHeaders(event) {
+function getRequestHeaders$1(event) {
   const _headers = {};
   for (const key in event.node.req.headers) {
     const val = event.node.req.headers[key];
@@ -907,13 +847,12 @@ function getRequestHeaders(event) {
   }
   return _headers;
 }
-function getRequestHeader(event, name) {
-  const headers = getRequestHeaders(event);
+function getRequestHeader$1(event, name) {
+  const headers = getRequestHeaders$1(event);
   const value = headers[name.toLowerCase()];
   return value;
 }
-const getHeader = getRequestHeader;
-function getRequestHost(event, opts = {}) {
+function getRequestHost$1(event, opts = {}) {
   if (opts.xForwardedHost) {
     const _header = event.node.req.headers["x-forwarded-host"];
     const xForwardedHost = (_header || "").split(",").shift()?.trim();
@@ -930,7 +869,7 @@ function getRequestProtocol(event, opts = {}) {
   return event.node.req.connection?.encrypted ? "https" : "http";
 }
 function getRequestURL(event, opts = {}) {
-  const host = getRequestHost(event, opts);
+  const host = getRequestHost$1(event, opts);
   const protocol = getRequestProtocol(event, opts);
   const path = (event.node.req.originalUrl || event.path).replace(
     /^[/\\]+/g,
@@ -1012,7 +951,7 @@ function readRawBody(event, encoding = "utf8") {
 }
 async function readBody(event, options = {}) {
   const request = event.node.req;
-  if (hasProp(request, ParsedBodySymbol)) {
+  if (hasProp$1(request, ParsedBodySymbol)) {
     return request[ParsedBodySymbol];
   }
   const contentType = request.headers["content-type"] || "";
@@ -1071,7 +1010,7 @@ function _parseJSON(body = "", strict) {
   try {
     return destr(body, { strict });
   } catch {
-    throw createError$1({
+    throw createError$2({
       statusCode: 400,
       statusMessage: "Bad Request",
       message: "Invalid JSON body"
@@ -1082,7 +1021,7 @@ function _parseURLEncodedBody(body) {
   const form = new URLSearchParams(body);
   const parsedForm = /* @__PURE__ */ Object.create(null);
   for (const [key, value] of form.entries()) {
-    if (hasProp(parsedForm, key)) {
+    if (hasProp$1(parsedForm, key)) {
       if (!Array.isArray(parsedForm[key])) {
         parsedForm[key] = [parsedForm[key]];
       }
@@ -1126,16 +1065,16 @@ function handleCacheHeaders(event, opts) {
   return false;
 }
 
-const MIMES = {
+const MIMES$1 = {
   html: "text/html",
   json: "application/json"
 };
 
-const DISALLOWED_STATUS_CHARS = /[^\u0009\u0020-\u007E]/g;
-function sanitizeStatusMessage(statusMessage = "") {
-  return statusMessage.replace(DISALLOWED_STATUS_CHARS, "");
+const DISALLOWED_STATUS_CHARS$1 = /[^\u0009\u0020-\u007E]/g;
+function sanitizeStatusMessage$1(statusMessage = "") {
+  return statusMessage.replace(DISALLOWED_STATUS_CHARS$1, "");
 }
-function sanitizeStatusCode(statusCode, defaultStatusCode = 200) {
+function sanitizeStatusCode$1(statusCode, defaultStatusCode = 200) {
   if (!statusCode) {
     return defaultStatusCode;
   }
@@ -1203,13 +1142,13 @@ function splitCookiesString(cookiesString) {
   return cookiesStrings;
 }
 
-const defer = typeof setImmediate === "undefined" ? (fn) => fn() : setImmediate;
-function send(event, data, type) {
+const defer$1 = typeof setImmediate === "undefined" ? (fn) => fn() : setImmediate;
+function send$1(event, data, type) {
   if (type) {
-    defaultContentType(event, type);
+    defaultContentType$1(event, type);
   }
   return new Promise((resolve) => {
-    defer(() => {
+    defer$1(() => {
       if (!event.handled) {
         event.node.res.end(data);
       }
@@ -1224,7 +1163,7 @@ function sendNoContent(event, code) {
   if (!code && event.node.res.statusCode !== 200) {
     code = event.node.res.statusCode;
   }
-  const _code = sanitizeStatusCode(code, 204);
+  const _code = sanitizeStatusCode$1(code, 204);
   if (_code === 204) {
     event.node.res.removeHeader("content-length");
   }
@@ -1233,13 +1172,13 @@ function sendNoContent(event, code) {
 }
 function setResponseStatus(event, code, text) {
   if (code) {
-    event.node.res.statusCode = sanitizeStatusCode(
+    event.node.res.statusCode = sanitizeStatusCode$1(
       code,
       event.node.res.statusCode
     );
   }
   if (text) {
-    event.node.res.statusMessage = sanitizeStatusMessage(text);
+    event.node.res.statusMessage = sanitizeStatusMessage$1(text);
   }
 }
 function getResponseStatus(event) {
@@ -1248,20 +1187,20 @@ function getResponseStatus(event) {
 function getResponseStatusText(event) {
   return event.node.res.statusMessage;
 }
-function defaultContentType(event, type) {
+function defaultContentType$1(event, type) {
   if (type && event.node.res.statusCode !== 304 && !event.node.res.getHeader("content-type")) {
     event.node.res.setHeader("content-type", type);
   }
 }
-function sendRedirect(event, location, code = 302) {
-  event.node.res.statusCode = sanitizeStatusCode(
+function sendRedirect$1(event, location, code = 302) {
+  event.node.res.statusCode = sanitizeStatusCode$1(
     code,
     event.node.res.statusCode
   );
   event.node.res.setHeader("location", location);
   const encodedLoc = location.replace(/"/g, "%22");
   const html = `<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0; url=${encodedLoc}"></head></html>`;
-  return send(event, html, MIMES.html);
+  return send$1(event, html, MIMES$1.html);
 }
 function getResponseHeader(event, name) {
   return event.node.res.getHeader(name);
@@ -1275,10 +1214,9 @@ function setResponseHeaders(event, headers) {
   }
 }
 const setHeaders = setResponseHeaders;
-function setResponseHeader(event, name, value) {
+function setResponseHeader$1(event, name, value) {
   event.node.res.setHeader(name, value);
 }
-const setHeader = setResponseHeader;
 function appendResponseHeader(event, name, value) {
   let current = event.node.res.getHeader(name);
   if (!current) {
@@ -1322,7 +1260,7 @@ function sendStream(event, stream) {
     event._handled = true;
     return Promise.resolve();
   }
-  if (hasProp(stream, "pipeTo") && typeof stream.pipeTo === "function") {
+  if (hasProp$1(stream, "pipeTo") && typeof stream.pipeTo === "function") {
     return stream.pipeTo(
       new WritableStream({
         write(chunk) {
@@ -1333,7 +1271,7 @@ function sendStream(event, stream) {
       event.node.res.end();
     });
   }
-  if (hasProp(stream, "pipe") && typeof stream.pipe === "function") {
+  if (hasProp$1(stream, "pipe") && typeof stream.pipe === "function") {
     return new Promise((resolve, reject) => {
       stream.pipe(event.node.res);
       if (stream.on) {
@@ -1363,13 +1301,13 @@ function sendWebResponse(event, response) {
     }
   }
   if (response.status) {
-    event.node.res.statusCode = sanitizeStatusCode(
+    event.node.res.statusCode = sanitizeStatusCode$1(
       response.status,
       event.node.res.statusCode
     );
   }
   if (response.statusText) {
-    event.node.res.statusMessage = sanitizeStatusMessage(response.statusText);
+    event.node.res.statusMessage = sanitizeStatusMessage$1(response.statusText);
   }
   if (response.redirected) {
     event.node.res.setHeader("location", response.url);
@@ -1430,17 +1368,17 @@ async function sendProxy(event, target, opts = {}) {
       ...opts.fetchOptions
     });
   } catch (error) {
-    throw createError$1({
+    throw createError$2({
       status: 502,
       statusMessage: "Bad Gateway",
       cause: error
     });
   }
-  event.node.res.statusCode = sanitizeStatusCode(
+  event.node.res.statusCode = sanitizeStatusCode$1(
     response.status,
     event.node.res.statusCode
   );
-  event.node.res.statusMessage = sanitizeStatusMessage(response.statusText);
+  event.node.res.statusMessage = sanitizeStatusMessage$1(response.statusText);
   const cookies = [];
   for (const [key, value] of response.headers.entries()) {
     if (key === "content-encoding") {
@@ -1499,7 +1437,7 @@ async function sendProxy(event, target, opts = {}) {
 }
 function getProxyRequestHeaders(event, opts) {
   const headers = /* @__PURE__ */ Object.create(null);
-  const reqHeaders = getRequestHeaders(event);
+  const reqHeaders = getRequestHeaders$1(event);
   for (const name in reqHeaders) {
     if (!ignoredHeaders.has(name) || name === "host" && opts?.host) {
       headers[name] = reqHeaders[name];
@@ -1629,7 +1567,7 @@ class H3Event {
   }
 }
 function isEvent(input) {
-  return hasProp(input, "__is_event__");
+  return hasProp$1(input, "__is_event__");
 }
 function createEvent(req, res) {
   return new H3Event(req, res);
@@ -1648,27 +1586,27 @@ function _normalizeNodeHeaders(nodeHeaders) {
   return headers;
 }
 
-function defineEventHandler(handler) {
+function defineEventHandler$1(handler) {
   if (typeof handler === "function") {
     handler.__is_handler__ = true;
     return handler;
   }
   const _hooks = {
-    onRequest: _normalizeArray(handler.onRequest),
-    onBeforeResponse: _normalizeArray(handler.onBeforeResponse)
+    onRequest: _normalizeArray$1(handler.onRequest),
+    onBeforeResponse: _normalizeArray$1(handler.onBeforeResponse)
   };
   const _handler = (event) => {
-    return _callHandler(event, handler.handler, _hooks);
+    return _callHandler$1(event, handler.handler, _hooks);
   };
   _handler.__is_handler__ = true;
   _handler.__resolve__ = handler.handler.__resolve__;
   _handler.__websocket__ = handler.websocket;
   return _handler;
 }
-function _normalizeArray(input) {
+function _normalizeArray$1(input) {
   return input ? Array.isArray(input) ? input : [input] : void 0;
 }
-async function _callHandler(event, handler, hooks) {
+async function _callHandler$1(event, handler, hooks) {
   if (hooks.onRequest) {
     for (const hook of hooks.onRequest) {
       await hook(event);
@@ -1686,14 +1624,14 @@ async function _callHandler(event, handler, hooks) {
   }
   return response.body;
 }
-const eventHandler = defineEventHandler;
+const eventHandler$1 = defineEventHandler$1;
 function isEventHandler(input) {
-  return hasProp(input, "__is_handler__");
+  return hasProp$1(input, "__is_handler__");
 }
-function toEventHandler(input, _, _route) {
+function toEventHandler$1(input, _, _route) {
   return input;
 }
-function defineLazyEventHandler(factory) {
+function defineLazyEventHandler$1(factory) {
   let _promise;
   let _resolved;
   const resolveHandler = () => {
@@ -1709,13 +1647,13 @@ function defineLazyEventHandler(factory) {
             handler2
           );
         }
-        _resolved = { handler: toEventHandler(r.default || r) };
+        _resolved = { handler: toEventHandler$1(r.default || r) };
         return _resolved;
       });
     }
     return _promise;
   };
-  const handler = eventHandler((event) => {
+  const handler = eventHandler$1((event) => {
     if (_resolved) {
       return _resolved.handler(event);
     }
@@ -1724,7 +1662,7 @@ function defineLazyEventHandler(factory) {
   handler.__resolve__ = resolveHandler;
   return handler;
 }
-const lazyEventHandler = defineLazyEventHandler;
+const lazyEventHandler$1 = defineLazyEventHandler$1;
 
 function createApp(options = {}) {
   const stack = [];
@@ -1767,7 +1705,7 @@ function use(app, arg1, arg2, arg3) {
 }
 function createAppEventHandler(stack, options) {
   const spacing = options.debug ? 2 : void 0;
-  return eventHandler(async (event) => {
+  return eventHandler$1(async (event) => {
     event.node.req.originalUrl = event.node.req.originalUrl || event.node.req.url || "/";
     const _rawReqUrl = event.node.req.url || "/";
     const _reqPath = _decodePath(event._path || _rawReqUrl);
@@ -1815,7 +1753,7 @@ function createAppEventHandler(stack, options) {
       }
     }
     if (!event.handled) {
-      throw createError$1({
+      throw createError$2({
         statusCode: 404,
         statusMessage: `Cannot find any path matching ${event.path || "/"}.`
       });
@@ -1849,7 +1787,7 @@ function createResolver(stack) {
         res = {
           ...res,
           ..._res,
-          route: joinURL(res.route || "/", _res.route || "/")
+          route: joinURL$1(res.route || "/", _res.route || "/")
         };
       }
       return res;
@@ -1862,12 +1800,12 @@ function normalizeLayer(input) {
     handler = handler.handler;
   }
   if (input.lazy) {
-    handler = lazyEventHandler(handler);
+    handler = lazyEventHandler$1(handler);
   } else if (!isEventHandler(handler)) {
-    handler = toEventHandler(handler, void 0, input.route);
+    handler = toEventHandler$1(handler, void 0, input.route);
   }
   return {
-    route: withoutTrailingSlash(input.route),
+    route: withoutTrailingSlash$1(input.route),
     match: input.match,
     handler
   };
@@ -1884,15 +1822,15 @@ function handleHandlerResponse(event, val, jsonSpace) {
       return sendStream(event, val);
     }
     if (val.buffer) {
-      return send(event, val);
+      return send$1(event, val);
     }
     if (val.arrayBuffer && typeof val.arrayBuffer === "function") {
       return val.arrayBuffer().then((arrayBuffer) => {
-        return send(event, Buffer.from(arrayBuffer), val.type);
+        return send$1(event, Buffer.from(arrayBuffer), val.type);
       });
     }
     if (val instanceof Error) {
-      throw createError$1(val);
+      throw createError$2(val);
     }
     if (typeof val.end === "function") {
       return true;
@@ -1900,15 +1838,15 @@ function handleHandlerResponse(event, val, jsonSpace) {
   }
   const valType = typeof val;
   if (valType === "string") {
-    return send(event, val, MIMES.html);
+    return send$1(event, val, MIMES$1.html);
   }
   if (valType === "object" || valType === "boolean" || valType === "number") {
-    return send(event, JSON.stringify(val, void 0, jsonSpace), MIMES.json);
+    return send$1(event, JSON.stringify(val, void 0, jsonSpace), MIMES$1.json);
   }
   if (valType === "bigint") {
-    return send(event, val.toString(), MIMES.json);
+    return send$1(event, val.toString(), MIMES$1.json);
   }
-  throw createError$1({
+  throw createError$2({
     statusCode: 500,
     statusMessage: `[h3] Cannot send ${valType} as response.`
   });
@@ -1926,7 +1864,7 @@ function _decodePath(url) {
   const qIndex = url.indexOf("?");
   const path = qIndex === -1 ? url : url.slice(0, qIndex);
   const query = qIndex === -1 ? "" : url.slice(qIndex);
-  const decodedPath = path.includes("%25") ? decodePath(path.replace(/%25/g, "%2525")) : decodePath(path);
+  const decodedPath = path.includes("%25") ? decodePath$1(path.replace(/%25/g, "%2525")) : decodePath$1(path);
   return decodedPath + query;
 }
 function websocketOptions(evResolver, appOptions) {
@@ -1934,7 +1872,7 @@ function websocketOptions(evResolver, appOptions) {
     ...appOptions.websocket,
     async resolve(info) {
       const url = info.request?.url || info.url || "/";
-      const { pathname } = typeof url === "string" ? parseURL(url) : url;
+      const { pathname } = typeof url === "string" ? parseURL$1(url) : url;
       const resolved = await evResolver(pathname);
       return resolved?.handler?.__websocket__ || {};
     }
@@ -1952,8 +1890,8 @@ const RouterMethods = [
   "trace",
   "patch"
 ];
-function createRouter(opts = {}) {
-  const _router = createRouter$1({});
+function createRouter$1(opts = {}) {
+  const _router = createRouter$2({});
   const routes = {};
   let _matcher;
   const router = {};
@@ -1968,7 +1906,7 @@ function createRouter(opts = {}) {
         addRoute(path, handler, m);
       }
     } else {
-      route.handlers[method] = toEventHandler(handler);
+      route.handlers[method] = toEventHandler$1(handler);
     }
     return router;
   };
@@ -1984,7 +1922,7 @@ function createRouter(opts = {}) {
     const matched = _router.lookup(path);
     if (!matched || !matched.handlers) {
       return {
-        error: createError$1({
+        error: createError$2({
           statusCode: 404,
           name: "Not Found",
           statusMessage: `Cannot find any route matching ${path || "/"}.`
@@ -1994,7 +1932,7 @@ function createRouter(opts = {}) {
     let handler = matched.handlers[method] || matched.handlers.all;
     if (!handler) {
       if (!_matcher) {
-        _matcher = toRouteMatcher(_router);
+        _matcher = toRouteMatcher$1(_router);
       }
       const _matches = _matcher.matchAll(path).reverse();
       for (const _match of _matches) {
@@ -2012,7 +1950,7 @@ function createRouter(opts = {}) {
     }
     if (!handler) {
       return {
-        error: createError$1({
+        error: createError$2({
           statusCode: 405,
           name: "Method Not Allowed",
           statusMessage: `Method ${method} is not allowed on this route.`
@@ -2022,7 +1960,7 @@ function createRouter(opts = {}) {
     return { matched, handler };
   };
   const isPreemptive = opts.preemptive || opts.preemtive;
-  router.handler = eventHandler((event) => {
+  router.handler = eventHandler$1((event) => {
     const match = matchHandler(
       event.path,
       event.method.toLowerCase()
@@ -2045,7 +1983,7 @@ function createRouter(opts = {}) {
     });
   });
   router.handler.__resolve__ = async (path) => {
-    path = withLeadingSlash(path);
+    path = withLeadingSlash$1(path);
     const match = matchHandler(path);
     if ("error" in match) {
       return;
@@ -2071,8 +2009,8 @@ function toNodeListener(app) {
     try {
       await app.handler(event);
     } catch (_error) {
-      const error = createError$1(_error);
-      if (!isError(_error)) {
+      const error = createError$2(_error);
+      if (!isError$1(_error)) {
         error.unhandled = true;
       }
       setResponseStatus(event, error.statusCode, error.statusMessage);
@@ -2523,10 +2461,10 @@ function createFetch(globalOptions = {}) {
     }
     if (typeof context.request === "string") {
       if (context.options.baseURL) {
-        context.request = withBase(context.request, context.options.baseURL);
+        context.request = withBase$1(context.request, context.options.baseURL);
       }
       if (context.options.query) {
-        context.request = withQuery(context.request, context.options.query);
+        context.request = withQuery$1(context.request, context.options.query);
         delete context.options.query;
       }
       if ("query" in context.options) {
@@ -3296,21 +3234,21 @@ const assets$1 = {
 function defineDriver(factory) {
   return factory;
 }
-function createError(driver, message, opts) {
+function createError$1(driver, message, opts) {
   const err = new Error(`[unstorage] [${driver}] ${message}`, opts);
   if (Error.captureStackTrace) {
-    Error.captureStackTrace(err, createError);
+    Error.captureStackTrace(err, createError$1);
   }
   return err;
 }
 function createRequiredError(driver, name) {
   if (Array.isArray(name)) {
-    return createError(
+    return createError$1(
       driver,
       `Missing some of the required options ${name.map((n) => "`" + n + "`").join(", ")}`
     );
   }
-  return createError(driver, `Missing required option \`${name}\`.`);
+  return createError$1(driver, `Missing required option \`${name}\`.`);
 }
 
 function ignoreNotfound(err) {
@@ -3389,7 +3327,7 @@ const unstorage_47drivers_47fs_45lite = defineDriver((opts = {}) => {
   opts.base = resolve$2(opts.base);
   const r = (key) => {
     if (PATH_TRAVERSE_RE.test(key)) {
-      throw createError(
+      throw createError$1(
         DRIVER_NAME,
         `Invalid key: ${JSON.stringify(key)}. It should not contain .. segments`
       );
@@ -3456,13 +3394,7 @@ function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
 }
 
-function serialize$1(o){return typeof o=="string"?`'${o}'`:new c$1().serialize(o)}const c$1=/*@__PURE__*/function(){class o{#t=new Map;compare(t,r){const e=typeof t,n=typeof r;return e==="string"&&n==="string"?t.localeCompare(r):e==="number"&&n==="number"?t-r:String.prototype.localeCompare.call(this.serialize(t,true),this.serialize(r,true))}serialize(t,r){if(t===null)return "null";switch(typeof t){case "string":return r?t:`'${t}'`;case "bigint":return `${t}n`;case "object":return this.$object(t);case "function":return this.$function(t)}return String(t)}serializeObject(t){const r=Object.prototype.toString.call(t);if(r!=="[object Object]")return this.serializeBuiltInType(r.length<10?`unknown:${r}`:r.slice(8,-1),t);const e=t.constructor,n=e===Object||e===void 0?"":e.name;if(n!==""&&globalThis[n]===e)return this.serializeBuiltInType(n,t);if(typeof t.toJSON=="function"){const i=t.toJSON();return n+(i!==null&&typeof i=="object"?this.$object(i):`(${this.serialize(i)})`)}return this.serializeObjectEntries(n,Object.entries(t))}serializeBuiltInType(t,r){const e=this["$"+t];if(e)return e.call(this,r);if(typeof r?.entries=="function")return this.serializeObjectEntries(t,r.entries());throw new Error(`Cannot serialize ${t}`)}serializeObjectEntries(t,r){const e=Array.from(r).sort((i,a)=>this.compare(i[0],a[0]));let n=`${t}{`;for(let i=0;i<e.length;i++){const[a,l]=e[i];n+=`${this.serialize(a,true)}:${this.serialize(l)}`,i<e.length-1&&(n+=",");}return n+"}"}$object(t){let r=this.#t.get(t);return r===void 0&&(this.#t.set(t,`#${this.#t.size}`),r=this.serializeObject(t),this.#t.set(t,r)),r}$function(t){const r=Function.prototype.toString.call(t);return r.slice(-15)==="[native code] }"?`${t.name||""}()[native]`:`${t.name}(${t.length})${r.replace(/\s*\n\s*/g,"")}`}$Array(t){let r="[";for(let e=0;e<t.length;e++)r+=this.serialize(t[e]),e<t.length-1&&(r+=",");return r+"]"}$Date(t){try{return `Date(${t.toISOString()})`}catch{return "Date(null)"}}$ArrayBuffer(t){return `ArrayBuffer[${new Uint8Array(t).join(",")}]`}$Set(t){return `Set${this.$Array(Array.from(t).sort((r,e)=>this.compare(r,e)))}`}$Map(t){return this.serializeObjectEntries("Map",t.entries())}}for(const s of ["Error","RegExp","URL"])o.prototype["$"+s]=function(t){return `${s}(${t})`};for(const s of ["Int8Array","Uint8Array","Uint8ClampedArray","Int16Array","Uint16Array","Int32Array","Uint32Array","Float32Array","Float64Array"])o.prototype["$"+s]=function(t){return `${s}[${t.join(",")}]`};for(const s of ["BigInt64Array","BigUint64Array"])o.prototype["$"+s]=function(t){return `${s}[${t.join("n,")}${t.length>0?"n":""}]`};return o}();
-
 const e=globalThis.process?.getBuiltinModule?.("crypto")?.hash,r$1="sha256",s="base64url";function digest(t){if(e)return e(r$1,t,s);const o=createHash(r$1).update(t);return globalThis.process?.versions?.webcontainer?o.digest().toString(s):o.digest(s)}
-
-function hash$1(input) {
-  return digest(serialize$1(input));
-}
 
 const Hasher = /* @__PURE__ */ (() => {
   class Hasher2 {
@@ -3773,7 +3705,7 @@ function defineCachedEventHandler(handler, opts = defaultCacheOptions()) {
       const _path = event.node.req.originalUrl || event.node.req.url || event.path;
       let _pathname;
       try {
-        _pathname = escapeKey(decodeURI(parseURL(_path).pathname)).slice(0, 16) || "index";
+        _pathname = escapeKey(decodeURI(parseURL$1(_path).pathname)).slice(0, 16) || "index";
       } catch {
         _pathname = "-";
       }
@@ -3926,7 +3858,7 @@ function defineCachedEventHandler(handler, opts = defaultCacheOptions()) {
     },
     _opts
   );
-  return defineEventHandler(async (event) => {
+  return defineEventHandler$1(async (event) => {
     if (opts.headersOnly) {
       if (handleCacheHeaders(event, { maxAge: opts.maxAge })) {
         return;
@@ -4168,7 +4100,7 @@ function _expandFromEnv(value) {
 const _inlineRuntimeConfig = {
   "app": {
     "baseURL": "/",
-    "buildId": "4f1c8bd4-c6c3-4d5f-9173-27999256b3b5",
+    "buildId": "07d11f1d-baf3-4bca-ab68-5efcfa45d475",
     "buildAssetsDir": "/_nuxt/",
     "cdnURL": ""
   },
@@ -4343,130 +4275,12 @@ new Proxy(/* @__PURE__ */ Object.create(null), {
   }
 });
 
-function createContext(opts = {}) {
-  let currentInstance;
-  let isSingleton = false;
-  const checkConflict = (instance) => {
-    if (currentInstance && currentInstance !== instance) {
-      throw new Error("Context conflict");
-    }
-  };
-  let als;
-  if (opts.asyncContext) {
-    const _AsyncLocalStorage = opts.AsyncLocalStorage || globalThis.AsyncLocalStorage;
-    if (_AsyncLocalStorage) {
-      als = new _AsyncLocalStorage();
-    } else {
-      console.warn("[unctx] `AsyncLocalStorage` is not provided.");
-    }
-  }
-  const _getCurrentInstance = () => {
-    if (als) {
-      const instance = als.getStore();
-      if (instance !== void 0) {
-        return instance;
-      }
-    }
-    return currentInstance;
-  };
-  return {
-    use: () => {
-      const _instance = _getCurrentInstance();
-      if (_instance === void 0) {
-        throw new Error("Context is not available");
-      }
-      return _instance;
-    },
-    tryUse: () => {
-      return _getCurrentInstance();
-    },
-    set: (instance, replace) => {
-      if (!replace) {
-        checkConflict(instance);
-      }
-      currentInstance = instance;
-      isSingleton = true;
-    },
-    unset: () => {
-      currentInstance = void 0;
-      isSingleton = false;
-    },
-    call: (instance, callback) => {
-      checkConflict(instance);
-      currentInstance = instance;
-      try {
-        return als ? als.run(instance, callback) : callback();
-      } finally {
-        if (!isSingleton) {
-          currentInstance = void 0;
-        }
-      }
-    },
-    async callAsync(instance, callback) {
-      currentInstance = instance;
-      const onRestore = () => {
-        currentInstance = instance;
-      };
-      const onLeave = () => currentInstance === instance ? onRestore : void 0;
-      asyncHandlers.add(onLeave);
-      try {
-        const r = als ? als.run(instance, callback) : callback();
-        if (!isSingleton) {
-          currentInstance = void 0;
-        }
-        return await r;
-      } finally {
-        asyncHandlers.delete(onLeave);
-      }
-    }
-  };
-}
-function createNamespace(defaultOpts = {}) {
-  const contexts = {};
-  return {
-    get(key, opts = {}) {
-      if (!contexts[key]) {
-        contexts[key] = createContext({ ...defaultOpts, ...opts });
-      }
-      return contexts[key];
-    }
-  };
-}
-const _globalThis = typeof globalThis !== "undefined" ? globalThis : typeof self !== "undefined" ? self : typeof global !== "undefined" ? global : {};
-const globalKey = "__unctx__";
-const defaultNamespace = _globalThis[globalKey] || (_globalThis[globalKey] = createNamespace());
-const getContext = (key, opts = {}) => defaultNamespace.get(key, opts);
-const asyncHandlersKey = "__unctx_async_handlers__";
-const asyncHandlers = _globalThis[asyncHandlersKey] || (_globalThis[asyncHandlersKey] = /* @__PURE__ */ new Set());
-function executeAsync(function_) {
-  const restores = [];
-  for (const leaveHandler of asyncHandlers) {
-    const restore2 = leaveHandler();
-    if (restore2) {
-      restores.push(restore2);
-    }
-  }
-  const restore = () => {
-    for (const restore2 of restores) {
-      restore2();
-    }
-  };
-  let awaitable = function_();
-  if (awaitable && typeof awaitable === "object" && "catch" in awaitable) {
-    awaitable = awaitable.catch((error) => {
-      restore();
-      throw error;
-    });
-  }
-  return [awaitable, restore];
-}
-
 const config = useRuntimeConfig();
-const _routeRulesMatcher = toRouteMatcher(
-  createRouter$1({ routes: config.nitro.routeRules })
+const _routeRulesMatcher = toRouteMatcher$1(
+  createRouter$2({ routes: config.nitro.routeRules })
 );
 function createRouteRulesHandler(ctx) {
-  return eventHandler((event) => {
+  return eventHandler$1((event) => {
     const routeRules = getRouteRules(event);
     if (routeRules.headers) {
       setHeaders(event, routeRules.headers);
@@ -4477,14 +4291,14 @@ function createRouteRulesHandler(ctx) {
         let targetPath = event.path;
         const strpBase = routeRules.redirect._redirectStripBase;
         if (strpBase) {
-          targetPath = withoutBase(targetPath, strpBase);
+          targetPath = withoutBase$1(targetPath, strpBase);
         }
-        target = joinURL(target.slice(0, -3), targetPath);
+        target = joinURL$1(target.slice(0, -3), targetPath);
       } else if (event.path.includes("?")) {
-        const query = getQuery$1(event.path);
-        target = withQuery(target, query);
+        const query = getQuery$3(event.path);
+        target = withQuery$1(target, query);
       }
-      return sendRedirect(event, target, routeRules.redirect.statusCode);
+      return sendRedirect$1(event, target, routeRules.redirect.statusCode);
     }
     if (routeRules.proxy) {
       let target = routeRules.proxy.to;
@@ -4492,12 +4306,12 @@ function createRouteRulesHandler(ctx) {
         let targetPath = event.path;
         const strpBase = routeRules.proxy._proxyStripBase;
         if (strpBase) {
-          targetPath = withoutBase(targetPath, strpBase);
+          targetPath = withoutBase$1(targetPath, strpBase);
         }
-        target = joinURL(target.slice(0, -3), targetPath);
+        target = joinURL$1(target.slice(0, -3), targetPath);
       } else if (event.path.includes("?")) {
-        const query = getQuery$1(event.path);
-        target = withQuery(target, query);
+        const query = getQuery$3(event.path);
+        target = withQuery$1(target, query);
       }
       return proxyRequest(event, target, {
         fetch: ctx.localFetch,
@@ -4510,13 +4324,13 @@ function getRouteRules(event) {
   event.context._nitro = event.context._nitro || {};
   if (!event.context._nitro.routeRules) {
     event.context._nitro.routeRules = getRouteRulesForPath(
-      withoutBase(event.path.split("?")[0], useRuntimeConfig().app.baseURL)
+      withoutBase$1(event.path.split("?")[0], useRuntimeConfig().app.baseURL)
     );
   }
   return event.context._nitro.routeRules;
 }
 function getRouteRulesForPath(path) {
-  return defu({}, ..._routeRulesMatcher.matchAll(path).reverse());
+  return defu$1({}, ..._routeRulesMatcher.matchAll(path).reverse());
 }
 
 function _captureError(error, type) {
@@ -4574,7 +4388,7 @@ function isJsonRequest(event) {
 	return hasReqHeader(event, "accept", "application/json") || hasReqHeader(event, "user-agent", "curl/") || hasReqHeader(event, "user-agent", "httpie/") || hasReqHeader(event, "sec-fetch-mode", "cors") || event.path.startsWith("/api/") || event.path.endsWith(".json");
 }
 function hasReqHeader(event, name, includes) {
-	const value = getRequestHeader(event, name);
+	const value = getRequestHeader$1(event, name);
 	return !!(value && typeof value === "string" && value.toLowerCase().includes(includes));
 }
 
@@ -4590,12 +4404,12 @@ const errorHandler$0 = (async function errorhandler(error, event, { defaultHandl
 	if (status === 404 && defaultRes.status === 302) {
 		setResponseHeaders(event, defaultRes.headers);
 		setResponseStatus(event, defaultRes.status, defaultRes.statusText);
-		return send(event, JSON.stringify(defaultRes.body, null, 2));
+		return send$1(event, JSON.stringify(defaultRes.body, null, 2));
 	}
 	const errorObject = defaultRes.body;
 	// remove proto/hostname/port from URL
 	const url = new URL(errorObject.url);
-	errorObject.url = withoutBase(url.pathname, useRuntimeConfig(event).app.baseURL) + url.search + url.hash;
+	errorObject.url = withoutBase$1(url.pathname, useRuntimeConfig(event).app.baseURL) + url.search + url.hash;
 	// add default server message (keep sanitized for unhandled errors)
 	errorObject.message = error.unhandled ? errorObject.message || "Server Error" : error.message || errorObject.message || "Server Error";
 	// we will be rendering this error internally so we can pass along the error.data safely
@@ -4605,11 +4419,11 @@ const errorHandler$0 = (async function errorhandler(error, event, { defaultHandl
 	delete defaultRes.headers["content-security-policy"];
 	setResponseHeaders(event, defaultRes.headers);
 	// Access request headers
-	const reqHeaders = getRequestHeaders(event);
+	const reqHeaders = getRequestHeaders$1(event);
 	// Detect to avoid recursion in SSR rendering of errors
 	const isRenderingError = event.path.startsWith("/__nuxt_error") || !!reqHeaders["x-nuxt-error"];
 	// HTML response (via SSR)
-	const res = isRenderingError ? null : await useNitroApp().localFetch(withQuery(joinURL(useRuntimeConfig(event).app.baseURL, "/__nuxt_error"), errorObject), {
+	const res = isRenderingError ? null : await useNitroApp().localFetch(withQuery$1(joinURL$1(useRuntimeConfig(event).app.baseURL, "/__nuxt_error"), errorObject), {
 		headers: {
 			...reqHeaders,
 			"x-nuxt-error": "true"
@@ -4622,8 +4436,8 @@ const errorHandler$0 = (async function errorhandler(error, event, { defaultHandl
 	// Fallback to static rendered error page
 	if (!res) {
 		const { template } = await import('./error-500.mjs');
-		setResponseHeader(event, "Content-Type", "text/html;charset=UTF-8");
-		return send(event, template(errorObject));
+		setResponseHeader$1(event, "Content-Type", "text/html;charset=UTF-8");
+		return send$1(event, template(errorObject));
 	}
 	const html = await res.text();
 	for (const [header, value] of res.headers.entries()) {
@@ -4631,10 +4445,10 @@ const errorHandler$0 = (async function errorhandler(error, event, { defaultHandl
 			appendResponseHeader(event, header, value);
 			continue;
 		}
-		setResponseHeader(event, header, value);
+		setResponseHeader$1(event, header, value);
 	}
 	setResponseStatus(event, res.status && res.status !== 200 ? res.status : defaultRes.status, res.statusText || defaultRes.statusText);
-	return send(event, html);
+	return send$1(event, html);
 });
 
 function defineNitroErrorHandler(handler) {
@@ -4646,7 +4460,7 @@ const errorHandler$1 = defineNitroErrorHandler(
     const res = defaultHandler(error, event);
     setResponseHeaders(event, res.headers);
     setResponseStatus(event, res.status, res.statusText);
-    return send(event, JSON.stringify(res.body, null, 2));
+    return send$1(event, JSON.stringify(res.body, null, 2));
   }
 );
 function defaultHandler(error, event, opts) {
@@ -4957,8 +4771,8 @@ function normalizeSiteConfig(config) {
     config.indexable = String(config.indexable) !== "false";
   if (typeof config.trailingSlash !== "undefined" && !config.trailingSlash)
     config.trailingSlash = String(config.trailingSlash) !== "false";
-  if (config.url && !hasProtocol(String(config.url), { acceptRelative: true, strict: false }))
-    config.url = withHttps(String(config.url));
+  if (config.url && !hasProtocol$1(String(config.url), { acceptRelative: true, strict: false }))
+    config.url = withHttps$1(String(config.url));
   const keys = Object.keys(config).sort((a, b) => a.localeCompare(b));
   const newConfig = {};
   for (const k of keys)
@@ -5033,7 +4847,7 @@ function envSiteConfig(env = {}) {
 
 function getSiteConfig(e, _options) {
   e.context.siteConfig = e.context.siteConfig || createSiteConfigStack();
-  const options = defu(_options, useRuntimeConfig(e)["nuxt-site-config"], { debug: false });
+  const options = defu$1(_options, useRuntimeConfig(e)["nuxt-site-config"], { debug: false });
   return e.context.siteConfig.get(options);
 }
 
@@ -5064,12 +4878,12 @@ const assets = {
     "size": 4286,
     "path": "../public/favicon.ico"
   },
-  "/logo-pica.png": {
-    "type": "image/png",
-    "etag": "\"9706-ePgqMFtxdOrTLmxqcqc7IQpEuDk\"",
-    "mtime": "2026-04-20T14:06:53.357Z",
-    "size": 38662,
-    "path": "../public/logo-pica.png"
+  "/logo-pica-caravan.jpg": {
+    "type": "image/jpeg",
+    "etag": "\"2ab1-6B2N1e7FIKSNu5dPttZcNVYqDXc\"",
+    "mtime": "2026-04-20T14:06:53.446Z",
+    "size": 10929,
+    "path": "../public/logo-pica-caravan.jpg"
   },
   "/robots.txt": {
     "type": "text/plain; charset=utf-8",
@@ -5077,13 +4891,6 @@ const assets = {
     "mtime": "2026-04-20T14:06:53.448Z",
     "size": 145,
     "path": "../public/robots.txt"
-  },
-  "/logo-pica-caravan.jpg": {
-    "type": "image/jpeg",
-    "etag": "\"2ab1-6B2N1e7FIKSNu5dPttZcNVYqDXc\"",
-    "mtime": "2026-04-20T14:06:53.446Z",
-    "size": 10929,
-    "path": "../public/logo-pica-caravan.jpg"
   },
   "/silktide-consent-manager.js": {
     "type": "text/javascript; charset=utf-8",
@@ -5099,292 +4906,292 @@ const assets = {
     "size": 13,
     "path": "../public/images/placeholder-vehicle.jpg"
   },
-  "/_nuxt/admin.BwoR7TSc.css": {
+  "/logo-pica.png": {
+    "type": "image/png",
+    "etag": "\"9706-ePgqMFtxdOrTLmxqcqc7IQpEuDk\"",
+    "mtime": "2026-04-20T14:06:53.357Z",
+    "size": 38662,
+    "path": "../public/logo-pica.png"
+  },
+  "/_nuxt/admin.CNC7Ocgd.css": {
     "type": "text/css; charset=utf-8",
-    "etag": "\"3cab-BHCsaZHz/b7UE8Y4/qPs5qiAjrk\"",
-    "mtime": "2026-04-25T15:04:26.944Z",
-    "size": 15531,
-    "path": "../public/_nuxt/admin.BwoR7TSc.css"
+    "etag": "\"3880-OOnhuQi5eTdRxxzSLRvMHpJl0UU\"",
+    "mtime": "2026-04-25T22:30:53.901Z",
+    "size": 14464,
+    "path": "../public/_nuxt/admin.CNC7Ocgd.css"
   },
-  "/_nuxt/A0gIFfqc.js": {
+  "/_nuxt/B7P8xJsu.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"ae6-REHp0JrrwmATj/Y4qJzf0HpuAFY\"",
-    "mtime": "2026-04-25T15:04:26.946Z",
-    "size": 2790,
-    "path": "../public/_nuxt/A0gIFfqc.js"
+    "etag": "\"db4-LRtlOCSQEbXBueyV03ZTBeLI9gM\"",
+    "mtime": "2026-04-25T22:30:53.903Z",
+    "size": 3508,
+    "path": "../public/_nuxt/B7P8xJsu.js"
   },
-  "/_nuxt/BAie3Kpz.js": {
+  "/_nuxt/B4DG2JA-.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"3136-IIAbD2cJHrm4jNaVpOvQ7QaH/gg\"",
-    "mtime": "2026-04-25T15:04:26.948Z",
-    "size": 12598,
-    "path": "../public/_nuxt/BAie3Kpz.js"
-  },
-  "/_nuxt/B30Tc1zV.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"302e7-V7Sd65iILAgLvKaQAMvRNtpO8Eo\"",
-    "mtime": "2026-04-25T15:04:26.946Z",
-    "size": 197351,
-    "path": "../public/_nuxt/B30Tc1zV.js"
-  },
-  "/_nuxt/Bu92OM44.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"d7b-IcVrNud8uOS/tGxGkF0vj5JKH9U\"",
-    "mtime": "2026-04-25T15:04:26.946Z",
-    "size": 3451,
-    "path": "../public/_nuxt/Bu92OM44.js"
-  },
-  "/_nuxt/BMoxjklI.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"1b0e-UuojcpLIf6C+tTVwufU2mDwYlAg\"",
-    "mtime": "2026-04-25T15:04:26.947Z",
-    "size": 6926,
-    "path": "../public/_nuxt/BMoxjklI.js"
-  },
-  "/_nuxt/BBT76Onc.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"cad1-YcL7zuazMk9fpnAWgjbVBjSW1AI\"",
-    "mtime": "2026-04-25T15:04:26.950Z",
-    "size": 51921,
-    "path": "../public/_nuxt/BBT76Onc.js"
-  },
-  "/_nuxt/CdLAI-bj.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"56-Q1uXLJa24Ejkrl2APBR7SWtmMN0\"",
-    "mtime": "2026-04-25T15:04:26.946Z",
-    "size": 86,
-    "path": "../public/_nuxt/CdLAI-bj.js"
-  },
-  "/_nuxt/C7K5__IG.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"2e37-VzEtKTQNitPhzDN1zZG47O28Gg8\"",
-    "mtime": "2026-04-25T15:04:26.957Z",
-    "size": 11831,
-    "path": "../public/_nuxt/C7K5__IG.js"
-  },
-  "/_nuxt/CBuReJfq.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"cbf-z5ZHUWCo2D489KjK4r/FF2oQ7DE\"",
-    "mtime": "2026-04-25T15:04:26.948Z",
-    "size": 3263,
-    "path": "../public/_nuxt/CBuReJfq.js"
-  },
-  "/_nuxt/CDZmnJLQ.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"e31-zim5Oc7yij2Bn5/3+P+Ci/jsEFg\"",
-    "mtime": "2026-04-25T15:04:26.947Z",
-    "size": 3633,
-    "path": "../public/_nuxt/CDZmnJLQ.js"
-  },
-  "/_nuxt/cookie-policy.CaIcTSdV.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"1036-WewyQ5l4A4p1rEDLfBB4EqVPU0U\"",
-    "mtime": "2026-04-25T15:04:26.944Z",
-    "size": 4150,
-    "path": "../public/_nuxt/cookie-policy.CaIcTSdV.css"
-  },
-  "/_nuxt/CldHzKTq.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"af46-bQhkW5xgQIyx6m+r92yjQEBr608\"",
-    "mtime": "2026-04-25T15:04:26.947Z",
-    "size": 44870,
-    "path": "../public/_nuxt/CldHzKTq.js"
-  },
-  "/_nuxt/CurSqNUX.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"17e7-dxLFhBeB2Mm1m8SpybPZFJcuiIQ\"",
-    "mtime": "2026-04-25T15:04:26.958Z",
-    "size": 6119,
-    "path": "../public/_nuxt/CurSqNUX.js"
-  },
-  "/_nuxt/Cm2IICOa.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"2f38-EC2184xPfX48bQ0thB348pteSLE\"",
-    "mtime": "2026-04-25T15:04:26.947Z",
-    "size": 12088,
-    "path": "../public/_nuxt/Cm2IICOa.js"
-  },
-  "/_nuxt/BwraVL9e.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"eb4-Nq2l0g3jBtCxxVmgBySBEG9iRdQ\"",
-    "mtime": "2026-04-25T15:04:26.945Z",
-    "size": 3764,
-    "path": "../public/_nuxt/BwraVL9e.js"
-  },
-  "/_nuxt/BRfW9Udb.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"e8b-vU+zQOJjCdE1GLbB+iVGCvvAoBA\"",
-    "mtime": "2026-04-25T15:04:26.947Z",
-    "size": 3723,
-    "path": "../public/_nuxt/BRfW9Udb.js"
-  },
-  "/_nuxt/DAaPZdSN.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"531b-5ceBs4B2U5+chPB45x7pN4nOeV8\"",
-    "mtime": "2026-04-25T15:04:26.947Z",
-    "size": 21275,
-    "path": "../public/_nuxt/DAaPZdSN.js"
-  },
-  "/_nuxt/dashboard.CQ9HwD3O.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"1e03-LuOGfQ1OJS+PZ5eTazqzh8vxO5Q\"",
-    "mtime": "2026-04-25T15:04:26.943Z",
-    "size": 7683,
-    "path": "../public/_nuxt/dashboard.CQ9HwD3O.css"
-  },
-  "/_nuxt/default.wpbERoja.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"612-pjs1eZnCDckEDtv2qxNNZi+e0G0\"",
-    "mtime": "2026-04-25T15:04:26.945Z",
-    "size": 1554,
-    "path": "../public/_nuxt/default.wpbERoja.css"
-  },
-  "/_nuxt/DGJp4o61.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"14f0-4CtPCaXc2R1QSQLr5E+5z8lIkjs\"",
-    "mtime": "2026-04-25T15:04:26.949Z",
-    "size": 5360,
-    "path": "../public/_nuxt/DGJp4o61.js"
-  },
-  "/_nuxt/Dj1KLTyo.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"29e5-IlWLez6rQzSLNGVJ+xzEeol18UE\"",
-    "mtime": "2026-04-25T15:04:26.946Z",
-    "size": 10725,
-    "path": "../public/_nuxt/Dj1KLTyo.js"
-  },
-  "/_nuxt/entry.BFQtrxnp.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"45a5-rmNGPPiRIOldeVFHCDvCdr7Ja7Q\"",
-    "mtime": "2026-04-25T15:04:26.942Z",
-    "size": 17829,
-    "path": "../public/_nuxt/entry.BFQtrxnp.css"
-  },
-  "/_nuxt/error-404._yXoGkXB.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"97e-UvhxUpGzrIO+HDYB4qU9Txgu35A\"",
-    "mtime": "2026-04-25T15:04:26.943Z",
-    "size": 2430,
-    "path": "../public/_nuxt/error-404._yXoGkXB.css"
-  },
-  "/_nuxt/error-500.BENb_mjk.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"773-BFLUend+w1t3SP3QDB+Z0A0V5pI\"",
-    "mtime": "2026-04-25T15:04:26.900Z",
-    "size": 1907,
-    "path": "../public/_nuxt/error-500.BENb_mjk.css"
-  },
-  "/_nuxt/DJEElt__.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"da9f-4OjcTgNpZ5cArQ0duNYQTBaNhqk\"",
-    "mtime": "2026-04-25T15:04:26.948Z",
-    "size": 55967,
-    "path": "../public/_nuxt/DJEElt__.js"
-  },
-  "/_nuxt/DMP7Uwjn.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"8ec-b7yxXtgm3e5XnQxw7+9BflQwYBI\"",
-    "mtime": "2026-04-25T15:04:26.948Z",
-    "size": 2284,
-    "path": "../public/_nuxt/DMP7Uwjn.js"
-  },
-  "/_nuxt/FeaturedVehicles.DLMe1Lma.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"2be1-C+G4Y6Z1KJl3QzH3oE6QYefWDEE\"",
-    "mtime": "2026-04-25T15:04:26.946Z",
-    "size": 11233,
-    "path": "../public/_nuxt/FeaturedVehicles.DLMe1Lma.css"
-  },
-  "/_nuxt/FWogPpZJ.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"4e-UVjU9/DxnX7Y4bGHds6R59XDT0k\"",
-    "mtime": "2026-04-25T15:04:26.947Z",
+    "etag": "\"4e-rA/miO8gAG1B2seU7c/xpEHqEuU\"",
+    "mtime": "2026-04-25T22:30:53.903Z",
     "size": 78,
-    "path": "../public/_nuxt/FWogPpZJ.js"
+    "path": "../public/_nuxt/B4DG2JA-.js"
   },
-  "/_nuxt/index.BncFGHWG.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"2e14-I7RxlCNflEKPQfcaqWHPzP9A2O8\"",
-    "mtime": "2026-04-25T15:04:26.944Z",
-    "size": 11796,
-    "path": "../public/_nuxt/index.BncFGHWG.css"
+  "/_nuxt/BeKOhmXA.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"2f9a-wMPzXDUGro/e/gHs2kmx9ECNlaY\"",
+    "mtime": "2026-04-25T22:30:53.903Z",
+    "size": 12186,
+    "path": "../public/_nuxt/BeKOhmXA.js"
   },
-  "/_nuxt/index.CeUzwkil.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"688e-F/1VrTukKFR9inuivJ2syc/ecaU\"",
-    "mtime": "2026-04-25T15:04:26.945Z",
-    "size": 26766,
-    "path": "../public/_nuxt/index.CeUzwkil.css"
+  "/_nuxt/BCh4Csfw.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"17ba-PqSO74Fxkw0dQlSZTVUkPUf3vaU\"",
+    "mtime": "2026-04-25T22:30:53.902Z",
+    "size": 6074,
+    "path": "../public/_nuxt/BCh4Csfw.js"
   },
-  "/_nuxt/index.DvBuS9Nx.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"111e-0CiKe4p5Ja8SjBWzb1fFVL3wamg\"",
-    "mtime": "2026-04-25T15:04:26.945Z",
-    "size": 4382,
-    "path": "../public/_nuxt/index.DvBuS9Nx.css"
+  "/_nuxt/BWws1Wlf.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"21a3-w10yJdNKMv0ddLq7AP/b1RJnU78\"",
+    "mtime": "2026-04-25T22:30:53.904Z",
+    "size": 8611,
+    "path": "../public/_nuxt/BWws1Wlf.js"
   },
-  "/_nuxt/legal-notes.C7cL4UIx.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"941-p6v3UD+UjZcS4nNRRGZrw9IgWA0\"",
-    "mtime": "2026-04-25T15:04:26.944Z",
-    "size": 2369,
-    "path": "../public/_nuxt/legal-notes.C7cL4UIx.css"
+  "/_nuxt/C8cMB7-v.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"d7b-s56WXwMA1Ai7buCKHQFhmk7YzB8\"",
+    "mtime": "2026-04-25T22:30:53.902Z",
+    "size": 3451,
+    "path": "../public/_nuxt/C8cMB7-v.js"
   },
-  "/_nuxt/login.DoTJjdth.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"264-0/CnFr927tbMTJr0xIqAfSqfka4\"",
-    "mtime": "2026-04-25T15:04:26.943Z",
-    "size": 612,
-    "path": "../public/_nuxt/login.DoTJjdth.css"
+  "/_nuxt/BxiQFMfh.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"1ae6-IUmOilSR3PVv/nocCyPTmwcaEDA\"",
+    "mtime": "2026-04-25T22:30:53.902Z",
+    "size": 6886,
+    "path": "../public/_nuxt/BxiQFMfh.js"
   },
-  "/_nuxt/privacy-policy.BVmzdRY9.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"10b9-ZNsJk4AU44JwPxlKCbXBfB9kg7o\"",
-    "mtime": "2026-04-25T15:04:26.944Z",
-    "size": 4281,
-    "path": "../public/_nuxt/privacy-policy.BVmzdRY9.css"
+  "/_nuxt/C9MYZHQZ.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"c97-qUY4qY7kLKyOn+tqdr/IBkSS24c\"",
+    "mtime": "2026-04-25T22:30:53.908Z",
+    "size": 3223,
+    "path": "../public/_nuxt/C9MYZHQZ.js"
   },
-  "/_nuxt/VehicleCarousel.CvHvFApG.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"649-wmHzgLhBrzR0f3LgfF2bVqnAVNQ\"",
-    "mtime": "2026-04-25T15:04:26.945Z",
-    "size": 1609,
-    "path": "../public/_nuxt/VehicleCarousel.CvHvFApG.css"
+  "/_nuxt/CFKts2rl.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"27e0-h4VFQ/5QQ43+6I77cauc6kdEU+4\"",
+    "mtime": "2026-04-25T22:30:53.902Z",
+    "size": 10208,
+    "path": "../public/_nuxt/CFKts2rl.js"
   },
-  "/_nuxt/_id_.Be0HLR4D.css": {
-    "type": "text/css; charset=utf-8",
-    "etag": "\"1442-5q1c8fWQsbaalvg+U0z9RXy3lUQ\"",
-    "mtime": "2026-04-25T15:04:26.943Z",
-    "size": 5186,
-    "path": "../public/_nuxt/_id_.Be0HLR4D.css"
+  "/_nuxt/CffoU_HE.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"95da-YC8QkMfKTFZthCeA5j3TqJpfhOQ\"",
+    "mtime": "2026-04-25T22:30:53.903Z",
+    "size": 38362,
+    "path": "../public/_nuxt/CffoU_HE.js"
   },
-  "/_nuxt/_slug_.B2zqSEf7.css": {
+  "/_nuxt/cookie-policy.D_Ny7_i8.css": {
     "type": "text/css; charset=utf-8",
-    "etag": "\"14d2-IcISntWH/BMHtYI/OOGp6coBZiM\"",
-    "mtime": "2026-04-25T15:04:26.943Z",
-    "size": 5330,
-    "path": "../public/_nuxt/_slug_.B2zqSEf7.css"
+    "etag": "\"d26-edL9o/d6cIuF3l5erV31xNemq6s\"",
+    "mtime": "2026-04-25T22:30:53.901Z",
+    "size": 3366,
+    "path": "../public/_nuxt/cookie-policy.D_Ny7_i8.css"
+  },
+  "/_nuxt/dashboard.CALHPv7J.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"1b66-//AaZXCMzteNF+mxPZaqGxlLSBM\"",
+    "mtime": "2026-04-25T22:30:53.900Z",
+    "size": 7014,
+    "path": "../public/_nuxt/dashboard.CALHPv7J.css"
+  },
+  "/_nuxt/CW14r-2C.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"207a-Y8DD0SoZ5PcegRp2GNEIVqNtqwg\"",
+    "mtime": "2026-04-25T22:30:53.903Z",
+    "size": 8314,
+    "path": "../public/_nuxt/CW14r-2C.js"
+  },
+  "/_nuxt/CZZGWusa.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"2c2d-XSpK8So0+U5I0aGbWuyGcQ8JAHs\"",
+    "mtime": "2026-04-25T22:30:53.902Z",
+    "size": 11309,
+    "path": "../public/_nuxt/CZZGWusa.js"
+  },
+  "/_nuxt/cVyZubch.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"eb4-ojSJrFhEkjq8TvDYnjjHO1/izAA\"",
+    "mtime": "2026-04-25T22:30:53.901Z",
+    "size": 3764,
+    "path": "../public/_nuxt/cVyZubch.js"
+  },
+  "/_nuxt/default.B4D1MVxO.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"868-VVqwJpHfR5ZALHLjAX2GSe4mdG8\"",
+    "mtime": "2026-04-25T22:30:53.902Z",
+    "size": 2152,
+    "path": "../public/_nuxt/default.B4D1MVxO.css"
+  },
+  "/_nuxt/CXT5DcTR.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"311fe-Q8vnwTj9KLjskvh7se1MZZ/5zg8\"",
+    "mtime": "2026-04-25T22:30:53.901Z",
+    "size": 201214,
+    "path": "../public/_nuxt/CXT5DcTR.js"
+  },
+  "/_nuxt/DiCkgNEV.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"56-5K5zFvqyMILa+yYt6waqVnfmKuY\"",
+    "mtime": "2026-04-25T22:30:53.902Z",
+    "size": 86,
+    "path": "../public/_nuxt/DiCkgNEV.js"
+  },
+  "/_nuxt/DrkiZAM5.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"d3a3-M5L4wRhiH/4P0ff4yodIFmmhwfE\"",
+    "mtime": "2026-04-25T22:30:53.902Z",
+    "size": 54179,
+    "path": "../public/_nuxt/DrkiZAM5.js"
+  },
+  "/_nuxt/DRR5JFw4.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"ad8-PqsdkAQ6QfN5hynlZfPh0VAPpl0\"",
+    "mtime": "2026-04-25T22:30:53.902Z",
+    "size": 2776,
+    "path": "../public/_nuxt/DRR5JFw4.js"
+  },
+  "/_nuxt/entry.DDUzAK85.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"3682-f8AcUag/wR839lcse+xjyXKUbk4\"",
+    "mtime": "2026-04-25T22:30:53.864Z",
+    "size": 13954,
+    "path": "../public/_nuxt/entry.DDUzAK85.css"
+  },
+  "/_nuxt/error-404.DsjY6sZm.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"97e-OyYSk2SdwslhC86qoBQBHR+EuKk\"",
+    "mtime": "2026-04-25T22:30:53.901Z",
+    "size": 2430,
+    "path": "../public/_nuxt/error-404.DsjY6sZm.css"
+  },
+  "/_nuxt/FeaturedVehicles.DJwyc9aS.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"25db-jm6+yeaW/Wwyc7t1sl36efId6pY\"",
+    "mtime": "2026-04-25T22:30:53.901Z",
+    "size": 9691,
+    "path": "../public/_nuxt/FeaturedVehicles.DJwyc9aS.css"
+  },
+  "/_nuxt/error-500.CpOspNBv.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"773-kLs7YFk0/MQCUgy/Hx7W9RYWuEY\"",
+    "mtime": "2026-04-25T22:30:53.900Z",
+    "size": 1907,
+    "path": "../public/_nuxt/error-500.CpOspNBv.css"
+  },
+  "/_nuxt/index.lHEn_bDh.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"24f7-NPcytgtgMqTtPDT5/wkituHuOQs\"",
+    "mtime": "2026-04-25T22:30:53.901Z",
+    "size": 9463,
+    "path": "../public/_nuxt/index.lHEn_bDh.css"
+  },
+  "/_nuxt/index.CoacRqh4.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"3d1b-T/uTaUu+2M9f5OjCleBsNXq3W1k\"",
+    "mtime": "2026-04-25T22:30:53.901Z",
+    "size": 15643,
+    "path": "../public/_nuxt/index.CoacRqh4.css"
+  },
+  "/_nuxt/legal-notes.DF5tdcO6.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"768-bCDYUMYo7lp1FBCFKMAgoA3/Xic\"",
+    "mtime": "2026-04-25T22:30:53.901Z",
+    "size": 1896,
+    "path": "../public/_nuxt/legal-notes.DF5tdcO6.css"
+  },
+  "/_nuxt/login.BDdbR2V-.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"23e-DiLuY/ydXV4+s7UD/6aT3stEJKM\"",
+    "mtime": "2026-04-25T22:30:53.900Z",
+    "size": 574,
+    "path": "../public/_nuxt/login.BDdbR2V-.css"
+  },
+  "/_nuxt/index.LNUWcDvP.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"e36-aHVbz3RnKqoKqCOyBgmogwrux2A\"",
+    "mtime": "2026-04-25T22:30:53.901Z",
+    "size": 3638,
+    "path": "../public/_nuxt/index.LNUWcDvP.css"
+  },
+  "/_nuxt/M3sp9DWp.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"8ec-UE4auORvhJ/UC2En0lxSYSsc7rs\"",
+    "mtime": "2026-04-25T22:30:53.903Z",
+    "size": 2284,
+    "path": "../public/_nuxt/M3sp9DWp.js"
+  },
+  "/_nuxt/privacy-policy.9BmrDgiv.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"da0-Qb7hRInKjlWR2Ixjyw3N1m3F58Q\"",
+    "mtime": "2026-04-25T22:30:53.902Z",
+    "size": 3488,
+    "path": "../public/_nuxt/privacy-policy.9BmrDgiv.css"
+  },
+  "/_nuxt/OqUmWFL0.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"29e7-3vrX+F3FPapkwsdhQfz3TObjYTo\"",
+    "mtime": "2026-04-25T22:30:53.902Z",
+    "size": 10727,
+    "path": "../public/_nuxt/OqUmWFL0.js"
+  },
+  "/_nuxt/TsmE8l7-.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"e68-WeRv8UDYe7MXzBIwpoIHbGTHQMI\"",
+    "mtime": "2026-04-25T22:30:53.902Z",
+    "size": 3688,
+    "path": "../public/_nuxt/TsmE8l7-.js"
+  },
+  "/_nuxt/yNxKjTGs.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"14ee-FgOYsMDteTqI3fXk3ecRiaV+CzU\"",
+    "mtime": "2026-04-25T22:30:53.904Z",
+    "size": 5358,
+    "path": "../public/_nuxt/yNxKjTGs.js"
+  },
+  "/_nuxt/_id_.C9GvrOcc.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"fef-cvfvxXjR1SXzLQPt+qQRrUZ35O8\"",
+    "mtime": "2026-04-25T22:30:53.901Z",
+    "size": 4079,
+    "path": "../public/_nuxt/_id_.C9GvrOcc.css"
+  },
+  "/_nuxt/_slug_.INIJOYF3.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"ce8-wVA45BMsMyp0vSQ5wD4FIuoi18A\"",
+    "mtime": "2026-04-25T22:30:53.900Z",
+    "size": 3304,
+    "path": "../public/_nuxt/_slug_.INIJOYF3.css"
   },
   "/_nuxt/builds/latest.json": {
     "type": "application/json",
-    "etag": "\"47-K3Dt6lZZJctO0/4FTqE1/wOhtnI\"",
-    "mtime": "2026-04-25T15:04:37.323Z",
+    "etag": "\"47-huOL1apGjxLRhg/l3X7AenYe6tE\"",
+    "mtime": "2026-04-25T22:31:06.031Z",
     "size": 71,
     "path": "../public/_nuxt/builds/latest.json"
   },
-  "/_nuxt/xgxdCp6f.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"11198-9ubDNODqOLALvTTPNnR3eEdAXgI\"",
-    "mtime": "2026-04-25T15:04:26.949Z",
-    "size": 70040,
-    "path": "../public/_nuxt/xgxdCp6f.js"
-  },
-  "/_nuxt/builds/meta/4f1c8bd4-c6c3-4d5f-9173-27999256b3b5.json": {
+  "/_nuxt/builds/meta/07d11f1d-baf3-4bca-ab68-5efcfa45d475.json": {
     "type": "application/json",
-    "etag": "\"58-BtvqQdbjIBUQnRqzfwLSeMeLsOU\"",
-    "mtime": "2026-04-25T15:04:37.325Z",
+    "etag": "\"58-+IE+quBhzjWte4Ei/Bj8PDj2xRU\"",
+    "mtime": "2026-04-25T22:31:06.034Z",
     "size": 88,
-    "path": "../public/_nuxt/builds/meta/4f1c8bd4-c6c3-4d5f-9173-27999256b3b5.json"
+    "path": "../public/_nuxt/builds/meta/07d11f1d-baf3-4bca-ab68-5efcfa45d475.json"
+  },
+  "/_nuxt/VehicleCarousel.CQUymgCK.css": {
+    "type": "text/css; charset=utf-8",
+    "etag": "\"449-uO4C3bIU8Er8psvuwKief1vWNDk\"",
+    "mtime": "2026-04-25T22:30:53.901Z",
+    "size": 1097,
+    "path": "../public/_nuxt/VehicleCarousel.CQUymgCK.css"
   },
   "/video/hero-video.mp4": {
     "type": "video/mp4",
@@ -5402,7 +5209,7 @@ function normalizeWindowsPath(input = "") {
   }
   return input.replace(/\\/g, "/").replace(_DRIVE_LETTER_START_RE, (r) => r.toUpperCase());
 }
-const _IS_ABSOLUTE_RE = /^[/\\](?![/\\])|^[/\\]{2}(?!\.)|^[A-Za-z]:[/\\]/;
+const _IS_ABSOLUTE_RE$1 = /^[/\\](?![/\\])|^[/\\]{2}(?!\.)|^[A-Za-z]:[/\\]/;
 const _DRIVE_LETTER_RE = /^[A-Za-z]:$/;
 function cwd() {
   if (typeof process !== "undefined" && typeof process.cwd === "function") {
@@ -5420,10 +5227,10 @@ const resolve$1 = function(...arguments_) {
       continue;
     }
     resolvedPath = `${path}/${resolvedPath}`;
-    resolvedAbsolute = isAbsolute(path);
+    resolvedAbsolute = isAbsolute$1(path);
   }
   resolvedPath = normalizeString(resolvedPath, !resolvedAbsolute);
-  if (resolvedAbsolute && !isAbsolute(resolvedPath)) {
+  if (resolvedAbsolute && !isAbsolute$1(resolvedPath)) {
     return `/${resolvedPath}`;
   }
   return resolvedPath.length > 0 ? resolvedPath : ".";
@@ -5487,15 +5294,15 @@ function normalizeString(path, allowAboveRoot) {
   }
   return res;
 }
-const isAbsolute = function(p) {
-  return _IS_ABSOLUTE_RE.test(p);
+const isAbsolute$1 = function(p) {
+  return _IS_ABSOLUTE_RE$1.test(p);
 };
 const dirname = function(p) {
   const segments = normalizeWindowsPath(p).replace(/\/$/, "").split("/").slice(0, -1);
   if (segments.length === 1 && _DRIVE_LETTER_RE.test(segments[0])) {
     segments[0] += "/";
   }
-  return segments.join("/") || (isAbsolute(p) ? "/" : ".");
+  return segments.join("/") || (isAbsolute$1(p) ? "/" : ".");
 };
 
 function readAsset (id) {
@@ -5521,23 +5328,23 @@ function getAsset (id) {
 
 const METHODS = /* @__PURE__ */ new Set(["HEAD", "GET"]);
 const EncodingMap = { gzip: ".gz", br: ".br" };
-const _EI5waZ = eventHandler((event) => {
+const _EI5waZ = eventHandler$1((event) => {
   if (event.method && !METHODS.has(event.method)) {
     return;
   }
-  let id = decodePath(
-    withLeadingSlash(withoutTrailingSlash(parseURL(event.path).pathname))
+  let id = decodePath$1(
+    withLeadingSlash$1(withoutTrailingSlash$1(parseURL$1(event.path).pathname))
   );
   let asset;
   const encodingHeader = String(
-    getRequestHeader(event, "accept-encoding") || ""
+    getRequestHeader$1(event, "accept-encoding") || ""
   );
   const encodings = [
     ...encodingHeader.split(",").map((e) => EncodingMap[e.trim()]).filter(Boolean).sort(),
     ""
   ];
   for (const encoding of encodings) {
-    for (const _id of [id + encoding, joinURL(id, "index.html" + encoding)]) {
+    for (const _id of [id + encoding, joinURL$1(id, "index.html" + encoding)]) {
       const _asset = getAsset(_id);
       if (_asset) {
         asset = _asset;
@@ -5549,43 +5356,43 @@ const _EI5waZ = eventHandler((event) => {
   if (!asset) {
     if (isPublicAssetURL(id)) {
       removeResponseHeader(event, "Cache-Control");
-      throw createError$1({ statusCode: 404 });
+      throw createError$2({ statusCode: 404 });
     }
     return;
   }
   if (asset.encoding !== void 0) {
     appendResponseHeader(event, "Vary", "Accept-Encoding");
   }
-  const ifNotMatch = getRequestHeader(event, "if-none-match") === asset.etag;
+  const ifNotMatch = getRequestHeader$1(event, "if-none-match") === asset.etag;
   if (ifNotMatch) {
     setResponseStatus(event, 304, "Not Modified");
     return "";
   }
-  const ifModifiedSinceH = getRequestHeader(event, "if-modified-since");
+  const ifModifiedSinceH = getRequestHeader$1(event, "if-modified-since");
   const mtimeDate = new Date(asset.mtime);
   if (ifModifiedSinceH && asset.mtime && new Date(ifModifiedSinceH) >= mtimeDate) {
     setResponseStatus(event, 304, "Not Modified");
     return "";
   }
   if (asset.type && !getResponseHeader(event, "Content-Type")) {
-    setResponseHeader(event, "Content-Type", asset.type);
+    setResponseHeader$1(event, "Content-Type", asset.type);
   }
   if (asset.etag && !getResponseHeader(event, "ETag")) {
-    setResponseHeader(event, "ETag", asset.etag);
+    setResponseHeader$1(event, "ETag", asset.etag);
   }
   if (asset.mtime && !getResponseHeader(event, "Last-Modified")) {
-    setResponseHeader(event, "Last-Modified", mtimeDate.toUTCString());
+    setResponseHeader$1(event, "Last-Modified", mtimeDate.toUTCString());
   }
   if (asset.encoding && !getResponseHeader(event, "Content-Encoding")) {
-    setResponseHeader(event, "Content-Encoding", asset.encoding);
+    setResponseHeader$1(event, "Content-Encoding", asset.encoding);
   }
   if (asset.size > 0 && !getResponseHeader(event, "Content-Length")) {
-    setResponseHeader(event, "Content-Length", asset.size);
+    setResponseHeader$1(event, "Content-Length", asset.size);
   }
   return readAsset(id);
 });
 
-const _SxA8c9 = defineEventHandler(() => {});
+const _SxA8c9 = defineEventHandler$1(() => {});
 
 const r=Object.create(null),i=e=>globalThis.process?.env||globalThis._importMeta_.env||globalThis.Deno?.env.toObject()||globalThis.__env__||(e?r:globalThis),o=new Proxy(r,{get(e,s){return i()[s]??r[s]},has(e,s){const E=i();return s in E||s in r},set(e,s,E){const B=i(true);return B[s]=E,true},deleteProperty(e,s){if(!s)return  false;const E=i(true);return delete E[s],true},ownKeys(){const e=i(true);return Object.keys(e)}}),t=typeof process<"u"&&process.env&&"production"||"",f=[["APPVEYOR"],["AWS_AMPLIFY","AWS_APP_ID",{ci:true}],["AZURE_PIPELINES","SYSTEM_TEAMFOUNDATIONCOLLECTIONURI"],["AZURE_STATIC","INPUT_AZURE_STATIC_WEB_APPS_API_TOKEN"],["APPCIRCLE","AC_APPCIRCLE"],["BAMBOO","bamboo_planKey"],["BITBUCKET","BITBUCKET_COMMIT"],["BITRISE","BITRISE_IO"],["BUDDY","BUDDY_WORKSPACE_ID"],["BUILDKITE"],["CIRCLE","CIRCLECI"],["CIRRUS","CIRRUS_CI"],["CLOUDFLARE_PAGES","CF_PAGES",{ci:true}],["CLOUDFLARE_WORKERS","WORKERS_CI",{ci:true}],["CODEBUILD","CODEBUILD_BUILD_ARN"],["CODEFRESH","CF_BUILD_ID"],["DRONE"],["DRONE","DRONE_BUILD_EVENT"],["DSARI"],["GITHUB_ACTIONS"],["GITLAB","GITLAB_CI"],["GITLAB","CI_MERGE_REQUEST_ID"],["GOCD","GO_PIPELINE_LABEL"],["LAYERCI"],["HUDSON","HUDSON_URL"],["JENKINS","JENKINS_URL"],["MAGNUM"],["NETLIFY"],["NETLIFY","NETLIFY_LOCAL",{ci:false}],["NEVERCODE"],["RENDER"],["SAIL","SAILCI"],["SEMAPHORE"],["SCREWDRIVER"],["SHIPPABLE"],["SOLANO","TDDIUM"],["STRIDER"],["TEAMCITY","TEAMCITY_VERSION"],["TRAVIS"],["VERCEL","NOW_BUILDER"],["VERCEL","VERCEL",{ci:false}],["VERCEL","VERCEL_ENV",{ci:false}],["APPCENTER","APPCENTER_BUILD_ID"],["CODESANDBOX","CODESANDBOX_SSE",{ci:false}],["CODESANDBOX","CODESANDBOX_HOST",{ci:false}],["STACKBLITZ"],["STORMKIT"],["CLEAVR"],["ZEABUR"],["CODESPHERE","CODESPHERE_APP_ID",{ci:true}],["RAILWAY","RAILWAY_PROJECT_ID"],["RAILWAY","RAILWAY_SERVICE_ID"],["DENO-DEPLOY","DENO_DEPLOYMENT_ID"],["FIREBASE_APP_HOSTING","FIREBASE_APP_HOSTING",{ci:true}]];function b(){if(globalThis.process?.env)for(const e of f){const s=e[1]||e[0];if(globalThis.process?.env[s])return {name:e[0].toLowerCase(),...e[2]}}return globalThis.process?.env?.SHELL==="/bin/jsh"&&globalThis.process?.versions?.webcontainer?{name:"stackblitz",ci:false}:{name:"",ci:false}}const l=b();l.name;function n(e){return e?e!=="false":false}const I=globalThis.process?.platform||"",T=n(o.CI)||l.ci!==false,R=n(globalThis.process?.stdout&&globalThis.process?.stdout.isTTY);n(o.DEBUG);const a=t==="test"||n(o.TEST),h=t==="dev"||t==="development";n(o.MINIMAL)||T||a||!R;const A=/^win/i.test(I);!n(o.NO_COLOR)&&(n(o.FORCE_COLOR)||(R||A)&&o.TERM!=="dumb"||T);const C=(globalThis.process?.versions?.node||"").replace(/^v/,"")||null;Number(C?.split(".")[0])||null;const W=globalThis.process||Object.create(null),_={versions:{}};new Proxy(W,{get(e,s){if(s==="env")return o;if(s in e)return e[s];if(s in _)return _[s]}});const O=globalThis.process?.release?.name==="node",c=!!globalThis.Bun||!!globalThis.process?.versions?.bun,D=!!globalThis.Deno,L=!!globalThis.fastly,S=!!globalThis.Netlify,u=!!globalThis.EdgeRuntime,N=globalThis.navigator?.userAgent==="Cloudflare-Workers",F=[[S,"netlify"],[u,"edge-light"],[N,"workerd"],[L,"fastly"],[D,"deno"],[c,"bun"],[O,"node"]];function G(){const e=F.find(s=>s[0]);if(e)return {name:e[1]}}const P=G();P?.name||"";
 
@@ -5676,12 +5483,12 @@ function getNitroOrigin(e) {
   return getNitroOrigin$1({
     isDev: false,
     isPrerender: false,
-    requestHost: e ? getRequestHost(e, { xForwardedHost: true }) : void 0,
+    requestHost: e ? getRequestHost$1(e, { xForwardedHost: true }) : void 0,
     requestProtocol: e ? getRequestProtocol(e, { xForwardedProto: true }) : void 0
   });
 }
 
-const _1zx9fb = eventHandler(async (e) => {
+const _1zx9fb = eventHandler$1(async (e) => {
   if (e.context._initedSiteConfig)
     return;
   const runtimeConfig = useRuntimeConfig(e);
@@ -5716,7 +5523,7 @@ const _1zx9fb = eventHandler(async (e) => {
     });
   }
   if (config.multiTenancy) {
-    const host = parseURL(nitroOrigin).host?.replace(/:\d+$/, "") || "";
+    const host = parseURL$1(nitroOrigin).host?.replace(/:\d+$/, "") || "";
     const tenant = config.multiTenancy?.find((t) => t.hosts.includes(host));
     if (tenant) {
       siteConfig.push({
@@ -5731,6 +5538,838 @@ const _1zx9fb = eventHandler(async (e) => {
   e.context.siteConfig = ctx.siteConfig;
   e.context._initedSiteConfig = true;
 });
+
+const HASH_RE = /#/g;
+const AMPERSAND_RE = /&/g;
+const SLASH_RE = /\//g;
+const EQUAL_RE = /=/g;
+const IM_RE = /\?/g;
+const PLUS_RE = /\+/g;
+const ENC_CARET_RE = /%5e/gi;
+const ENC_BACKTICK_RE = /%60/gi;
+const ENC_PIPE_RE = /%7c/gi;
+const ENC_SPACE_RE = /%20/gi;
+const ENC_SLASH_RE = /%2f/gi;
+const ENC_ENC_SLASH_RE = /%252f/gi;
+function encode(text) {
+  return encodeURI("" + text).replace(ENC_PIPE_RE, "|");
+}
+function encodeQueryValue(input) {
+  return encode(typeof input === "string" ? input : JSON.stringify(input)).replace(PLUS_RE, "%2B").replace(ENC_SPACE_RE, "+").replace(HASH_RE, "%23").replace(AMPERSAND_RE, "%26").replace(ENC_BACKTICK_RE, "`").replace(ENC_CARET_RE, "^").replace(SLASH_RE, "%2F");
+}
+function encodeQueryKey(text) {
+  return encodeQueryValue(text).replace(EQUAL_RE, "%3D");
+}
+function encodePath(text) {
+  return encode(text).replace(HASH_RE, "%23").replace(IM_RE, "%3F").replace(ENC_ENC_SLASH_RE, "%2F").replace(AMPERSAND_RE, "%26").replace(PLUS_RE, "%2B");
+}
+function encodeParam(text) {
+  return encodePath(text).replace(SLASH_RE, "%2F");
+}
+function decode(text = "") {
+  try {
+    return decodeURIComponent("" + text);
+  } catch {
+    return "" + text;
+  }
+}
+function decodePath(text) {
+  return decode(text.replace(ENC_SLASH_RE, "%252F"));
+}
+function decodeQueryKey(text) {
+  return decode(text.replace(PLUS_RE, " "));
+}
+function decodeQueryValue(text) {
+  return decode(text.replace(PLUS_RE, " "));
+}
+
+function parseQuery(parametersString = "") {
+  const object = /* @__PURE__ */ Object.create(null);
+  if (parametersString[0] === "?") {
+    parametersString = parametersString.slice(1);
+  }
+  for (const parameter of parametersString.split("&")) {
+    const s = parameter.match(/([^=]+)=?(.*)/) || [];
+    if (s.length < 2) {
+      continue;
+    }
+    const key = decodeQueryKey(s[1]);
+    if (key === "__proto__" || key === "constructor") {
+      continue;
+    }
+    const value = decodeQueryValue(s[2] || "");
+    if (object[key] === void 0) {
+      object[key] = value;
+    } else if (Array.isArray(object[key])) {
+      object[key].push(value);
+    } else {
+      object[key] = [object[key], value];
+    }
+  }
+  return object;
+}
+function encodeQueryItem(key, value) {
+  if (typeof value === "number" || typeof value === "boolean") {
+    value = String(value);
+  }
+  if (!value) {
+    return encodeQueryKey(key);
+  }
+  if (Array.isArray(value)) {
+    return value.map(
+      (_value) => `${encodeQueryKey(key)}=${encodeQueryValue(_value)}`
+    ).join("&");
+  }
+  return `${encodeQueryKey(key)}=${encodeQueryValue(value)}`;
+}
+function stringifyQuery(query) {
+  return Object.keys(query).filter((k) => query[k] !== void 0).map((k) => encodeQueryItem(k, query[k])).filter(Boolean).join("&");
+}
+
+const PROTOCOL_STRICT_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{1,2})/;
+const PROTOCOL_REGEX = /^[\s\w\0+.-]{2,}:([/\\]{2})?/;
+const PROTOCOL_RELATIVE_REGEX = /^([/\\]\s*){2,}[^/\\]/;
+const PROTOCOL_SCRIPT_RE = /^[\s\0]*(blob|data|javascript|vbscript):$/i;
+const TRAILING_SLASH_RE = /\/$|\/\?|\/#/;
+const JOIN_LEADING_SLASH_RE = /^\.?\//;
+function hasProtocol(inputString, opts = {}) {
+  if (typeof opts === "boolean") {
+    opts = { acceptRelative: opts };
+  }
+  if (opts.strict) {
+    return PROTOCOL_STRICT_REGEX.test(inputString);
+  }
+  return PROTOCOL_REGEX.test(inputString) || (opts.acceptRelative ? PROTOCOL_RELATIVE_REGEX.test(inputString) : false);
+}
+function isScriptProtocol(protocol) {
+  return !!protocol && PROTOCOL_SCRIPT_RE.test(protocol);
+}
+function hasTrailingSlash(input = "", respectQueryAndFragment) {
+  if (!respectQueryAndFragment) {
+    return input.endsWith("/");
+  }
+  return TRAILING_SLASH_RE.test(input);
+}
+function withoutTrailingSlash(input = "", respectQueryAndFragment) {
+  if (!respectQueryAndFragment) {
+    return (hasTrailingSlash(input) ? input.slice(0, -1) : input) || "/";
+  }
+  if (!hasTrailingSlash(input, true)) {
+    return input || "/";
+  }
+  let path = input;
+  let fragment = "";
+  const fragmentIndex = input.indexOf("#");
+  if (fragmentIndex !== -1) {
+    path = input.slice(0, fragmentIndex);
+    fragment = input.slice(fragmentIndex);
+  }
+  const [s0, ...s] = path.split("?");
+  const cleanPath = s0.endsWith("/") ? s0.slice(0, -1) : s0;
+  return (cleanPath || "/") + (s.length > 0 ? `?${s.join("?")}` : "") + fragment;
+}
+function withTrailingSlash(input = "", respectQueryAndFragment) {
+  if (!respectQueryAndFragment) {
+    return input.endsWith("/") ? input : input + "/";
+  }
+  if (hasTrailingSlash(input, true)) {
+    return input || "/";
+  }
+  let path = input;
+  let fragment = "";
+  const fragmentIndex = input.indexOf("#");
+  if (fragmentIndex !== -1) {
+    path = input.slice(0, fragmentIndex);
+    fragment = input.slice(fragmentIndex);
+    if (!path) {
+      return fragment;
+    }
+  }
+  const [s0, ...s] = path.split("?");
+  return s0 + "/" + (s.length > 0 ? `?${s.join("?")}` : "") + fragment;
+}
+function hasLeadingSlash(input = "") {
+  return input.startsWith("/");
+}
+function withLeadingSlash(input = "") {
+  return hasLeadingSlash(input) ? input : "/" + input;
+}
+function withBase(input, base) {
+  if (isEmptyURL(base) || hasProtocol(input)) {
+    return input;
+  }
+  const _base = withoutTrailingSlash(base);
+  if (input.startsWith(_base)) {
+    const nextChar = input[_base.length];
+    if (!nextChar || nextChar === "/" || nextChar === "?") {
+      return input;
+    }
+  }
+  return joinURL(_base, input);
+}
+function withoutBase(input, base) {
+  if (isEmptyURL(base)) {
+    return input;
+  }
+  const _base = withoutTrailingSlash(base);
+  if (!input.startsWith(_base)) {
+    return input;
+  }
+  const nextChar = input[_base.length];
+  if (nextChar && nextChar !== "/" && nextChar !== "?") {
+    return input;
+  }
+  const trimmed = input.slice(_base.length);
+  return trimmed[0] === "/" ? trimmed : "/" + trimmed;
+}
+function withQuery(input, query) {
+  const parsed = parseURL(input);
+  const mergedQuery = { ...parseQuery(parsed.search), ...query };
+  parsed.search = stringifyQuery(mergedQuery);
+  return stringifyParsedURL(parsed);
+}
+function getQuery$1(input) {
+  return parseQuery(parseURL(input).search);
+}
+function isEmptyURL(url) {
+  return !url || url === "/";
+}
+function isNonEmptyURL(url) {
+  return url && url !== "/";
+}
+function joinURL(base, ...input) {
+  let url = base || "";
+  for (const segment of input.filter((url2) => isNonEmptyURL(url2))) {
+    if (url) {
+      const _segment = segment.replace(JOIN_LEADING_SLASH_RE, "");
+      url = withTrailingSlash(url) + _segment;
+    } else {
+      url = segment;
+    }
+  }
+  return url;
+}
+function withHttps(input) {
+  return withProtocol(input, "https://");
+}
+function withProtocol(input, protocol) {
+  let match = input.match(PROTOCOL_REGEX);
+  if (!match) {
+    match = input.match(/^\/{2,}/);
+  }
+  if (!match) {
+    return protocol + input;
+  }
+  return protocol + input.slice(match[0].length);
+}
+
+const protocolRelative = Symbol.for("ufo:protocolRelative");
+function parseURL(input = "", defaultProto) {
+  const _specialProtoMatch = input.match(
+    /^[\s\0]*(blob:|data:|javascript:|vbscript:)(.*)/i
+  );
+  if (_specialProtoMatch) {
+    const [, _proto, _pathname = ""] = _specialProtoMatch;
+    return {
+      protocol: _proto.toLowerCase(),
+      pathname: _pathname,
+      href: _proto + _pathname,
+      auth: "",
+      host: "",
+      search: "",
+      hash: ""
+    };
+  }
+  if (!hasProtocol(input, { acceptRelative: true })) {
+    return defaultProto ? parseURL(defaultProto + input) : parsePath(input);
+  }
+  const [, protocol = "", auth, hostAndPath = ""] = input.replace(/\\/g, "/").match(/^[\s\0]*([\w+.-]{2,}:)?\/\/([^/@]+@)?(.*)/) || [];
+  let [, host = "", path = ""] = hostAndPath.match(/([^#/?]*)(.*)?/) || [];
+  if (protocol === "file:") {
+    path = path.replace(/\/(?=[A-Za-z]:)/, "");
+  }
+  const { pathname, search, hash } = parsePath(path);
+  return {
+    protocol: protocol.toLowerCase(),
+    auth: auth ? auth.slice(0, Math.max(0, auth.length - 1)) : "",
+    host,
+    pathname,
+    search,
+    hash,
+    [protocolRelative]: !protocol
+  };
+}
+function parsePath(input = "") {
+  const [pathname = "", search = "", hash = ""] = (input.match(/([^#?]*)(\?[^#]*)?(#.*)?/) || []).splice(1);
+  return {
+    pathname,
+    search,
+    hash
+  };
+}
+function stringifyParsedURL(parsed) {
+  const pathname = parsed.pathname || "";
+  const search = parsed.search ? (parsed.search.startsWith("?") ? "" : "?") + parsed.search : "";
+  const hash = parsed.hash || "";
+  const auth = parsed.auth ? parsed.auth + "@" : "";
+  const host = parsed.host || "";
+  const proto = parsed.protocol || parsed[protocolRelative] ? (parsed.protocol || "") + "//" : "";
+  return proto + auth + host + pathname + search + hash;
+}
+
+const NODE_TYPES = {
+  NORMAL: 0,
+  WILDCARD: 1,
+  PLACEHOLDER: 2
+};
+
+function createRouter(options = {}) {
+  const ctx = {
+    options,
+    rootNode: createRadixNode(),
+    staticRoutesMap: {}
+  };
+  const normalizeTrailingSlash = (p) => options.strictTrailingSlash ? p : p.replace(/\/$/, "") || "/";
+  if (options.routes) {
+    for (const path in options.routes) {
+      insert$1(ctx, normalizeTrailingSlash(path), options.routes[path]);
+    }
+  }
+  return {
+    ctx,
+    lookup: (path) => lookup(ctx, normalizeTrailingSlash(path)),
+    insert: (path, data) => insert$1(ctx, normalizeTrailingSlash(path), data),
+    remove: (path) => remove(ctx, normalizeTrailingSlash(path))
+  };
+}
+function lookup(ctx, path) {
+  const staticPathNode = ctx.staticRoutesMap[path];
+  if (staticPathNode) {
+    return staticPathNode.data;
+  }
+  const sections = path.split("/");
+  const params = {};
+  let paramsFound = false;
+  let wildcardNode = null;
+  let node = ctx.rootNode;
+  let wildCardParam = null;
+  for (let i = 0; i < sections.length; i++) {
+    const section = sections[i];
+    if (node.wildcardChildNode !== null) {
+      wildcardNode = node.wildcardChildNode;
+      wildCardParam = sections.slice(i).join("/");
+    }
+    const nextNode = node.children.get(section);
+    if (nextNode === void 0) {
+      if (node && node.placeholderChildren.length > 1) {
+        const remaining = sections.length - i;
+        node = node.placeholderChildren.find((c) => c.maxDepth === remaining) || null;
+      } else {
+        node = node.placeholderChildren[0] || null;
+      }
+      if (!node) {
+        break;
+      }
+      if (node.paramName) {
+        params[node.paramName] = section;
+      }
+      paramsFound = true;
+    } else {
+      node = nextNode;
+    }
+  }
+  if ((node === null || node.data === null) && wildcardNode !== null) {
+    node = wildcardNode;
+    params[node.paramName || "_"] = wildCardParam;
+    paramsFound = true;
+  }
+  if (!node) {
+    return null;
+  }
+  if (paramsFound) {
+    return {
+      ...node.data,
+      params: paramsFound ? params : void 0
+    };
+  }
+  return node.data;
+}
+function insert$1(ctx, path, data) {
+  let isStaticRoute = true;
+  const sections = path.split("/");
+  let node = ctx.rootNode;
+  let _unnamedPlaceholderCtr = 0;
+  const matchedNodes = [node];
+  for (const section of sections) {
+    let childNode;
+    if (childNode = node.children.get(section)) {
+      node = childNode;
+    } else {
+      const type = getNodeType(section);
+      childNode = createRadixNode({ type, parent: node });
+      node.children.set(section, childNode);
+      if (type === NODE_TYPES.PLACEHOLDER) {
+        childNode.paramName = section === "*" ? `_${_unnamedPlaceholderCtr++}` : section.slice(1);
+        node.placeholderChildren.push(childNode);
+        isStaticRoute = false;
+      } else if (type === NODE_TYPES.WILDCARD) {
+        node.wildcardChildNode = childNode;
+        childNode.paramName = section.slice(
+          3
+          /* "**:" */
+        ) || "_";
+        isStaticRoute = false;
+      }
+      matchedNodes.push(childNode);
+      node = childNode;
+    }
+  }
+  for (const [depth, node2] of matchedNodes.entries()) {
+    node2.maxDepth = Math.max(matchedNodes.length - depth, node2.maxDepth || 0);
+  }
+  node.data = data;
+  if (isStaticRoute === true) {
+    ctx.staticRoutesMap[path] = node;
+  }
+  return node;
+}
+function remove(ctx, path) {
+  let success = false;
+  const sections = path.split("/");
+  let node = ctx.rootNode;
+  for (const section of sections) {
+    node = node.children.get(section);
+    if (!node) {
+      return success;
+    }
+  }
+  if (node.data) {
+    const lastSection = sections.at(-1) || "";
+    node.data = null;
+    if (Object.keys(node.children).length === 0 && node.parent) {
+      node.parent.children.delete(lastSection);
+      node.parent.wildcardChildNode = null;
+      node.parent.placeholderChildren = [];
+    }
+    success = true;
+  }
+  return success;
+}
+function createRadixNode(options = {}) {
+  return {
+    type: options.type || NODE_TYPES.NORMAL,
+    maxDepth: 0,
+    parent: options.parent || null,
+    children: /* @__PURE__ */ new Map(),
+    data: options.data || null,
+    paramName: options.paramName || null,
+    wildcardChildNode: null,
+    placeholderChildren: []
+  };
+}
+function getNodeType(str) {
+  if (str.startsWith("**")) {
+    return NODE_TYPES.WILDCARD;
+  }
+  if (str[0] === ":" || str === "*") {
+    return NODE_TYPES.PLACEHOLDER;
+  }
+  return NODE_TYPES.NORMAL;
+}
+
+function toRouteMatcher(router) {
+  const table = _routerNodeToTable("", router.ctx.rootNode);
+  return _createMatcher(table, router.ctx.options.strictTrailingSlash);
+}
+function _createMatcher(table, strictTrailingSlash) {
+  return {
+    ctx: { table },
+    matchAll: (path) => _matchRoutes(path, table, strictTrailingSlash)
+  };
+}
+function _createRouteTable() {
+  return {
+    static: /* @__PURE__ */ new Map(),
+    wildcard: /* @__PURE__ */ new Map(),
+    dynamic: /* @__PURE__ */ new Map()
+  };
+}
+function _matchRoutes(path, table, strictTrailingSlash) {
+  if (strictTrailingSlash !== true && path.endsWith("/")) {
+    path = path.slice(0, -1) || "/";
+  }
+  const matches = [];
+  for (const [key, value] of _sortRoutesMap(table.wildcard)) {
+    if (path === key || path.startsWith(key + "/")) {
+      matches.push(value);
+    }
+  }
+  for (const [key, value] of _sortRoutesMap(table.dynamic)) {
+    if (path.startsWith(key + "/")) {
+      const subPath = "/" + path.slice(key.length).split("/").splice(2).join("/");
+      matches.push(..._matchRoutes(subPath, value));
+    }
+  }
+  const staticMatch = table.static.get(path);
+  if (staticMatch) {
+    matches.push(staticMatch);
+  }
+  return matches.filter(Boolean);
+}
+function _sortRoutesMap(m) {
+  return [...m.entries()].sort((a, b) => a[0].length - b[0].length);
+}
+function _routerNodeToTable(initialPath, initialNode) {
+  const table = _createRouteTable();
+  function _addNode(path, node) {
+    if (path) {
+      if (node.type === NODE_TYPES.NORMAL && !(path.includes("*") || path.includes(":"))) {
+        if (node.data) {
+          table.static.set(path, node.data);
+        }
+      } else if (node.type === NODE_TYPES.WILDCARD) {
+        table.wildcard.set(path.replace("/**", ""), node.data);
+      } else if (node.type === NODE_TYPES.PLACEHOLDER) {
+        const subTable = _routerNodeToTable("", node);
+        if (node.data) {
+          subTable.static.set("/", node.data);
+        }
+        table.dynamic.set(path.replace(/\/\*|\/:\w+/, ""), subTable);
+        return;
+      }
+    }
+    for (const [childPath, child] of node.children.entries()) {
+      _addNode(`${path}/${childPath}`.replace("//", "/"), child);
+    }
+  }
+  _addNode(initialPath, initialNode);
+  return table;
+}
+
+function isPlainObject(value) {
+  if (value === null || typeof value !== "object") {
+    return false;
+  }
+  const prototype = Object.getPrototypeOf(value);
+  if (prototype !== null && prototype !== Object.prototype && Object.getPrototypeOf(prototype) !== null) {
+    return false;
+  }
+  if (Symbol.iterator in value) {
+    return false;
+  }
+  if (Symbol.toStringTag in value) {
+    return Object.prototype.toString.call(value) === "[object Module]";
+  }
+  return true;
+}
+
+function _defu(baseObject, defaults, namespace = ".", merger) {
+  if (!isPlainObject(defaults)) {
+    return _defu(baseObject, {}, namespace, merger);
+  }
+  const object = { ...defaults };
+  for (const key of Object.keys(baseObject)) {
+    if (key === "__proto__" || key === "constructor") {
+      continue;
+    }
+    const value = baseObject[key];
+    if (value === null || value === void 0) {
+      continue;
+    }
+    if (merger && merger(object, key, value, namespace)) {
+      continue;
+    }
+    if (Array.isArray(value) && Array.isArray(object[key])) {
+      object[key] = [...value, ...object[key]];
+    } else if (isPlainObject(value) && isPlainObject(object[key])) {
+      object[key] = _defu(
+        value,
+        object[key],
+        (namespace ? `${namespace}.` : "") + key.toString(),
+        merger
+      );
+    } else {
+      object[key] = value;
+    }
+  }
+  return object;
+}
+function createDefu(merger) {
+  return (...arguments_) => (
+    // eslint-disable-next-line unicorn/no-array-reduce
+    arguments_.reduce((p, c) => _defu(p, c, "", merger), {})
+  );
+}
+const defu = createDefu();
+
+function useBase(base, handler) {
+  base = withoutTrailingSlash(base);
+  if (!base || base === "/") {
+    return handler;
+  }
+  return eventHandler(async (event) => {
+    event.node.req.originalUrl = event.node.req.originalUrl || event.node.req.url || "/";
+    const _path = event._path || event.node.req.url || "/";
+    event._path = withoutBase(event.path || "/", base);
+    event.node.req.url = event._path;
+    try {
+      return await handler(event);
+    } finally {
+      event._path = event.node.req.url = _path;
+    }
+  });
+}
+
+function hasProp(obj, prop) {
+  try {
+    return prop in obj;
+  } catch {
+    return false;
+  }
+}
+
+class H3Error extends Error {
+  static __h3_error__ = true;
+  statusCode = 500;
+  fatal = false;
+  unhandled = false;
+  statusMessage;
+  data;
+  cause;
+  constructor(message, opts = {}) {
+    super(message, opts);
+    if (opts.cause && !this.cause) {
+      this.cause = opts.cause;
+    }
+  }
+  toJSON() {
+    const obj = {
+      message: this.message,
+      statusCode: sanitizeStatusCode(this.statusCode, 500)
+    };
+    if (this.statusMessage) {
+      obj.statusMessage = sanitizeStatusMessage(this.statusMessage);
+    }
+    if (this.data !== void 0) {
+      obj.data = this.data;
+    }
+    return obj;
+  }
+}
+function createError(input) {
+  if (typeof input === "string") {
+    return new H3Error(input);
+  }
+  if (isError(input)) {
+    return input;
+  }
+  const err = new H3Error(input.message ?? input.statusMessage ?? "", {
+    cause: input.cause || input
+  });
+  if (hasProp(input, "stack")) {
+    try {
+      Object.defineProperty(err, "stack", {
+        get() {
+          return input.stack;
+        }
+      });
+    } catch {
+      try {
+        err.stack = input.stack;
+      } catch {
+      }
+    }
+  }
+  if (input.data) {
+    err.data = input.data;
+  }
+  if (input.statusCode) {
+    err.statusCode = sanitizeStatusCode(input.statusCode, err.statusCode);
+  } else if (input.status) {
+    err.statusCode = sanitizeStatusCode(input.status, err.statusCode);
+  }
+  if (input.statusMessage) {
+    err.statusMessage = input.statusMessage;
+  } else if (input.statusText) {
+    err.statusMessage = input.statusText;
+  }
+  if (err.statusMessage) {
+    const originalMessage = err.statusMessage;
+    const sanitizedMessage = sanitizeStatusMessage(err.statusMessage);
+    if (sanitizedMessage !== originalMessage) {
+      console.warn(
+        "[h3] Please prefer using `message` for longer error messages instead of `statusMessage`. In the future, `statusMessage` will be sanitized by default."
+      );
+    }
+  }
+  if (input.fatal !== void 0) {
+    err.fatal = input.fatal;
+  }
+  if (input.unhandled !== void 0) {
+    err.unhandled = input.unhandled;
+  }
+  return err;
+}
+function isError(input) {
+  return input?.constructor?.__h3_error__ === true;
+}
+
+function getQuery(event) {
+  return getQuery$1(event.path || "");
+}
+function getRequestHeaders(event) {
+  const _headers = {};
+  for (const key in event.node.req.headers) {
+    const val = event.node.req.headers[key];
+    _headers[key] = Array.isArray(val) ? val.filter(Boolean).join(", ") : val;
+  }
+  return _headers;
+}
+function getRequestHeader(event, name) {
+  const headers = getRequestHeaders(event);
+  const value = headers[name.toLowerCase()];
+  return value;
+}
+const getHeader = getRequestHeader;
+function getRequestHost(event, opts = {}) {
+  if (opts.xForwardedHost) {
+    const _header = event.node.req.headers["x-forwarded-host"];
+    const xForwardedHost = (_header || "").split(",").shift()?.trim();
+    if (xForwardedHost) {
+      return xForwardedHost;
+    }
+  }
+  return event.node.req.headers.host || "localhost";
+}
+
+const MIMES = {
+  html: "text/html"};
+
+const DISALLOWED_STATUS_CHARS = /[^\u0009\u0020-\u007E]/g;
+function sanitizeStatusMessage(statusMessage = "") {
+  return statusMessage.replace(DISALLOWED_STATUS_CHARS, "");
+}
+function sanitizeStatusCode(statusCode, defaultStatusCode = 200) {
+  if (!statusCode) {
+    return defaultStatusCode;
+  }
+  if (typeof statusCode === "string") {
+    statusCode = Number.parseInt(statusCode, 10);
+  }
+  if (statusCode < 100 || statusCode > 999) {
+    return defaultStatusCode;
+  }
+  return statusCode;
+}
+
+const defer = typeof setImmediate === "undefined" ? (fn) => fn() : setImmediate;
+function send(event, data, type) {
+  {
+    defaultContentType(event, type);
+  }
+  return new Promise((resolve) => {
+    defer(() => {
+      if (!event.handled) {
+        event.node.res.end(data);
+      }
+      resolve();
+    });
+  });
+}
+function defaultContentType(event, type) {
+  if (event.node.res.statusCode !== 304 && !event.node.res.getHeader("content-type")) {
+    event.node.res.setHeader("content-type", type);
+  }
+}
+function sendRedirect(event, location, code = 302) {
+  event.node.res.statusCode = sanitizeStatusCode(
+    code,
+    event.node.res.statusCode
+  );
+  event.node.res.setHeader("location", location);
+  const encodedLoc = location.replace(/"/g, "%22");
+  const html = `<!DOCTYPE html><html><head><meta http-equiv="refresh" content="0; url=${encodedLoc}"></head></html>`;
+  return send(event, html, MIMES.html);
+}
+function setResponseHeader(event, name, value) {
+  event.node.res.setHeader(name, value);
+}
+const setHeader = setResponseHeader;
+
+function defineEventHandler(handler) {
+  if (typeof handler === "function") {
+    handler.__is_handler__ = true;
+    return handler;
+  }
+  const _hooks = {
+    onRequest: _normalizeArray(handler.onRequest),
+    onBeforeResponse: _normalizeArray(handler.onBeforeResponse)
+  };
+  const _handler = (event) => {
+    return _callHandler(event, handler.handler, _hooks);
+  };
+  _handler.__is_handler__ = true;
+  _handler.__resolve__ = handler.handler.__resolve__;
+  _handler.__websocket__ = handler.websocket;
+  return _handler;
+}
+function _normalizeArray(input) {
+  return input ? Array.isArray(input) ? input : [input] : void 0;
+}
+async function _callHandler(event, handler, hooks) {
+  if (hooks.onRequest) {
+    for (const hook of hooks.onRequest) {
+      await hook(event);
+      if (event.handled) {
+        return;
+      }
+    }
+  }
+  const body = await handler(event);
+  const response = { body };
+  if (hooks.onBeforeResponse) {
+    for (const hook of hooks.onBeforeResponse) {
+      await hook(event, response);
+    }
+  }
+  return response.body;
+}
+const eventHandler = defineEventHandler;
+function toEventHandler(input, _, _route) {
+  return input;
+}
+function defineLazyEventHandler(factory) {
+  let _promise;
+  let _resolved;
+  const resolveHandler = () => {
+    if (_resolved) {
+      return Promise.resolve(_resolved);
+    }
+    if (!_promise) {
+      _promise = Promise.resolve(factory()).then((r) => {
+        const handler2 = r.default || r;
+        if (typeof handler2 !== "function") {
+          throw new TypeError(
+            "Invalid lazy handler result. It should be a function:",
+            handler2
+          );
+        }
+        _resolved = { handler: toEventHandler(r.default || r) };
+        return _resolved;
+      });
+    }
+    return _promise;
+  };
+  const handler = eventHandler((event) => {
+    if (_resolved) {
+      return _resolved.handler(event);
+    }
+    return resolveHandler().then((r) => r.handler(event));
+  });
+  handler.__resolve__ = resolveHandler;
+  return handler;
+}
+const lazyEventHandler = defineLazyEventHandler;
 
 const logger = createConsola({
   defaults: {
@@ -5817,11 +6456,11 @@ function createFilter(options = {}) {
   const includeRegex = include.filter((r) => r instanceof RegExp);
   const excludeStrings = exclude.filter((r) => typeof r === "string");
   const includeStrings = include.filter((r) => typeof r === "string");
-  const excludeMatcher = excludeStrings.length > 0 ? toRouteMatcher(createRouter$1({
+  const excludeMatcher = excludeStrings.length > 0 ? toRouteMatcher(createRouter({
     routes: Object.fromEntries(excludeStrings.map((r) => [r, true])),
     strictTrailingSlash: false
   })) : null;
-  const includeMatcher = includeStrings.length > 0 ? toRouteMatcher(createRouter$1({
+  const includeMatcher = includeStrings.length > 0 ? toRouteMatcher(createRouter({
     routes: Object.fromEntries(includeStrings.map((r) => [r, true])),
     strictTrailingSlash: false
   })) : null;
@@ -5862,25 +6501,25 @@ function useSiteConfig(e, _options) {
   return getSiteConfig(e, _options);
 }
 
-function resolveSitePath(pathOrUrl, options) {
+function resolveSitePath$1(pathOrUrl, options) {
   let path = pathOrUrl;
-  if (hasProtocol(pathOrUrl, { strict: false, acceptRelative: true })) {
-    const parsed = parseURL(pathOrUrl);
+  if (hasProtocol$1(pathOrUrl, { strict: false, acceptRelative: true })) {
+    const parsed = parseURL$1(pathOrUrl);
     path = parsed.pathname;
   }
-  const base = withLeadingSlash(options.base || "/");
+  const base = withLeadingSlash$1(options.base || "/");
   if (base !== "/" && path.startsWith(base)) {
     path = path.slice(base.length);
   }
-  let origin = withoutTrailingSlash(options.absolute ? options.siteUrl : "");
+  let origin = withoutTrailingSlash$1(options.absolute ? options.siteUrl : "");
   if (base !== "/" && origin.endsWith(base)) {
     origin = origin.slice(0, origin.indexOf(base));
   }
-  const baseWithOrigin = options.withBase ? withBase(base, origin || "/") : origin;
-  const resolvedUrl = withBase(path, baseWithOrigin);
-  return path === "/" && !options.withBase ? withTrailingSlash(resolvedUrl) : fixSlashes(options.trailingSlash, resolvedUrl);
+  const baseWithOrigin = options.withBase ? withBase$1(base, origin || "/") : origin;
+  const resolvedUrl = withBase$1(path, baseWithOrigin);
+  return path === "/" && !options.withBase ? withTrailingSlash$1(resolvedUrl) : fixSlashes$1(options.trailingSlash, resolvedUrl);
 }
-const fileExtensions = [
+const fileExtensions$1 = [
   // Images
   "jpg",
   "jpeg",
@@ -5992,16 +6631,16 @@ const fileExtensions = [
   "old",
   "sav"
 ];
-function isPathFile(path) {
+function isPathFile$1(path) {
   const lastSegment = path.split("/").pop();
   const ext = (lastSegment || path).match(/\.[0-9a-z]+$/i)?.[0];
-  return ext && fileExtensions.includes(ext.replace(".", ""));
+  return ext && fileExtensions$1.includes(ext.replace(".", ""));
 }
-function fixSlashes(trailingSlash, pathOrUrl) {
-  const $url = parseURL(pathOrUrl);
-  if (isPathFile($url.pathname))
+function fixSlashes$1(trailingSlash, pathOrUrl) {
+  const $url = parseURL$1(pathOrUrl);
+  if (isPathFile$1($url.pathname))
     return pathOrUrl;
-  const fixedPath = trailingSlash ? withTrailingSlash($url.pathname) : withoutTrailingSlash($url.pathname);
+  const fixedPath = trailingSlash ? withTrailingSlash$1($url.pathname) : withoutTrailingSlash$1($url.pathname);
   return `${$url.protocol ? `${$url.protocol}//` : ""}${$url.host || ""}${fixedPath}${$url.search || ""}${$url.hash || ""}`;
 }
 
@@ -6010,7 +6649,7 @@ function createSitePathResolver(e, options = {}) {
   const nitroOrigin = getNitroOrigin(e);
   const nuxtBase = useRuntimeConfig(e).app.baseURL || "/";
   return (path) => {
-    return resolveSitePath(path, {
+    return resolveSitePath$1(path, {
       ...options,
       siteUrl: options.canonical !== false || false ? siteConfig.url : nitroOrigin,
       trailingSlash: siteConfig.trailingSlash,
@@ -6019,7 +6658,7 @@ function createSitePathResolver(e, options = {}) {
   };
 }
 
-const _kOrydB = defineEventHandler(async (e) => {
+const _5r7vDO = defineEventHandler(async (e) => {
   const fixPath = createSitePathResolver(e, { absolute: false, withBase: true });
   const { sitemapName: fallbackSitemapName, cacheMaxAgeSeconds, version, xslColumns, xslTips } = useSitemapRuntimeConfig();
   setHeader(e, "Content-Type", "application/xslt+xml");
@@ -6437,13 +7076,156 @@ const _kOrydB = defineEventHandler(async (e) => {
 `;
 });
 
+function resolveSitePath(pathOrUrl, options) {
+  let path = pathOrUrl;
+  if (hasProtocol(pathOrUrl, { strict: false, acceptRelative: true })) {
+    const parsed = parseURL(pathOrUrl);
+    path = parsed.pathname;
+  }
+  const base = withLeadingSlash(options.base || "/");
+  if (base !== "/" && path.startsWith(base)) {
+    path = path.slice(base.length);
+  }
+  let origin = withoutTrailingSlash(options.siteUrl );
+  if (base !== "/" && origin.endsWith(base)) {
+    origin = origin.slice(0, origin.indexOf(base));
+  }
+  const baseWithOrigin = origin;
+  const resolvedUrl = withBase(path, baseWithOrigin);
+  return path === "/" && true ? withTrailingSlash(resolvedUrl) : fixSlashes(options.trailingSlash, resolvedUrl);
+}
+const fileExtensions = [
+  // Images
+  "jpg",
+  "jpeg",
+  "png",
+  "gif",
+  "bmp",
+  "webp",
+  "svg",
+  "ico",
+  // Documents
+  "pdf",
+  "doc",
+  "docx",
+  "xls",
+  "xlsx",
+  "ppt",
+  "pptx",
+  "txt",
+  "md",
+  "markdown",
+  // Archives
+  "zip",
+  "rar",
+  "7z",
+  "tar",
+  "gz",
+  // Audio
+  "mp3",
+  "wav",
+  "flac",
+  "ogg",
+  "opus",
+  "m4a",
+  "aac",
+  "midi",
+  "mid",
+  // Video
+  "mp4",
+  "avi",
+  "mkv",
+  "mov",
+  "wmv",
+  "flv",
+  "webm",
+  // Web
+  "html",
+  "css",
+  "js",
+  "json",
+  "xml",
+  "tsx",
+  "jsx",
+  "ts",
+  "vue",
+  "svelte",
+  "xsl",
+  "rss",
+  "atom",
+  // Programming
+  "php",
+  "py",
+  "rb",
+  "java",
+  "c",
+  "cpp",
+  "h",
+  "go",
+  // Data formats
+  "csv",
+  "tsv",
+  "sql",
+  "yaml",
+  "yml",
+  // Fonts
+  "woff",
+  "woff2",
+  "ttf",
+  "otf",
+  "eot",
+  // Executables/Binaries
+  "exe",
+  "msi",
+  "apk",
+  "ipa",
+  "dmg",
+  "iso",
+  "bin",
+  // Scripts/Config
+  "bat",
+  "cmd",
+  "sh",
+  "env",
+  "htaccess",
+  "conf",
+  "toml",
+  "ini",
+  // Package formats
+  "deb",
+  "rpm",
+  "jar",
+  "war",
+  // E-books
+  "epub",
+  "mobi",
+  // Common temporary/backup files
+  "log",
+  "tmp",
+  "bak",
+  "old",
+  "sav"
+];
+function isPathFile(path) {
+  const lastSegment = path.split("/").pop();
+  const ext = (lastSegment || path).match(/\.[0-9a-z]+$/i)?.[0];
+  return ext && fileExtensions.includes(ext.replace(".", ""));
+}
+function fixSlashes(trailingSlash, pathOrUrl) {
+  const $url = parseURL(pathOrUrl);
+  if (isPathFile($url.pathname))
+    return pathOrUrl;
+  const fixedPath = trailingSlash ? withTrailingSlash($url.pathname) : withoutTrailingSlash($url.pathname);
+  return `${$url.protocol ? `${$url.protocol}//` : ""}${$url.host || ""}${fixedPath}${$url.search || ""}${$url.hash || ""}`;
+}
+
 function withoutQuery(path) {
   return path.split("?")[0];
 }
 function createNitroRouteRuleMatcher() {
   const { nitro, app } = useRuntimeConfig();
   const _routeRulesMatcher = toRouteMatcher(
-    createRouter$1({
+    createRouter({
       routes: Object.fromEntries(
         Object.entries(nitro?.routeRules || {}).map(([path, rules]) => [path === "/" ? path : withoutTrailingSlash(path), rules])
       )
@@ -7458,8 +8240,6 @@ async function buildSitemapUrls(sitemap, resolvers, runtimeConfig, nitro) {
     if (domain) {
       const _tester = resolvers.canonicalUrlResolver;
       resolvers.canonicalUrlResolver = (path) => resolveSitePath(path, {
-        absolute: true,
-        withBase: false,
         siteUrl: withHttps(domain),
         trailingSlash: _tester("/test/").endsWith("/"),
         base: "/"
@@ -7587,7 +8367,7 @@ async function buildSitemapXml(event, definition, resolvers, runtimeConfig) {
       const chunkIndex = Number(lastPart);
       const baseSitemapName = parts.join("-");
       if (urls.length === 0 && chunkIndex > 0) {
-        throw createError$1({
+        throw createError({
           statusCode: 404,
           message: `Sitemap chunk ${chunkIndex} for "${baseSitemapName}" does not exist.`
         });
@@ -7651,7 +8431,12 @@ async function sitemapXmlEventHandler(e) {
   return createSitemap(e, Object.values(sitemaps)[0], runtimeConfig);
 }
 
-const _2E1EzU = defineEventHandler(sitemapXmlEventHandler);
+const _085oPk = defineEventHandler(sitemapXmlEventHandler);
+
+const _IS_ABSOLUTE_RE = /^[/\\](?![/\\])|^[/\\]{2}(?!\.)|^[A-Za-z]:[/\\]/;
+const isAbsolute = function(p) {
+  return _IS_ABSOLUTE_RE.test(p);
+};
 
 function defineNitroPlugin(def) {
   return def;
@@ -7659,14 +8444,14 @@ function defineNitroPlugin(def) {
 
 function defineRenderHandler(render) {
   const runtimeConfig = useRuntimeConfig();
-  return eventHandler(async (event) => {
+  return eventHandler$1(async (event) => {
     const nitroApp = useNitroApp();
     const ctx = { event, render, response: void 0 };
     await nitroApp.hooks.callHook("render:before", ctx);
     if (!ctx.response) {
       if (event.path === `${runtimeConfig.app.baseURL}favicon.ico`) {
-        setResponseHeader(event, "Content-Type", "image/x-icon");
-        return send(
+        setResponseHeader$1(event, "Content-Type", "image/x-icon");
+        return send$1(
           event,
           "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7"
         );
@@ -7675,7 +8460,7 @@ function defineRenderHandler(render) {
       if (!ctx.response) {
         const _currentStatus = getResponseStatus(event);
         setResponseStatus(event, _currentStatus === 200 ? 500 : _currentStatus);
-        return send(
+        return send$1(
           event,
           "No response returned from render handler: " + event.path
         );
@@ -34740,7 +35525,7 @@ const useDb = async () => {
   }
 };
 
-const _19aWza = lazyEventHandler(() => {
+const _C_6MG0 = lazyEventHandler(() => {
   const opts = useRuntimeConfig().ipx || {};
   const fsDir = opts?.fs?.dir ? (Array.isArray(opts.fs.dir) ? opts.fs.dir : [opts.fs.dir]).map((dir) => isAbsolute(dir) ? dir : fileURLToPath(new URL(dir, globalThis._importMeta_.url))) : void 0;
   const fsStorage = opts.fs?.dir ? ipxFSStorage({ ...opts.fs, dir: fsDir }) : void 0;
@@ -34821,9 +35606,9 @@ const handlers = [
   { route: '/__nuxt_error', handler: _lazy_2rrIMW, lazy: true, middleware: false, method: undefined },
   { route: '/__nuxt_island/**', handler: _SxA8c9, lazy: false, middleware: false, method: undefined },
   { route: '', handler: _1zx9fb, lazy: false, middleware: true, method: undefined },
-  { route: '/__sitemap__/style.xsl', handler: _kOrydB, lazy: false, middleware: false, method: undefined },
-  { route: '/sitemap.xml', handler: _2E1EzU, lazy: false, middleware: false, method: undefined },
-  { route: '/_ipx/**', handler: _19aWza, lazy: false, middleware: false, method: undefined },
+  { route: '/__sitemap__/style.xsl', handler: _5r7vDO, lazy: false, middleware: false, method: undefined },
+  { route: '/sitemap.xml', handler: _085oPk, lazy: false, middleware: false, method: undefined },
+  { route: '/_ipx/**', handler: _C_6MG0, lazy: false, middleware: false, method: undefined },
   { route: '/**', handler: _lazy_2rrIMW, lazy: true, middleware: false, method: undefined }
 ];
 
@@ -34895,7 +35680,7 @@ function createNitroApp() {
       });
     }
   });
-  const router = createRouter({
+  const router = createRouter$1({
     preemptive: true
   });
   const nodeHandler = toNodeListener(h3App);
@@ -34921,7 +35706,7 @@ function createNitroApp() {
   globalThis.$fetch = $fetch;
   h3App.use(createRouteRulesHandler({ localFetch }));
   for (const h of handlers) {
-    let handler = h.lazy ? lazyEventHandler(h.handler) : h.handler;
+    let handler = h.lazy ? lazyEventHandler$1(h.handler) : h.handler;
     if (h.middleware || !h.route) {
       const middlewareBase = (config.app.baseURL + (h.route || "/")).replace(
         /\/+/g,
@@ -35214,5 +35999,5 @@ function setupGracefulShutdown(listener, nitroApp) {
   });
 }
 
-export { $fetch$1 as $, withQuery as A, sanitizeStatusCode as B, getContext as C, baseURL as D, defu as E, executeAsync as F, hash$1 as G, parseQuery as H, withTrailingSlash as I, withoutTrailingSlash as J, withLeadingSlash as K, encodeParam as L, trapUnhandledNodeErrors as a, useNitroApp as b, defineEventHandler as c, destr as d, createError$1 as e, getRouterParam as f, getQuery as g, useDb as h, index$1 as i, buildAssetsURL as j, getResponseStatusText as k, libExports as l, getResponseStatus as m, defineRenderHandler as n, getRouteRules as o, publicAssetsURL as p, joinURL as q, readBody as r, setupGracefulShutdown as s, toNodeListener as t, useRuntimeConfig as u, parseURL as v, encodePath as w, decodePath as x, hasProtocol as y, isScriptProtocol as z };
+export { $fetch$1 as $, joinURL as A, withQuery as B, sanitizeStatusCode as C, baseURL as D, defu as E, createError as F, defu$1 as G, parseQuery as H, withTrailingSlash as I, withoutTrailingSlash as J, withLeadingSlash as K, encodeParam as L, trapUnhandledNodeErrors as a, useNitroApp as b, defineEventHandler$1 as c, destr as d, createError$2 as e, getRouterParam as f, getQuery$2 as g, useDb as h, index$1 as i, buildAssetsURL as j, getResponseStatusText as k, libExports as l, getResponseStatus as m, defineRenderHandler as n, getRouteRules as o, publicAssetsURL as p, joinURL$1 as q, readBody as r, setupGracefulShutdown as s, toNodeListener as t, useRuntimeConfig as u, parseURL as v, encodePath as w, decodePath as x, hasProtocol as y, isScriptProtocol as z };
 //# sourceMappingURL=nitro.mjs.map

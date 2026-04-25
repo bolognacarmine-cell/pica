@@ -1,12 +1,6 @@
 
 <script setup>
-import { ref, onMounted, nextTick } from 'vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-if (process.client) {
-  gsap.registerPlugin(ScrollTrigger)
-}
+import { ref, nextTick } from 'vue'
 
 const form = ref({
   nome: '',
@@ -45,11 +39,7 @@ const toggleForm = () => {
   nextTick(() => {
     const el = document.querySelector('.trade-form-container')
     if (el) {
-      el.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      gsap.fromTo(el, 
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.8, ease: 'power3.out' }
-      )
+      el.scrollIntoView({ behavior: 'auto', block: 'start' })
     }
   })
 }
@@ -80,14 +70,6 @@ const submitForm = async () => {
 
     if (res.success) {
       submitted.value = true
-      nextTick(() => {
-        gsap.from('.success-message', {
-          scale: 0.9,
-          opacity: 0,
-          duration: 0.5,
-          ease: 'back.out(1.7)'
-        })
-      })
     }
   } catch (err) {
     console.error('Errore invio permuta:', err)
@@ -96,71 +78,6 @@ const submitForm = async () => {
     loading.value = false
   }
 }
-
-let ctx
-onMounted(async () => {
-  await nextTick()
-  ctx = gsap.context(() => {
-    // Header Animation
-    const headerElements = document.querySelectorAll('.trade-content > .section-kicker, .trade-content > .section-title, .trade-content > .section-description')
-    if (headerElements.length > 0) {
-      gsap.fromTo(headerElements, 
-        { y: 30, opacity: 0 },
-        {
-          scrollTrigger: {
-            trigger: '.trade-section',
-            start: 'top 80%',
-          },
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          stagger: 0.2,
-          ease: 'power3.out',
-          clearProps: 'all'
-        }
-      )
-    }
-
-    // Benefits Animation
-    const benefitItems = document.querySelectorAll('.benefits-list li')
-    if (benefitItems.length > 0) {
-      gsap.fromTo(benefitItems, 
-        { y: 20, opacity: 0 },
-        {
-          scrollTrigger: {
-            trigger: '.benefits-list',
-            start: 'top 85%',
-          },
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.1,
-          ease: 'power2.out',
-          clearProps: 'all'
-        }
-      )
-    }
-
-    // CTA Animation
-    const ctaWrapper = document.querySelector('.trade-actions')
-    if (ctaWrapper) {
-      gsap.fromTo(ctaWrapper, 
-        { y: 30, opacity: 0 },
-        {
-          scrollTrigger: {
-            trigger: '.trade-actions',
-            start: 'top 85%',
-          },
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: 'power3.out',
-          clearProps: 'all'
-        }
-      )
-    }
-  })
-})
 </script>
 
 <template>
@@ -328,12 +245,12 @@ onMounted(async () => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to right, var(--panel) 0%, transparent 100%);
+  background: var(--panel);
 }
 
 @media (max-width: 1024px) {
   .visual-overlay {
-    background: linear-gradient(to top, var(--panel) 0%, transparent 100%);
+    background: var(--panel);
   }
 }
 
@@ -341,7 +258,7 @@ onMounted(async () => {
   position: absolute;
   bottom: 40px;
   right: 40px;
-  background: var(--primary-gradient);
+  background: var(--primary);
   color: white;
   padding: 24px 32px;
   border-radius: var(--radius-lg);
@@ -364,6 +281,5 @@ onMounted(async () => {
   font-weight: 800;
   letter-spacing: 0.2em;
   margin-top: 4px;
-  opacity: 0.9;
 }
 </style>

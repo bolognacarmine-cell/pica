@@ -3,20 +3,20 @@ import { Server } from 'node:http';
 import { resolve as resolve$1, dirname, join } from 'node:path';
 import nodeCrypto from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
-import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getQuery as getQuery$1, readBody, getRequestProtocol, getRequestHost, setHeader, getHeader, getResponseStatus, lazyEventHandler, useBase, createApp, createRouter as createRouter$1, toNodeListener, getRouterParam, getResponseStatusText } from 'file://C:/Users/Acer/pica/node_modules/h3/dist/index.mjs';
+import { defineEventHandler, handleCacheHeaders, splitCookiesString, createEvent, fetchWithEvent, isEvent, eventHandler, setHeaders, sendRedirect, proxyRequest, getRequestHeader, setResponseHeaders, setResponseStatus, send, getRequestHeaders, setResponseHeader, appendResponseHeader, getRequestURL, getResponseHeader, removeResponseHeader, createError, getQuery as getQuery$1, readBody, getRequestProtocol, getRequestHost, setHeader, getResponseStatus, createApp, createRouter as createRouter$2, toNodeListener, lazyEventHandler as lazyEventHandler$1, getRouterParam, getResponseStatusText } from 'file://C:/Users/Acer/pica/node_modules/h3/dist/index.mjs';
 import { escapeHtml } from 'file://C:/Users/Acer/pica/node_modules/@vue/shared/dist/shared.cjs.js';
-import { MongoClient, ObjectId } from 'file://C:/Users/Acer/pica/node_modules/mongodb/lib/index.js';
-import { v2 } from 'file://C:/Users/Acer/pica/node_modules/cloudinary/cloudinary.js';
+import { MongoClient, ObjectId } from 'file://C:/Users/Acer/pica/node_modules/.pnpm/mongodb@7.2.0/node_modules/mongodb/lib/index.js';
+import { v2 } from 'file://C:/Users/Acer/pica/node_modules/.pnpm/cloudinary@2.9.0/node_modules/cloudinary/cloudinary.js';
 import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'file://C:/Users/Acer/pica/node_modules/vue-bundle-renderer/dist/runtime.mjs';
-import { parseURL, withoutBase, joinURL, getQuery, withQuery, hasProtocol, withHttps, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL, parsePath, stringifyQuery, parseQuery, encodePath, stringifyParsedURL, withBase } from 'file://C:/Users/Acer/pica/node_modules/ufo/dist/index.mjs';
+import { parseURL, withoutBase, joinURL, getQuery, withQuery, hasProtocol, withHttps, withTrailingSlash, decodePath, withLeadingSlash, withoutTrailingSlash, joinRelativeURL, withBase } from 'file://C:/Users/Acer/pica/node_modules/ufo/dist/index.mjs';
 import destr, { destr as destr$1 } from 'file://C:/Users/Acer/pica/node_modules/destr/dist/index.mjs';
 import { renderToString } from 'file://C:/Users/Acer/pica/node_modules/vue/server-renderer/index.mjs';
 import { klona } from 'file://C:/Users/Acer/pica/node_modules/klona/dist/index.mjs';
-import defu, { defuFn, defu as defu$1, createDefu } from 'file://C:/Users/Acer/pica/node_modules/defu/dist/defu.mjs';
+import defu, { defuFn, defu as defu$1 } from 'file://C:/Users/Acer/pica/node_modules/defu/dist/defu.mjs';
 import { snakeCase } from 'file://C:/Users/Acer/pica/node_modules/scule/dist/index.mjs';
-import { createHead as createHead$1, propsToString, renderSSRHead } from 'file://C:/Users/Acer/pica/node_modules/unhead/dist/server.mjs';
+import { createHead as createHead$1, propsToString, renderSSRHead } from 'file://C:/Users/Acer/pica/node_modules/.pnpm/unhead@2.1.13/node_modules/unhead/dist/server.mjs';
 import { stringify, uneval } from 'file://C:/Users/Acer/pica/node_modules/devalue/index.js';
-import { toValue, isVNode, isRef } from 'file://C:/Users/Acer/pica/node_modules/vue/index.mjs';
+import { isRef, toValue as toValue$1 } from 'file://C:/Users/Acer/pica/node_modules/.pnpm/vue@3.5.33/node_modules/vue/index.mjs';
 import { createHooks } from 'file://C:/Users/Acer/pica/node_modules/nitropack/node_modules/hookable/dist/index.mjs';
 import { createFetch, Headers as Headers$1 } from 'file://C:/Users/Acer/pica/node_modules/ofetch/dist/node.mjs';
 import { fetchNodeRequestHandler, callNodeRequestHandler } from 'file://C:/Users/Acer/pica/node_modules/node-mock-http/dist/index.mjs';
@@ -30,16 +30,23 @@ import { ErrorParser } from 'file://C:/Users/Acer/pica/node_modules/youch-core/b
 import { Youch } from 'file://C:/Users/Acer/pica/node_modules/youch/build/index.js';
 import { SourceMapConsumer } from 'file://C:/Users/Acer/pica/node_modules/source-map/source-map.js';
 import devalue from 'file://C:/Users/Acer/pica/node_modules/@nuxt/devalue/dist/devalue.mjs';
+import { toValue, isVNode } from 'file://C:/Users/Acer/pica/node_modules/vue/index.mjs';
 import { AsyncLocalStorage } from 'node:async_hooks';
 import { getContext } from 'file://C:/Users/Acer/pica/node_modules/unctx/dist/index.mjs';
 import { captureRawStackTrace, parseRawStackTrace } from 'file://C:/Users/Acer/pica/node_modules/errx/dist/index.js';
 import _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw from 'file://C:/Users/Acer/pica/node_modules/@nuxt/vite-builder/dist/fix-stacktrace.mjs';
 import { promises } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname as dirname$1, resolve as resolve$2, isAbsolute } from 'file://C:/Users/Acer/pica/node_modules/pathe/dist/index.mjs';
-import { walkResolver } from 'file://C:/Users/Acer/pica/node_modules/unhead/dist/utils.mjs';
-import { XMLParser } from 'file://C:/Users/Acer/pica/node_modules/fast-xml-parser/src/fxp.js';
-import { ipxFSStorage, ipxHttpStorage, createIPX, createIPXH3Handler } from 'file://C:/Users/Acer/pica/node_modules/ipx/dist/index.mjs';
+import { dirname as dirname$1, resolve as resolve$2 } from 'file://C:/Users/Acer/pica/node_modules/pathe/dist/index.mjs';
+import { walkResolver } from 'file://C:/Users/Acer/pica/node_modules/.pnpm/unhead@2.1.13/node_modules/unhead/dist/utils.mjs';
+import { getRequestHost as getRequestHost$1, defineEventHandler as defineEventHandler$1, setHeader as setHeader$1, getHeader, getQuery as getQuery$3, createError as createError$1, sendRedirect as sendRedirect$1, lazyEventHandler, useBase } from 'file://C:/Users/Acer/pica/node_modules/.pnpm/h3@1.15.11/node_modules/h3/dist/index.mjs';
+import { createDefu, defu as defu$2 } from 'file://C:/Users/Acer/pica/node_modules/.pnpm/defu@6.1.7/node_modules/defu/dist/defu.mjs';
+import { withLeadingSlash as withLeadingSlash$1, parseURL as parseURL$1, hasProtocol as hasProtocol$1, parsePath, stringifyQuery, parseQuery, encodePath, stringifyParsedURL, withoutTrailingSlash as withoutTrailingSlash$1, getQuery as getQuery$2, withQuery as withQuery$1, withTrailingSlash as withTrailingSlash$1, withBase as withBase$1, withoutBase as withoutBase$1, withHttps as withHttps$1, joinURL as joinURL$1 } from 'file://C:/Users/Acer/pica/node_modules/.pnpm/ufo@1.6.3/node_modules/ufo/dist/index.mjs';
+import { toRouteMatcher as toRouteMatcher$1, createRouter as createRouter$1 } from 'file://C:/Users/Acer/pica/node_modules/.pnpm/radix3@1.1.2/node_modules/radix3/dist/index.mjs';
+import { createConsola as createConsola$1 } from 'file://C:/Users/Acer/pica/node_modules/.pnpm/consola@3.4.2/node_modules/consola/dist/index.mjs';
+import { XMLParser } from 'file://C:/Users/Acer/pica/node_modules/.pnpm/fast-xml-parser@5.7.1/node_modules/fast-xml-parser/src/fxp.js';
+import { ipxFSStorage, ipxHttpStorage, createIPX, createIPXH3Handler } from 'file://C:/Users/Acer/pica/node_modules/.pnpm/ipx@3.1.1_db0@0.3.4_drizzle_6d2ac4df428cca8ceea144c8edc7e2f9/node_modules/ipx/dist/index.mjs';
+import { isAbsolute } from 'file://C:/Users/Acer/pica/node_modules/.pnpm/pathe@2.0.3/node_modules/pathe/dist/index.mjs';
 
 const serverAssets = [{"baseName":"server","dir":"C:/Users/Acer/pica/server/assets"}];
 
@@ -2443,7 +2450,7 @@ const _EI5waZ = eventHandler((event) => {
 });
 
 const VueResolver = (_, value) => {
-  return isRef(value) ? toValue(value) : value;
+  return isRef(value) ? toValue$1(value) : value;
 };
 
 const headSymbol = "usehead";
@@ -2972,7 +2979,7 @@ const _XkZjDu = eventHandler(async (e) => {
   };
 });
 
-const logger = createConsola({
+const logger = createConsola$1({
   defaults: {
     tag: "@nuxt/sitemap"
   }
@@ -3000,7 +3007,7 @@ function mergeOnKey(arr, key) {
   return result;
 }
 function splitForLocales(path, locales) {
-  const prefix = withLeadingSlash(path).split("/")[1];
+  const prefix = withLeadingSlash$1(path).split("/")[1];
   if (prefix && locales.includes(prefix))
     return [prefix, path.replace(`/${prefix}`, "")];
   return [null, path];
@@ -3021,7 +3028,7 @@ function createPathFilter(options = {}) {
   return (loc) => {
     let path = loc;
     try {
-      path = parseURL(loc).pathname;
+      path = parseURL$1(loc).pathname;
     } catch {
       return false;
     }
@@ -3057,11 +3064,11 @@ function createFilter(options = {}) {
   const includeRegex = include.filter((r) => r instanceof RegExp);
   const excludeStrings = exclude.filter((r) => typeof r === "string");
   const includeStrings = include.filter((r) => typeof r === "string");
-  const excludeMatcher = excludeStrings.length > 0 ? toRouteMatcher(createRouter({
+  const excludeMatcher = excludeStrings.length > 0 ? toRouteMatcher$1(createRouter$1({
     routes: Object.fromEntries(excludeStrings.map((r) => [r, true])),
     strictTrailingSlash: false
   })) : null;
-  const includeMatcher = includeStrings.length > 0 ? toRouteMatcher(createRouter({
+  const includeMatcher = includeStrings.length > 0 ? toRouteMatcher$1(createRouter$1({
     routes: Object.fromEntries(includeStrings.map((r) => [r, true])),
     strictTrailingSlash: false
   })) : null;
@@ -3426,7 +3433,7 @@ async function parseSitemapXml(xml) {
   if (!xml) {
     throw new Error("Empty XML input provided");
   }
-  const { XMLParser } = await import('file://C:/Users/Acer/pica/node_modules/fast-xml-parser/src/fxp.js');
+  const { XMLParser } = await import('file://C:/Users/Acer/pica/node_modules/.pnpm/fast-xml-parser@5.7.1/node_modules/fast-xml-parser/src/fxp.js');
   const parser = new XMLParser({
     isArray: (tagName) => ["url", "image", "video", "link", "tag", "price"].includes(tagName),
     removeNSPrefix: true,
@@ -3511,13 +3518,13 @@ async function fetchDataSource(input, event) {
   const abortRequestTimeout = setTimeout(() => timeoutController.abort(), timeout);
   try {
     let isMaybeErrorResponse = false;
-    const isXmlRequest = parseURL(url).pathname.endsWith(".xml");
-    const mergedHeaders = defu$1(
+    const isXmlRequest = parseURL$1(url).pathname.endsWith(".xml");
+    const mergedHeaders = defu$2(
       options?.headers,
       {
         Accept: isXmlRequest ? "text/xml" : "application/json"
       },
-      event && !isExternalUrl ? { host: getRequestHost(event, { xForwardedHost: true }) } : {}
+      event && !isExternalUrl ? { host: getRequestHost$1(event, { xForwardedHost: true }) } : {}
     );
     const fetchOptions = {
       ...options,
@@ -3549,7 +3556,7 @@ async function fetchDataSource(input, event) {
     let urls = [];
     if (typeof res === "object") {
       urls = res.urls || res;
-    } else if (typeof res === "string" && parseURL(url).pathname.endsWith(".xml")) {
+    } else if (typeof res === "string" && parseURL$1(url).pathname.endsWith(".xml")) {
       const result = await parseSitemapXml(res);
       urls = result.urls;
     }
@@ -3644,7 +3651,7 @@ function resolve(s, resolvers) {
   const str = typeof s === "string" ? s : s.toString();
   if (!resolvers)
     return str;
-  if (hasProtocol(str, { acceptRelative: true, strict: false }))
+  if (hasProtocol$1(str, { acceptRelative: true, strict: false }))
     return resolvers.fixSlashes(str);
   return resolvers.canonicalUrlResolver(str);
 }
@@ -3663,9 +3670,9 @@ function preNormalizeEntry(_e, resolvers) {
   const skipEncoding = input._encoded === true;
   const e = input;
   e.loc = removeTrailingSlash(e.loc);
-  e._abs = hasProtocol(e.loc, { acceptRelative: false, strict: false });
+  e._abs = hasProtocol$1(e.loc, { acceptRelative: false, strict: false });
   try {
-    e._path = e._abs ? parseURL(e.loc) : parsePath(e.loc);
+    e._path = e._abs ? parseURL$1(e.loc) : parsePath(e.loc);
   } catch {
     e._path = null;
   }
@@ -3685,7 +3692,7 @@ function preNormalizeEntry(_e, resolvers) {
   if (e.loc === "")
     e.loc = `/`;
   e.loc = resolve(e.loc, resolvers);
-  e._key = `${e._sitemap || ""}${withoutTrailingSlash(e.loc)}`;
+  e._key = `${e._sitemap || ""}${withoutTrailingSlash$1(e.loc)}`;
   return e;
 }
 function isEncoded(url) {
@@ -3696,7 +3703,7 @@ function isEncoded(url) {
   }
 }
 function normaliseEntry(_e, defaults, resolvers) {
-  const e = defu$1(_e, defaults);
+  const e = defu$2(_e, defaults);
   {
     const warnings = validateSitemapUrl(e);
     if (warnings.length)
@@ -3778,7 +3785,7 @@ function useSiteConfig(e, _options) {
   return getSiteConfig(e, _options);
 }
 
-function resolveSitePath(pathOrUrl, options) {
+function resolveSitePath$1(pathOrUrl, options) {
   let path = pathOrUrl;
   if (hasProtocol(pathOrUrl, { strict: false, acceptRelative: true })) {
     const parsed = parseURL(pathOrUrl);
@@ -3794,9 +3801,9 @@ function resolveSitePath(pathOrUrl, options) {
   }
   const baseWithOrigin = options.withBase ? withBase(base, origin || "/") : origin;
   const resolvedUrl = withBase(path, baseWithOrigin);
-  return path === "/" && !options.withBase ? withTrailingSlash(resolvedUrl) : fixSlashes(options.trailingSlash, resolvedUrl);
+  return path === "/" && !options.withBase ? withTrailingSlash(resolvedUrl) : fixSlashes$1(options.trailingSlash, resolvedUrl);
 }
-const fileExtensions = [
+const fileExtensions$1 = [
   // Images
   "jpg",
   "jpeg",
@@ -3908,14 +3915,14 @@ const fileExtensions = [
   "old",
   "sav"
 ];
-function isPathFile(path) {
+function isPathFile$1(path) {
   const lastSegment = path.split("/").pop();
   const ext = (lastSegment || path).match(/\.[0-9a-z]+$/i)?.[0];
-  return ext && fileExtensions.includes(ext.replace(".", ""));
+  return ext && fileExtensions$1.includes(ext.replace(".", ""));
 }
-function fixSlashes(trailingSlash, pathOrUrl) {
+function fixSlashes$1(trailingSlash, pathOrUrl) {
   const $url = parseURL(pathOrUrl);
-  if (isPathFile($url.pathname))
+  if (isPathFile$1($url.pathname))
     return pathOrUrl;
   const fixedPath = trailingSlash ? withTrailingSlash($url.pathname) : withoutTrailingSlash($url.pathname);
   return `${$url.protocol ? `${$url.protocol}//` : ""}${$url.host || ""}${fixedPath}${$url.search || ""}${$url.hash || ""}`;
@@ -3926,7 +3933,7 @@ function createSitePathResolver(e, options = {}) {
   const nitroOrigin = getNitroOrigin(e);
   const nuxtBase = useRuntimeConfig(e).app.baseURL || "/";
   return (path) => {
-    return resolveSitePath(path, {
+    return resolveSitePath$1(path, {
       ...options,
       siteUrl: options.canonical !== false || false ? siteConfig.url : nitroOrigin,
       trailingSlash: siteConfig.trailingSlash,
@@ -3953,7 +3960,7 @@ function attachUrlWarnings(sources) {
   }
   return sources;
 }
-const _nsKO5G = defineEventHandler(async (e) => {
+const _JOmhZ2 = defineEventHandler$1(async (e) => {
   const _runtimeConfig = useSitemapRuntimeConfig();
   const siteConfig = getSiteConfig(e);
   const { sitemaps: _sitemaps } = _runtimeConfig;
@@ -3978,28 +3985,28 @@ const _nsKO5G = defineEventHandler(async (e) => {
   };
 });
 
-const _kOrydB = defineEventHandler(async (e) => {
+const _5r7vDO = defineEventHandler$1(async (e) => {
   const fixPath = createSitePathResolver(e, { absolute: false, withBase: true });
   const { sitemapName: fallbackSitemapName, cacheMaxAgeSeconds, version, xslColumns, xslTips } = useSitemapRuntimeConfig();
-  setHeader(e, "Content-Type", "application/xslt+xml");
+  setHeader$1(e, "Content-Type", "application/xslt+xml");
   if (cacheMaxAgeSeconds)
-    setHeader(e, "Cache-Control", `public, max-age=${cacheMaxAgeSeconds}, must-revalidate`);
+    setHeader$1(e, "Cache-Control", `public, max-age=${cacheMaxAgeSeconds}, must-revalidate`);
   else
-    setHeader(e, "Cache-Control", `no-cache, no-store`);
+    setHeader$1(e, "Cache-Control", `no-cache, no-store`);
   const { name: siteName, url: siteUrl } = useSiteConfig(e);
   const referrer = getHeader(e, "Referer") || "/";
-  const referrerPath = parseURL(referrer).pathname;
+  const referrerPath = parseURL$1(referrer).pathname;
   const isNotIndexButHasIndex = referrerPath !== "/sitemap.xml" && referrerPath !== "/sitemap_index.xml" && referrerPath.endsWith(".xml");
-  const sitemapName = parseURL(referrer).pathname.split("/").pop()?.split("-sitemap")[0] || fallbackSitemapName;
+  const sitemapName = parseURL$1(referrer).pathname.split("/").pop()?.split("-sitemap")[0] || fallbackSitemapName;
   const title = `${siteName}${sitemapName !== "sitemap.xml" ? ` - ${sitemapName === "sitemap_index.xml" ? "index" : sitemapName}` : ""}`.replace(/&/g, "&amp;");
   const isIndexPage = referrerPath === "/sitemap.xml" || referrerPath === "/sitemap_index.xml";
-  const canonicalQuery = getQuery(referrer).canonical;
+  const canonicalQuery = getQuery$2(referrer).canonical;
   const isShowingCanonical = typeof canonicalQuery !== "undefined" && canonicalQuery !== "false";
-  const debugUrl = xmlEscape(withQuery("/__sitemap__/debug.json", { sitemap: sitemapName }));
+  const debugUrl = xmlEscape(withQuery$1("/__sitemap__/debug.json", { sitemap: sitemapName }));
   const devUrl = xmlEscape(referrerPath);
-  const prodUrl = xmlEscape(withQuery(referrerPath, { canonical: "" }));
+  const prodUrl = xmlEscape(withQuery$1(referrerPath, { canonical: "" }));
   const fetchErrors = [];
-  const xslQuery = getQuery$1(e);
+  const xslQuery = getQuery$3(e);
   if (xslQuery.error_messages) {
     const errorMessages = xslQuery.error_messages;
     const errorUrls = xslQuery.error_urls;
@@ -4425,24 +4432,167 @@ const _kOrydB = defineEventHandler(async (e) => {
 `;
 });
 
+function resolveSitePath(pathOrUrl, options) {
+  let path = pathOrUrl;
+  if (hasProtocol$1(pathOrUrl, { strict: false, acceptRelative: true })) {
+    const parsed = parseURL$1(pathOrUrl);
+    path = parsed.pathname;
+  }
+  const base = withLeadingSlash$1(options.base || "/");
+  if (base !== "/" && path.startsWith(base)) {
+    path = path.slice(base.length);
+  }
+  let origin = withoutTrailingSlash$1(options.siteUrl );
+  if (base !== "/" && origin.endsWith(base)) {
+    origin = origin.slice(0, origin.indexOf(base));
+  }
+  const baseWithOrigin = origin;
+  const resolvedUrl = withBase$1(path, baseWithOrigin);
+  return path === "/" && true ? withTrailingSlash$1(resolvedUrl) : fixSlashes(options.trailingSlash, resolvedUrl);
+}
+const fileExtensions = [
+  // Images
+  "jpg",
+  "jpeg",
+  "png",
+  "gif",
+  "bmp",
+  "webp",
+  "svg",
+  "ico",
+  // Documents
+  "pdf",
+  "doc",
+  "docx",
+  "xls",
+  "xlsx",
+  "ppt",
+  "pptx",
+  "txt",
+  "md",
+  "markdown",
+  // Archives
+  "zip",
+  "rar",
+  "7z",
+  "tar",
+  "gz",
+  // Audio
+  "mp3",
+  "wav",
+  "flac",
+  "ogg",
+  "opus",
+  "m4a",
+  "aac",
+  "midi",
+  "mid",
+  // Video
+  "mp4",
+  "avi",
+  "mkv",
+  "mov",
+  "wmv",
+  "flv",
+  "webm",
+  // Web
+  "html",
+  "css",
+  "js",
+  "json",
+  "xml",
+  "tsx",
+  "jsx",
+  "ts",
+  "vue",
+  "svelte",
+  "xsl",
+  "rss",
+  "atom",
+  // Programming
+  "php",
+  "py",
+  "rb",
+  "java",
+  "c",
+  "cpp",
+  "h",
+  "go",
+  // Data formats
+  "csv",
+  "tsv",
+  "sql",
+  "yaml",
+  "yml",
+  // Fonts
+  "woff",
+  "woff2",
+  "ttf",
+  "otf",
+  "eot",
+  // Executables/Binaries
+  "exe",
+  "msi",
+  "apk",
+  "ipa",
+  "dmg",
+  "iso",
+  "bin",
+  // Scripts/Config
+  "bat",
+  "cmd",
+  "sh",
+  "env",
+  "htaccess",
+  "conf",
+  "toml",
+  "ini",
+  // Package formats
+  "deb",
+  "rpm",
+  "jar",
+  "war",
+  // E-books
+  "epub",
+  "mobi",
+  // Common temporary/backup files
+  "log",
+  "tmp",
+  "bak",
+  "old",
+  "sav"
+];
+function isPathFile(path) {
+  const lastSegment = path.split("/").pop();
+  const ext = (lastSegment || path).match(/\.[0-9a-z]+$/i)?.[0];
+  return ext && fileExtensions.includes(ext.replace(".", ""));
+}
+function fixSlashes(trailingSlash, pathOrUrl) {
+  const $url = parseURL$1(pathOrUrl);
+  if (isPathFile($url.pathname))
+    return pathOrUrl;
+  const fixedPath = trailingSlash ? withTrailingSlash$1($url.pathname) : withoutTrailingSlash$1($url.pathname);
+  return `${$url.protocol ? `${$url.protocol}//` : ""}${$url.host || ""}${fixedPath}${$url.search || ""}${$url.hash || ""}`;
+}
+
 function withoutQuery(path) {
   return path.split("?")[0];
 }
 function createNitroRouteRuleMatcher() {
   const { nitro, app } = useRuntimeConfig();
-  const _routeRulesMatcher = toRouteMatcher(
-    createRouter({
+  const _routeRulesMatcher = toRouteMatcher$1(
+    createRouter$1({
       routes: Object.fromEntries(
-        Object.entries(nitro?.routeRules || {}).map(([path, rules]) => [path === "/" ? path : withoutTrailingSlash(path), rules])
+        Object.entries(nitro?.routeRules || {}).map(([path, rules]) => [path === "/" ? path : withoutTrailingSlash$1(path), rules])
       )
     })
   );
   return (pathOrUrl) => {
-    const path = pathOrUrl[0] === "/" ? pathOrUrl : parseURL(pathOrUrl, app.baseURL).pathname;
+    const path = pathOrUrl[0] === "/" ? pathOrUrl : parseURL$1(pathOrUrl, app.baseURL).pathname;
     const pathWithoutQuery = withoutQuery(path);
-    return defu$1({}, ..._routeRulesMatcher.matchAll(
+    return defu$2({}, ..._routeRulesMatcher.matchAll(
       // radix3 does not support trailing slashes
-      withoutBase(pathWithoutQuery === "/" ? pathWithoutQuery : withoutTrailingSlash(pathWithoutQuery), app.baseURL)
+      withoutBase$1(pathWithoutQuery === "/" ? pathWithoutQuery : withoutTrailingSlash$1(pathWithoutQuery), app.baseURL)
     ).reverse());
   };
 }
@@ -4594,7 +4744,7 @@ function buildUrlXml(url, NL, I1, I2, I3, I4) {
 function urlsToXml(urls, resolvers, { version, xsl, credits, minify }, errorInfo) {
   let xslHref = xsl ? resolvers.relativeBaseUrlResolver(xsl) : false;
   if (xslHref && errorInfo?.messages.length) {
-    xslHref = withQuery(xslHref, {
+    xslHref = withQuery$1(xslHref, {
       errors: "true",
       error_messages: errorInfo.messages,
       error_urls: errorInfo.urls
@@ -4695,7 +4845,7 @@ function resolveSitemapEntries(sitemap, urls, runtimeConfig, resolvers) {
           ].map((locale) => {
             return {
               hreflang: locale._hreflang,
-              href: joinURL(withHttps(locale.domain), e._pathWithoutPrefix)
+              href: joinURL$1(withHttps$1(locale.domain), e._pathWithoutPrefix)
             };
           });
         } else {
@@ -4712,10 +4862,10 @@ function resolveSitemapEntries(sitemap, urls, runtimeConfig, resolvers) {
                 loc = customPath[0] === "/" ? customPath : `/${customPath}`;
                 loc = applyDynamicParams(loc, pageMatch.paramSegments);
                 if (isPrefixStrategy || isPrefixExceptOrAndDefault && l.code !== defaultLocale)
-                  loc = joinURL(`/${l.code}`, loc);
+                  loc = joinURL$1(`/${l.code}`, loc);
               }
             } else if (!hasDifferentDomains && !(isPrefixExceptOrAndDefault && l.code === defaultLocale)) {
-              loc = joinURL(`/${l.code}`, pathWithoutPrefix);
+              loc = joinURL$1(`/${l.code}`, pathWithoutPrefix);
             }
             const _sitemap = isI18nMapped ? l._sitemap : void 0;
             const alternatives = [];
@@ -4731,12 +4881,12 @@ function resolveSitemapEntries(sitemap, urls, runtimeConfig, resolvers) {
                   href = customPath[0] === "/" ? customPath : `/${customPath}`;
                   href = applyDynamicParams(href, pageMatch.paramSegments);
                   if (isPrefixStrategy || isPrefixExceptOrAndDefault && !isDefault)
-                    href = joinURL("/", code, href);
+                    href = joinURL$1("/", code, href);
                 }
               } else if (isPrefixStrategy) {
-                href = joinURL("/", code, pathWithoutPrefix);
+                href = joinURL$1("/", code, pathWithoutPrefix);
               } else if (isPrefixExceptOrAndDefault && !isDefault) {
-                href = joinURL("/", code, pathWithoutPrefix);
+                href = joinURL$1("/", code, pathWithoutPrefix);
               }
               if (!filterPath(href))
                 continue;
@@ -4798,9 +4948,7 @@ async function buildSitemapUrls(sitemap, resolvers, runtimeConfig, nitro) {
     if (domain) {
       const _tester = resolvers.canonicalUrlResolver;
       resolvers.canonicalUrlResolver = (path) => resolveSitePath(path, {
-        absolute: true,
-        withBase: false,
-        siteUrl: withHttps(domain),
+        siteUrl: withHttps$1(domain),
         trailingSlash: _tester("/test/").endsWith("/"),
         base: "/"
       });
@@ -4864,7 +5012,7 @@ async function buildSitemapUrls(sitemap, resolvers, runtimeConfig, nitro) {
 }
 
 function useNitroUrlResolvers(e) {
-  const canonicalQuery = getQuery$1(e).canonical;
+  const canonicalQuery = getQuery$3(e).canonical;
   const isShowingCanonical = typeof canonicalQuery !== "undefined" && canonicalQuery !== "false";
   const siteConfig = getSiteConfig(e);
   return {
@@ -4894,7 +5042,7 @@ async function buildSitemapXml(event, definition, resolvers, runtimeConfig) {
       const match = splitForLocales(path, autoI18n.locales.map((l) => l.code));
       const pathWithoutPrefix = match[1];
       if (pathWithoutPrefix && pathWithoutPrefix !== path)
-        routeRules = defu$1(routeRules, routeRuleMatcher(pathWithoutPrefix));
+        routeRules = defu$2(routeRules, routeRuleMatcher(pathWithoutPrefix));
     }
     if (routeRules.sitemap === false)
       continue;
@@ -4903,7 +5051,7 @@ async function buildSitemapXml(event, definition, resolvers, runtimeConfig) {
     const hasRobotsDisabled = Object.entries(routeRules.headers || {}).some(([name, value]) => name.toLowerCase() === "x-robots-tag" && value.toLowerCase().includes("noindex"));
     if (routeRules.redirect || hasRobotsDisabled)
       continue;
-    sitemapUrls[validCount++] = routeRules.sitemap ? defu$1(u, routeRules.sitemap) : u;
+    sitemapUrls[validCount++] = routeRules.sitemap ? defu$2(u, routeRules.sitemap) : u;
   }
   sitemapUrls.length = validCount;
   if (validCount === 0 && sitemapUrls.length > 0) {
@@ -4930,7 +5078,7 @@ async function buildSitemapXml(event, definition, resolvers, runtimeConfig) {
       const chunkIndex = Number(lastPart);
       const baseSitemapName = parts.join("-");
       if (urls.length === 0 && chunkIndex > 0) {
-        throw createError({
+        throw createError$1({
           statusCode: 404,
           message: `Sitemap chunk ${chunkIndex} for "${baseSitemapName}" does not exist.`
         });
@@ -4968,18 +5116,18 @@ defineCachedFunction(
 async function createSitemap(event, definition, runtimeConfig) {
   const resolvers = useNitroUrlResolvers(event);
   const xml = await buildSitemapXml(event, definition, resolvers, runtimeConfig);
-  setHeader(event, "Content-Type", "text/xml; charset=UTF-8");
+  setHeader$1(event, "Content-Type", "text/xml; charset=UTF-8");
   if (runtimeConfig.cacheMaxAgeSeconds) {
-    setHeader(event, "Cache-Control", `public, max-age=${runtimeConfig.cacheMaxAgeSeconds}, s-maxage=${runtimeConfig.cacheMaxAgeSeconds}, stale-while-revalidate=3600`);
+    setHeader$1(event, "Cache-Control", `public, max-age=${runtimeConfig.cacheMaxAgeSeconds}, s-maxage=${runtimeConfig.cacheMaxAgeSeconds}, stale-while-revalidate=3600`);
     const now = /* @__PURE__ */ new Date();
-    setHeader(event, "X-Sitemap-Generated", now.toISOString());
-    setHeader(event, "X-Sitemap-Cache-Duration", `${runtimeConfig.cacheMaxAgeSeconds}s`);
+    setHeader$1(event, "X-Sitemap-Generated", now.toISOString());
+    setHeader$1(event, "X-Sitemap-Cache-Duration", `${runtimeConfig.cacheMaxAgeSeconds}s`);
     const expiryTime = new Date(now.getTime() + runtimeConfig.cacheMaxAgeSeconds * 1e3);
-    setHeader(event, "X-Sitemap-Cache-Expires", expiryTime.toISOString());
+    setHeader$1(event, "X-Sitemap-Cache-Expires", expiryTime.toISOString());
     const remainingSeconds = Math.floor((expiryTime.getTime() - now.getTime()) / 1e3);
-    setHeader(event, "X-Sitemap-Cache-Remaining", `${remainingSeconds}s`);
+    setHeader$1(event, "X-Sitemap-Cache-Remaining", `${remainingSeconds}s`);
   } else {
-    setHeader(event, "Cache-Control", `no-cache, no-store`);
+    setHeader$1(event, "Cache-Control", `no-cache, no-store`);
   }
   event.context._isSitemap = true;
   return xml;
@@ -4989,11 +5137,11 @@ async function sitemapXmlEventHandler(e) {
   const runtimeConfig = useSitemapRuntimeConfig();
   const { sitemaps } = runtimeConfig;
   if ("index" in sitemaps)
-    return sendRedirect(e, withBase("/sitemap_index.xml", useRuntimeConfig().app.baseURL), 302 );
+    return sendRedirect$1(e, withBase$1("/sitemap_index.xml", useRuntimeConfig().app.baseURL), 302 );
   return createSitemap(e, Object.values(sitemaps)[0], runtimeConfig);
 }
 
-const _2E1EzU = defineEventHandler(sitemapXmlEventHandler);
+const _085oPk = defineEventHandler$1(sitemapXmlEventHandler);
 
 function defineNitroPlugin(def) {
   return def;
@@ -5115,7 +5263,7 @@ const useDb = async () => {
   }
 };
 
-const _19aWza = lazyEventHandler(() => {
+const _C_6MG0 = lazyEventHandler(() => {
   const opts = useRuntimeConfig().ipx || {};
   const fsDir = opts?.fs?.dir ? (Array.isArray(opts.fs.dir) ? opts.fs.dir : [opts.fs.dir]).map((dir) => isAbsolute(dir) ? dir : fileURLToPath(new URL(dir, globalThis._importMeta_.url))) : void 0;
   const fsStorage = opts.fs?.dir ? ipxFSStorage({ ...opts.fs, dir: fsDir }) : void 0;
@@ -5197,10 +5345,10 @@ const handlers = [
   { route: '/__nuxt_island/**', handler: handler$1, lazy: false, middleware: false, method: undefined },
   { route: '', handler: _1zx9fb, lazy: false, middleware: true, method: undefined },
   { route: '/__site-config__/debug.json', handler: _XkZjDu, lazy: false, middleware: false, method: undefined },
-  { route: '/__sitemap__/debug.json', handler: _nsKO5G, lazy: false, middleware: false, method: undefined },
-  { route: '/__sitemap__/style.xsl', handler: _kOrydB, lazy: false, middleware: false, method: undefined },
-  { route: '/sitemap.xml', handler: _2E1EzU, lazy: false, middleware: false, method: undefined },
-  { route: '/_ipx/**', handler: _19aWza, lazy: false, middleware: false, method: undefined },
+  { route: '/__sitemap__/debug.json', handler: _JOmhZ2, lazy: false, middleware: false, method: undefined },
+  { route: '/__sitemap__/style.xsl', handler: _5r7vDO, lazy: false, middleware: false, method: undefined },
+  { route: '/sitemap.xml', handler: _085oPk, lazy: false, middleware: false, method: undefined },
+  { route: '/_ipx/**', handler: _C_6MG0, lazy: false, middleware: false, method: undefined },
   { route: '/**', handler: _lazy_2rrIMW, lazy: true, middleware: false, method: undefined }
 ];
 
@@ -5272,7 +5420,7 @@ function createNitroApp() {
       });
     }
   });
-  const router = createRouter$1({
+  const router = createRouter$2({
     preemptive: true
   });
   const nodeHandler = toNodeListener(h3App);
@@ -5298,7 +5446,7 @@ function createNitroApp() {
   globalThis.$fetch = $fetch;
   h3App.use(createRouteRulesHandler({ localFetch }));
   for (const h of handlers) {
-    let handler = h.lazy ? lazyEventHandler(h.handler) : h.handler;
+    let handler = h.lazy ? lazyEventHandler$1(h.handler) : h.handler;
     if (h.middleware || !h.route) {
       const middlewareBase = (config.app.baseURL + (h.route || "/")).replace(
         /\/+/g,
@@ -6040,7 +6188,7 @@ const _slug__get = defineEventHandler(async (event) => {
       slug: { $regex: new RegExp(`^${slug}$`, "i") }
     });
     if (!post && slug.length === 24) {
-      const { ObjectId } = await import('file://C:/Users/Acer/pica/node_modules/mongodb/lib/index.js');
+      const { ObjectId } = await import('file://C:/Users/Acer/pica/node_modules/.pnpm/mongodb@7.2.0/node_modules/mongodb/lib/index.js');
       try {
         post = await collection.findOne({ _id: new ObjectId(slug) });
       } catch (e) {
@@ -6062,7 +6210,7 @@ const _slug__get = defineEventHandler(async (event) => {
     const vehicleIdsRaw = post.relatedVehicles || post.relatedMotos || [];
     if (vehicleIdsRaw.length > 0) {
       const veicoliCollection = db.collection("veicoli");
-      const { ObjectId } = await import('file://C:/Users/Acer/pica/node_modules/mongodb/lib/index.js');
+      const { ObjectId } = await import('file://C:/Users/Acer/pica/node_modules/.pnpm/mongodb@7.2.0/node_modules/mongodb/lib/index.js');
       const ids = vehicleIdsRaw.map((id) => {
         try {
           return new ObjectId(id);
@@ -6471,7 +6619,7 @@ const leads_post = defineEventHandler(async (event) => {
   if (!config.mongodbUri) {
     throw createError({ statusCode: 500, statusMessage: "Database non configurato." });
   }
-  const { MongoClient } = await import('file://C:/Users/Acer/pica/node_modules/mongodb/lib/index.js');
+  const { MongoClient } = await import('file://C:/Users/Acer/pica/node_modules/.pnpm/mongodb@7.2.0/node_modules/mongodb/lib/index.js');
   const client = new MongoClient(config.mongodbUri);
   try {
     await client.connect();

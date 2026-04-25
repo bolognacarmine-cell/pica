@@ -1,6 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
-import { gsap } from 'gsap'
+import { ref } from 'vue'
 import { useRuntimeConfig } from '#imports'
 
 // Componenti modulari

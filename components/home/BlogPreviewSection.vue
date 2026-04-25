@@ -1,12 +1,5 @@
 <script setup>
-import { onMounted, nextTick } from 'vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import BlogCard from '~/components/blog/BlogCard.vue'
-
-if (process.client) {
-  gsap.registerPlugin(ScrollTrigger)
-}
 
 // Utilizziamo useAsyncData per il data fetching lato server (SSR friendly)
 const { data: res, pending: loading, error } = await useAsyncData('latest-posts', () => 
@@ -16,42 +9,10 @@ const { data: res, pending: loading, error } = await useAsyncData('latest-posts'
 )
 
 const latestPosts = computed(() => res.value?.posts || [])
-
-onMounted(async () => {
-  await nextTick()
-  if (process.client && latestPosts.value.length > 0) {
-    gsap.from('.blog-preview-header > *', {
-      scrollTrigger: {
-        trigger: '.blog-preview-section',
-        start: 'top 80%',
-      },
-      y: 30,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.15,
-      ease: 'power3.out'
-    })
-
-    gsap.from('.blog-grid-item', {
-      scrollTrigger: {
-        trigger: '.blog-preview-grid',
-        start: 'top 85%',
-      },
-      y: 40,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.1,
-      ease: 'power2.out'
-    })
-  }
-})
 </script>
 
 <template>
   <section class="blog-preview-section py-24 md:py-32 bg-white dark:bg-[#050505] relative overflow-hidden">
-    <!-- Subtle Decor -->
-    <div class="absolute bottom-0 right-0 w-full h-1/2 bg-gradient-to-t from-gray-50 dark:from-white/2 to-transparent pointer-events-none"></div>
-    
     <div class="container mx-auto px-4 relative z-10">
       
       <!-- Section Header -->
@@ -66,7 +27,7 @@ onMounted(async () => {
               Consigli tecnici, guide di viaggio e tutte le novità dal settore dei veicoli ricreazionali, curati dai nostri esperti.
             </p>
           </div>
-          <NuxtLink to="/blog" class="btn-secondary-glass">
+          <NuxtLink to="/blog" class="btn-premium">
             Esplora tutto il blog
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </NuxtLink>
@@ -75,7 +36,7 @@ onMounted(async () => {
 
       <!-- Loading State -->
       <div v-if="loading" class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div v-for="i in 3" :key="i" class="skeleton-card h-[500px] bg-gray-100 dark:bg-white/5 rounded-[var(--radius-xl)] animate-pulse"></div>
+        <div v-for="i in 3" :key="i" class="skeleton-card h-[500px] bg-gray-100 dark:bg-white/5 rounded-[var(--radius-xl)]"></div>
       </div>
 
       <!-- Error State -->
@@ -101,17 +62,10 @@ onMounted(async () => {
 
 <style scoped>
 .skeleton-card {
-  background: linear-gradient(90deg, rgba(0,0,0,0.02) 25%, rgba(0,0,0,0.05) 50%, rgba(0,0,0,0.02) 75%);
-  background-size: 200% 100%;
-  animation: shimmer 2s infinite linear;
+  background: rgba(0, 0, 0, 0.04);
 }
 
 .dark .skeleton-card {
-  background: linear-gradient(90deg, rgba(255,255,255,0.02) 25%, rgba(255,255,255,0.05) 50%, rgba(255,255,255,0.02) 75%);
-}
-
-@keyframes shimmer {
-  from { background-position: -200% 0; }
-  to { background-position: 200% 0; }
+  background: rgba(255, 255, 255, 0.06);
 }
 </style>

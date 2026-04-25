@@ -1,11 +1,5 @@
 <script setup>
-import { ref, computed, onMounted, nextTick } from 'vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-if (process.client) {
-  gsap.registerPlugin(ScrollTrigger)
-}
+import { ref, computed } from 'vue'
 
 // Articoli realistici coerenti con il settore camper/roulotte
 const allPosts = ref([
@@ -123,7 +117,6 @@ const allPosts = ref([
   }
 ])
 
-const loading = ref(false)
 const selectedCategory = ref('Tutti')
 const searchQuery = ref('')
 
@@ -166,79 +159,6 @@ const formatDate = (dateString) => {
   })
 }
 
-let ctx
-
-onMounted(async () => {
-  await nextTick()
-  ctx = gsap.context(() => {
-    // Header animation
-    const headerElements = document.querySelectorAll('.blog-header > *')
-    if (headerElements.length > 0) {
-      gsap.fromTo(headerElements,
-        { y: 40, opacity: 0 },
-        {
-          scrollTrigger: {
-            trigger: '.blog-page',
-            start: 'top 80%',
-          },
-          y: 0,
-          opacity: 1,
-          duration: 1.2,
-          stagger: 0.15,
-          ease: 'power4.out',
-          clearProps: 'all'
-        }
-      )
-    }
-
-    // Featured article animation
-    const featuredElements = document.querySelectorAll('.featured-article > *')
-    if (featuredElements.length > 0) {
-      gsap.fromTo(featuredElements,
-        { y: 50, opacity: 0, scale: 0.95 },
-        {
-          scrollTrigger: {
-            trigger: '.featured-article',
-            start: 'top 75%',
-          },
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          duration: 1.5,
-          stagger: 0.2,
-          ease: 'expo.out',
-          clearProps: 'all'
-        }
-      )
-    }
-
-    // Articles grid animation
-    const articleCards = document.querySelectorAll('.article-card')
-    if (articleCards.length > 0) {
-      gsap.fromTo(articleCards,
-        { y: 60, opacity: 0, scale: 0.9 },
-        {
-          scrollTrigger: {
-            trigger: '.articles-grid',
-            start: 'top 85%',
-          },
-          y: 0,
-          opacity: 1,
-          scale: 1,
-          duration: 1,
-          stagger: 0.1,
-          ease: 'power3.out',
-          clearProps: 'all'
-        }
-      )
-    }
-  })
-})
-
-onUnmounted(() => {
-  if (ctx) ctx.revert()
-})
-
 useHead({
   title: 'Blog & News | Pica Caravan',
   meta: [
@@ -249,11 +169,6 @@ useHead({
 
 <template>
   <div class="blog-horizontal section">
-    <!-- Background Decor -->
-    <div class="blog-background">
-      <div class="bg-pattern"></div>
-    </div>
-    
     <div class="container">
       
       <!-- Editorial Header -->
@@ -309,7 +224,6 @@ useHead({
               width="800"
               height="600"
             />
-            <div class="featured-horizontal-overlay"></div>
           </div>
           <div class="featured-horizontal-content">
             <div class="featured-horizontal-meta">
@@ -364,7 +278,6 @@ useHead({
                   width="400"
                   height="300"
                 />
-                <div class="article-horizontal-overlay"></div>
                 <span class="article-horizontal-category">{{ article.category }}</span>
               </div>
               
@@ -401,26 +314,6 @@ useHead({
   position: relative;
   overflow: hidden;
   min-height: 100vh;
-}
-
-.blog-background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
-  opacity: 0.02;
-  pointer-events: none;
-}
-
-.bg-pattern {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    radial-gradient(circle at 25% 25%, var(--primary) 0%, transparent 50%),
-    radial-gradient(circle at 75% 75%, var(--secondary) 0%, transparent 50%);
-  opacity: 0.03;
 }
 
 /* Blog Header */
@@ -501,21 +394,13 @@ useHead({
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  transition: all var(--transition-base);
   cursor: pointer;
-}
-
-.category-btn:hover {
-  background: var(--surface-elevated);
-  border-color: var(--primary);
-  color: var(--text-primary);
 }
 
 .category-btn.active {
   background: var(--primary);
   border-color: var(--primary);
   color: var(--text-inverse);
-  box-shadow: var(--shadow-primary);
 }
 
 .search-container {
@@ -544,14 +429,12 @@ useHead({
   color: var(--text-primary);
   font-size: var(--text-sm);
   font-weight: 500;
-  transition: all var(--transition-base);
 }
 
 .search-input:focus {
   outline: none;
   border-color: var(--primary);
   background: var(--surface-elevated);
-  box-shadow: 0 0 0 3px var(--primary-glow);
 }
 
 /* Featured Article Orizzontale */
@@ -568,15 +451,8 @@ useHead({
   border-radius: var(--radius-2xl);
   overflow: hidden;
   text-decoration: none;
-  transition: all var(--transition-base);
   min-height: 400px;
   box-shadow: var(--shadow-sm);
-}
-
-.featured-horizontal-link:hover {
-  transform: translateX(8px);
-  border-color: var(--primary);
-  box-shadow: var(--shadow-lg);
 }
 
 .featured-horizontal-image {
@@ -591,26 +467,6 @@ useHead({
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transition: transform var(--transition-slow);
-}
-
-.featured-horizontal-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.3) 100%);
-  opacity: 0;
-  transition: opacity var(--transition-base);
-}
-
-.featured-horizontal-link:hover .featured-horizontal-overlay {
-  opacity: 1;
-}
-
-.featured-horizontal-link:hover .featured-horizontal-img {
-  transform: scale(1.05);
 }
 
 .featured-horizontal-content {
@@ -649,7 +505,6 @@ useHead({
 
 .featured-horizontal-separator {
   color: var(--primary);
-  opacity: 0.5;
 }
 
 .featured-horizontal-title {
@@ -687,12 +542,6 @@ useHead({
   text-transform: uppercase;
   letter-spacing: 0.05em;
   border-radius: var(--radius-lg);
-  transition: all var(--transition-base);
-}
-
-.featured-horizontal-link:hover .featured-horizontal-cta {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-primary);
 }
 
 .featured-horizontal-tags {
@@ -750,14 +599,7 @@ useHead({
   border: 1px solid var(--line);
   border-radius: var(--radius-2xl);
   overflow: hidden;
-  transition: all var(--transition-base);
   box-shadow: var(--shadow-sm);
-}
-
-.article-horizontal-card:hover {
-  transform: translateX(8px);
-  border-color: var(--primary);
-  box-shadow: var(--shadow-lg);
 }
 
 .article-horizontal-link {
@@ -779,34 +621,13 @@ useHead({
   height: 100%;
   object-fit: cover;
   object-position: center;
-  transition: transform var(--transition-slow);
-}
-
-.article-horizontal-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(to right, transparent 0%, rgba(0,0,0,0.2) 100%);
-  opacity: 0;
-  transition: opacity var(--transition-base);
-}
-
-.article-horizontal-card:hover .article-horizontal-overlay {
-  opacity: 1;
-}
-
-.article-horizontal-card:hover .article-horizontal-img {
-  transform: scale(1.05);
 }
 
 .article-horizontal-category {
   position: absolute;
   top: var(--space-lg);
   left: var(--space-lg);
-  background: rgba(255, 255, 255, 0.9);
-  backdrop-filter: blur(10px);
+  background: #fff;
   color: var(--text-primary);
   padding: var(--space-xs) var(--space-md);
   border-radius: var(--radius-lg);
@@ -839,7 +660,6 @@ useHead({
 
 .article-horizontal-separator {
   color: var(--primary);
-  opacity: 0.5;
 }
 
 .article-horizontal-title {
@@ -878,11 +698,6 @@ useHead({
   font-size: var(--text-xs);
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  transition: all var(--transition-base);
-}
-
-.article-horizontal-card:hover .article-horizontal-cta {
-  gap: var(--space-md);
 }
 
 .article-horizontal-author {
@@ -925,12 +740,6 @@ useHead({
   text-transform: uppercase;
   letter-spacing: 0.05em;
   cursor: pointer;
-  transition: all var(--transition-base);
-}
-
-.reset-btn:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-primary);
 }
 
 /* Responsive Design */

@@ -1,13 +1,5 @@
 
 <script setup>
-import { onMounted, nextTick } from 'vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-if (process.client) {
-  gsap.registerPlugin(ScrollTrigger)
-}
-
 const categories = [
   {
     id: 'novita-camper',
@@ -42,43 +34,10 @@ const categories = [
     label: 'Scopri di più'
   }
 ]
-
-let ctx
-onMounted(async () => {
-  await nextTick()
-  ctx = gsap.context(() => {
-    gsap.from('.camper-header > *', {
-      scrollTrigger: {
-        trigger: '.camper-world-section',
-        start: 'top 80%',
-      },
-      y: 30,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.15,
-      ease: 'power3.out'
-    })
-
-    gsap.from('.category-card', {
-      scrollTrigger: {
-        trigger: '.categories-grid',
-        start: 'top 85%',
-      },
-      y: 40,
-      opacity: 0,
-      duration: 1,
-      stagger: 0.1,
-      ease: 'power2.out'
-    })
-  })
-})
 </script>
 
 <template>
   <section id="mondo-camper" class="camper-world-section py-24 bg-white dark:bg-[#050505] relative overflow-hidden">
-    <!-- Subtle Background Decor -->
-    <div class="absolute top-0 left-0 w-full h-1/2 bg-gradient-to-b from-gray-50 dark:from-white/2 to-transparent pointer-events-none"></div>
-    
     <div class="container mx-auto px-4 relative z-10">
       
       <!-- Intestazione Sezione -->
@@ -99,16 +58,16 @@ onMounted(async () => {
           v-for="cat in categories" 
           :key="cat.id" 
           :to="cat.link"
-          class="category-card group flex flex-col p-8 glass-panel border border-transparent hover:border-primary/30 transition-all duration-500 hover:shadow-2xl hover:shadow-primary/5"
+          class="category-card flex flex-col p-8 border border-primary/20 bg-white dark:bg-[#0b0b0b]"
         >
-          <div class="category-icon w-14 h-14 mb-8 rounded-2xl bg-white dark:bg-white/10 flex items-center justify-center text-primary shadow-sm group-hover:scale-110 group-hover:bg-primary group-hover:text-white transition-all duration-500" v-html="cat.icon"></div>
+          <div class="category-icon w-14 h-14 mb-8 rounded-2xl bg-primary/10 flex items-center justify-center text-primary" v-html="cat.icon"></div>
           
           <div class="card-content flex-1 flex flex-col">
             <h3 class="text-xl font-black mb-3 dark:text-white uppercase tracking-tight">{{ cat.title }}</h3>
             <p class="text-sm text-gray-500 dark:text-gray-400 mb-8 leading-relaxed line-clamp-3">{{ cat.desc }}</p>
             
             <div class="mt-auto">
-              <span class="card-link inline-flex items-center gap-2 text-primary font-black text-[10px] uppercase tracking-widest group-hover:gap-4 transition-all duration-300">
+              <span class="card-link inline-flex items-center gap-2 text-primary font-black text-[10px] uppercase tracking-widest">
                 {{ cat.label }}
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
               </span>
@@ -118,8 +77,7 @@ onMounted(async () => {
       </div>
 
       <!-- Social Band -->
-      <div class="social-community-band glass-panel rounded-[40px] p-10 md:p-16 flex flex-col lg:flex-row justify-between items-center gap-10 shadow-2xl relative overflow-hidden group">
-        <div class="glow-effect"></div>
+      <div class="social-community-band rounded-[40px] p-10 md:p-16 flex flex-col lg:flex-row justify-between items-center gap-10 shadow-2xl relative bg-[#0b0b0b] border border-white/10">
         
         <div class="band-text text-center lg:text-left relative z-10">
           <h4 class="text-3xl md:text-4xl font-black text-white mb-4 uppercase tracking-tighter leading-none">Entra nella nostra <span class="text-primary italic">Community</span></h4>

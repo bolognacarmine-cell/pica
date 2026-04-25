@@ -1,6 +1,5 @@
 <script setup>
 import { ref, computed, onMounted, watch, nextTick } from 'vue'
-import { gsap } from 'gsap'
 import { useRoute } from 'vue-router'
 
 const props = defineProps({
@@ -95,7 +94,7 @@ const checkPreSelection = (id) => {
     // Smooth scroll alla sezione preventivo
     nextTick(() => {
       const el = document.getElementById('preventivo')
-      if (el) el.scrollIntoView({ behavior: 'smooth' })
+      if (el) el.scrollIntoView({ behavior: 'auto' })
     })
   }
 }
@@ -103,36 +102,17 @@ const checkPreSelection = (id) => {
 const startQuote = () => {
   showForm.value = true
   step.value = 1
-  // Animazione ingresso form
-  nextTick(() => {
-    const formEl = document.querySelector('.quote-form')
-    gsap.fromTo(formEl, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out', clearProps: 'all' })
-  })
 }
 
 const nextStep = () => {
   if (step.value < totalSteps) {
-    const currentStepEl = document.querySelector('.form-step')
-    gsap.to(currentStepEl, { opacity: 0, x: -20, duration: 0.3, onComplete: () => {
-      step.value++
-      nextTick(() => {
-        const nextStepEl = document.querySelector('.form-step')
-        gsap.fromTo(nextStepEl, { opacity: 0, x: 20 }, { opacity: 1, x: 0, duration: 0.3, clearProps: 'all' })
-      })
-    }})
+    step.value++
   }
 }
 
 const prevStep = () => {
   if (step.value > 1) {
-    const currentStepEl = document.querySelector('.form-step')
-    gsap.to(currentStepEl, { opacity: 0, x: 20, duration: 0.3, onComplete: () => {
-      step.value--
-      nextTick(() => {
-        const prevStepEl = document.querySelector('.form-step')
-        gsap.fromTo(prevStepEl, { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.3, clearProps: 'all' })
-      })
-    }})
+    step.value--
   }
 }
 
@@ -146,10 +126,6 @@ const handleSubmit = async () => {
       body: form.value
     })
     isSubmitted.value = true
-    gsap.fromTo('.success-content', 
-      { scale: 0.8, opacity: 0 },
-      { scale: 1, opacity: 1, duration: 0.5, ease: 'back.out' }
-    )
   } catch (err) {
     alert('Errore durante l\'invio. Riprova più tardi.')
   } finally {
@@ -385,8 +361,6 @@ const tipi = ['Motorhome', 'Profilato', 'Mansardato', 'Van/Camper puro', 'Roulot
   border: 1px solid var(--line);
   border-radius: var(--radius-3xl);
   padding: var(--space-4xl);
-  box-shadow: var(--shadow-xl);
-  transition: all var(--transition-base);
   max-width: 1000px;
   margin: 0 auto;
   position: relative;
@@ -423,8 +397,7 @@ const tipi = ['Motorhome', 'Profilato', 'Mansardato', 'Van/Camper puro', 'Roulot
 
 .progress-bar {
   height: 100%;
-  background: var(--primary-gradient);
-  transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  background: var(--primary);
 }
 
 .steps-info {
@@ -441,15 +414,6 @@ const tipi = ['Motorhome', 'Profilato', 'Mansardato', 'Van/Camper puro', 'Roulot
   gap: var(--space-3xl);
 }
 
-.form-step {
-  animation: fadeIn 0.4s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
 .step-header {
   margin-bottom: var(--space-2xl);
   display: flex;
@@ -461,7 +425,6 @@ const tipi = ['Motorhome', 'Profilato', 'Mansardato', 'Van/Camper puro', 'Roulot
   font-size: var(--text-2xl);
   font-weight: 900;
   color: var(--primary);
-  opacity: 0.5;
 }
 
 .step-header h3 {
@@ -502,8 +465,8 @@ const tipi = ['Motorhome', 'Profilato', 'Mansardato', 'Van/Camper puro', 'Roulot
   color: var(--text-primary);
   font-size: var(--text-base);
   font-weight: 500;
-  transition: all var(--transition-base);
   -webkit-appearance: none;
+  appearance: none;
 }
 
 .form-input:focus,
@@ -512,7 +475,6 @@ const tipi = ['Motorhome', 'Profilato', 'Mansardato', 'Van/Camper puro', 'Roulot
   outline: none;
   border-color: var(--primary);
   background: var(--surface-elevated);
-  box-shadow: 0 0 0 3px var(--primary-glow);
 }
 
 .form-input::placeholder,
@@ -545,12 +507,7 @@ const tipi = ['Motorhome', 'Profilato', 'Mansardato', 'Van/Camper puro', 'Roulot
   gap: var(--space-sm);
   cursor: pointer;
   color: var(--text-primary);
-  transition: color var(--transition-base);
   font-weight: 600;
-}
-
-.radio-label:hover {
-  color: var(--primary);
 }
 
 .radio-input {
@@ -589,11 +546,6 @@ const tipi = ['Motorhome', 'Profilato', 'Mansardato', 'Van/Camper puro', 'Roulot
 .link {
   color: var(--primary);
   text-decoration: none;
-  transition: color var(--transition-base);
-}
-
-.link:hover {
-  text-decoration: underline;
 }
 
 /* Form Navigation */

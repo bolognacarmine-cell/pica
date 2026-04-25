@@ -50,7 +50,7 @@ useHead({
         <div class="login-header">
           <img src="/logo-pica-caravan.jpg" alt="Logo" class="portal-logo mx-auto" />
           <h1 class="text-3xl font-black mb-2">Portale Cliente</h1>
-          <p class="text-white/50 text-sm uppercase tracking-widest">Inserisci i dati del tuo veicolo</p>
+          <p class="text-white text-sm uppercase tracking-widest">Inserisci i dati del tuo veicolo</p>
         </div>
 
         <form @submit.prevent="handleLogin" class="login-form mt-8">
@@ -60,7 +60,7 @@ useHead({
               v-model="username" 
               type="text" 
               readonly 
-              class="premium-input opacity-50 cursor-not-allowed"
+              class="premium-input cursor-not-allowed"
             />
           </div>
 
@@ -110,7 +110,7 @@ useHead({
   display: flex;
   align-items: center;
   justify-content: center;
-  background: radial-gradient(circle at center, #111 0%, #000 100%);
+  background: #050505;
   padding: 24px;
 }
 

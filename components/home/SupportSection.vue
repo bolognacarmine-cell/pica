@@ -1,34 +1,4 @@
 <script setup>
-import { onMounted } from 'vue'
-import { gsap } from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-if (process.client) {
-  gsap.registerPlugin(ScrollTrigger)
-}
-
-onMounted(() => {
-  const ctx = gsap.context(() => {
-    const cards = document.querySelectorAll('.support-card')
-    if (cards.length > 0) {
-      gsap.fromTo(cards, 
-        { opacity: 0, y: 50 },
-        {
-          scrollTrigger: {
-            trigger: '.support-grid',
-            start: 'top 80%',
-          },
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          stagger: 0.2,
-          ease: 'power3.out'
-        }
-      )
-    }
-  })
-})
-
 const services = [
   {
     title: 'Officina Specializzata',
@@ -84,17 +54,6 @@ const services = [
   overflow: hidden;
 }
 
-.support-section::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--line), transparent);
-}
-
 .section-heading {
   margin-bottom: 80px;
   max-width: 700px;
@@ -138,14 +97,6 @@ const services = [
   border: 1px solid rgba(255, 255, 255, 0.05);
   padding: 48px 40px;
   border-radius: 32px;
-  transition: all 0.4s ease;
-}
-
-.support-card:hover {
-  transform: translateY(-10px);
-  border-color: var(--primary);
-  background: #151515;
-  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.5);
 }
 
 .support-icon-box {
@@ -178,7 +129,7 @@ const services = [
 }
 
 .cta-inner {
-  background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+  background: #111;
   border: 1px solid rgba(255, 255, 255, 0.08);
   padding: 60px;
   border-radius: 40px;

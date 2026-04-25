@@ -16,7 +16,7 @@ const brands = ['Across Car', 'Viesa', 'Thetford', 'Webasto', 'Hymer', 'Knaus']
         <div
           v-for="brand in brands"
           :key="brand"
-          class="brand-pill glass-panel"
+          class="brand-pill"
         >
           {{ brand }}
         </div>
@@ -70,31 +70,8 @@ const brands = ['Across Car', 'Viesa', 'Thetford', 'Webasto', 'Hymer', 'Knaus']
   text-align: center;
   padding: 20px;
   border-radius: var(--radius-md);
-  transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
   cursor: default;
-  position: relative;
-  overflow: hidden;
-}
-
-.brand-pill:hover {
-  transform: translateY(-8px);
-  border-color: var(--primary);
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 0 0 20px var(--primary-glow);
-}
-
-.brand-pill::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.05), transparent);
-  transition: 0.5s;
-}
-
-.brand-pill:hover::after {
-  left: 100%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 </style>

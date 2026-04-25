@@ -127,7 +127,6 @@ onMounted(() => {
   padding: 40px;
   border-radius: var(--radius);
   border: 1px solid var(--line);
-  transition: all 0.4s ease;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -135,12 +134,7 @@ onMounted(() => {
 
 .benefit-card.highlight {
   border-color: var(--primary);
-  background: linear-gradient(145deg, var(--panel), #002d2d);
-}
-
-.benefit-card:hover {
-  transform: translateY(-10px);
-  border-color: var(--accent);
+  background: var(--panel);
 }
 
 .benefit-icon {
@@ -153,13 +147,6 @@ onMounted(() => {
   height: 80px;
   background: rgba(255, 107, 53, 0.1);
   border-radius: 20px;
-  transition: all 0.3s ease;
-}
-
-.benefit-card:hover .benefit-icon {
-  background: var(--primary);
-  color: white;
-  transform: scale(1.05);
 }
 
 .benefit-card h3 {
@@ -181,10 +168,5 @@ onMounted(() => {
   color: var(--accent);
   font-weight: 700;
   text-decoration: none;
-  transition: color 0.3s;
-}
-
-.btn-text:hover {
-  color: #fff;
 }
 </style>

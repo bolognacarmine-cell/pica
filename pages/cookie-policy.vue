@@ -22,7 +22,6 @@ const openConsentManager = () => {
         <h1 class="legal-title">Cookie Policy</h1>
         <p class="legal-subtitle">Gestione del consenso e dettagli sulle tecnologie di tracciamento.</p>
       </div>
-      <div class="hero-glow"></div>
     </div>
 
     <div class="container legal-container">
@@ -176,21 +175,10 @@ const openConsentManager = () => {
 /* Hero Section */
 .legal-hero {
   padding: 160px 0 80px;
-  background: linear-gradient(to bottom, #0a0a0a, #030303);
+  background: #0a0a0a;
   position: relative;
   overflow: hidden;
   text-align: center;
-}
-
-.hero-glow {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
-  height: 100%;
-  background: radial-gradient(circle at 50% 0%, rgba(225, 29, 72, 0.15) 0%, transparent 70%);
-  pointer-events: none;
 }
 
 .legal-badge {
@@ -212,14 +200,12 @@ const openConsentManager = () => {
   font-weight: 950;
   margin-bottom: 16px;
   letter-spacing: -0.02em;
-  background: linear-gradient(to bottom, #fff, #888);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #fff;
 }
 
 .legal-subtitle {
   font-size: 1.25rem;
-  color: rgba(255, 255, 255, 0.5);
+  color: #fff;
   max-width: 600px;
   margin: 0 auto;
 }
@@ -246,10 +232,9 @@ const openConsentManager = () => {
 
 /* Sidebar */
 .index-card {
-  position: sticky;
-  top: 120px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  position: static;
+  background: #0a0a0a;
+  border: 1px solid var(--line);
   border-radius: 24px;
   padding: 32px;
 }
@@ -271,22 +256,16 @@ const openConsentManager = () => {
 }
 
 .index-card a {
-  color: rgba(255, 255, 255, 0.5);
+  color: #fff;
   text-decoration: none;
   font-size: 0.95rem;
-  transition: all 0.3s ease;
-}
-
-.index-card a:hover {
-  color: #fff;
-  padding-left: 5px;
 }
 
 /* Content Sections */
 .update-info {
   margin-bottom: 60px;
   font-size: 0.9rem;
-  color: rgba(255, 255, 255, 0.3);
+  color: #fff;
   font-weight: 600;
 }
 
@@ -298,7 +277,7 @@ const openConsentManager = () => {
 .section-number {
   font-size: 4rem;
   font-weight: 900;
-  color: rgba(255, 255, 255, 0.03);
+  color: #111;
   position: absolute;
   top: -20px;
   left: -20px;
@@ -314,7 +293,7 @@ const openConsentManager = () => {
 }
 
 .section-body {
-  color: rgba(255, 255, 255, 0.6);
+  color: #fff;
   line-height: 1.8;
   font-size: 1.1rem;
 }
@@ -357,16 +336,10 @@ const openConsentManager = () => {
 }
 
 .cookie-type-card {
-  background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: #0a0a0a;
+  border: 1px solid var(--line);
   padding: 24px;
   border-radius: 20px;
-  transition: transform 0.3s ease;
-}
-
-.cookie-type-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(225, 29, 72, 0.2);
 }
 
 .cookie-type-card strong {
@@ -384,21 +357,14 @@ const openConsentManager = () => {
 }
 
 .browser-link {
-  background: rgba(255, 255, 255, 0.03);
+  background: #0a0a0a;
   padding: 16px;
   border-radius: 12px;
   text-align: center;
-  color: rgba(255, 255, 255, 0.7);
+  color: #fff;
   text-decoration: none;
   font-weight: 700;
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  transition: all 0.3s ease;
-}
-
-.browser-link:hover {
-  background: var(--primary-2);
-  color: #fff;
-  border-color: var(--primary-2);
+  border: 1px solid var(--line);
 }
 
 .fiscal-card {
@@ -415,7 +381,7 @@ const openConsentManager = () => {
   display: block;
   font-size: 0.8rem;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.4);
+  color: #fff;
   letter-spacing: 0.1em;
   margin-bottom: 4px;
 }
