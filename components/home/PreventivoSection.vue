@@ -87,7 +87,7 @@ const toggleInfo = () => {
             <div class="relative">
               <button @click="toggleInfo" class="flex items-center justify-between w-full py-6 text-left group">
                 <span class="text-sm font-black uppercase tracking-widest dark:text-white">Perché Pica Caravan?</span>
-                <svg aria-hidden="true" class="w-4 h-4 text-slate-500 dark:text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg aria-hidden="true" class="faq-chevron w-4 h-4 text-slate-500 dark:text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
@@ -102,7 +102,7 @@ const toggleInfo = () => {
             <div class="relative">
               <button @click="toggleGdpr" class="flex items-center justify-between w-full py-6 text-left group">
                 <span class="text-sm font-black uppercase tracking-widest dark:text-white">Trattamento Dati</span>
-                <svg aria-hidden="true" class="w-4 h-4 text-slate-500 dark:text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg aria-hidden="true" class="faq-chevron w-4 h-4 text-slate-500 dark:text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
@@ -136,5 +136,11 @@ const toggleInfo = () => {
 .action-card .action-link :deep(svg) {
   width: 18px !important;
   height: 18px !important;
+}
+
+.faq-chevron {
+  width: 16px !important;
+  height: 16px !important;
+  flex: none;
 }
 </style>

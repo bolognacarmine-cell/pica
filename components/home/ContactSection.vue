@@ -115,7 +115,7 @@ const handleSubmit = async () => {
                     <option value="rimessaggio">Interesse: Rimessaggio</option>
                     <option value="assistenza">Interesse: Assistenza</option>
                   </select>
-                  <svg aria-hidden="true" class="absolute right-6 top-1/2 -mt-2 w-4 h-4 text-slate-500 dark:text-white/60 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg aria-hidden="true" class="select-chevron absolute right-6 top-1/2 -mt-2 w-4 h-4 text-slate-500 dark:text-white/60 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
                   </svg>
                 </div>
@@ -153,5 +153,10 @@ const handleSubmit = async () => {
   background: var(--bg);
   position: relative;
   overflow: hidden;
+}
+
+.select-chevron {
+  width: 16px !important;
+  height: 16px !important;
 }
 </style>
