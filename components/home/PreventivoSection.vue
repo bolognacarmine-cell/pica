@@ -43,7 +43,7 @@ const toggleInfo = () => {
           <!-- Card 1: Modulo -->
           <div class="action-card p-10 md:p-12 bg-white dark:bg-white/5 rounded-[40px] border border-primary/20 relative">
             
-            <div class="flex items-center justify-center w-16 h-16 mb-8 rounded-2xl bg-primary/10 text-primary">
+            <div class="action-card-icon flex items-center justify-center w-16 h-16 mb-8 rounded-2xl bg-primary/10 text-primary">
               <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/></svg>
             </div>
             
@@ -52,7 +52,7 @@ const toggleInfo = () => {
             
             <NuxtLink 
               to="/#contatti" 
-              class="inline-flex items-center gap-3 px-8 py-4 bg-primary text-white font-black rounded-xl no-underline uppercase tracking-widest text-[10px] shadow-lg shadow-primary/20"
+              class="action-link inline-flex items-center gap-3 px-8 py-4 bg-primary text-white font-black rounded-xl no-underline uppercase tracking-widest text-[10px] shadow-lg shadow-primary/20"
             >
               RICHIEDI CONSULENZA
               <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="3" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
@@ -62,7 +62,7 @@ const toggleInfo = () => {
           <!-- Card 2: Chiamata Diretta -->
           <div class="action-card p-10 md:p-12 bg-primary rounded-[40px] shadow-xl shadow-primary/20 relative">
             
-            <div class="flex items-center justify-center w-16 h-16 mb-8 rounded-2xl bg-white/20 text-white">
+            <div class="action-card-icon flex items-center justify-center w-16 h-16 mb-8 rounded-2xl bg-white/20 text-white">
               <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
             </div>
             
@@ -71,7 +71,7 @@ const toggleInfo = () => {
             
             <a 
               href="tel:3332327592" 
-              class="inline-flex items-center gap-3 px-8 py-4 bg-white text-primary font-black rounded-xl no-underline uppercase tracking-widest text-lg md:text-xl shadow-lg shadow-black/10"
+              class="action-call inline-flex items-center gap-3 px-8 py-4 bg-white text-primary font-black rounded-xl no-underline uppercase tracking-widest text-lg md:text-xl shadow-lg shadow-black/10"
             >
               <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/></svg>
               333 2327592
@@ -122,18 +122,18 @@ const toggleInfo = () => {
 
 <style scoped>
 /* Fix icone giganti */
-.action-card :deep(svg) {
+.action-card .action-card-icon :deep(svg) {
   width: 32px !important;
   height: 32px !important;
   display: block;
 }
 
-a :deep(svg) {
+.action-card .action-call :deep(svg) {
   width: 24px !important;
   height: 24px !important;
 }
 
-.NuxtLink :deep(svg) {
+.action-card .action-link :deep(svg) {
   width: 18px !important;
   height: 18px !important;
 }
