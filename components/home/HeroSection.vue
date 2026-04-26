@@ -92,7 +92,7 @@ const toggleMute = () => {
   background: #000;
 }
 
-/* Mobile First: Video full-width, content sotto con animazione */
+/* Mobile First: Video full-width, content sotto con design minimalista */
 @media (max-width: 767px) {
   .hero {
     min-height: 100vh;
@@ -102,61 +102,45 @@ const toggleMute = () => {
   .hero-media {
     position: relative;
     width: 100%;
-    height: 60vh;
-    min-height: 400px;
+    height: 65vh;
+    min-height: 450px;
   }
   
   .hero-content {
     position: relative;
     width: 100%;
-    padding: var(--spacing-2xl) var(--spacing-lg);
-    background: linear-gradient(135deg, #0F0A08 0%, #1A1512 100%);
+    padding: 40px 24px;
+    background: #ffffff;
     z-index: 2;
     flex: 1;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    overflow: hidden;
   }
   
-  /* Animazione entrance per caption mobile */
-  .hero-content::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(241, 110, 34, 0.1), transparent);
-    animation: slideInOverlay 2s ease-out 0.5s forwards;
-  }
-  
+  /* Animazioni minimaliste */
   .hero-badge-wrapper {
     opacity: 0;
-    transform: translateY(20px);
-    animation: fadeInUp 0.8s ease-out 0.3s forwards;
+    animation: fadeIn 0.6s ease-out 0.2s forwards;
   }
   
   .hero-title {
     opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.8s ease-out 0.5s forwards;
+    animation: fadeIn 0.6s ease-out 0.4s forwards;
   }
   
   .hero-subtitle {
     opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 0.8s ease-out 0.7s forwards;
+    animation: fadeIn 0.6s ease-out 0.6s forwards;
   }
   
   .hero-cta {
     opacity: 0;
-    transform: translateY(40px);
-    animation: fadeInUp 0.8s ease-out 0.9s forwards;
+    animation: fadeIn 0.6s ease-out 0.8s forwards;
   }
 }
 
-/* Desktop: Layout split (testo a sinistra, video a destra) */
+/* Desktop: Layout split con design pulito */
 @media (min-width: 768px) {
   .hero {
     min-height: 100vh;
@@ -164,58 +148,42 @@ const toggleMute = () => {
   }
   
   .hero-media {
-    width: 55%;
+    width: 60%;
     height: 100vh;
     position: relative;
   }
   
   .hero-content {
-    width: 45%;
+    width: 40%;
     height: 100vh;
     position: relative;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    padding: var(--spacing-2xl);
-    background: linear-gradient(135deg, #0F0A08 0%, #1A1512 100%);
+    padding: 60px;
+    background: #ffffff;
     z-index: 2;
-    overflow: hidden;
   }
   
-  /* Animazioni desktop */
-  .hero-content::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(241, 110, 34, 0.08), transparent);
-    animation: slideInOverlay 2.5s ease-out 0.3s forwards;
-  }
-  
+  /* Animazioni desktop semplici */
   .hero-badge-wrapper {
     opacity: 0;
-    transform: translateX(-30px);
-    animation: fadeInLeft 0.8s ease-out 0.2s forwards;
+    animation: fadeIn 0.6s ease-out 0.1s forwards;
   }
   
   .hero-title {
     opacity: 0;
-    transform: translateX(-40px);
-    animation: fadeInLeft 0.8s ease-out 0.4s forwards;
+    animation: fadeIn 0.6s ease-out 0.3s forwards;
   }
   
   .hero-subtitle {
     opacity: 0;
-    transform: translateX(-30px);
-    animation: fadeInLeft 0.8s ease-out 0.6s forwards;
+    animation: fadeIn 0.6s ease-out 0.5s forwards;
   }
   
   .hero-cta {
     opacity: 0;
-    transform: translateX(-30px);
-    animation: fadeInLeft 0.8s ease-out 0.8s forwards;
+    animation: fadeIn 0.6s ease-out 0.7s forwards;
   }
 }
 
@@ -279,184 +247,112 @@ const toggleMute = () => {
   transform: translateY(-1px);
 }
 
-/* Content Typography - Gerarchia chiara con design moderno */
+/* Content Typography - Design minimalista e pulito */
 .hero-badge-wrapper {
-  margin-bottom: var(--spacing-lg);
-  position: relative;
+  margin-bottom: 24px;
 }
 
 .hero-badge {
   display: inline-block;
-  background: linear-gradient(135deg, var(--primary) 0%, #F16913 100%);
+  background: var(--primary);
   color: white;
-  padding: 8px 16px;
-  border-radius: 50px;
-  font-size: 10px;
-  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
-  box-shadow: 0 4px 15px rgba(241, 110, 34, 0.3);
-  position: relative;
-  overflow: hidden;
-}
-
-.hero-badge::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
-  animation: shimmer 3s ease-in-out infinite;
+  letter-spacing: 0.5px;
 }
 
 .hero-title {
-  font-size: clamp(32px, 6vw, 56px);
-  font-weight: 900;
-  line-height: 1.05;
-  color: #ffffff;
-  margin-bottom: var(--spacing-lg);
-  max-width: 600px;
-  position: relative;
-  text-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
-}
-
-.hero-title::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 0;
-  width: 60px;
-  height: 3px;
-  background: linear-gradient(90deg, var(--primary), transparent);
-  border-radius: 2px;
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 800;
+  line-height: 1.1;
+  color: #1a1a1a;
+  margin-bottom: 20px;
+  max-width: 500px;
 }
 
 @media (min-width: 768px) {
   .hero-title {
-    font-size: clamp(40px, 5vw, 64px);
-    max-width: 500px;
+    font-size: clamp(36px, 4vw, 56px);
+    max-width: 450px;
   }
 }
 
 .hero-subtitle {
-  font-size: clamp(16px, 2.5vw, 20px);
+  font-size: clamp(16px, 2vw, 18px);
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.8);
-  margin-bottom: var(--spacing-2xl);
-  max-width: 500px;
-  position: relative;
-  padding-left: 20px;
+  color: #666666;
+  margin-bottom: 32px;
+  max-width: 450px;
 }
 
-.hero-subtitle::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 8px;
-  bottom: 8px;
-  width: 2px;
-  background: linear-gradient(180deg, var(--primary), transparent);
-  border-radius: 1px;
-}
-
-/* CTA - Design premium con animazioni */
+/* CTA - Design semplice e diretto */
 .hero-cta {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: 16px;
   align-items: flex-start;
-  position: relative;
 }
 
 @media (min-width: 768px) {
   .hero-cta {
     flex-direction: row;
     align-items: center;
-    gap: var(--spacing-lg);
+    gap: 20px;
   }
 }
 
 .btn {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  padding: 16px 28px;
-  border-radius: 50px;
+  gap: 8px;
+  padding: 16px 24px;
+  border-radius: 6px;
   font-size: 14px;
-  font-weight: 800;
+  font-weight: 600;
   text-decoration: none;
-  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: all 0.2s ease;
   cursor: pointer;
   border: none;
-  min-height: 52px;
-  position: relative;
-  overflow: hidden;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
+  min-height: 48px;
 }
 
 @media (max-width: 767px) {
   .btn {
     width: 100%;
     justify-content: center;
-    padding: 18px 24px;
   }
 }
 
-.btn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  transition: all 0.4s ease;
-}
-
-.btn:hover::before {
-  left: 100%;
-}
-
 .btn--primary {
-  background: linear-gradient(135deg, var(--primary) 0%, #F16913 100%);
+  background: var(--primary);
   color: white;
-  box-shadow: 0 8px 25px rgba(241, 110, 34, 0.4);
-}
-
-.btn--primary::before {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
 }
 
 .btn--primary:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 12px 35px rgba(241, 110, 34, 0.5);
+  background: #e67e00;
+  transform: translateY(-1px);
 }
 
 .btn--secondary {
-  background: rgba(255, 255, 255, 0.08);
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-}
-
-.btn--secondary::before {
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  background: transparent;
+  color: var(--primary);
+  border: 2px solid var(--primary);
 }
 
 .btn--secondary:hover {
-  background: rgba(255, 255, 255, 0.15);
-  border-color: rgba(255, 255, 255, 0.4);
-  transform: translateY(-2px);
+  background: var(--primary);
+  color: white;
 }
 
 .btn svg {
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
 }
 
 .btn:hover svg {
-  transform: translateX(4px);
+  transform: translateX(2px);
 }
 
 /* Safe Area e Spaziamenti */
