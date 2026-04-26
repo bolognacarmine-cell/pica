@@ -3,9 +3,9 @@ import { ref } from 'vue'
 
 // Props per dinamismo
 defineProps({
-  badge: { type: String, default: 'Vendita e Rimessaggio a San Nicola la Strada' },
-  title: { type: String, default: 'Camper e roulotte per partire senza pensieri' },
-  subtitle: { type: String, default: 'Vendita nuovo e usato garantito, assistenza e rimessaggio sicuro.' }
+  badge: { type: String, default: 'Pica Caravan • San Nicola la Strada' },
+  title: { type: String, default: 'Viaggia senza compromessi.' },
+  subtitle: { type: String, default: 'Camper e roulotte selezionati. Nuovo, usato garantito e officina specializzata.' }
 })
 
 const isMuted = ref(true)
@@ -90,6 +90,16 @@ const toggleMute = () => {
   z-index: 0;
 }
 
+.hero-video-wrapper::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(1200px 650px at 24% 30%, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.56) 56%, rgba(0, 0, 0, 0.82) 100%),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.35) 42%, rgba(0, 0, 0, 0.78) 100%);
+  pointer-events: none;
+}
+
 .hero-video {
   width: 100%;
   height: 100%;
@@ -101,15 +111,20 @@ const toggleMute = () => {
   bottom: 40px;
   right: 40px;
   z-index: 1;
-  background: #fff;
-  border: 1px solid #ddd;
-  padding: 10px 20px;
+  background: rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  padding: 10px 16px;
   border-radius: 100px;
-  color: #111;
+  color: rgba(255, 255, 255, 0.92);
   display: flex;
   align-items: center;
   gap: 10px;
   cursor: pointer;
+}
+
+.video-audio-toggle:hover {
+  background: rgba(0, 0, 0, 0.68);
+  border-color: rgba(255, 255, 255, 0.24);
 }
 
 .hero-container {
@@ -117,54 +132,101 @@ const toggleMute = () => {
   z-index: 1;
 }
 
+.hero-content {
+  width: 100%;
+}
+
 .hero-text-wrapper {
-  max-width: 800px;
-  background: #fff;
-  border: 1px solid #eee;
-  border-radius: 16px;
-  padding: 28px 28px;
-  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  max-width: 720px;
+  background: rgba(0, 0, 0, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 20px;
+  padding: 30px 30px;
+  box-shadow: 0 14px 42px rgba(0, 0, 0, 0.26);
 }
 
 .hero-badge-wrapper {
-  margin-bottom: 24px;
+  margin-bottom: 18px;
 }
 
 .hero-badge {
   display: inline-block;
-  padding: 10px 24px;
-  background: #fff;
-  border: 1px solid rgba(241, 110, 34, 0.4);
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 100px;
-  color: var(--primary);
-  font-size: 0.8rem;
-  font-weight: 800;
-  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.92);
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
 }
 
 .hero-title {
-  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-size: clamp(2.3rem, 6.2vw, 4.8rem);
   font-weight: 900;
-  line-height: 1.05;
-  margin-bottom: 24px;
-  color: #111;
+  line-height: 1.02;
+  margin-bottom: 18px;
+  color: #fff;
   text-wrap: balance;
   letter-spacing: -0.04em;
+  max-width: 18ch;
 }
 
 .hero-subtitle {
-  font-size: clamp(1.125rem, 2vw, 1.5rem);
-  color: #444;
-  margin-bottom: 48px;
-  max-width: 600px;
-  line-height: 1.5;
+  font-size: clamp(1.03rem, 1.8vw, 1.25rem);
+  color: rgba(255, 255, 255, 0.76);
+  margin-bottom: 34px;
+  max-width: 56ch;
+  line-height: 1.55;
 }
 
 .hero-actions {
   display: flex;
-  gap: 24px;
+  gap: 14px;
   flex-wrap: wrap;
+}
+
+.hero-actions .btn-premium {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 14px 18px;
+  border-radius: 999px;
+  background: var(--primary);
+  color: #fff;
+  font-weight: 900;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: 0 14px 34px rgba(241, 110, 34, 0.16);
+}
+
+.hero-actions .btn-premium:hover {
+  background: var(--primary-2);
+}
+
+.hero-actions .btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 14px 18px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.92);
+  font-weight: 900;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+}
+
+.hero-actions .btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.1);
 }
 
 @media (max-width: 768px) {

@@ -1,0 +1,28 @@
+warning: in the working copy of '.gitignore', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'layouts/default.vue', LF will be replaced by CRLF the next time Git touches it
+.gitignore
+.output/public/_nuxt/BPvFDpe7.js
+.output/public/_nuxt/BTEhNikI.js
+.output/public/_nuxt/BwAfqtvk.js
+.output/public/_nuxt/BzAO5Df5.js
+.output/public/_nuxt/CGWRiUrL.js
+.output/public/_nuxt/CH20fvRt.js
+.output/public/_nuxt/CRNnI3Hi.js
+.output/public/_nuxt/CVciaJPj.js
+.output/public/_nuxt/CWCTIIWD.js
+.output/public/_nuxt/Cbm4Y4Qn.js
+.output/public/_nuxt/CcpSbulZ.js
+.output/public/_nuxt/Ckj__v20.js
+.output/public/_nuxt/CnTg9tTq.js
+.output/public/_nuxt/Cq8bvNdE.js
+.output/public/_nuxt/DAbI_Q-r.js
+.output/public/_nuxt/DLSYXeMz.js
+.output/public/_nuxt/D_6H_Iu-.js
+.output/public/_nuxt/DdIuDSd9.js
+.output/public/_nuxt/FsDXEoBl.js
+.output/public/_nuxt/builds/latest.json
+.output/public/_nuxt/builds/meta/3a934b33-4d7b-473a-a788-265f1465fc6c.json
+.output/public/_nuxt/etMJnkSV.js
+.output/public/_nuxt/index.DR7aWAEI.css
+.output/public/_nuxt/kiarZPGE.js
+layouts/default.vue
