@@ -469,3 +469,9 @@ main .page-container > section + section {
   .intro-grid,.featured-grid,.benefits-grid,.brands-grid,.footer-grid{grid-template-columns:1fr;}
   .cta-content h2 { font-size: 2rem; }
 }
+
+svg:not([width]):not([height]) {
+  width: 16px;
+  height: 16px;
+  flex: none;
+}
