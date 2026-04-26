@@ -87,7 +87,9 @@ const toggleInfo = () => {
             <div class="relative">
               <button @click="toggleInfo" class="flex items-center justify-between w-full py-6 text-left group">
                 <span class="text-sm font-black uppercase tracking-widest dark:text-white">Perché Pica Caravan?</span>
-                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                <svg aria-hidden="true" class="w-4 h-4 text-slate-500 dark:text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                </svg>
               </button>
               <div v-if="showInfo" class="overflow-hidden">
                 <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed pb-6">
@@ -100,7 +102,9 @@ const toggleInfo = () => {
             <div class="relative">
               <button @click="toggleGdpr" class="flex items-center justify-between w-full py-6 text-left group">
                 <span class="text-sm font-black uppercase tracking-widest dark:text-white">Trattamento Dati</span>
-                <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/></svg>
+                <svg aria-hidden="true" class="w-4 h-4 text-slate-500 dark:text-white/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                </svg>
               </button>
               <div v-if="showGdpr" class="overflow-hidden">
                 <p class="text-sm text-gray-500 dark:text-gray-400 leading-relaxed pb-6">

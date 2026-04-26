@@ -115,7 +115,9 @@ const handleSubmit = async () => {
                     <option value="rimessaggio">Interesse: Rimessaggio</option>
                     <option value="assistenza">Interesse: Assistenza</option>
                   </select>
-                  <svg class="absolute right-6 top-1/2 -mt-2 w-4 h-4 text-gray-400 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path d="M19 9l-7 7-7-7"/></svg>
+                  <svg aria-hidden="true" class="absolute right-6 top-1/2 -mt-2 w-4 h-4 text-slate-500 dark:text-white/60 pointer-events-none" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7" />
+                  </svg>
                 </div>
                 <textarea v-model="formData.message" placeholder="Descrivi le tue necessità" rows="4" class="w-full bg-gray-50 dark:bg-[#111] border border-primary/20 focus:border-primary rounded-2xl py-4 px-6 text-sm text-gray-900 dark:text-white outline-none resize-none"></textarea>
                 
