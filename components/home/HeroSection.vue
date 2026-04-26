@@ -19,8 +19,10 @@ const toggleMute = () => {
 </script>
 
 <template>
-  <section class="hero">
-    <div class="hero-video-wrapper">
+  <!-- Hero Section con layout responsive: mobile caption sotto, desktop split -->
+  <section class="hero hero--video">
+    <!-- Media container: video su mobile (full), su desktop (destra) -->
+    <div class="hero-media">
       <video
         class="hero-video"
         autoplay
@@ -32,6 +34,10 @@ const toggleMute = () => {
         <source src="/video/hero-video.mp4" type="video/mp4" />
       </video>
       
+      <!-- Overlay leggero per migliorare contrasto su mobile -->
+      <div class="hero-overlay hero-overlay--gradient"></div>
+      
+      <!-- Controllo audio: posizionato per non confliggere con CTA -->
       <button 
         @click="toggleMute"
         class="video-audio-toggle"
@@ -43,110 +49,298 @@ const toggleMute = () => {
       </button>
     </div>
 
-    <div class="container hero-container">
-      <div class="hero-content">
-        <div class="hero-text-wrapper">
-          <div class="hero-badge-wrapper">
-            <span class="hero-badge">{{ badge }}</span>
-          </div>
-          <h1 class="hero-title">
-            {{ title }}
-          </h1>
-          <p class="hero-subtitle">
-            {{ subtitle }}
-          </p>
-          <div class="hero-actions">
-            <a href="#contatti" class="btn-premium">
-              Richiedi informazioni
-              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
-            </a>
-            <NuxtLink to="/veicoli" class="btn-secondary">
-              Scopri i veicoli
-            </NuxtLink>
-          </div>
-        </div>
+    <!-- Content container: caption sotto su mobile, split a sinistra su desktop -->
+    <div class="hero-content">
+      <!-- Badge per contesto -->
+      <div class="hero-badge-wrapper">
+        <span class="hero-badge">{{ badge }}</span>
+      </div>
+      
+      <!-- Titolo principale con gerarchia chiara -->
+      <h1 class="hero-title">
+        {{ title }}
+      </h1>
+      
+      <!-- Sottotitolo opzionale per dettagli -->
+      <p class="hero-subtitle">
+        {{ subtitle }}
+      </p>
+      
+      <!-- CTA con gerarchia primaria/secondaria -->
+      <div class="hero-cta">
+        <a href="#contatti" class="btn btn--primary">
+          Richiedi informazioni
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
+        </a>
+        <NuxtLink to="/veicoli" class="btn btn--secondary">
+          Scopri i veicoli
+        </NuxtLink>
       </div>
     </div>
   </section>
 </template>
 
 <style scoped>
+/* Hero Section - Layout responsive: mobile caption, desktop split */
 .hero {
   position: relative;
-  height: 100vh;
+  min-height: 100vh;
   width: 100%;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   overflow: hidden;
   background: #000;
 }
 
-.hero-video-wrapper {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 0;
+/* Mobile First: Video full-width, content sotto */
+@media (max-width: 767px) {
+  .hero {
+    min-height: 100vh;
+    flex-direction: column;
+  }
+  
+  .hero-media {
+    position: relative;
+    width: 100%;
+    height: 60vh;
+    min-height: 400px;
+  }
+  
+  .hero-content {
+    position: relative;
+    width: 100%;
+    padding: var(--spacing-xl) var(--spacing-md);
+    background: var(--surface);
+    z-index: 2;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
 }
 
-.hero-video-wrapper::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(1200px 650px at 24% 30%, rgba(0, 0, 0, 0.12) 0%, rgba(0, 0, 0, 0.56) 56%, rgba(0, 0, 0, 0.82) 100%),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.55) 0%, rgba(0, 0, 0, 0.35) 42%, rgba(0, 0, 0, 0.78) 100%);
-  pointer-events: none;
+/* Desktop: Layout split (testo a sinistra, video a destra) */
+@media (min-width: 768px) {
+  .hero {
+    min-height: 100vh;
+    flex-direction: row;
+  }
+  
+  .hero-media {
+    width: 55%;
+    height: 100vh;
+    position: relative;
+  }
+  
+  .hero-content {
+    width: 45%;
+    height: 100vh;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: var(--spacing-2xl);
+    background: var(--surface);
+    z-index: 2;
+  }
 }
 
+/* Media Container */
 .hero-video {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
+/* Overlay per migliorare contrasto (solo su mobile) */
+.hero-overlay--gradient {
+  display: none;
+}
+
+@media (max-width: 767px) {
+  .hero-overlay--gradient {
+    display: block;
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 0, 0, 0.3) 0%,
+      rgba(0, 0, 0, 0.1) 100%
+    );
+    pointer-events: none;
+    z-index: 1;
+  }
+}
+
+/* Controllo Audio - posizionato per non confliggere */
 .video-audio-toggle {
   position: absolute;
-  bottom: 40px;
-  right: 40px;
-  z-index: 1;
-  background: rgba(0, 0, 0, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  padding: 10px 16px;
+  bottom: var(--spacing-lg);
+  right: var(--spacing-lg);
+  z-index: 10;
+  background: rgba(0, 0, 0, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 12px 16px;
   border-radius: 100px;
-  color: rgba(255, 255, 255, 0.92);
+  color: rgba(255, 255, 255, 0.9);
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   cursor: pointer;
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 767px) {
+  .video-audio-toggle {
+    bottom: var(--spacing-md);
+    right: var(--spacing-md);
+    padding: 10px 14px;
+  }
 }
 
 .video-audio-toggle:hover {
-  background: rgba(0, 0, 0, 0.68);
-  border-color: rgba(255, 255, 255, 0.24);
+  background: rgba(0, 0, 0, 0.85);
+  border-color: rgba(255, 255, 255, 0.3);
+  transform: translateY(-1px);
 }
 
-.hero-container {
-  position: relative;
-  z-index: 1;
-}
-
-.hero-content {
-  width: 100%;
-}
-
-.hero-text-wrapper {
-  max-width: 720px;
-  background: rgba(0, 0, 0, 0.42);
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  border-radius: 20px;
-  padding: 30px 30px;
-  box-shadow: 0 14px 42px rgba(0, 0, 0, 0.26);
-}
-
+/* Content Typography - Gerarchia chiara */
 .hero-badge-wrapper {
-  margin-bottom: 18px;
+  margin-bottom: var(--spacing-md);
+}
+
+.hero-badge {
+  display: inline-block;
+  background: var(--primary);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.hero-title {
+  font-size: clamp(28px, 5vw, 48px);
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--text-primary);
+  margin-bottom: var(--spacing-lg);
+  max-width: 600px;
+}
+
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: clamp(36px, 4vw, 56px);
+    max-width: 500px;
+  }
+}
+
+.hero-subtitle {
+  font-size: clamp(16px, 2vw, 20px);
+  line-height: 1.6;
+  color: var(--text-secondary);
+  margin-bottom: var(--spacing-xl);
+  max-width: 500px;
+}
+
+/* CTA - Gerarchia primaria/secondaria */
+.hero-cta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  align-items: flex-start;
+}
+
+@media (min-width: 768px) {
+  .hero-cta {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--spacing-lg);
+  }
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  border: none;
+  min-height: 48px; /* Touch target WCAG */
+}
+
+@media (max-width: 767px) {
+  .btn {
+    width: 100%;
+    justify-content: center;
+    padding: 16px 24px;
+  }
+}
+
+.btn--primary {
+  background: var(--primary);
+  color: white;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn--primary:hover {
+  background: var(--primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+}
+
+.btn--secondary {
+  background: transparent;
+  color: var(--text-primary);
+  border: 2px solid var(--border);
+}
+
+.btn--secondary:hover {
+  background: var(--surface-hover);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Safe Area e Spaziamenti */
+@media (max-width: 767px) {
+  .hero-content {
+    padding-top: calc(var(--spacing-xl) + env(safe-area-inset-top));
+    padding-bottom: calc(var(--spacing-xl) + env(safe-area-inset-bottom));
+  }
+  
+  .video-audio-toggle {
+    right: calc(var(--spacing-md) + env(safe-area-inset-right));
+    bottom: calc(var(--spacing-md) + env(safe-area-inset-bottom));
+  }
+}
+
+/* Performance e Accessibilità */
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .video-audio-toggle {
+    transition: none;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .btn--primary {
+    border: 2px solid currentColor;
+  }
+  
+  .video-audio-toggle {
+    border-width: 2px;
+  }
+}
+</style>
 }
 
 .hero-badge {

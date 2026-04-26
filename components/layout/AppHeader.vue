@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue'
+import { onBeforeUnmount, onMounted, ref } from 'vue'
 
 const props = defineProps({
   logo: { type: String, default: '/logo-pica.png' },
@@ -16,6 +16,21 @@ const props = defineProps({
 })
 
 const mobileMenuOpen = ref(false)
+
+let mq
+const handleBreakpointChange = () => {
+  if (mq?.matches) mobileMenuOpen.value = false
+}
+
+onMounted(() => {
+  mq = window.matchMedia('(min-width: 1025px)')
+  handleBreakpointChange()
+  mq.addEventListener?.('change', handleBreakpointChange)
+})
+
+onBeforeUnmount(() => {
+  mq?.removeEventListener?.('change', handleBreakpointChange)
+})
 </script>
 
 <template>
@@ -35,13 +50,19 @@ const mobileMenuOpen = ref(false)
 
       <div class="actions">
         <a href="tel:3332327592" class="cta">{{ props.ctaText }}</a>
-        <button class="menu-toggle" type="button" @click="mobileMenuOpen = !mobileMenuOpen">
+        <button
+          class="menu-toggle"
+          type="button"
+          :aria-expanded="mobileMenuOpen ? 'true' : 'false'"
+          aria-controls="mobile-menu"
+          @click="mobileMenuOpen = !mobileMenuOpen"
+        >
           Menu
         </button>
       </div>
     </div>
 
-    <div v-if="mobileMenuOpen" class="mobile-menu">
+    <div v-if="mobileMenuOpen" id="mobile-menu" class="mobile-menu">
       <nav class="mobile-nav" role="navigation" aria-label="Menu mobile">
         <NuxtLink
           v-for="item in props.menuItems"
@@ -78,11 +99,13 @@ const mobileMenuOpen = ref(false)
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 24px;
+  min-width: 0;
 }
 
 .logo-link {
   display: inline-flex;
   align-items: center;
+  flex: 0 0 auto;
 }
 
 .logo-shell {
@@ -135,6 +158,7 @@ const mobileMenuOpen = ref(false)
   display: inline-flex;
   align-items: center;
   gap: 10px;
+  flex: 0 0 auto;
 }
 
 .cta {
@@ -210,7 +234,25 @@ const mobileMenuOpen = ref(false)
   border-color: rgba(241, 110, 34, 0.35);
 }
 
-@media (min-width: 1024px) {
+@media (max-width: 420px) {
+  .header-content {
+    gap: 12px;
+    padding: 0 14px;
+  }
+  .logo-shell {
+    padding: 6px 10px;
+    border-radius: 14px;
+  }
+  .logo-visible {
+    width: 112px;
+  }
+  .menu-toggle {
+    padding: 10px 12px;
+    letter-spacing: 0.16em;
+  }
+}
+
+@media (min-width: 1025px) {
   .nav-desktop {
     display: flex;
   }
