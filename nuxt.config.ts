@@ -55,7 +55,8 @@ export default defineNuxtConfig({
   // ✅ Build performance e ottimizzazioni
   vite: {
     build: { sourcemap: false },
-    optimizeDeps: { include: ['gsap'] }
+    optimizeDeps: { include: ['gsap'] },
+    css: { devSourcemap: false }
   },
 
   // ✅ Configurazione Nitro per gestire file grandi (immagini)
