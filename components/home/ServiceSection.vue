@@ -3,21 +3,21 @@
 const services = [
   {
     title: 'Vendita Veicoli',
-    desc: 'Ampia scelta di camper e roulotte nuovi e usati dei migliori brand, garantiti e controllati.',
+    desc: 'Selezione di camper e roulotte nuovi e usati, con verifiche e indicazioni chiare prima dell’acquisto.',
     icon: '<svg width="32" height="32" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>',
-    type: 'sales'
+    type: 'Vendita'
   },
   {
     title: 'Officina Specializzata',
-    desc: 'Affida il tuo mezzo a mani esperte: eseguiamo manutenzioni, riparazioni scocche, controlli infiltrazioni e installazione accessori. Un servizio professionale per viaggiare sempre in sicurezza.',
+    desc: 'Manutenzione, riparazioni, controlli infiltrazioni e installazione accessori: interventi certificati e rapidi.',
     icon: '<svg width="32" height="32" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg>',
-    type: 'service'
+    type: 'Officina'
   },
   {
     title: 'Accessori e Ricambi',
-    desc: 'Utilizziamo solo componenti di qualità e accessori delle migliori marche per personalizzare il tuo camper.',
+    desc: 'Ricambi e accessori selezionati, installazione e configurazioni per comfort e autonomia in viaggio.',
     icon: '<svg width="32" height="32" class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"/></svg>',
-    type: 'parts'
+    type: 'Ricambi'
   }
 ]
 </script>
@@ -26,18 +26,16 @@ const services = [
   <section id="assistenza" class="combined-services-section">
     <div class="container">
       <div class="services-header">
-        <p class="section-kicker">Service & Support</p>
-        <h2 class="section-title">Soluzioni complete per il tuo viaggio</h2>
-        <p class="section-subtitle">
-          Dall'acquisto alla manutenzione, ti accompagniamo in ogni chilometro delle tue vacanze.
-        </p>
+        <p class="section-kicker">Assistenza</p>
+        <h2 class="section-title">Servizi solidi, prima e dopo l’acquisto.</h2>
+        <p class="section-description">Dalla scelta del veicolo alla manutenzione: un punto di riferimento unico, con officina e supporto dedicato.</p>
       </div>
 
       <div class="services-grid">
         <div v-for="s in services" :key="s.title" class="service-card glass-panel">
           <div class="card-top">
             <div class="service-icon-box" v-html="s.icon"></div>
-            <div class="service-tag status-badge primary">{{ s.type }}</div>
+            <div class="service-tag">{{ s.type }}</div>
           </div>
           <div class="card-body">
             <h3>{{ s.title }}</h3>
@@ -45,7 +43,7 @@ const services = [
           </div>
           <div class="card-footer">
             <NuxtLink to="/#contatti" class="service-link">
-              Richiedi Info
+              Parla con un consulente
               <svg width="16" height="16" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/></svg>
             </NuxtLink>
           </div>
@@ -56,8 +54,8 @@ const services = [
       <div class="support-cta-box glass-panel">
         <div class="cta-content">
           <div class="cta-text">
-            <h3>Hai bisogno di assistenza o accessori?</h3>
-            <p>Il nostro team tecnico è a tua disposizione per appuntamenti e consulenze veloci.</p>
+            <h3>Hai bisogno di officina o accessori?</h3>
+            <p>Richiedi un appuntamento: ti rispondiamo con tempi e opzioni disponibili.</p>
           </div>
           <div class="cta-actions">
             <a href="tel:0823224038" class="btn-premium">
@@ -77,151 +75,115 @@ const services = [
 
 <style scoped>
 .combined-services-section {
-  padding: 60px 0;
-  background: #050505;
+  padding: 88px 0;
+  background: var(--bg);
   position: relative;
 }
 
 .services-header {
-  max-width: 700px;
-  margin-bottom: 80px;
-}
-
-.section-kicker {
-  color: var(--primary);
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  font-size: 0.85rem;
-  margin-bottom: 12px;
-}
-
-.section-title {
-  font-size: clamp(2rem, 5vw, 3rem);
-  font-weight: 900;
-  margin-bottom: 16px;
-  line-height: 1.1;
-}
-
-.section-subtitle {
-  color: var(--muted);
-  font-size: 1.1rem;
-  max-width: 600px;
-  margin: 0 auto;
+  max-width: 760px;
+  margin-bottom: 44px;
 }
 
 .services-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 32px;
-  margin-bottom: 60px;
+  gap: 20px;
+  margin-bottom: 28px;
 }
 
 .service-card {
-  padding: 40px;
+  padding: 26px;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  text-align: center;
 }
 
 .card-top {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  margin-bottom: 32px;
-}
-
-.service-icon-box {
-  width: 64px;
-  height: 64px;
-  background: rgba(241, 110, 34, 0.1);
-  border-radius: 16px;
-  display: grid;
-  place-items: center;
-  font-size: 2rem;
-  margin: 0 auto 20px auto;
-  color: var(--primary);
-  border: 1px solid rgba(241, 110, 34, 0.2);
-}
-
-.service-tag {
-  font-size: 0.65rem;
-  font-weight: 900;
-  color: rgba(241, 110, 34, 0.75);
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-}
-
-.card-body h3 {
-  font-size: 1.5rem;
-  font-weight: 800;
+  align-items: flex-start;
+  gap: 16px;
   margin-bottom: 16px;
 }
 
+.service-icon-box {
+  width: 52px;
+  height: 52px;
+  background: rgba(241, 110, 34, 0.12);
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: var(--primary);
+  border: 1px solid rgba(241, 110, 34, 0.18);
+}
+
+.service-tag {
+  font-size: 0.7rem;
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.78);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.card-body h3 {
+  font-size: 1.25rem;
+  font-weight: 900;
+  margin-bottom: 10px;
+}
+
 .card-body p {
-  color: rgba(255, 255, 255, 0.5);
-  line-height: 1.6;
-  font-size: 1rem;
+  color: var(--text-dim);
+  line-height: 1.7;
+  font-size: 0.98rem;
 }
 
 .card-footer {
-  margin-top: 32px;
+  margin-top: 18px;
 }
 
 .service-link {
-  color: var(--primary-2);
+  color: rgba(255, 255, 255, 0.9);
   text-decoration: none;
-  font-weight: 800;
-  font-size: 0.9rem;
+  font-weight: 900;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
 }
 
 /* CTA Box */
 .support-cta-box {
-  padding: 60px;
-  border-radius: var(--radius-xl);
+  padding: 28px;
 }
 
 .cta-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  gap: 40px;
+  gap: 24px;
 }
 
 .cta-text h3 {
-  font-size: 2rem;
+  font-size: 1.6rem;
   font-weight: 900;
   margin-bottom: 12px;
 }
 
 .cta-text p {
   color: var(--text-dim);
-  font-size: 1.1rem;
+  font-size: 1.02rem;
+  line-height: 1.65;
 }
 
 .cta-actions {
   display: flex;
   gap: 16px;
-}
-
-.btn-whatsapp {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 32px;
-  background: #25D366;
-  color: white;
-  border-radius: 100px;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  box-shadow: 0 8px 24px rgba(37, 211, 102, 0.2);
-}
-
-.btn-primary-custom {
-  position: relative;
-  overflow: hidden;
 }
 
 @media (max-width: 1100px) {
@@ -231,6 +193,6 @@ const services = [
 
 @media (max-width: 768px) {
   .services-grid { grid-template-columns: 1fr; }
-  .service-card { padding: 30px; }
+  .service-card { padding: 22px; }
 }
 </style>

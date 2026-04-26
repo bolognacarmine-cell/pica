@@ -342,12 +342,11 @@ const formatImages = (moto) => {
 
 <style scoped>
 .featured-section {
-  padding: 40px 0 60px;
+  padding: 88px 0;
   background: var(--bg);
   position: relative;
   z-index: 2;
   margin-top: 0;
-  scroll-margin-top: 20px;
 }
 
 .section-heading-row {
@@ -373,23 +372,6 @@ const formatImages = (moto) => {
   min-width: 300px;
 }
 
-.section-kicker {
-  color: var(--primary);
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.15em;
-  font-size: 1rem;
-  margin-bottom: 12px;
-}
-
-.heading-left h2 {
-  font-size: clamp(2rem, 5vw, 3.5rem);
-  font-weight: 950;
-  letter-spacing: -0.02em;
-  line-height: 1.1;
-  margin: 0;
-}
-
 /* --- Search Bar Style --- */
 .search-bar-container {
   width: 100%;
@@ -406,7 +388,7 @@ const formatImages = (moto) => {
 .search-wrapper {
   position: relative;
   width: 100%;
-  border-radius: var(--radius-xl);
+  border-radius: var(--radius-lg);
   overflow: hidden;
 }
 
@@ -425,7 +407,7 @@ const formatImages = (moto) => {
   width: 100%;
   background: transparent;
   border: none;
-  padding: 14px 24px 14px 54px;
+  padding: 14px 18px 14px 52px;
   color: #fff;
   font-size: 0.95rem;
   font-weight: 500;
@@ -439,7 +421,7 @@ const formatImages = (moto) => {
 
 .search-wrapper:focus-within {
   border-color: var(--primary);
-  box-shadow: 0 0 20px var(--primary-glow);
+  box-shadow: 0 0 0 3px rgba(241, 110, 34, 0.18);
 }
 
 .search-wrapper:focus-within .search-icon {
@@ -459,8 +441,9 @@ const formatImages = (moto) => {
 
 .section-description {
   color: var(--text-dim);
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   margin-top: 8px;
+  max-width: 62ch;
 }
 
 .main-filter-tabs {
@@ -479,10 +462,10 @@ const formatImages = (moto) => {
 }
 
 .main-tab-btn {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--line);
-  padding: 14px 28px;
-  border-radius: var(--radius-xl);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 12px 18px;
+  border-radius: var(--radius-lg);
   color: white;
   cursor: pointer;
   display: flex;
@@ -494,14 +477,14 @@ const formatImages = (moto) => {
 }
 
 .main-tab-btn.active {
-  background: var(--primary);
-  border-color: transparent;
+  background: rgba(241, 110, 34, 0.12);
+  border-color: rgba(241, 110, 34, 0.34);
 }
 
 .main-tab-btn.active .tab-label,
 .main-tab-btn.active .tab-count,
 .main-tab-btn.active .tab-icon {
-  color: white;
+  color: rgba(241, 110, 34, 0.98);
 }
 
 .tab-icon {
@@ -511,53 +494,37 @@ const formatImages = (moto) => {
 }
 
 .tab-label {
-  font-weight: 800;
-  letter-spacing: 0.05em;
-  font-size: 0.85rem;
-  color: var(--text-dim);
+  font-weight: 900;
+  letter-spacing: 0.16em;
+  font-size: 0.72rem;
+  color: rgba(255, 255, 255, 0.72);
   text-transform: uppercase;
 }
 
 .main-tab-btn.active .tab-label {
-  color: white;
+  color: rgba(241, 110, 34, 0.98);
 }
 
 .tab-count {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 2px 10px;
-  border-radius: var(--radius-sm);
-  font-size: 0.75rem;
+  background: rgba(255, 255, 255, 0.07);
+  padding: 3px 10px;
+  border-radius: 999px;
+  font-size: 0.72rem;
   font-weight: 900;
-  color: var(--primary);
+  color: rgba(255, 255, 255, 0.82);
 }
 
 .main-tab-btn.active .tab-count {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-}
-
-.promo-tab.active::before {
-  background: #f59e0b;
+  background: var(--primary);
+  color: #fff;
 }
 
 .promo-tab.active {
-  box-shadow: 0 10px 30px -10px rgba(245, 158, 11, 0.5);
-}
-
-.promo-tab .tab-count {
-  color: #f59e0b;
-}
-
-.sold-tab.active::before {
-  background: #4b5563;
+  border-color: rgba(245, 158, 11, 0.42);
 }
 
 .sold-tab.active {
-  box-shadow: 0 10px 30px -10px rgba(75, 85, 99, 0.5);
-}
-
-.sold-tab .tab-count {
-  color: #9ca3af;
+  border-color: rgba(156, 163, 175, 0.4);
 }
 
 /* --- Sold Stamp Style --- */
@@ -572,20 +539,20 @@ const formatImages = (moto) => {
   justify-content: center;
   pointer-events: none;
   z-index: 10;
-  background: rgba(0, 0, 0, 0.2);
+  background: rgba(0, 0, 0, 0.35);
 }
 
 .sold-stamp {
   color: #ff3e3e;
-  font-size: 2.5rem;
+  font-size: 2.1rem;
   font-weight: 900;
   text-transform: uppercase;
-  padding: 10px 30px;
-  border: 8px solid #ff3e3e;
-  border-radius: 12px;
-  letter-spacing: 4px;
+  padding: 10px 22px;
+  border: 4px solid #ff3e3e;
+  border-radius: 14px;
+  letter-spacing: 0.24em;
   font-family: 'Inter', sans-serif;
-  box-shadow: 0 0 0 4px rgba(255, 62, 62, 0.2);
+  box-shadow: 0 0 0 3px rgba(255, 62, 62, 0.16);
   position: relative;
 }
 
@@ -628,6 +595,7 @@ const formatImages = (moto) => {
 .premium-select:focus {
   border-color: var(--primary);
   background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 0 3px rgba(241, 110, 34, 0.18);
 }
 
 .featured-grid {
@@ -656,63 +624,6 @@ const formatImages = (moto) => {
   display: flex;
   flex-direction: column;
   gap: 12px;
-}
-
-.filter-label {
-  font-size: 0.875rem;
-  font-weight: 800;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--text-dim);
-}
-
-.filter-tabs {
-  display: flex;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.filter-select {
-  padding: 10px 20px;
-  border-radius: var(--radius-md);
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--line);
-  color: #fff;
-  font-weight: 700;
-  font-size: 0.9rem;
-  cursor: pointer;
-  min-width: 200px;
-  outline: none;
-}
-
-.filter-select option {
-  background: #111;
-  color: #fff;
-}
-
-.filter-btn {
-  padding: 10px 24px;
-  border-radius: var(--radius-xl);
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--line);
-  color: var(--text-dim);
-  font-weight: 700;
-  font-size: 0.9rem;
-  cursor: pointer;
-  text-transform: capitalize;
-}
-
-.filter-btn.active {
-  background: var(--primary);
-  border-color: var(--primary);
-  color: #fff;
-}
-
-.featured-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 32px;
-  margin-top: 40px;
 }
 
 .moto-card {
@@ -756,7 +667,7 @@ const formatImages = (moto) => {
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: white;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .badge-status-card.new {
@@ -769,8 +680,7 @@ const formatImages = (moto) => {
 }
 
 .badge-status-card.sold {
-  background: #dc3545; /* Red for Sold */
-  box-shadow: 0 4px 12px rgba(220, 53, 69, 0.4);
+  background: #dc3545;
 }
 
 .badge-promo-card {
@@ -781,11 +691,11 @@ const formatImages = (moto) => {
   font-size: 0.65rem;
   font-weight: 900;
   letter-spacing: 0.05em;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .moto-body {
-  padding: 32px;
+  padding: 24px;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -801,8 +711,8 @@ const formatImages = (moto) => {
   color: var(--primary);
   font-weight: 900;
   text-transform: uppercase;
-  font-size: 0.75rem;
-  letter-spacing: 0.2em;
+  font-size: 0.72rem;
+  letter-spacing: 0.18em;
 }
 
 .category-tag {
@@ -814,12 +724,12 @@ const formatImages = (moto) => {
 }
 
 .moto-title-display {
-  font-size: 1.75rem;
-  font-weight: 950;
-  margin: 12px 0 28px;
+  font-size: 1.45rem;
+  font-weight: 900;
+  margin: 10px 0 18px;
   color: #fff;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
 }
 
 .moto-spec-grid {
@@ -850,10 +760,9 @@ const formatImages = (moto) => {
 }
 
 .spec-value {
-  font-size: 0.8rem;
-  font-weight: 800;
+  font-size: 0.85rem;
+  font-weight: 750;
   color: var(--text);
-  text-transform: uppercase;
 }
 
 .moto-footer-premium {
@@ -887,15 +796,15 @@ const formatImages = (moto) => {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  background: rgba(255, 255, 255, 0.05);
-  padding: 12px 24px;
-  border-radius: var(--radius-xl);
-  font-size: 0.85rem;
-  font-weight: 800;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 900;
   color: #fff;
-  border: 1px solid var(--line);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.16em;
 }
 
 .state-box {
@@ -907,47 +816,10 @@ const formatImages = (moto) => {
   border: 1px dashed var(--line);
 }
 
-.moto-footer a:hover {
-  color: #fff;
-}
-
-.section-footer {
-  display: flex;
-  justify-content: center;
-  margin-top: 60px;
-}
-
-.btn-read-more-section {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-  padding: 16px 32px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--line);
-  color: #fff;
-  border-radius: 100px;
-  font-weight: 700;
-  text-decoration: none;
-}
-
-.mt-5 { margin-top: 3rem; }
-@media (max-width: 480px) {
-  .action-links {
-    flex-direction: column;
-    align-items: stretch;
-  }
-  .btn-quote-mini {
-    text-align: center;
-  }
-}
 .section-footer-actions {
   display: flex;
   justify-content: center;
   margin-top: 60px;
-}
-
-.section-footer-actions .btn-primary-custom {
-  gap: 12px;
 }
 
 .section-footer-actions svg {

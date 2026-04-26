@@ -111,9 +111,9 @@ fetchVehicles()
   <div class="homepage">
     <!-- Hero dinamico -->
     <HeroSection
-      badge="Vendita e Rimessaggio a San Nicola la Strada"
-      title="Camper e roulotte per partire senza pensieri"
-      subtitle="Vendita nuovo e usato garantito, assistenza specializzata e rimessaggio sicuro a Caserta"
+      badge="Pica Caravan • San Nicola la Strada"
+      title="Camper e roulotte selezionati."
+      subtitle="Consulenza su misura, usato garantito e officina specializzata. Ti accompagniamo dalla scelta alla consegna."
     />
 
     <!-- About Section -->
@@ -146,29 +146,9 @@ fetchVehicles()
 
 <style scoped>
 .homepage {
-  background: #050505;
+  background: var(--bg);
   color: #f5f5f5;
   min-height: 100vh;
-}
-
-/* Spaziature verticali premium tra sezioni */
-.homepage > section, 
-.homepage > div:not(.state-box) {
-  margin-bottom: 5rem;
-}
-
-@media (min-width: 768px) {
-  .homepage > section, 
-  .homepage > div:not(.state-box) {
-    margin-bottom: 7rem;
-  }
-}
-
-@media (min-width: 1024px) {
-  .homepage > section, 
-  .homepage > div:not(.state-box) {
-    margin-bottom: 9rem;
-  }
 }
 
 .state-box {

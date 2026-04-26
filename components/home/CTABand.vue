@@ -7,14 +7,14 @@
     <div class="cta-band-shell">
       
       <div class="cta-content">
-        <p class="section-kicker">Pica Caravan</p>
-        <h2>Passione e professionalità <br class="desktop-only" /> al tuo servizio</h2>
-        <p class="cta-desc">Vieni a trovarci a San Nicola la Strada per scoprire il nostro parco veicoli e i servizi di rimessaggio. Il nostro team è pronto a guidarti nella scelta migliore.</p>
+        <p class="section-kicker">Consulenza</p>
+        <h2 class="cta-title section-title">Facciamo chiarezza sul veicolo giusto per te.</h2>
+        <p class="cta-desc section-description">Due minuti di contatto, una risposta concreta: selezione, disponibilità e prossimi passi, senza giri di parole.</p>
       </div>
       
       <div class="cta-actions">
         <a href="#contatti" class="btn-premium">
-          Richiedi Informazioni
+          Richiedi consulenza
         </a>
         <div class="secondary-actions">
           <a href="tel:0823224038" class="btn-secondary-glass">
@@ -34,20 +34,20 @@
 
 <style scoped>
 .cta-band {
-  padding: 30px 0 60px;
-  background: #030303;
+  padding: 88px 0;
+  background: var(--bg);
 }
 
 .cta-band-shell {
   position: relative;
   display: grid;
   grid-template-columns: 1.2fr 0.8fr;
-  gap: 48px;
+  gap: 28px;
   align-items: center;
-  padding: 64px;
-  border-radius: var(--radius-xl);
-  background: var(--panel);
-  box-shadow: 0 40px 100px -20px rgba(0, 0, 0, 0.8);
+  padding: 36px;
+  border-radius: var(--radius-lg);
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.10);
   overflow: hidden;
 }
 
@@ -56,35 +56,12 @@
   z-index: 1;
 }
 
-.section-kicker {
-  display: inline-block;
-  color: var(--primary);
-  font-weight: 900;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  font-size: 0.875rem;
-  margin-bottom: 20px;
-  background: rgba(241, 110, 34, 0.1);
-  padding: 6px 16px;
-  border-radius: 100px;
-  border: 1px solid rgba(241, 110, 34, 0.2);
-}
-
-.cta-band-shell h2 {
-  margin: 0 0 24px;
-  font-size: clamp(2.5rem, 5vw, 4rem);
-  font-weight: 950;
-  line-height: 1;
-  letter-spacing: -0.03em;
-  color: white;
+.cta-title {
+  margin: 0 0 14px;
 }
 
 .cta-desc {
-  color: var(--text-dim);
   margin: 0;
-  font-size: 1.125rem;
-  max-width: 540px;
-  line-height: 1.6;
 }
 
 .cta-actions {
@@ -117,8 +94,8 @@
   .cta-band-shell {
     grid-template-columns: 1fr;
     text-align: center;
-    padding: 60px 32px;
-    gap: 40px;
+    padding: 32px 20px;
+    gap: 24px;
   }
   
   .cta-content {
@@ -140,20 +117,7 @@
 
 @media (max-width: 480px) {
   .cta-band-shell {
-    padding: 48px 20px;
-    border-radius: 32px;
-  }
-  
-  .cta-band-shell h2 {
-    font-size: 2.25rem;
-  }
-  
-  .btn-primary-custom,
-  .btn-secondary-custom,
-  .btn-whatsapp-custom,
-  .btn-blog-custom {
-    padding: 16px 24px;
-    font-size: 0.9375rem;
+    border-radius: var(--radius-lg);
   }
 }
 </style>

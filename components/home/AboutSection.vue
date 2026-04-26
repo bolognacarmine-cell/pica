@@ -11,19 +11,19 @@
         <div class="about-content">
           <div class="about-header">
             <p class="section-kicker">La nostra realtà</p>
-            <h2 class="about-title">PICA CARAVAN: La tua casa in movimento</h2>
-            <p class="about-subtitle">Esperienza e professionalità nel mondo del plein air a San Nicola la Strada.</p>
+            <h2 class="about-title">Pica Caravan, qualità e consulenza per viaggiare meglio.</h2>
+            <p class="about-subtitle">Showroom, assistenza e rimessaggio a San Nicola la Strada (CE).</p>
           </div>
           
           <div class="about-text">
             <p>
-              Situata strategicamente a <strong>San Nicola la Strada (CE)</strong>, Pica Caravan è l'azienda leader per chi ama viaggiare in libertà. Guidata dall'esperienza di <strong>Antimo Pica</strong>, la nostra realtà è specializzata nella <strong>vendita di articoli da campeggio, riparazione e ristrutturazione di camper, roulotte e container</strong>.
+              In sede trovi una selezione di <strong>camper e roulotte</strong>, con un supporto concreto nella scelta: utilizzo reale, budget, dotazioni e tempi.
             </p>
             <p>
-              Siamo orgogliosi di essere <strong>Concessionario Across Car</strong>, produttore europeo d'eccellenza per Camper e Roulotte. Inoltre, realizziamo <strong>allestimenti Street-Food</strong> personalizzati, trasformando la nostra competenza tecnica in soluzioni professionali per il tuo business su ruote.
+              Siamo <strong>concessionario Across Car</strong> e realizziamo <strong>allestimenti Street-Food</strong> personalizzati, con soluzioni tecniche progettate per lavorare in modo affidabile.
             </p>
             <p>
-              Qualità e sicurezza sono i nostri pilastri: siamo <strong>Service Center autorizzato VIESA, THETFORD e WEBASTO</strong>, garantendo interventi certificati e ricambi di altissimo livello per ogni esigenza di climatizzazione e comfort.
+              Come <strong>Service Center autorizzato VIESA, THETFORD e WEBASTO</strong>, garantiamo interventi certificati e ricambi selezionati per comfort e impianti di bordo.
             </p>
           </div>
 
@@ -33,8 +33,8 @@
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/></svg>
               </div>
               <div class="value-info">
-                <strong>Soluzioni Su Misura</strong>
-                <p>Dal primo camper alla roulotte per tutta la famiglia, ti guidiamo nella scelta migliore.</p>
+                <strong>Consulenza su misura</strong>
+                <p>Ti guidiamo con criteri chiari: spazi, utilizzo, dotazioni e budget.</p>
               </div>
             </div>
             <div class="value-card glass-panel">
@@ -42,8 +42,8 @@
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
               </div>
               <div class="value-info">
-                <strong>Affidabilità Locale</strong>
-                <p>Un nome storico sul territorio casertano, sinonimo di fiducia e assistenza continua.</p>
+                <strong>Assistenza concreta</strong>
+                <p>Officina specializzata e supporto post-vendita, prima e dopo l’acquisto.</p>
               </div>
             </div>
           </div>
@@ -71,8 +71,8 @@
             <!-- Badge esperienza -->
             <div class="visual-layer layer-badge">
               <div class="experience-badge-content">
-                <span class="years">Expert</span>
-                <span class="label">Plein Air</span>
+                <span class="years">Dal 2004</span>
+                <span class="label">Esperienza</span>
               </div>
             </div>
           </div>
@@ -85,7 +85,7 @@
 
 <style scoped>
 .about-section {
-  padding: 120px 0;
+  padding: 96px 0;
   background: var(--bg);
   color: #fff;
   overflow: hidden;
@@ -154,7 +154,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: var(--shadow-lg);
+  box-shadow: var(--shadow-md);
   padding: 24px;
 }
 
@@ -179,7 +179,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 15px 30px var(--primary-glow);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
 }
 
 .experience-badge-content .years {
@@ -213,27 +213,26 @@
 }
 
 .about-title {
-  font-size: clamp(2.25rem, 5vw, 3.5rem);
-  font-weight: 950;
+  font-size: clamp(2.1rem, 4.4vw, 3.1rem);
+  font-weight: 900;
   line-height: 1.05;
-  margin-bottom: 24px;
+  margin-bottom: 16px;
   letter-spacing: -0.03em;
-  text-transform: uppercase;
 }
 
 .about-subtitle {
-  font-size: 1.25rem;
+  font-size: 1.1rem;
   color: var(--text-dim);
-  margin-bottom: 32px;
-  font-weight: 500;
-  line-height: 1.5;
+  margin-bottom: 28px;
+  font-weight: 550;
+  line-height: 1.55;
 }
 
 .about-text {
-  font-size: 1.05rem;
-  line-height: 1.8;
+  font-size: 1rem;
+  line-height: 1.75;
   color: var(--text-dim);
-  margin-bottom: 48px;
+  margin-bottom: 40px;
 }
 
 .about-text p {
@@ -266,7 +265,7 @@
 }
 
 .value-icon {
-  background: var(--primary-glow);
+  background: rgba(241, 110, 34, 0.12);
   color: var(--primary);
   width: 48px;
   height: 48px;
@@ -274,7 +273,7 @@
   align-items: center;
   justify-content: center;
   border-radius: 12px;
-  border: 1px solid var(--primary);
+  border: 1px solid rgba(241, 110, 34, 0.22);
   flex-shrink: 0;
 }
 
