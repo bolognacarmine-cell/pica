@@ -1,0 +1,52 @@
+
+# 2026-04-25 00:55:00.272916
++y
+
+# 2026-04-25 00:57:05.216198
++cd "C:\Users\Acer\Desktop\pica"
+
+# 2026-04-25 01:01:58.888010
++cd "C:\Users\Acer\Desktop\pica"
++py -3.12 -m aider --model deepseek-coder-v2
+
+# 2026-04-25 01:02:30.151807
++py -3.12 -m aider --model deepseek-coder-v2
+
+# 2026-04-25 01:03:25.782497
++y
+
+# 2026-04-25 01:03:54.607402
++py -3.12 -m aider --model deepseek-coder-v2
+
+# 2026-04-25 01:06:07.831629
++n
+
+# 2026-04-25 01:06:15.894643
++--model deepseek-coder-v2-lite-instruct
+
+# 2026-04-25 01:07:25.806540
++n
+
+# 2026-04-25 01:08:11.734067
++Waiting for 'deepseek-coder-v2' to ask again [Yes]:
+
+# 2026-04-25 01:08:16.630746
++y
+
+# 2026-04-25 01:08:42.470445
++Waiting for 'deepseek-coder-v2' to ask again [Yes]:y
+
+# 2026-04-25 01:10:28.940350
++ollama pull phi3.5-mini
+
+# 2026-04-25 01:10:37.470044
++py -3.12 -m aider --model ollama/phi3.5-miniy
+
+# 2026-04-25 01:10:39.063071
++y
+
+# 2026-04-25 01:11:11.574638
++py -3.12 -m aider --model qwen2.5-coder-7b-instruct
+
+# 2026-04-25 01:13:18.879750
++y
