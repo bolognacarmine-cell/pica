@@ -340,8 +340,6 @@ const toggleMute = () => {
     border-width: 2px;
   }
 }
-</style>
-}
 
 .hero-badge {
   display: inline-block;
