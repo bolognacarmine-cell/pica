@@ -7,6 +7,8 @@ out-tsc
 *.tsbuildinfo
 .expo
 .expo-shared
+.nuxt
+.output
 
 # dependencies
 node_modules

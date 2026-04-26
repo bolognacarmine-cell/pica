@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /admin
-Disallow: /portale/dashboard
-Disallow: /testsiti.txt
-
-Sitemap: https://picacaravan.it/sitemap.xml

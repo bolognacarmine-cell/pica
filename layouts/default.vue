@@ -24,6 +24,11 @@ const isAdmin = computed(() => route.path.startsWith('/admin'))
 const isPortal = computed(() => route.path.startsWith('/portale'))
 
 const hideHeaderFooter = computed(() => isAdmin.value || isPortal.value)
+
+const buildId = useState('buildId', () => process.env.RENDER_GIT_COMMIT || process.env.GIT_COMMIT || 'local')
+useHead({
+  meta: [{ name: 'x-build-id', content: buildId.value }]
+})
 </script>
 
 <style scoped>
