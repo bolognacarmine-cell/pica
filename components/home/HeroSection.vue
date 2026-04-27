@@ -60,15 +60,29 @@ const toggleMute = () => {
         </div>
       </div>
       
-      <button 
-        @click="toggleMute"
-        class="video-audio-toggle"
-        :aria-label="isMuted ? 'Attiva audio' : 'Disattiva audio'"
-      >
-        <svg v-if="isMuted" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/></svg>
-        <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
-        <span class="text-xs font-black uppercase tracking-widest hidden md:block">{{ isMuted ? 'Senti Audio' : 'Muto' }}</span>
-      </button>
+      <div class="hero-corner" aria-label="Controlli Hero">
+        <NuxtLink to="/" class="hero-logo-link" aria-label="Pica Caravan - Home">
+          <span class="hero-logo-shell">
+            <img
+              src="/logo-pica.png"
+              alt="Pica Caravan"
+              class="hero-logo"
+              decoding="async"
+              fetchpriority="high"
+            />
+          </span>
+        </NuxtLink>
+
+        <button
+          @click="toggleMute"
+          class="video-audio-toggle"
+          :aria-label="isMuted ? 'Attiva audio' : 'Disattiva audio'"
+        >
+          <svg v-if="isMuted" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2"/></svg>
+          <svg v-else class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z"/></svg>
+          <span class="text-xs font-black uppercase tracking-widest hidden md:block">{{ isMuted ? 'Senti Audio' : 'Muto' }}</span>
+        </button>
+      </div>
     </div>
   </section>
 </template>
@@ -137,11 +151,68 @@ const toggleMute = () => {
   }
 }
 
-.video-audio-toggle {
+.hero-corner {
   position: absolute;
-  top: 18px;
-  right: 18px;
+  top: calc(14px + env(safe-area-inset-top));
+  right: calc(14px + env(safe-area-inset-right));
   z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 10px;
+}
+
+@media (min-width: 768px) {
+  .hero-corner {
+    top: 18px;
+    right: 18px;
+    gap: 12px;
+  }
+}
+
+.hero-logo-link {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.hero-logo-shell {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 12px;
+  border-radius: 999px;
+  background: rgba(0, 0, 0, 0.42);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.28);
+  transition: background 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.hero-logo-link:hover .hero-logo-shell {
+  background: rgba(0, 0, 0, 0.52);
+  border-color: rgba(255, 255, 255, 0.22);
+  transform: translateY(-1px);
+}
+
+.hero-logo {
+  width: clamp(96px, 11vw, 138px);
+  height: auto;
+  display: block;
+  opacity: 0.96;
+  filter: drop-shadow(0 10px 22px rgba(0, 0, 0, 0.35));
+}
+
+@media (max-width: 420px) {
+  .hero-logo-shell {
+    padding: 8px 10px;
+  }
+
+  .hero-logo {
+    width: 110px;
+  }
+}
+
+.video-audio-toggle {
   background: rgba(0, 0, 0, 0.7);
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 12px 16px;
@@ -157,8 +228,6 @@ const toggleMute = () => {
 
 @media (max-width: 767px) {
   .video-audio-toggle {
-    top: calc(14px + env(safe-area-inset-top));
-    right: calc(14px + env(safe-area-inset-right));
     padding: 10px 12px;
   }
 }
