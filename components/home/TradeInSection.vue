@@ -7,6 +7,7 @@ const form = ref({
   email: '',
   telefono: '',
   citta: '',
+  website: '',
   marca: '',
   modello: '',
   versione: '',

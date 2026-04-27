@@ -15,11 +15,12 @@ export default defineNuxtConfig({
     cloudinaryCloudName: process.env.CLOUDINARY_CLOUD_NAME,
     cloudinaryApiKey: process.env.CLOUDINARY_API_KEY,
     cloudinaryApiSecret: process.env.CLOUDINARY_API_SECRET,
+    adminApiKey: process.env.ADMIN_API_KEY,
+    turnstileSecretKey: process.env.TURNSTILE_SECRET_KEY,
     public: {
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://picacaravan.it',
       apiBase: process.env.NUXT_PUBLIC_API_BASE || 'https://api.picacaravan.it',
-      adminUser: process.env.ADMIN_USER || 'picacaravan',
-      adminPassword: process.env.ADMIN_PASSWORD || 'pica2026'
+      turnstileSiteKey: process.env.NUXT_PUBLIC_TURNSTILE_SITE_KEY || ''
     }
   },
 
@@ -48,6 +49,9 @@ export default defineNuxtConfig({
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,100..900;1,9..144,100..900&family=Inter:wght@100..900&display=swap' }
+      ],
+      script: [
+        { src: 'https://challenges.cloudflare.com/turnstile/v0/api.js', async: true, defer: true }
       ]
     }
   },

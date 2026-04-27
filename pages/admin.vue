@@ -11,22 +11,12 @@
 
         <form @submit.prevent="handleLogin" class="space-y-6">
           <div class="form-group">
-            <label class="premium-label">Username</label>
-            <input 
-              type="text" 
-              v-model="usernameInput" 
-              class="premium-input"
-              placeholder="Inserisci username" 
-              required 
-            />
-          </div>
-          <div class="form-group">
-            <label class="premium-label">Password</label>
+            <label class="premium-label">Admin key</label>
             <input 
               type="password" 
-              v-model="passwordInput" 
+              v-model="adminKeyInput" 
               class="premium-input"
-              placeholder="••••••••" 
+              placeholder="Inserisci admin key" 
               required 
             />
           </div>
@@ -34,7 +24,7 @@
             Accedi al Pannello
           </button>
           <p v-if="loginError" class="text-center text-[var(--primary)] text-xs font-bold uppercase tracking-widest mt-4">
-            Credenziali non valide
+            Admin key non valida
           </p>
         </form>
       </div>
@@ -798,32 +788,48 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
-import { useRuntimeConfig } from '#imports'
+import { ref } from 'vue'
 import VehicleCarousel from '~/components/veicoli/VehicleCarousel.vue'
 
 // --- Auth State ---
-const config = useRuntimeConfig()
 const isAuthenticated = ref(false)
-const usernameInput = ref('')
-const passwordInput = ref('')
+const adminKeyInput = ref('')
 const loginError = ref(false)
-const ADMIN_USER = config.public.adminUser || 'picacaravan'
-const ADMIN_PASSWORD = config.public.adminPassword || 'pica2026'
+
+const adminFetch = (url, options = {}) => {
+  const headers = {
+    ...(options.headers || {}),
+    'x-admin-key': adminKeyInput.value
+  }
+  return $fetch(url, { ...options, headers })
+}
 
 const handleLogin = () => {
-  if (usernameInput.value === ADMIN_USER && passwordInput.value === ADMIN_PASSWORD) {
-    isAuthenticated.value = true
-    localStorage.setItem('pica_admin_auth', 'true')
-    fetchVehicles()
-  } else {
+  loginError.value = false
+  if (!adminKeyInput.value) {
     loginError.value = true
+    return
   }
+
+  adminFetch('/api/admin/portal-data')
+    .then(() => {
+      isAuthenticated.value = true
+      fetchVehicles()
+    })
+    .catch((err) => {
+      if (err?.statusCode === 401) {
+        loginError.value = true
+        return
+      }
+
+      isAuthenticated.value = true
+      fetchVehicles()
+    })
 }
 
 const logout = () => {
   isAuthenticated.value = false
-  localStorage.removeItem('pica_admin_auth')
+  adminKeyInput.value = ''
 }
 
 // --- Data State ---
@@ -837,7 +843,7 @@ const portalUsers = ref([])
 const fetchTradeIns = async () => {
   loading.value = true
   try {
-    const res = await $fetch('/api/admin/trade-ins')
+    const res = await adminFetch('/api/admin/trade-ins')
     if (res.success) {
       tradeIns.value = res.tradeIns
     }
@@ -966,7 +972,7 @@ const openMaintenance = async (user) => {
 
 const addMaintenanceRecord = async () => {
   try {
-    await $fetch('/api/admin/add-maintenance', {
+    await adminFetch('/api/admin/add-maintenance', {
       method: 'POST',
       body: {
         targa: selectedUserForAction.value.targa,
@@ -984,7 +990,7 @@ const addMaintenanceRecord = async () => {
 const deleteMaintenance = async (id) => {
   if (!confirm('Eliminare questo intervento dallo storico?')) return
   try {
-    await $fetch(`/api/admin/delete-maintenance?id=${id}`, { method: 'DELETE' })
+    await adminFetch(`/api/admin/delete-maintenance?id=${id}`, { method: 'DELETE' })
     openMaintenance(selectedUserForAction.value)
   } catch (e) {
     alert('Errore eliminazione.')
@@ -1005,7 +1011,7 @@ const openManageDocs = async (user) => {
 
 const savePortalVehicle = async () => {
   try {
-    await $fetch('/api/admin/update-portal-vehicle', {
+    await adminFetch('/api/admin/update-portal-vehicle', {
       method: 'POST',
       body: portalVehicleForm.value
     })
@@ -1025,7 +1031,7 @@ const handlePortalDocUpload = async (event) => {
   const reader = new FileReader()
   reader.onload = async (e) => {
     try {
-      await $fetch('/api/admin/upload-portal-document', {
+      await adminFetch('/api/admin/upload-portal-document', {
         method: 'POST',
         body: {
           targa: selectedUserForAction.value.targa,
@@ -1046,7 +1052,7 @@ const handlePortalDocUpload = async (event) => {
 const deletePortalDoc = async (docId) => {
   if (!confirm('Eliminare questo documento?')) return
   try {
-    await $fetch(`/api/admin/delete-portal-document?id=${docId}`, { method: 'DELETE' })
+    await adminFetch(`/api/admin/delete-portal-document?id=${docId}`, { method: 'DELETE' })
     openManageDocs(selectedUserForAction.value) // Refresh
   } catch (e) {
     alert('Errore eliminazione.')
@@ -1056,7 +1062,7 @@ const deletePortalDoc = async (docId) => {
 const deletePortalUser = async (id) => {
   if (!confirm('Sei sicuro di voler eliminare questo cliente dal portale?')) return
   try {
-    await $fetch(`/api/admin/delete-portal-user?id=${id}`, { method: 'DELETE' })
+    await adminFetch(`/api/admin/delete-portal-user?id=${id}`, { method: 'DELETE' })
     alert('Cliente rimosso dal portale.')
     fetchPortalUsers() // Refresh list
   } catch (e) {
@@ -1082,7 +1088,7 @@ const fetchVehicles = async () => {
 
 const fetchLeads = async () => {
   try {
-    const res = await $fetch('/api/leads')
+    const res = await adminFetch('/api/leads')
     leads.value = res.leads || []
   } catch (e) {
     console.error('Errore caricamento leads:', e)
@@ -1092,11 +1098,11 @@ const fetchLeads = async () => {
 const fetchPortalUsers = async () => {
   loading.value = true
   try {
-    const res = await $fetch('/api/admin/portal-data')
+    const res = await adminFetch('/api/admin/portal-data')
     portalUsers.value = res.users || []
     
     // Recupera anche tutti i veicoli per calcolare le scadenze
-    const vehiclesRes = await $fetch('/api/admin/all-portal-vehicles')
+    const vehiclesRes = await adminFetch('/api/admin/all-portal-vehicles')
     portalVehicles.value = vehiclesRes.vehicles || []
   } catch (e) {
     console.error('Errore caricamento utenti portale:', e)
@@ -1189,7 +1195,7 @@ const formatDate = (dateStr) => {
 
 const handleCreatePortalUser = async () => {
   try {
-    await $fetch('/api/admin/create-portal-user', {
+    await adminFetch('/api/admin/create-portal-user', {
       method: 'POST',
       body: newUser.value
     })
@@ -1222,7 +1228,7 @@ const handleBlogSubmit = async () => {
       : '/api/blog'
     const method = editingBlogId.value ? 'PUT' : 'POST'
     
-    await $fetch(url, {
+    await adminFetch(url, {
       method,
       body: blogForm.value
     })
@@ -1247,7 +1253,7 @@ const editBlog = (post) => {
 const deleteBlog = async (id) => {
   if (!confirm('Sei sicuro di voler eliminare questo articolo?')) return
   try {
-    await $fetch(`/api/blog/${id}`, { method: 'DELETE' })
+    await adminFetch(`/api/blog/${id}`, { method: 'DELETE' })
     fetchBlogPosts()
   } catch (e) {
     alert('Errore durante l\'eliminazione.')
@@ -1350,7 +1356,7 @@ const handleSubmit = async () => {
       immagini: vehicleForm.value.immagini 
     }
 
-    const response = await $fetch(url, {
+    const response = await adminFetch(url, {
       method,
       body
     })
@@ -1385,7 +1391,7 @@ const deleteVehicle = async () => {
   if (!vehicleToDelete.value) return
   
   try {
-    await $fetch(`/api/admin/veicoli/${vehicleToDelete.value._id}`, { method: 'DELETE' })
+    await adminFetch(`/api/admin/veicoli/${vehicleToDelete.value._id}`, { method: 'DELETE' })
     vehicles.value = vehicles.value.filter(m => m._id !== vehicleToDelete.value._id)
     showDeleteModal.value = false
   } catch (e) {
@@ -1393,12 +1399,6 @@ const deleteVehicle = async () => {
   }
 }
 
-onMounted(() => {
-  if (localStorage.getItem('pica_admin_auth') === 'true') {
-    isAuthenticated.value = true
-    fetchVehicles()
-  }
-})
 </script>
 
 <style scoped>

@@ -1,6 +1,14 @@
+import { verifyTurnstile } from '../utils/turnstile'
+
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event)
   const body = await readBody(event)
+
+  if (body?.website && String(body.website).trim()) {
+    return { success: true, message: 'Richiesta ricevuta con successo!' }
+  }
+
+  await verifyTurnstile(event, body?.turnstileToken)
 
   if (!config.mongodbUri) {
     throw createError({ statusCode: 500, statusMessage: 'Database non configurato.' })
@@ -19,8 +27,10 @@ export default defineEventHandler(async (event) => {
       throw createError({ statusCode: 400, statusMessage: 'Dati obbligatori mancanti.' })
     }
 
+    const { website, turnstileToken, ...payload } = body || {}
+
     const newLead = {
-      ...body,
+      ...payload,
       status: 'nuovo',
       createdAt: new Date(),
       updatedAt: new Date()

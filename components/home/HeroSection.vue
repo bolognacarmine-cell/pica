@@ -358,13 +358,13 @@ const toggleMute = () => {
 /* Safe Area e Spaziamenti */
 @media (max-width: 767px) {
   .hero-content {
-    padding-top: calc(var(--spacing-xl) + env(safe-area-inset-top));
-    padding-bottom: calc(var(--spacing-xl) + env(safe-area-inset-bottom));
+    padding-top: calc(40px + env(safe-area-inset-top));
+    padding-bottom: calc(40px + env(safe-area-inset-bottom));
   }
   
   .video-audio-toggle {
-    right: calc(var(--spacing-md) + env(safe-area-inset-right));
-    bottom: calc(var(--spacing-md) + env(safe-area-inset-bottom));
+    right: calc(16px + env(safe-area-inset-right));
+    bottom: calc(16px + env(safe-area-inset-bottom));
   }
 }
 

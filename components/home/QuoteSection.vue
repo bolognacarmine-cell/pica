@@ -6,6 +6,7 @@ const props = defineProps({
   vehicles: { type: Array, default: () => [] }
 })
 
+const runtimeConfig = useRuntimeConfig()
 const route = useRoute()
 const step = ref(1)
 const totalSteps = 4
@@ -19,6 +20,8 @@ const form = ref({
   email: '',
   telefono: '',
   citta: '',
+  website: '',
+  turnstileToken: '',
   // Sezione Moto
   vehicleId: '',
   marca: '',
@@ -40,6 +43,41 @@ const form = ref({
 })
 
 const progress = computed(() => (step.value / totalSteps) * 100)
+const turnstileSiteKey = computed(() => runtimeConfig.public.turnstileSiteKey)
+const turnstileEl = ref(null)
+const turnstileWidgetId = ref(null)
+
+const initTurnstile = async () => {
+  if (!turnstileSiteKey.value) return
+  if (!turnstileEl.value) return
+  if (turnstileWidgetId.value !== null) return
+
+  const render = () => {
+    const t = window.turnstile
+    if (!t) return false
+    turnstileWidgetId.value = t.render(turnstileEl.value, {
+      sitekey: turnstileSiteKey.value,
+      callback: (token) => {
+        form.value.turnstileToken = token
+      },
+      'expired-callback': () => {
+        form.value.turnstileToken = ''
+      },
+      'error-callback': () => {
+        form.value.turnstileToken = ''
+      }
+    })
+    return true
+  }
+
+  if (render()) return
+
+  let attempts = 0
+  const timer = setInterval(() => {
+    attempts += 1
+    if (render() || attempts >= 20) clearInterval(timer)
+  }, 250)
+}
 
 onMounted(() => {
   // Assicura uno stato pulito al caricamento della pagina
@@ -83,6 +121,12 @@ watch(() => route.hash, (newHash) => {
   }
 })
 
+watch([() => showForm.value, () => step.value, () => turnstileSiteKey.value], async ([isOpen, currentStep, siteKey]) => {
+  if (!isOpen || currentStep !== totalSteps || !siteKey) return
+  await nextTick()
+  initTurnstile()
+}, { immediate: true })
+
 const checkPreSelection = (id) => {
   const vehicle = props.vehicles.find(v => v._id === id || v.slug === id)
   if (vehicle) {
@@ -118,6 +162,7 @@ const prevStep = () => {
 
 const handleSubmit = async () => {
   if (!form.value.privacy) return alert('Devi accettare la privacy policy.')
+  if (turnstileSiteKey.value && !form.value.turnstileToken) return alert('Completa la verifica anti-spam.')
   
   isSubmitting.value = true
   try {
@@ -167,6 +212,7 @@ const tipi = ['Motorhome', 'Profilato', 'Mansardato', 'Van/Camper puro', 'Roulot
 
         <!-- 2. Form Multi-step -->
         <form v-else-if="showForm" @submit.prevent="handleSubmit" class="quote-form">
+          <input v-model="form.website" type="text" name="website" autocomplete="off" tabindex="-1" class="hp-field" />
           
           <!-- Progress Bar -->
           <div class="progress-container">
@@ -315,6 +361,9 @@ const tipi = ['Motorhome', 'Profilato', 'Mansardato', 'Van/Camper puro', 'Roulot
                 <span>Voglio ricevere promozioni e offerte speciali</span>
               </label>
             </div>
+            <div v-if="turnstileSiteKey" class="turnstile-wrap">
+              <div ref="turnstileEl"></div>
+            </div>
           </div>
 
           <!-- Navigazione Form -->
@@ -412,6 +461,21 @@ const tipi = ['Motorhome', 'Profilato', 'Mansardato', 'Van/Camper puro', 'Roulot
   display: flex;
   flex-direction: column;
   gap: var(--space-3xl);
+}
+
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  height: 0;
+  width: 0;
+  opacity: 0;
+}
+
+.turnstile-wrap {
+  margin-top: var(--space-lg);
+  display: flex;
+  justify-content: center;
 }
 
 .step-header {

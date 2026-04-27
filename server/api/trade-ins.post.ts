@@ -2,10 +2,17 @@
 import { defineEventHandler, readBody, createError } from 'h3'
 import { MongoClient } from 'mongodb'
 import { v2 as cloudinary } from 'cloudinary'
+import { verifyTurnstile } from '../utils/turnstile'
 
 export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig(event)
   const body = await readBody(event)
+
+  if (body?.website && String(body.website).trim()) {
+    return { success: true, message: 'Richiesta di permuta inviata con successo!' }
+  }
+
+  await verifyTurnstile(event, body?.turnstileToken)
 
   // 1. Verifica configurazione Database
   if (!config.mongodbUri) {
@@ -40,15 +47,14 @@ export default defineEventHandler(async (event) => {
     const db = client.db(config.mongodbDbName)
     const collection = db.collection('tradeins')
 
+    const { imagesBase64, website, turnstileToken, ...payload } = body || {}
+
     const newTradeIn = {
-      ...body,
+      ...payload,
       images: imageUrls,
       createdAt: new Date(),
       status: 'penden' // penden, in_progress, completed, rejected
     }
-
-    // Rimuovi i dati base64 prima del salvataggio nel DB
-    delete newTradeIn.imagesBase64
 
     const result = await collection.insertOne(newTradeIn)
 
