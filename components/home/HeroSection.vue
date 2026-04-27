@@ -9,6 +9,7 @@ defineProps({
 })
 
 const isMuted = ref(true)
+const heroVideoSrc = useRuntimeConfig().public.heroVideoSrc || '/video/hero-video.mp4'
 
 const toggleMute = () => {
   isMuted.value = !isMuted.value
@@ -29,7 +30,7 @@ const toggleMute = () => {
         playsinline
         preload="auto"
       >
-        <source src="/video/hero-video.mp4" type="video/mp4" />
+        <source :src="heroVideoSrc" type="video/mp4" />
       </video>
       
       <div class="hero-scrim" aria-hidden="true"></div>

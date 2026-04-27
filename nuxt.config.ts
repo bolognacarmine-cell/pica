@@ -20,7 +20,8 @@ export default defineNuxtConfig({
     public: {
       siteUrl: process.env.NUXT_PUBLIC_SITE_URL || 'https://picacaravan.it',
       apiBase: process.env.NUXT_PUBLIC_API_BASE || 'https://api.picacaravan.it',
-      turnstileSiteKey: process.env.NUXT_PUBLIC_TURNSTILE_SITE_KEY || ''
+      turnstileSiteKey: process.env.NUXT_PUBLIC_TURNSTILE_SITE_KEY || '',
+      heroVideoSrc: process.env.NUXT_PUBLIC_HERO_VIDEO_SRC || '/video/hero-video.mp4'
     }
   },
 
