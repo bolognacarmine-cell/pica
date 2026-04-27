@@ -11,8 +11,6 @@ declare global {
   const computed: typeof import('../../node_modules/vue').computed
   const createError: typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/error').createError
   const createSitePathResolver: typeof import('../../node_modules/nuxt-site-config/dist/runtime/app/composables/utils').createSitePathResolver
-  const createUseAsyncData: typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/asyncData').createUseAsyncData
-  const createUseFetch: typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/fetch').createUseFetch
   const customRef: typeof import('../../node_modules/vue').customRef
   const defineAppConfig: typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/nuxt').defineAppConfig
   const defineAsyncComponent: typeof import('../../node_modules/vue').defineAsyncComponent
@@ -22,7 +20,7 @@ declare global {
   const defineNuxtLink: typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/components/nuxt-link').defineNuxtLink
   const defineNuxtPlugin: typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/nuxt').defineNuxtPlugin
   const defineNuxtRouteMiddleware: typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/router').defineNuxtRouteMiddleware
-  const definePageMeta: typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/pages').definePageMeta
+  const definePageMeta: typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/pages/runtime/composables').definePageMeta
   const definePayloadPlugin: typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/nuxt').definePayloadPlugin
   const definePayloadReducer: typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/payload').definePayloadReducer
   const definePayloadReviver: typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/payload').definePayloadReviver
@@ -99,7 +97,6 @@ declare global {
   const unref: typeof import('../../node_modules/vue').unref
   const updateAppConfig: typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/config').updateAppConfig
   const updateSiteConfig: typeof import('../../node_modules/nuxt-site-config/dist/runtime/app/composables/updateSiteConfig').updateSiteConfig
-  const useAnnouncer: typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/announcer').useAnnouncer
   const useAppConfig: typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/config').useAppConfig
   const useAsyncData: typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/asyncData').useAsyncData
   const useAttrs: typeof import('../../node_modules/vue').useAttrs
@@ -196,9 +193,6 @@ declare global {
   // @ts-ignore
   export type { Component, ComponentPublicInstance, ComputedRef, DirectiveBinding, ExtractDefaultPropTypes, ExtractPropTypes, ExtractPublicPropTypes, InjectionKey, PropType, Ref, MaybeRef, MaybeRefOrGetter, VNode, WritableComputedRef } from '../../node_modules/vue'
   import('../../node_modules/vue')
-  // @ts-ignore
-  export type { PageMeta } from '../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/pages'
-  import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/pages')
 }
 // for vue template auto import
 import { UnwrapRef } from 'vue'
@@ -214,8 +208,6 @@ declare module 'vue' {
     readonly computed: UnwrapRef<typeof import('../../node_modules/vue')['computed']>
     readonly createError: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/error')['createError']>
     readonly createSitePathResolver: UnwrapRef<typeof import('../../node_modules/nuxt-site-config/dist/runtime/app/composables/utils')['createSitePathResolver']>
-    readonly createUseAsyncData: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/asyncData')['createUseAsyncData']>
-    readonly createUseFetch: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/fetch')['createUseFetch']>
     readonly customRef: UnwrapRef<typeof import('../../node_modules/vue')['customRef']>
     readonly defineAppConfig: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/nuxt')['defineAppConfig']>
     readonly defineAsyncComponent: UnwrapRef<typeof import('../../node_modules/vue')['defineAsyncComponent']>
@@ -225,7 +217,7 @@ declare module 'vue' {
     readonly defineNuxtLink: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/components/nuxt-link')['defineNuxtLink']>
     readonly defineNuxtPlugin: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/nuxt')['defineNuxtPlugin']>
     readonly defineNuxtRouteMiddleware: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/router')['defineNuxtRouteMiddleware']>
-    readonly definePageMeta: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/pages')['definePageMeta']>
+    readonly definePageMeta: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/pages/runtime/composables')['definePageMeta']>
     readonly definePayloadPlugin: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/nuxt')['definePayloadPlugin']>
     readonly definePayloadReducer: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/payload')['definePayloadReducer']>
     readonly definePayloadReviver: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/payload')['definePayloadReviver']>
@@ -302,7 +294,6 @@ declare module 'vue' {
     readonly unref: UnwrapRef<typeof import('../../node_modules/vue')['unref']>
     readonly updateAppConfig: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/config')['updateAppConfig']>
     readonly updateSiteConfig: UnwrapRef<typeof import('../../node_modules/nuxt-site-config/dist/runtime/app/composables/updateSiteConfig')['updateSiteConfig']>
-    readonly useAnnouncer: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/announcer')['useAnnouncer']>
     readonly useAppConfig: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/config')['useAppConfig']>
     readonly useAsyncData: UnwrapRef<typeof import('../../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/composables/asyncData')['useAsyncData']>
     readonly useAttrs: UnwrapRef<typeof import('../../node_modules/vue')['useAttrs']>

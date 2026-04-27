@@ -207,10 +207,5 @@
     "../node_modules/dist/*.*",
     "dev",
     "../server"
-  ],
-  "vueCompilerOptions": {
-    "plugins": [
-      "vue-router/volar/sfc-route-blocks"
-    ]
-  }
+  ]
 }

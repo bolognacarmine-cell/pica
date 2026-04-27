@@ -48,7 +48,6 @@ export const NuxtLink: typeof import("../node_modules/.pnpm/nuxt@4.4.2_@babel+co
 export const NuxtLoadingIndicator: typeof import("../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/components/nuxt-loading-indicator")['default']
 export const NuxtTime: typeof import("../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/components/nuxt-time.vue")['default']
 export const NuxtRouteAnnouncer: typeof import("../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/components/nuxt-route-announcer")['default']
-export const NuxtAnnouncer: typeof import("../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/components/nuxt-announcer")['default']
 export const NuxtImg: typeof import("../node_modules/.pnpm/@nuxt+image@2.0.0_db0@0.3.4_631e74ece614e16f0549727fc9d9ed71/node_modules/@nuxt/image/dist/runtime/components/NuxtImg.vue")['default']
 export const NuxtPicture: typeof import("../node_modules/.pnpm/@nuxt+image@2.0.0_db0@0.3.4_631e74ece614e16f0549727fc9d9ed71/node_modules/@nuxt/image/dist/runtime/components/NuxtPicture.vue")['default']
 export const NuxtPage: typeof import("../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/pages/runtime/page")['default']
@@ -96,7 +95,6 @@ export const LazyNuxtLink: LazyComponent<typeof import("../node_modules/.pnpm/nu
 export const LazyNuxtLoadingIndicator: LazyComponent<typeof import("../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/components/nuxt-loading-indicator")['default']>
 export const LazyNuxtTime: LazyComponent<typeof import("../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/components/nuxt-time.vue")['default']>
 export const LazyNuxtRouteAnnouncer: LazyComponent<typeof import("../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/components/nuxt-route-announcer")['default']>
-export const LazyNuxtAnnouncer: LazyComponent<typeof import("../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/app/components/nuxt-announcer")['default']>
 export const LazyNuxtImg: LazyComponent<typeof import("../node_modules/.pnpm/@nuxt+image@2.0.0_db0@0.3.4_631e74ece614e16f0549727fc9d9ed71/node_modules/@nuxt/image/dist/runtime/components/NuxtImg.vue")['default']>
 export const LazyNuxtPicture: LazyComponent<typeof import("../node_modules/.pnpm/@nuxt+image@2.0.0_db0@0.3.4_631e74ece614e16f0549727fc9d9ed71/node_modules/@nuxt/image/dist/runtime/components/NuxtPicture.vue")['default']>
 export const LazyNuxtPage: LazyComponent<typeof import("../node_modules/.pnpm/nuxt@4.4.2_@babel+core@7.29_77bcf01a770e47d92aa7cccd2f1da4be/node_modules/nuxt/dist/pages/runtime/page")['default']>

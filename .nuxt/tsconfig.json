@@ -216,10 +216,5 @@
     "../node_modules/.pnpm/@nuxtjs+sitemap@7.6.0_magic_362e2a1ffcd36e4f21a510d5b80247b4/node_modules/dist/runtime/server",
     "../node_modules/runtime/server",
     "../node_modules/dist/runtime/server"
-  ],
-  "vueCompilerOptions": {
-    "plugins": [
-      "vue-router/volar/sfc-route-blocks"
-    ]
-  }
+  ]
 }

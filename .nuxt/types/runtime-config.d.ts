@@ -20,6 +20,10 @@ import { RuntimeConfig as UserRuntimeConfig, PublicRuntimeConfig as UserPublicRu
 
    cloudinaryApiSecret: string,
 
+   adminApiKey: string,
+
+   turnstileSecretKey: string,
+
    nitro: {
       envPrefix: string,
    },
@@ -99,9 +103,7 @@ import { RuntimeConfig as UserRuntimeConfig, PublicRuntimeConfig as UserPublicRu
 
    apiBase: string,
 
-   adminUser: string,
-
-   adminPassword: string,
+   turnstileSiteKey: string,
   }
 declare module '@nuxt/schema' {
   interface RuntimeConfig extends UserRuntimeConfig {}
